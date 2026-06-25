@@ -188,6 +188,174 @@ pub fn new_packet_pool() PacketPool {
 	p.register(fn () Packet {
 		return &UpdateAttributesPacket{}
 	})
+	p.register(fn () Packet {
+		return &ChangeDimensionPacket{}
+	})
+	p.register(fn () Packet {
+		return &SetCommandsEnabledPacket{}
+	})
+	p.register(fn () Packet {
+		return &UpdateBlockPacket{}
+	})
+	p.register(fn () Packet {
+		return &BlockEventPacket{}
+	})
+	p.register(fn () Packet {
+		return &ActorEventPacket{}
+	})
+	p.register(fn () Packet {
+		return &SetActorLinkPacket{}
+	})
+	p.register(fn () Packet {
+		return &NetworkChunkPublisherUpdatePacket{}
+	})
+	p.register(fn () Packet {
+		return &GameRulesChangedPacket{}
+	})
+	p.register(fn () Packet {
+		return &SettingsCommandPacket{}
+	})
+	p.register(fn () Packet {
+		return &UpdateSoftEnumPacket{}
+	})
+	p.register(fn () Packet {
+		return &ModalFormRequestPacket{}
+	})
+	p.register(fn () Packet {
+		return &ModalFormResponsePacket{}
+	})
+	p.register(fn () Packet {
+		return &ServerSettingsRequestPacket{}
+	})
+	p.register(fn () Packet {
+		return &ServerSettingsResponsePacket{}
+	})
+	p.register(fn () Packet {
+		return &RemoveObjectivePacket{}
+	})
+	p.register(fn () Packet {
+		return &ToastRequestPacket{}
+	})
+	p.register(fn () Packet {
+		return &SetTitlePacket{}
+	})
+	p.register(fn () Packet {
+		return &SetDisplayObjectivePacket{}
+	})
+	p.register(fn () Packet {
+		return &NpcDialoguePacket{}
+	})
+	p.register(fn () Packet {
+		return &LevelEventPacket{}
+	})
+	p.register(fn () Packet {
+		return &StopSoundPacket{}
+	})
+	p.register(fn () Packet {
+		return &PlaySoundPacket{}
+	})
+	p.register(fn () Packet {
+		return &SpawnParticleEffectPacket{}
+	})
+	p.register(fn () Packet {
+		return &PlayerFogPacket{}
+	})
+	p.register(fn () Packet {
+		return &CameraShakePacket{}
+	})
+	p.register(fn () Packet {
+		return &AddPaintingPacket{}
+	})
+	p.register(fn () Packet {
+		return &TransferPacket{}
+	})
+	p.register(fn () Packet {
+		return &OpenSignPacket{}
+	})
+	p.register(fn () Packet {
+		return &AnvilDamagePacket{}
+	})
+	p.register(fn () Packet {
+		return &PlayerStartItemCooldownPacket{}
+	})
+	p.register(fn () Packet {
+		return &ClientboundCloseFormPacket{}
+	})
+	p.register(fn () Packet {
+		return &ScriptMessagePacket{}
+	})
+	p.register(fn () Packet {
+		return &SimulationTypePacket{}
+	})
+	p.register(fn () Packet {
+		return &DeathInfoPacket{}
+	})
+	p.register(fn () Packet {
+		return &AwardAchievementPacket{}
+	})
+	p.register(fn () Packet {
+		return &LevelSoundEventPacket{}
+	})
+	p.register(fn () Packet {
+		return &AnimateEntityPacket{}
+	})
+	p.register(fn () Packet {
+		return &MotionPredictionHintsPacket{}
+	})
+	p.register(fn () Packet {
+		return &NpcRequestPacket{}
+	})
+	p.register(fn () Packet {
+		return &CompletedUsingItemPacket{}
+	})
+	p.register(fn () Packet {
+		return &MoveActorDeltaPacket{}
+	})
+	p.register(fn () Packet {
+		return &SetLastHurtByPacket{}
+	})
+	p.register(fn () Packet {
+		return &CurrentStructureFeaturePacket{}
+	})
+	p.register(fn () Packet {
+		return &ServerboundLoadingScreenPacket{}
+	})
+	p.register(fn () Packet {
+		return &PlayerToggleCrafterSlotRequestPacket{}
+	})
+	p.register(fn () Packet {
+		return &SetDefaultGameTypePacket{}
+	})
+	p.register(fn () Packet {
+		return &UpdatePlayerGameTypePacket{}
+	})
+	p.register(fn () Packet {
+		return &CodeBuilderPacket{}
+	})
+	p.register(fn () Packet {
+		return &LecternUpdatePacket{}
+	})
+	p.register(fn () Packet {
+		return &PurchaseReceiptPacket{}
+	})
+	p.register(fn () Packet {
+		return &ShowProfilePacket{}
+	})
+	p.register(fn () Packet {
+		return &RequestPermissionsPacket{}
+	})
+	p.register(fn () Packet {
+		return &ClientCacheBlobStatusPacket{}
+	})
+	p.register(fn () Packet {
+		return &BossEventPacket{}
+	})
+	p.register(fn () Packet {
+		return &UpdateBlockSyncedPacket{}
+	})
+	p.register(fn () Packet {
+		return &BookEditPacket{}
+	})
 	return p
 }
 

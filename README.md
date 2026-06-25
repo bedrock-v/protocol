@@ -2,16 +2,6 @@
 
 A Minecraft: Bedrock Edition network protocol implementation in V.
 
-## Layout
-
-| Directory | Module | Contents |
-|-----------|--------|----------|
-| `src/` | `src` | Protocol packets, `ProtocolInfo` constants, `PacketPool` |
-| `src/types/` | `types` | Data types (Vector3, BlockPosition, UUID, ItemStack, ...) |
-| `src/enums/` | `enums` | Enumerations (PlayStatus, TextType, ...) |
-| `src/serializer/` | `serializer` | Binary `Reader`/`Writer` and common read/write helpers |
-| `examples/` | `main` | Usage / round-trip examples |
-
 ## Dependency: nbt
 
 This project consumes the standalone network-NBT codec from

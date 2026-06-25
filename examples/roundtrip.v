@@ -302,5 +302,203 @@ fn main() {
 		println('  -> MovePlayer mode=teleport cause=${d12.teleport_cause} item=${d12.teleport_item} tick=${d12.tick} OK')
 	}
 
+	cd := &protocol.ChangeDimensionPacket{
+		dimension:         1
+		position:          types.Vector3{0, 100, 0}
+		respawn:           false
+		loading_screen_id: u32(123)
+	}
+	d13 := roundtrip(cd, mut pool)!
+	if d13 is protocol.ChangeDimensionPacket {
+		assert d13.dimension == 1
+		assert (d13.loading_screen_id or { u32(0) }) == 123
+		println('  -> ChangeDimension dim=${d13.dimension} screen=${d13.loading_screen_id or { u32(0) }} OK')
+	}
+
+	ncpu := &protocol.NetworkChunkPublisherUpdatePacket{
+		block_position: types.BlockPosition{0, 64, 0}
+		radius:         80
+		saved_chunks: [
+			types.ChunkPosition{1, 2},
+			types.ChunkPosition{-3, 4},
+		]
+	}
+	d14 := roundtrip(ncpu, mut pool)!
+	if d14 is protocol.NetworkChunkPublisherUpdatePacket {
+		assert d14.radius == 80
+		assert d14.saved_chunks.len == 2
+		assert d14.saved_chunks[1].x == -3
+		println('  -> NetworkChunkPublisherUpdate radius=${d14.radius} chunks=${d14.saved_chunks.len} OK')
+	}
+
+	grc := &protocol.GameRulesChangedPacket{
+		game_rules: [
+			types.GameRule{
+				name:                 'doDaylightCycle'
+				is_player_modifiable: true
+				value:                types.GameRuleValue(types.BoolRule{
+					value: true
+				})
+			},
+			types.GameRule{
+				name:                 'randomTickSpeed'
+				is_player_modifiable: true
+				value:                types.GameRuleValue(types.IntRule{
+					value: u32(3)
+				})
+			},
+		]
+	}
+	d15 := roundtrip(grc, mut pool)!
+	if d15 is protocol.GameRulesChangedPacket {
+		assert d15.game_rules.len == 2
+		assert (d15.game_rules[0].value as types.BoolRule).value == true
+		assert (d15.game_rules[1].value as types.IntRule).value == 3
+		println('  -> GameRulesChanged rules=${d15.game_rules.len} (${d15.game_rules[0].name}, ${d15.game_rules[1].name}) OK')
+	}
+
+	mfr := &protocol.ModalFormResponsePacket{
+		form_id:       7
+		form_data:     '{"button":1}'
+		cancel_reason: none
+	}
+	d16 := roundtrip(mfr, mut pool)!
+	if d16 is protocol.ModalFormResponsePacket {
+		assert d16.form_id == 7
+		assert (d16.form_data or { '' }) == '{"button":1}'
+		assert d16.cancel_reason == none
+		println('  -> ModalFormResponse formId=${d16.form_id} data=${d16.form_data or { '<none>' }} OK')
+	}
+
+	st := &protocol.SetTitlePacket{
+		type:                2
+		text:                'Welcome'
+		fade_in_time:        10
+		stay_time:           70
+		fade_out_time:       20
+		xuid:                ''
+		platform_online_id:  ''
+		filtered_title_text: ''
+	}
+	d17 := roundtrip(st, mut pool)!
+	if d17 is protocol.SetTitlePacket {
+		assert d17.text == 'Welcome'
+		assert d17.stay_time == 70
+		println('  -> SetTitle text=${d17.text} stay=${d17.stay_time} OK')
+	}
+
+	ps := &protocol.PlaySoundPacket{
+		sound_name:          'random.pop'
+		position:            types.BlockPosition{80, 512, -16}
+		volume:              1.0
+		pitch:               1.25
+		server_sound_handle: u64(42)
+	}
+	d18 := roundtrip(ps, mut pool)!
+	if d18 is protocol.PlaySoundPacket {
+		assert d18.sound_name == 'random.pop'
+		assert d18.position.y == 512
+		assert (d18.server_sound_handle or { u64(0) }) == 42
+		println('  -> PlaySound name=${d18.sound_name} handle=${d18.server_sound_handle or { u64(0) }} OK')
+	}
+
+	use := &protocol.UpdateSoftEnumPacket{
+		enum_name: 'players'
+		values:    ['alice', 'bob']
+		type:      0
+	}
+	d19 := roundtrip(use, mut pool)!
+	if d19 is protocol.UpdateSoftEnumPacket {
+		assert d19.values.len == 2
+		assert d19.values[1] == 'bob'
+		println('  -> UpdateSoftEnum name=${d19.enum_name} values=${d19.values.len} OK')
+	}
+
+	mad := &protocol.MoveActorDeltaPacket{
+		actor_runtime_id: 9
+		flags:            protocol.move_actor_delta_flag_has_x | protocol.move_actor_delta_flag_has_z | protocol.move_actor_delta_flag_has_yaw
+		x_pos:            12.5
+		z_pos:            -8.25
+		yaw:              90.0
+	}
+	d20 := roundtrip(mad, mut pool)!
+	if d20 is protocol.MoveActorDeltaPacket {
+		assert d20.x_pos == 12.5
+		assert d20.z_pos == -8.25
+		assert d20.y_pos == 0.0
+		println('  -> MoveActorDelta x=${d20.x_pos} z=${d20.z_pos} (y unset=${d20.y_pos}) OK')
+	}
+
+	di := &protocol.DeathInfoPacket{
+		message_translation_key: 'death.attack.player'
+		message_parameters:      ['Steve', 'Zombie']
+	}
+	d21 := roundtrip(di, mut pool)!
+	if d21 is protocol.DeathInfoPacket {
+		assert d21.message_parameters.len == 2
+		assert d21.message_parameters[0] == 'Steve'
+		println('  -> DeathInfo key=${d21.message_translation_key} params=${d21.message_parameters.len} OK')
+	}
+
+	lse := &protocol.LevelSoundEventPacket{
+		sound:           'mob.zombie.say'
+		position:        types.Vector3{1, 2, 3}
+		extra_data:      -1
+		entity_type:     'minecraft:zombie'
+		is_baby_mob:     false
+		actor_unique_id: 77
+		fire_position:   none
+	}
+	d22 := roundtrip(lse, mut pool)!
+	if d22 is protocol.LevelSoundEventPacket {
+		assert d22.sound == 'mob.zombie.say'
+		assert d22.fire_position == none
+		println('  -> LevelSoundEvent sound=${d22.sound} fire=<none> OK')
+	}
+
+	be := &protocol.BookEditPacket{
+		inventory_slot: 0
+		type:           protocol.book_edit_type_sign_book
+		title:          'My Book'
+		author:         'Steve'
+		xuid:           '123'
+	}
+	d23 := roundtrip(be, mut pool)!
+	if d23 is protocol.BookEditPacket {
+		assert d23.type == protocol.book_edit_type_sign_book
+		assert d23.title == 'My Book'
+		assert d23.author == 'Steve'
+		println('  -> BookEdit type=sign title=${d23.title} author=${d23.author} OK')
+	}
+
+	bo := &protocol.BossEventPacket{
+		boss_actor_unique_id:   1000
+		player_actor_unique_id: 2000
+		event_type:             0
+		title:                  'Ender Dragon'
+		filtered_title:         'Ender Dragon'
+		health_percent:         0.75
+		color:                  2
+		overlay:                0
+	}
+	d24 := roundtrip(bo, mut pool)!
+	if d24 is protocol.BossEventPacket {
+		assert d24.title == 'Ender Dragon'
+		assert d24.health_percent == 0.75
+		println('  -> BossEvent title=${d24.title} hp=${d24.health_percent} OK')
+	}
+
+	ccbs := &protocol.ClientCacheBlobStatusPacket{
+		miss_hashes: [u64(0xAA), u64(0xBB)]
+		hit_hashes:  [u64(0xCC)]
+	}
+	d25 := roundtrip(ccbs, mut pool)!
+	if d25 is protocol.ClientCacheBlobStatusPacket {
+		assert d25.miss_hashes.len == 2
+		assert d25.hit_hashes.len == 1
+		assert d25.hit_hashes[0] == 0xCC
+		println('  -> ClientCacheBlobStatus miss=${d25.miss_hashes.len} hit=${d25.hit_hashes.len} OK')
+	}
+
 	println('All round-trip tests passed.')
 }
