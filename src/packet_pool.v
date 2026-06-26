@@ -605,6 +605,48 @@ pub fn new_packet_pool() PacketPool {
 	p.register(fn () Packet {
 		return &GraphicsOverrideParameterPacket{}
 	})
+	p.register(fn () Packet {
+		return &CameraSplinePacket{}
+	})
+	p.register(fn () Packet {
+		return &CameraAimAssistActorPriorityPacket{}
+	})
+	p.register(fn () Packet {
+		return &CameraInstructionPacket{}
+	})
+	p.register(fn () Packet {
+		return &EducationSettingsPacket{}
+	})
+	p.register(fn () Packet {
+		return &ServerboundPackSettingChangePacket{}
+	})
+	p.register(fn () Packet {
+		return &ServerStoreInfoPacket{}
+	})
+	p.register(fn () Packet {
+		return &ServerPresenceInfoPacket{}
+	})
+	p.register(fn () Packet {
+		return &PlayerSkinPacket{}
+	})
+	p.register(fn () Packet {
+		return &AddPlayerPacket{}
+	})
+	p.register(fn () Packet {
+		return &PlayerListPacket{}
+	})
+	p.register(fn () Packet {
+		return &ClientboundDebugRendererPacket{}
+	})
+	p.register(fn () Packet {
+		return &ClientMovementPredictionSyncPacket{}
+	})
+	p.register(fn () Packet {
+		return &LevelEventGenericPacket{}
+	})
+	p.register(fn () Packet {
+		return &ServerboundDiagnosticsPacket{}
+	})
 	return p
 }
 

@@ -1147,5 +1147,330 @@ fn main() {
 		println('  -> GraphicsOverrideParameter values=${d58.values.len} biome=${d58.biome_identifier} OK')
 	}
 
+	cs := &protocol.CameraSplinePacket{
+		splines: [
+			protocol.CameraSplineDefinition{
+				name:        'flythrough'
+				instruction: protocol.CameraSplineInstruction{
+					total_time:          5.0
+					ease_type:           1
+					curve:               [types.Vector3{0, 0, 0}, types.Vector3{1, 2, 3}]
+					progress_key_frames: [protocol.CameraProgressOption{
+						value:     0.5
+						time:      1.0
+						ease_type: 'linear'
+					}]
+					rotation_options: [protocol.CameraRotationOption{
+						value: types.Vector3{0, 90, 0}
+						time:  2.0
+						ease:  'in_out'
+					}]
+					spline_identifier: 'spline-1'
+					load_from_json:    false
+				}
+			},
+		]
+	}
+	d59 := roundtrip(cs, mut pool)!
+	if d59 is protocol.CameraSplinePacket {
+		assert d59.splines.len == 1
+		ins := d59.splines[0].instruction
+		assert ins.curve.len == 2
+		assert ins.progress_key_frames[0].ease_type == 'linear'
+		assert ins.spline_identifier == 'spline-1'
+		println('  -> CameraSpline splines=${d59.splines.len} curve=${ins.curve.len} OK')
+	}
+
+	cap := &protocol.CameraAimAssistActorPriorityPacket{
+		priority_data: [
+			protocol.CameraAimAssistActorPriorityData{
+				preset_index:   1
+				category_index: -2
+				actor_index:    3
+				priority:       100
+			},
+		]
+	}
+	d60 := roundtrip(cap, mut pool)!
+	if d60 is protocol.CameraAimAssistActorPriorityPacket {
+		assert d60.priority_data.len == 1
+		assert d60.priority_data[0].category_index == -2
+		assert d60.priority_data[0].priority == 100
+		println('  -> CameraAimAssistActorPriority data=${d60.priority_data.len} OK')
+	}
+
+	ci := &protocol.CameraInstructionPacket{
+		set: protocol.CameraSetInstruction{
+			preset:                 4
+			ease:                   protocol.CameraSetInstructionEase{
+				type:     1
+				duration: 0.5
+			}
+			camera_position:        types.Vector3{10, 20, 30}
+			rotation:               none
+			facing_position:        none
+			view_offset:            none
+			entity_offset:          none
+			default:                none
+			ignore_starting_values: true
+		}
+		clear:              none
+		fade:               protocol.CameraFadeInstruction{
+			time:  protocol.CameraFadeInstructionTime{
+				fade_in:  1.0
+				stay:     2.0
+				fade_out: 1.0
+			}
+			color: none
+		}
+		target:             none
+		remove_target:      true
+		field_of_view:      none
+		spline:             none
+		attach_to_entity:   42
+		detach_from_entity: none
+	}
+	d61 := roundtrip(ci, mut pool)!
+	if d61 is protocol.CameraInstructionPacket {
+		s := d61.set or { protocol.CameraSetInstruction{} }
+		assert s.preset == 4
+		assert (s.ease or { protocol.CameraSetInstructionEase{} }).duration == 0.5
+		assert (s.camera_position or { types.Vector3{} }).x == 10
+		assert s.rotation == none
+		f := d61.fade or { protocol.CameraFadeInstruction{} }
+		assert (f.time or { protocol.CameraFadeInstructionTime{} }).stay == 2.0
+		assert f.color == none
+		assert (d61.remove_target or { false }) == true
+		assert (d61.attach_to_entity or { 0 }) == 42
+		assert d61.detach_from_entity == none
+		println('  -> CameraInstruction set.preset=${s.preset} attach=${d61.attach_to_entity or { 0 }} OK')
+	}
+
+	es := &protocol.EducationSettingsPacket{
+		code_builder_default_uri:        'uri'
+		code_builder_title:              'Builder'
+		can_resize_code_builder:         true
+		disable_legacy_title_bar:        false
+		post_process_filter:             'filter'
+		screenshot_border_resource_path: 'border'
+		agent_capabilities:              protocol.EducationSettingsAgentCapabilities{
+			can_modify_blocks: true
+		}
+		code_builder_override_uri: none
+		has_quiz:                  true
+		link_settings:             none
+	}
+	d62 := roundtrip(es, mut pool)!
+	if d62 is protocol.EducationSettingsPacket {
+		assert d62.code_builder_title == 'Builder'
+		assert d62.has_quiz == true
+		ecap := d62.agent_capabilities or { protocol.EducationSettingsAgentCapabilities{} }
+		assert (ecap.can_modify_blocks or { false }) == true
+		assert d62.link_settings == none
+		println('  -> EducationSettings title=${d62.code_builder_title} quiz=${d62.has_quiz} OK')
+	}
+
+	psc := &protocol.ServerboundPackSettingChangePacket{
+		pack_id:      types.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+		setting_name: 'render_distance'
+		setting_type: protocol.pack_setting_type_float
+		float_value:  12.5
+	}
+	d63 := roundtrip(psc, mut pool)!
+	if d63 is protocol.ServerboundPackSettingChangePacket {
+		assert d63.setting_name == 'render_distance'
+		assert d63.setting_type == protocol.pack_setting_type_float
+		assert d63.float_value == 12.5
+		println('  -> ServerboundPackSettingChange name=${d63.setting_name} val=${d63.float_value} OK')
+	}
+
+	ssi := &protocol.ServerStoreInfoPacket{
+		config: protocol.ClientStoreEntrypointConfig{
+			store_id:   'store-1'
+			store_name: 'Marketplace'
+		}
+	}
+	d64 := roundtrip(ssi, mut pool)!
+	if d64 is protocol.ServerStoreInfoPacket {
+		c := d64.config or { protocol.ClientStoreEntrypointConfig{} }
+		assert c.store_name == 'Marketplace'
+		println('  -> ServerStoreInfo store=${c.store_name} OK')
+	}
+
+	spi := &protocol.ServerPresenceInfoPacket{
+		presence: protocol.PresenceInfo{
+			experience_name:  none
+			world_name:       'My World'
+			rich_presence_id: 'rp-1'
+		}
+	}
+	d65 := roundtrip(spi, mut pool)!
+	if d65 is protocol.ServerPresenceInfoPacket {
+		pinfo := d65.presence or { protocol.PresenceInfo{} }
+		assert pinfo.experience_name == none
+		assert (pinfo.world_name or { '' }) == 'My World'
+		assert pinfo.rich_presence_id == 'rp-1'
+		println('  -> ServerPresenceInfo world=${pinfo.world_name or { '' }} OK')
+	}
+
+	sample_skin := types.SkinData{
+		skin_id:        'skin-1'
+		resource_patch: '{}'
+		skin_image:     types.SkinImage{
+			width:  2
+			height: 2
+			data:   'abcd'
+		}
+		cape_image:        types.SkinImage{}
+		persona_pieces:    [types.PersonaSkinPiece{
+			piece_id:   'p1'
+			piece_type: 'body'
+			pack_id:    'pk'
+			is_default: true
+			product_id: ''
+		}]
+		piece_tint_colors: [types.PersonaPieceTintColor{
+			piece_type: 'body'
+			colors:     ['#fff', '#000']
+		}]
+		premium: true
+	}
+	psk := &protocol.PlayerSkinPacket{
+		uuid:          types.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+		skin:          sample_skin
+		new_skin_name: 'new'
+		old_skin_name: 'old'
+		verified:      true
+	}
+	d66 := roundtrip(psk, mut pool)!
+	if d66 is protocol.PlayerSkinPacket {
+		assert d66.skin.skin_id == 'skin-1'
+		assert d66.skin.skin_image.data == 'abcd'
+		assert d66.skin.persona_pieces.len == 1
+		assert d66.skin.piece_tint_colors[0].colors.len == 2
+		assert d66.verified == true
+		println('  -> PlayerSkin id=${d66.skin.skin_id} tints=${d66.skin.piece_tint_colors[0].colors.len} OK')
+	}
+
+	pl := &protocol.PlayerListPacket{
+		type:    protocol.player_list_type_add
+		entries: [
+			protocol.PlayerListEntry{
+				uuid:            types.uuid_from_bytes([u8(1), 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4])
+				actor_unique_id: 50
+				username:        'Steve'
+				xbox_user_id:    'xuid'
+				build_platform:  1
+				skin:            sample_skin
+				is_host:         true
+				color:           0xffffffff
+				verified:        true
+			},
+		]
+	}
+	d67 := roundtrip(pl, mut pool)!
+	if d67 is protocol.PlayerListPacket {
+		assert d67.type == protocol.player_list_type_add
+		assert d67.entries.len == 1
+		assert d67.entries[0].username == 'Steve'
+		assert d67.entries[0].verified == true
+		println('  -> PlayerList type=${d67.type} entries=${d67.entries.len} user=${d67.entries[0].username} OK')
+	}
+
+	ap := &protocol.AddPlayerPacket{
+		uuid:             types.uuid_from_bytes([u8(9), 9, 9, 9, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6])
+		username:         'Alex'
+		actor_runtime_id: 321
+		position:         types.Vector3{1, 2, 3}
+		motion:           types.Vector3{0, 0, 0}
+		item:             types.ItemStackWrapper{
+			item_stack: types.ItemStack{
+				id: 0
+			}
+		}
+		game_mode: 1
+		metadata:  []
+		abilities: protocol.AbilitiesData{
+			target_actor_unique_id: 321
+			layers:                 []
+		}
+		links:          []
+		device_id:      'dev'
+		build_platform: 2
+	}
+	d68 := roundtrip(ap, mut pool)!
+	if d68 is protocol.AddPlayerPacket {
+		assert d68.username == 'Alex'
+		assert d68.actor_runtime_id == 321
+		assert d68.build_platform == 2
+		println('  -> AddPlayer user=${d68.username} runtime=${d68.actor_runtime_id} OK')
+	}
+
+	cdr := &protocol.ClientboundDebugRendererPacket{
+		type: 'add_marker'
+		data: protocol.DebugMarkerData{
+			text:            'here'
+			position:        types.Vector3{1, 2, 3}
+			color:           0xff00ff00
+			duration_millis: 5000
+		}
+	}
+	d69 := roundtrip(cdr, mut pool)!
+	if d69 is protocol.ClientboundDebugRendererPacket {
+		dm := d69.data or { protocol.DebugMarkerData{} }
+		assert dm.text == 'here'
+		assert dm.duration_millis == 5000
+		println('  -> ClientboundDebugRenderer text=${dm.text} OK')
+	}
+
+	cmp := &protocol.ClientMovementPredictionSyncPacket{
+		flags:              [u8(0x81), 0x02]
+		scale:              1.0
+		health:             20.0
+		actor_unique_id:    7
+		actor_flying_state: true
+	}
+	d70 := roundtrip(cmp, mut pool)!
+	if d70 is protocol.ClientMovementPredictionSyncPacket {
+		assert d70.flags == [u8(0x81), 0x02]
+		assert d70.health == 20.0
+		assert d70.actor_flying_state == true
+		println('  -> ClientMovementPredictionSync flags=${d70.flags.len}B health=${d70.health} OK')
+	}
+
+	leg := &protocol.LevelEventGenericPacket{
+		event_id:   42
+		event_data: [u8(10), 0, 0]
+	}
+	d71 := roundtrip(leg, mut pool)!
+	if d71 is protocol.LevelEventGenericPacket {
+		assert d71.event_id == 42
+		assert d71.event_data == [u8(10), 0, 0]
+		println('  -> LevelEventGeneric id=${d71.event_id} data=${d71.event_data.len}B OK')
+	}
+
+	sd := &protocol.ServerboundDiagnosticsPacket{
+		avg_fps:                60.0
+		memory_category_values: [protocol.MemoryCategoryCounter{
+			category: 1
+			bytes:    4096
+		}]
+		entity_diagnostics: [protocol.EntityDiagnosticTimingInfo{
+			display_name:     'zombie'
+			entity:           'minecraft:zombie'
+			time_in_ns:       1000
+			percent_of_total: 50
+		}]
+		system_diagnostics: []
+		whisker_scopes:     []
+	}
+	d72 := roundtrip(sd, mut pool)!
+	if d72 is protocol.ServerboundDiagnosticsPacket {
+		assert d72.avg_fps == 60.0
+		assert d72.memory_category_values.len == 1
+		assert d72.entity_diagnostics[0].entity == 'minecraft:zombie'
+		println('  -> ServerboundDiagnostics fps=${d72.avg_fps} mem=${d72.memory_category_values.len} OK')
+	}
+
 	println('All round-trip tests passed.')
 }
