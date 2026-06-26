@@ -356,6 +356,213 @@ pub fn new_packet_pool() PacketPool {
 	p.register(fn () Packet {
 		return &BookEditPacket{}
 	})
+	p.register(fn () Packet {
+		return &CommandRequestPacket{}
+	})
+	p.register(fn () Packet {
+		return &SetScorePacket{}
+	})
+	p.register(fn () Packet {
+		return &SetScoreboardIdentityPacket{}
+	})
+	p.register(fn () Packet {
+		return &ShowStoreOfferPacket{}
+	})
+	p.register(fn () Packet {
+		return &AgentAnimationPacket{}
+	})
+	p.register(fn () Packet {
+		return &ServerPlayerPostMovePositionPacket{}
+	})
+	p.register(fn () Packet {
+		return &UpdateClientInputLocksPacket{}
+	})
+	p.register(fn () Packet {
+		return &ClientboundControlSchemeSetPacket{}
+	})
+	p.register(fn () Packet {
+		return &UpdateAdventureSettingsPacket{}
+	})
+	p.register(fn () Packet {
+		return &MultiplayerSettingsPacket{}
+	})
+	p.register(fn () Packet {
+		return &SetPlayerInventoryOptionsPacket{}
+	})
+	p.register(fn () Packet {
+		return &EmoteListPacket{}
+	})
+	p.register(fn () Packet {
+		return &SetHudPacket{}
+	})
+	p.register(fn () Packet {
+		return &RequestAbilityPacket{}
+	})
+	p.register(fn () Packet {
+		return &CodeBuilderSourcePacket{}
+	})
+	p.register(fn () Packet {
+		return &GameTestRequestPacket{}
+	})
+	p.register(fn () Packet {
+		return &LessonProgressPacket{}
+	})
+	p.register(fn () Packet {
+		return &ServerStatsPacket{}
+	})
+	p.register(fn () Packet {
+		return &PartyChangedPacket{}
+	})
+	p.register(fn () Packet {
+		return &CommandBlockUpdatePacket{}
+	})
+	p.register(fn () Packet {
+		return &AddBehaviorTreePacket{}
+	})
+	p.register(fn () Packet {
+		return &RemoveVolumeEntityPacket{}
+	})
+	p.register(fn () Packet {
+		return &SyncActorPropertyPacket{}
+	})
+	p.register(fn () Packet {
+		return &ServerboundDataDrivenScreenClosedPacket{}
+	})
+	p.register(fn () Packet {
+		return &PartyDestinationCookieResponsePacket{}
+	})
+	p.register(fn () Packet {
+		return &SendPartyDestinationCookiePacket{}
+	})
+	p.register(fn () Packet {
+		return &PlayerVideoCapturePacket{}
+	})
+	p.register(fn () Packet {
+		return &UpdateClientOptionsPacket{}
+	})
+	p.register(fn () Packet {
+		return &PacketViolationWarningPacket{}
+	})
+	p.register(fn () Packet {
+		return &MovementEffectPacket{}
+	})
+	p.register(fn () Packet {
+		return &LegacyTelemetryEventPacket{}
+	})
+	p.register(fn () Packet {
+		return &CorrectPlayerMovePredictionPacket{}
+	})
+	p.register(fn () Packet {
+		return &ClientboundTextureShiftPacket{}
+	})
+	p.register(fn () Packet {
+		return &ChangeMobPropertyPacket{}
+	})
+	p.register(fn () Packet {
+		return &UpdateTradePacket{}
+	})
+	p.register(fn () Packet {
+		return &PlayerArmorDamagePacket{}
+	})
+	p.register(fn () Packet {
+		return &MapInfoRequestPacket{}
+	})
+	p.register(fn () Packet {
+		return &CameraPacket{}
+	})
+	p.register(fn () Packet {
+		return &PlayerLocationPacket{}
+	})
+	p.register(fn () Packet {
+		return &AgentActionEventPacket{}
+	})
+	p.register(fn () Packet {
+		return &CreatePhotoPacket{}
+	})
+	p.register(fn () Packet {
+		return &ClientCameraAimAssistPacket{}
+	})
+	p.register(fn () Packet {
+		return &AutomationClientConnectPacket{}
+	})
+	p.register(fn () Packet {
+		return &UnlockedRecipesPacket{}
+	})
+	p.register(fn () Packet {
+		return &EditorNetworkPacket{}
+	})
+	p.register(fn () Packet {
+		return &EduUriResourcePacket{}
+	})
+	p.register(fn () Packet {
+		return &FeatureRegistryPacket{}
+	})
+	p.register(fn () Packet {
+		return &ClientboundDataDrivenUIReloadPacket{}
+	})
+	p.register(fn () Packet {
+		return &ClientboundDataDrivenUICloseScreenPacket{}
+	})
+	p.register(fn () Packet {
+		return &ClientboundDataDrivenUIShowScreenPacket{}
+	})
+	p.register(fn () Packet {
+		return &ResourcePacksReadyForValidationPacket{}
+	})
+	p.register(fn () Packet {
+		return &ContainerRegistryCleanupPacket{}
+	})
+	p.register(fn () Packet {
+		return &PlayerUpdateEntityOverridesPacket{}
+	})
+	p.register(fn () Packet {
+		return &DebugInfoPacket{}
+	})
+	p.register(fn () Packet {
+		return &PositionTrackingDBClientRequestPacket{}
+	})
+	p.register(fn () Packet {
+		return &PositionTrackingDBServerBroadcastPacket{}
+	})
+	p.register(fn () Packet {
+		return &AddVolumeEntityPacket{}
+	})
+	p.register(fn () Packet {
+		return &MapCreateLockedCopyPacket{}
+	})
+	p.register(fn () Packet {
+		return &StructureTemplateDataResponsePacket{}
+	})
+	p.register(fn () Packet {
+		return &SubChunkRequestPacket{}
+	})
+	p.register(fn () Packet {
+		return &AvailableActorIdentifiersPacket{}
+	})
+	p.register(fn () Packet {
+		return &GameTestResultsPacket{}
+	})
+	p.register(fn () Packet {
+		return &LabTablePacket{}
+	})
+	p.register(fn () Packet {
+		return &ClientboundUpdateSoundDataPacket{}
+	})
+	p.register(fn () Packet {
+		return &PhotoTransferPacket{}
+	})
+	p.register(fn () Packet {
+		return &SubClientLoginPacket{}
+	})
+	p.register(fn () Packet {
+		return &CameraAimAssistPacket{}
+	})
+	p.register(fn () Packet {
+		return &ClientCacheMissResponsePacket{}
+	})
+	p.register(fn () Packet {
+		return &UpdateAbilitiesPacket{}
+	})
 	return p
 }
 

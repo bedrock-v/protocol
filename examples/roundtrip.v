@@ -500,5 +500,322 @@ fn main() {
 		println('  -> ClientCacheBlobStatus miss=${d25.miss_hashes.len} hit=${d25.hit_hashes.len} OK')
 	}
 
+	ss := &protocol.SetScorePacket{
+		type: protocol.set_score_type_change
+		entries: [
+			types.ScorePacketEntry{
+				scoreboard_id:   1
+				objective_name:  'kills'
+				score:           42
+				type:            types.score_entry_type_fake_player
+				custom_name:     'Bot'
+			},
+			types.ScorePacketEntry{
+				scoreboard_id:   2
+				objective_name:  'kills'
+				score:           7
+				type:            types.score_entry_type_player
+				actor_unique_id: 9001
+			},
+		]
+	}
+	d26 := roundtrip(ss, mut pool)!
+	if d26 is protocol.SetScorePacket {
+		assert d26.entries.len == 2
+		assert (d26.entries[0].custom_name) == 'Bot'
+		assert d26.entries[1].actor_unique_id == 9001
+		println('  -> SetScore entries=${d26.entries.len} (fake=${d26.entries[0].custom_name}, player=${d26.entries[1].actor_unique_id}) OK')
+	}
+
+	cr := &protocol.CommandRequestPacket{
+		command: '/say hi'
+		origin_data: types.CommandOriginData{
+			type:                   'player'
+			uuid:                   types.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+			request_id:             'req-1'
+			player_actor_unique_id: 5
+		}
+		is_internal: false
+		version:     '1'
+	}
+	d27 := roundtrip(cr, mut pool)!
+	if d27 is protocol.CommandRequestPacket {
+		assert d27.command == '/say hi'
+		assert d27.origin_data.request_id == 'req-1'
+		assert d27.origin_data.uuid.bytes[0] == 1
+		println('  -> CommandRequest cmd=${d27.command} origin=${d27.origin_data.type}/${d27.origin_data.request_id} OK')
+	}
+
+	el := &protocol.EmoteListPacket{
+		player_actor_runtime_id: 3
+		emote_ids: [
+			types.uuid_from_bytes([u8(16), 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]),
+		]
+	}
+	d28 := roundtrip(el, mut pool)!
+	if d28 is protocol.EmoteListPacket {
+		assert d28.emote_ids.len == 1
+		assert d28.emote_ids[0].bytes[0] == 16
+		println('  -> EmoteList runtime=${d28.player_actor_runtime_id} emotes=${d28.emote_ids.len} OK')
+	}
+
+	cbu := &protocol.CommandBlockUpdatePacket{
+		is_block:           true
+		block_position:     types.BlockPosition{1, 2, 3}
+		command_block_mode: 0
+		is_redstone_mode:   true
+		is_conditional:     false
+		command:            '/time set day'
+		last_output:        ''
+		name:               'clock'
+		filtered_name:      ''
+		should_track_output: true
+		tick_delay:         0
+		execute_on_first_tick: true
+	}
+	d29 := roundtrip(cbu, mut pool)!
+	if d29 is protocol.CommandBlockUpdatePacket {
+		assert d29.is_block == true
+		assert d29.command == '/time set day'
+		assert d29.name == 'clock'
+		println('  -> CommandBlockUpdate isBlock=${d29.is_block} cmd=${d29.command} OK')
+	}
+
+	uco := &protocol.UpdateClientOptionsPacket{
+		graphics_mode:           2
+		filter_profanity_change: none
+	}
+	d30 := roundtrip(uco, mut pool)!
+	if d30 is protocol.UpdateClientOptionsPacket {
+		assert (d30.graphics_mode or { -1 }) == 2
+		assert d30.filter_profanity_change == none
+		println('  -> UpdateClientOptions gfx=${d30.graphics_mode or { -1 }} filter=<none> OK')
+	}
+
+	sap := &protocol.SyncActorPropertyPacket{
+		nbt: nbt.RootTag{
+			name: ''
+			tag:  nbt.Tag(nbt.Compound{
+				values: {
+					'speed': nbt.Tag(f32(0.25))
+				}
+			})
+		}
+	}
+	d31 := roundtrip(sap, mut pool)!
+	if d31 is protocol.SyncActorPropertyPacket {
+		dc := d31.nbt.tag as nbt.Compound
+		assert (dc.get('speed') or { nbt.Tag(f32(0)) } as f32) == 0.25
+		println('  -> SyncActorProperty nbt.speed=${dc.get('speed') or { nbt.Tag(f32(0)) } as f32} OK')
+	}
+
+	pvw := &protocol.PacketViolationWarningPacket{
+		type:      1
+		severity:  2
+		packet_id: 5
+		message:   'bad packet'
+	}
+	d32 := roundtrip(pvw, mut pool)!
+	if d32 is protocol.PacketViolationWarningPacket {
+		assert d32.packet_id == 5
+		assert d32.message == 'bad packet'
+		println('  -> PacketViolationWarning pid=${d32.packet_id} msg=${d32.message} OK')
+	}
+
+	cmpp := &protocol.CorrectPlayerMovePredictionPacket{
+		prediction_type:          1
+		position:                 types.Vector3{1, 2, 3}
+		delta:                    types.Vector3{0.1, 0.2, 0.3}
+		vehicle_rotation:         types.Vector2{10, 20}
+		vehicle_angular_velocity: none
+		on_ground:                true
+		tick:                     42
+	}
+	d33 := roundtrip(cmpp, mut pool)!
+	if d33 is protocol.CorrectPlayerMovePredictionPacket {
+		assert d33.position.x == 1
+		assert d33.on_ground == true
+		assert d33.tick == 42
+		assert d33.vehicle_angular_velocity == none
+		println('  -> CorrectPlayerMovePrediction tick=${d33.tick} ground=${d33.on_ground} OK')
+	}
+
+	pad := &protocol.PlayerArmorDamagePacket{
+		pairs: [
+			protocol.ArmorSlotAndDamagePair{
+				slot:   1
+				damage: 250
+			},
+		]
+	}
+	d34 := roundtrip(pad, mut pool)!
+	if d34 is protocol.PlayerArmorDamagePacket {
+		assert d34.pairs.len == 1
+		assert d34.pairs[0].damage == 250
+		println('  -> PlayerArmorDamage pairs=${d34.pairs.len} damage=${d34.pairs[0].damage} OK')
+	}
+
+	plp := &protocol.PlayerLocationPacket{
+		type:            protocol.player_location_type_coordinates
+		actor_unique_id: 99
+		position:        types.Vector3{5, 6, 7}
+	}
+	d35 := roundtrip(plp, mut pool)!
+	if d35 is protocol.PlayerLocationPacket {
+		assert d35.actor_unique_id == 99
+		assert d35.position.z == 7
+		println('  -> PlayerLocation id=${d35.actor_unique_id} z=${d35.position.z} OK')
+	}
+
+	ur := &protocol.UnlockedRecipesPacket{
+		type:    2
+		recipes: ['minecraft:stick', 'minecraft:torch']
+	}
+	d36 := roundtrip(ur, mut pool)!
+	if d36 is protocol.UnlockedRecipesPacket {
+		assert d36.type == 2
+		assert d36.recipes.len == 2
+		assert d36.recipes[1] == 'minecraft:torch'
+		println('  -> UnlockedRecipes type=${d36.type} recipes=${d36.recipes.len} OK')
+	}
+
+	fr := &protocol.FeatureRegistryPacket{
+		entries: [
+			protocol.FeatureRegistryEntry{
+				name: 'overworld'
+				json: '{}'
+			},
+		]
+	}
+	d37 := roundtrip(fr, mut pool)!
+	if d37 is protocol.FeatureRegistryPacket {
+		assert d37.entries.len == 1
+		assert d37.entries[0].name == 'overworld'
+		println('  -> FeatureRegistry entries=${d37.entries.len} name=${d37.entries[0].name} OK')
+	}
+
+	cds := &protocol.ClientboundDataDrivenUIShowScreenPacket{
+		screen_id:        'shop'
+		form_id:          7
+		data_instance_id: none
+	}
+	d38 := roundtrip(cds, mut pool)!
+	if d38 is protocol.ClientboundDataDrivenUIShowScreenPacket {
+		assert d38.screen_id == 'shop'
+		assert d38.form_id == 7
+		assert d38.data_instance_id == none
+		println('  -> ClientboundDataDrivenUIShowScreen screen=${d38.screen_id} form=${d38.form_id} OK')
+	}
+
+	puo := &protocol.PlayerUpdateEntityOverridesPacket{
+		actor_runtime_id:   55
+		property_index:     3
+		update_type:        protocol.override_update_type_set_float
+		float_override_value: 1.5
+	}
+	d39 := roundtrip(puo, mut pool)!
+	if d39 is protocol.PlayerUpdateEntityOverridesPacket {
+		assert d39.update_type == protocol.override_update_type_set_float
+		assert d39.float_override_value == 1.5
+		println('  -> PlayerUpdateEntityOverrides type=${d39.update_type} f=${d39.float_override_value} OK')
+	}
+
+	ptb := &protocol.PositionTrackingDBClientRequestPacket{
+		action:      1
+		tracking_id: 42
+	}
+	d40 := roundtrip(ptb, mut pool)!
+	if d40 is protocol.PositionTrackingDBClientRequestPacket {
+		assert d40.action == 1
+		assert d40.tracking_id == 42
+		println('  -> PositionTrackingDBClientRequest action=${d40.action} id=${d40.tracking_id} OK')
+	}
+
+	mlc := &protocol.MapCreateLockedCopyPacket{
+		original_map_id: 100
+		new_map_id:      200
+	}
+	d41 := roundtrip(mlc, mut pool)!
+	if d41 is protocol.MapCreateLockedCopyPacket {
+		assert d41.original_map_id == 100
+		assert d41.new_map_id == 200
+		println('  -> MapCreateLockedCopy orig=${d41.original_map_id} new=${d41.new_map_id} OK')
+	}
+
+	gtr := &protocol.GameTestResultsPacket{
+		success:   true
+		error:     ''
+		test_name: 'spawn_test'
+	}
+	d42 := roundtrip(gtr, mut pool)!
+	if d42 is protocol.GameTestResultsPacket {
+		assert d42.success == true
+		assert d42.test_name == 'spawn_test'
+		println('  -> GameTestResults success=${d42.success} name=${d42.test_name} OK')
+	}
+
+	scr := &protocol.SubChunkRequestPacket{
+		dimension: 0
+		entries:   [
+			protocol.SubChunkPositionOffset{
+				x_offset: 1
+				y_offset: -2
+				z_offset: 3
+			},
+		]
+		base_x: 16
+		base_y: 0
+		base_z: -16
+	}
+	d43 := roundtrip(scr, mut pool)!
+	if d43 is protocol.SubChunkRequestPacket {
+		assert d43.entries.len == 1
+		assert d43.entries[0].y_offset == -2
+		assert d43.base_z == -16
+		println('  -> SubChunkRequest entries=${d43.entries.len} baseZ=${d43.base_z} OK')
+	}
+
+	ccmr := &protocol.ClientCacheMissResponsePacket{
+		blobs: [
+			protocol.ChunkCacheBlob{
+				hash:    123456
+				payload: 'blobdata'
+			},
+		]
+	}
+	d44 := roundtrip(ccmr, mut pool)!
+	if d44 is protocol.ClientCacheMissResponsePacket {
+		assert d44.blobs.len == 1
+		assert d44.blobs[0].hash == 123456
+		assert d44.blobs[0].payload == 'blobdata'
+		println('  -> ClientCacheMissResponse blobs=${d44.blobs.len} hash=${d44.blobs[0].hash} OK')
+	}
+
+	ua := &protocol.UpdateAbilitiesPacket{
+		data: protocol.AbilitiesData{
+			target_actor_unique_id: 77
+			player_permission:      2
+			command_permission:     1
+			layers:                 [
+				protocol.AbilitiesLayer{
+					layer_id:           1
+					set_abilities:      0xff
+					set_ability_values: 0x0f
+					fly_speed:          0.05
+					vertical_fly_speed: 0.0
+					walk_speed:         0.1
+				},
+			]
+		}
+	}
+	d45 := roundtrip(ua, mut pool)!
+	if d45 is protocol.UpdateAbilitiesPacket {
+		assert d45.data.target_actor_unique_id == 77
+		assert d45.data.layers.len == 1
+		assert d45.data.layers[0].set_abilities == 0xff
+		assert d45.data.layers[0].walk_speed == 0.1
+		println('  -> UpdateAbilities perm=${d45.data.player_permission} layers=${d45.data.layers.len} OK')
+	}
+
 	println('All round-trip tests passed.')
 }
