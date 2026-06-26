@@ -563,6 +563,48 @@ pub fn new_packet_pool() PacketPool {
 	p.register(fn () Packet {
 		return &UpdateAbilitiesPacket{}
 	})
+	p.register(fn () Packet {
+		return &JigsawStructureDataPacket{}
+	})
+	p.register(fn () Packet {
+		return &DimensionDataPacket{}
+	})
+	p.register(fn () Packet {
+		return &UpdateSubChunkBlocksPacket{}
+	})
+	p.register(fn () Packet {
+		return &CommandOutputPacket{}
+	})
+	p.register(fn () Packet {
+		return &LevelChunkPacket{}
+	})
+	p.register(fn () Packet {
+		return &TrimDataPacket{}
+	})
+	p.register(fn () Packet {
+		return &ResourcePackStackPacket{}
+	})
+	p.register(fn () Packet {
+		return &ResourcePacksInfoPacket{}
+	})
+	p.register(fn () Packet {
+		return &StructureBlockUpdatePacket{}
+	})
+	p.register(fn () Packet {
+		return &StructureTemplateDataRequestPacket{}
+	})
+	p.register(fn () Packet {
+		return &SubChunkPacket{}
+	})
+	p.register(fn () Packet {
+		return &PlayerEnchantOptionsPacket{}
+	})
+	p.register(fn () Packet {
+		return &LocatorBarPacket{}
+	})
+	p.register(fn () Packet {
+		return &GraphicsOverrideParameterPacket{}
+	})
 	return p
 }
 

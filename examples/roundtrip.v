@@ -817,5 +817,335 @@ fn main() {
 		println('  -> UpdateAbilities perm=${d45.data.player_permission} layers=${d45.data.layers.len} OK')
 	}
 
+	dd := &protocol.DimensionDataPacket{
+		definitions: [
+			protocol.DimensionDefinition{
+				name:           'minecraft:overworld'
+				max_height:     320
+				min_height:     -64
+				generator:      1
+				dimension_type: 0
+			},
+		]
+	}
+	d46 := roundtrip(dd, mut pool)!
+	if d46 is protocol.DimensionDataPacket {
+		assert d46.definitions.len == 1
+		assert d46.definitions[0].min_height == -64
+		println('  -> DimensionData defs=${d46.definitions.len} minH=${d46.definitions[0].min_height} OK')
+	}
+
+	usb := &protocol.UpdateSubChunkBlocksPacket{
+		base_block_position: types.BlockPosition{16, 0, 16}
+		layer0_updates:      [
+			protocol.UpdateSubChunkBlocksEntry{
+				block_position:         types.BlockPosition{1, 2, 3}
+				block_runtime_id:       55
+				update_flags:           2
+				synced_update_actor_id: 999
+				synced_update_type:     1
+			},
+		]
+		layer1_updates: []
+	}
+	d47 := roundtrip(usb, mut pool)!
+	if d47 is protocol.UpdateSubChunkBlocksPacket {
+		assert d47.layer0_updates.len == 1
+		assert d47.layer0_updates[0].block_runtime_id == 55
+		assert d47.layer1_updates.len == 0
+		println('  -> UpdateSubChunkBlocks l0=${d47.layer0_updates.len} rid=${d47.layer0_updates[0].block_runtime_id} OK')
+	}
+
+	co := &protocol.CommandOutputPacket{
+		origin_data: types.CommandOriginData{
+			type:                   'player'
+			uuid:                   types.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+			request_id:             'req-9'
+			player_actor_unique_id: 7
+		}
+		output_type:   'all'
+		success_count: 3
+		messages:      [
+			protocol.CommandOutputMessage{
+				message_id:  'commands.test'
+				is_internal: false
+				parameters:  ['a', 'b']
+			},
+		]
+		data: none
+	}
+	d48 := roundtrip(co, mut pool)!
+	if d48 is protocol.CommandOutputPacket {
+		assert d48.success_count == 3
+		assert d48.messages.len == 1
+		assert d48.messages[0].parameters.len == 2
+		assert d48.data == none
+		println('  -> CommandOutput success=${d48.success_count} msgs=${d48.messages.len} OK')
+	}
+
+	lc := &protocol.LevelChunkPacket{
+		chunk_position:  types.ChunkPosition{3, -4}
+		dimension_id:    0
+		request_type:    protocol.level_chunk_request_truncated
+		sub_chunk_count: 5
+		cache_enabled:   true
+		used_blob_hashes: [u64(111), 222]
+		extra_payload:   'chunkbytes'
+	}
+	d49 := roundtrip(lc, mut pool)!
+	if d49 is protocol.LevelChunkPacket {
+		assert d49.request_type == protocol.level_chunk_request_truncated
+		assert d49.sub_chunk_count == 5
+		assert d49.used_blob_hashes.len == 2
+		assert d49.extra_payload == 'chunkbytes'
+		println('  -> LevelChunk reqType=${d49.request_type} sub=${d49.sub_chunk_count} hashes=${d49.used_blob_hashes.len} OK')
+	}
+
+	js := &protocol.JigsawStructureDataPacket{
+		nbt: nbt.RootTag{
+			name: ''
+			tag:  nbt.Tag(nbt.Compound{
+				values: {
+					'count': nbt.Tag(i32(3))
+				}
+			})
+		}
+	}
+	d50 := roundtrip(js, mut pool)!
+	if d50 is protocol.JigsawStructureDataPacket {
+		jc := d50.nbt.tag as nbt.Compound
+		cnt := (jc.get('count') or { nbt.Tag(i32(0)) }) as i32
+		assert cnt == 3
+		println('  -> JigsawStructureData nbt.count=${cnt} OK')
+	}
+
+	td := &protocol.TrimDataPacket{
+		patterns: [
+			protocol.TrimPattern{
+				item_id:    'minecraft:coast_trim'
+				pattern_id: 'coast'
+			},
+		]
+		materials: [
+			protocol.TrimMaterial{
+				material_id: 'iron'
+				color:       '#ffffff'
+				item_id:     'minecraft:iron_ingot'
+			},
+		]
+	}
+	d51 := roundtrip(td, mut pool)!
+	if d51 is protocol.TrimDataPacket {
+		assert d51.patterns.len == 1
+		assert d51.materials.len == 1
+		assert d51.materials[0].item_id == 'minecraft:iron_ingot'
+		println('  -> TrimData patterns=${d51.patterns.len} materials=${d51.materials.len} OK')
+	}
+
+	rps := &protocol.ResourcePackStackPacket{
+		must_accept:         true
+		resource_pack_stack: [
+			protocol.ResourcePackStackEntry{
+				pack_id:       'pack-1'
+				version:       '1.0.0'
+				sub_pack_name: ''
+			},
+		]
+		base_game_version: '1.21.0'
+		experiments:       types.Experiments{
+			entries: [
+				types.ExperimentEntry{
+					name:    'gametest'
+					enabled: true
+				},
+			]
+			has_previously_used: false
+		}
+		use_vanilla_editor_packs: false
+	}
+	d52 := roundtrip(rps, mut pool)!
+	if d52 is protocol.ResourcePackStackPacket {
+		assert d52.must_accept == true
+		assert d52.resource_pack_stack.len == 1
+		assert d52.base_game_version == '1.21.0'
+		assert d52.experiments.entries.len == 1
+		assert d52.experiments.entries[0].name == 'gametest'
+		println('  -> ResourcePackStack packs=${d52.resource_pack_stack.len} exp=${d52.experiments.entries.len} OK')
+	}
+
+	rpi := &protocol.ResourcePacksInfoPacket{
+		must_accept:            false
+		has_addons:             true
+		has_scripts:            false
+		world_template_id:      types.uuid_from_bytes([u8(9), 8, 7, 6, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6])
+		world_template_version: '2.0'
+		entries:                [
+			protocol.ResourcePackInfoEntry{
+				uuid:           types.uuid_from_bytes([u8(1), 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4])
+				version:        '1.0'
+				size_bytes:     123456789
+				encryption_key: ''
+				sub_pack_name:  ''
+				content_id:     'cid'
+				has_scripts:    false
+				is_addon_pack:  true
+				rtx_capable:    false
+				cdn_url:        ''
+			},
+		]
+	}
+	d53 := roundtrip(rpi, mut pool)!
+	if d53 is protocol.ResourcePacksInfoPacket {
+		assert d53.has_addons == true
+		assert d53.entries.len == 1
+		assert d53.entries[0].size_bytes == 123456789
+		assert d53.entries[0].content_id == 'cid'
+		println('  -> ResourcePacksInfo entries=${d53.entries.len} size=${d53.entries[0].size_bytes} OK')
+	}
+
+	sbu := &protocol.StructureBlockUpdatePacket{
+		block_position:        types.BlockPosition{1, 2, 3}
+		structure_editor_data: types.StructureEditorData{
+			structure_name:           'house'
+			filtered_structure_name:  'house'
+			structure_data_field:     ''
+			include_players:          true
+			show_bounding_box:        false
+			structure_block_type:     2
+			structure_settings:       types.StructureSettings{
+				palette_name:              'default'
+				dimensions:                types.BlockPosition{5, 5, 5}
+				offset:                    types.BlockPosition{0, 1, 0}
+				last_touched_by_player_id: 42
+				rotation:                  1
+				mirror:                    0
+				animation_mode:            0
+				animation_seconds:         0.0
+				integrity_value:           1.0
+				integrity_seed:            7
+				pivot:                     types.Vector3{0, 0, 0}
+			}
+			structure_redstone_save_mode: 1
+		}
+		is_powered:  true
+		waterlogged: false
+	}
+	d54 := roundtrip(sbu, mut pool)!
+	if d54 is protocol.StructureBlockUpdatePacket {
+		assert d54.is_powered == true
+		assert d54.structure_editor_data.structure_name == 'house'
+		assert d54.structure_editor_data.structure_settings.integrity_value == 1.0
+		assert d54.structure_editor_data.structure_settings.last_touched_by_player_id == 42
+		println('  -> StructureBlockUpdate name=${d54.structure_editor_data.structure_name} powered=${d54.is_powered} OK')
+	}
+
+	sc := &protocol.SubChunkPacket{
+		cache_enabled: false
+		dimension:     0
+		base_x:        1
+		base_y:        0
+		base_z:        -1
+		entries:       [
+			protocol.SubChunkEntry{
+				offset:                 protocol.SubChunkPositionOffset{0, 1, 0}
+				request_result:         1
+				terrain_data:           'blocks'
+				height_map_type:        protocol.subchunk_heightmap_all_too_high
+				height_map:             []
+				render_height_map_type: protocol.subchunk_heightmap_no_data
+				render_height_map:      []
+			},
+		]
+	}
+	d55 := roundtrip(sc, mut pool)!
+	if d55 is protocol.SubChunkPacket {
+		assert d55.entries.len == 1
+		assert d55.entries[0].terrain_data == 'blocks'
+		assert d55.entries[0].height_map_type == protocol.subchunk_heightmap_all_too_high
+		assert d55.base_z == -1
+		println('  -> SubChunk entries=${d55.entries.len} hmType=${d55.entries[0].height_map_type} OK')
+	}
+
+	peo := &protocol.PlayerEnchantOptionsPacket{
+		options: [
+			protocol.EnchantOption{
+				cost:           5
+				slot_flags:     3
+				equip_enchants: [protocol.Enchant{
+					id:    9
+					level: 2
+				}]
+				held_enchants:  []
+				self_enchants:  []
+				name:           'Sharpness'
+				option_id:      77
+			},
+		]
+	}
+	d56 := roundtrip(peo, mut pool)!
+	if d56 is protocol.PlayerEnchantOptionsPacket {
+		assert d56.options.len == 1
+		assert d56.options[0].cost == 5
+		assert d56.options[0].equip_enchants[0].id == 9
+		assert d56.options[0].option_id == 77
+		println('  -> PlayerEnchantOptions opts=${d56.options.len} cost=${d56.options[0].cost} OK')
+	}
+
+	lb := &protocol.LocatorBarPacket{
+		waypoints: [
+			protocol.LocatorBarWaypointPayload{
+				group:    types.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+				waypoint: protocol.LocatorBarWaypoint{
+					update_flag:     7
+					visible:         true
+					world_position:  protocol.WorldPosition{
+						position:  types.Vector3{1, 2, 3}
+						dimension: 0
+					}
+					texture_path:    none
+					icon_size:       none
+					color:           0xff00ff00
+					client_position_authority: none
+					actor_unique_id: 55
+				}
+				action: 1
+			},
+		]
+	}
+	d57 := roundtrip(lb, mut pool)!
+	if d57 is protocol.LocatorBarPacket {
+		assert d57.waypoints.len == 1
+		wp := d57.waypoints[0].waypoint
+		assert (wp.visible or { false }) == true
+		assert (wp.color or { 0 }) == 0xff00ff00
+		assert wp.texture_path == none
+		assert (wp.actor_unique_id or { 0 }) == 55
+		println('  -> LocatorBar waypoints=${d57.waypoints.len} flag=${wp.update_flag} OK')
+	}
+
+	gop := &protocol.GraphicsOverrideParameterPacket{
+		values: [
+			protocol.ParameterKeyframeValue{
+				time:  0.5
+				value: types.Vector3{1, 0, 0}
+			},
+		]
+		unknown_float:     none
+		unknown_vector3:   types.Vector3{9, 8, 7}
+		biome_identifier:  'minecraft:plains'
+		player_identifier: none
+		parameter_type:    2
+		reset:             true
+	}
+	d58 := roundtrip(gop, mut pool)!
+	if d58 is protocol.GraphicsOverrideParameterPacket {
+		assert d58.values.len == 1
+		assert d58.unknown_float == none
+		assert (d58.unknown_vector3 or { types.Vector3{} }).x == 9
+		assert d58.biome_identifier == 'minecraft:plains'
+		assert d58.reset == true
+		println('  -> GraphicsOverrideParameter values=${d58.values.len} biome=${d58.biome_identifier} OK')
+	}
+
 	println('All round-trip tests passed.')
 }
