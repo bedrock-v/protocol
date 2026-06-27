@@ -695,6 +695,9 @@ pub fn new_packet_pool() PacketPool {
 	p.register(fn () Packet {
 		return &StartGamePacket{}
 	})
+	p.register(fn () Packet {
+		return &AvailableCommandsPacket{}
+	})
 	return p
 }
 

@@ -2016,5 +2016,50 @@ fn main() {
 		println('  -> StartGame world=${d88.world_name} blocks=${d88.blocks.len} OK')
 	}
 
+	ac := &protocol.AvailableCommandsPacket{
+		enum_values: ['true', 'false']
+		suffixes:    ['L']
+		enums: [protocol.CommandEnumData{
+			name:          'bool'
+			value_indices: [u32(0), 1]
+		}]
+		commands: [protocol.CommandData{
+			name:             'tp'
+			description:      'teleport'
+			flags:            0
+			permission:       'any'
+			alias_enum_index: -1
+			overloads: [protocol.CommandOverload{
+				chaining:   false
+				parameters: [protocol.CommandParameter{
+					name:      'target'
+					type_info: 0x100000
+					optional:  false
+					flags:     0
+				}]
+			}]
+		}]
+		soft_enums: [protocol.CommandSoftEnum{
+			name:   'players'
+			values: ['Steve', 'Alex']
+		}]
+		constraints: [protocol.CommandEnumConstraint{
+			affected_value_index: 0
+			enum_index:           0
+			constraints:          [u8(1)]
+		}]
+	}
+	d89 := roundtrip(ac, mut pool)!
+	if d89 is protocol.AvailableCommandsPacket {
+		assert d89.enum_values == ['true', 'false']
+		assert d89.enums[0].name == 'bool'
+		assert d89.commands[0].name == 'tp'
+		assert d89.commands[0].overloads[0].parameters[0].type_info == 0x100000
+		assert d89.commands[0].alias_enum_index == -1
+		assert d89.soft_enums[0].values[1] == 'Alex'
+		assert d89.constraints[0].constraints == [u8(1)]
+		println('  -> AvailableCommands cmds=${d89.commands.len} enums=${d89.enums.len} softEnums=${d89.soft_enums.len} OK')
+	}
+
 	println('All round-trip tests passed.')
 }
