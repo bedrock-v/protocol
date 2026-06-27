@@ -1620,5 +1620,66 @@ fn main() {
 		println('  -> PrimitiveShapes net=${d78.shapes[0].network_id} text=${d78.shapes[0].text} OK')
 	}
 
+	caap := &protocol.CameraAimAssistPresetsPacket{
+		categories: [protocol.CameraAimAssistCategory{
+			name:       'default'
+			priorities: protocol.CameraAimAssistPriorities{
+				entities:           [protocol.CameraAimAssistPriority{
+					identifier: 'minecraft:pig'
+					priority:   10
+				}]
+				has_entity_default: true
+				entity_default:     1
+			}
+		}]
+		presets: [protocol.CameraAimAssistPreset{
+			identifier:        'preset1'
+			block_exclusions:  ['minecraft:air']
+			item_settings:     [protocol.CameraAimAssistItemSettings{
+				item:     'minecraft:sword'
+				category: 'default'
+			}]
+			has_hand_settings: true
+			hand_settings:     'default'
+		}]
+		operation: 1
+	}
+	d79 := roundtrip(caap, mut pool)!
+	if d79 is protocol.CameraAimAssistPresetsPacket {
+		assert d79.categories[0].name == 'default'
+		assert d79.categories[0].priorities.entities[0].priority == 10
+		assert d79.presets[0].item_settings[0].item == 'minecraft:sword'
+		assert d79.operation == 1
+		println('  -> CameraAimAssistPresets cats=${d79.categories.len} presets=${d79.presets.len} OK')
+	}
+
+	cpp := &protocol.CameraPresetsPacket{
+		presets: [protocol.CameraPreset{
+			name:           'follow'
+			parent:         'base'
+			has_pos_x:      true
+			pos_x:          1.5
+			has_radius:     true
+			radius:         8.0
+			has_aim_assist: true
+			aim_assist:     protocol.CameraPresetAimAssist{
+				has_preset:   true
+				preset:       'preset1'
+				has_distance: true
+				distance:     12.0
+			}
+			has_control_scheme: true
+			control_scheme:     2
+		}]
+	}
+	d80 := roundtrip(cpp, mut pool)!
+	if d80 is protocol.CameraPresetsPacket {
+		assert d80.presets[0].name == 'follow'
+		assert d80.presets[0].pos_x == 1.5
+		assert d80.presets[0].aim_assist.preset == 'preset1'
+		assert d80.presets[0].control_scheme == 2
+		println('  -> CameraPresets presets=${d80.presets.len} name=${d80.presets[0].name} OK')
+	}
+
 	println('All round-trip tests passed.')
 }
