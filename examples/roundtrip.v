@@ -1816,5 +1816,81 @@ fn main() {
 		println('  -> ItemStackResponse resps=${d84.responses.len} name=${d84.responses[0].container_info[0].slot_info[0].custom_name} OK')
 	}
 
+	invtx := &protocol.InventoryTransactionPacket{
+		legacy_request_id: 0
+		transaction_type:  protocol.inventory_transaction_type_use_item
+		actions: [protocol.InventoryAction{
+			source_type:    protocol.inventory_action_source_container
+			has_window_id:  true
+			window_id:      0
+			inventory_slot: 5
+			old_item:       types.ItemStackWrapper{
+				item_stack: types.ItemStack{
+					id: 0
+				}
+			}
+			new_item: types.ItemStackWrapper{
+				item_stack: types.ItemStack{
+					id: 0
+				}
+			}
+		}]
+		use_item: protocol.UseItemTransactionData{
+			action_type:      0
+			trigger_type:     1
+			block_position:   types.BlockPosition{1, 2, 3}
+			block_face:       4
+			hotbar_slot:      2
+			held_item:        types.ItemStackWrapper{
+				item_stack: types.ItemStack{
+					id: 0
+				}
+			}
+			position:         types.Vector3{1.0, 2.0, 3.0}
+			clicked_position: types.Vector3{0.5, 0.5, 0.5}
+			block_runtime_id: 77
+		}
+	}
+	d85 := roundtrip(invtx, mut pool)!
+	if d85 is protocol.InventoryTransactionPacket {
+		assert d85.transaction_type == protocol.inventory_transaction_type_use_item
+		assert d85.actions[0].inventory_slot == 5
+		assert d85.use_item.block_runtime_id == 77
+		assert d85.use_item.block_position.x == 1
+		println('  -> InventoryTransaction type=${d85.transaction_type} actions=${d85.actions.len} brid=${d85.use_item.block_runtime_id} OK')
+	}
+
+	pai := &protocol.PlayerAuthInputPacket{
+		pitch:             10.0
+		yaw:               20.0
+		position:          types.Vector3{1.0, 2.0, 3.0}
+		move_vector:       types.Vector2{0.5, -0.5}
+		head_yaw:          15.0
+		input_data:        [u8(0x80), 0x80, 0x80, 0x80, 0x80, 0x01]
+		input_mode:        1
+		play_mode:         0
+		interaction_model: 1
+		tick:              12345
+		delta:             types.Vector3{0.1, 0.0, -0.1}
+		block_actions: [protocol.PlayerBlockAction{
+			action:         protocol.player_action_start_break
+			block_position: types.BlockPosition{4, 5, 6}
+			face:           2
+		}]
+		analogue_move_vector: types.Vector2{0.0, 1.0}
+		camera_orientation:   types.Vector3{0.0, 0.0, 1.0}
+		raw_move_vector:      types.Vector2{0.5, -0.5}
+	}
+	d86 := roundtrip(pai, mut pool)!
+	if d86 is protocol.PlayerAuthInputPacket {
+		assert d86.tick == 12345
+		assert d86.position.x == 1.0
+		assert d86.block_actions.len == 1
+		assert d86.block_actions[0].block_position.x == 4
+		assert d86.block_actions[0].face == 2
+		assert d86.camera_orientation.z == 1.0
+		println('  -> PlayerAuthInput tick=${d86.tick} blockActions=${d86.block_actions.len} OK')
+	}
+
 	println('All round-trip tests passed.')
 }

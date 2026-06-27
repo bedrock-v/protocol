@@ -683,6 +683,12 @@ pub fn new_packet_pool() PacketPool {
 	p.register(fn () Packet {
 		return &ItemStackResponsePacket{}
 	})
+	p.register(fn () Packet {
+		return &InventoryTransactionPacket{}
+	})
+	p.register(fn () Packet {
+		return &PlayerAuthInputPacket{}
+	})
 	return p
 }
 
