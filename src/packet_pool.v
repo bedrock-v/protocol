@@ -647,6 +647,24 @@ pub fn new_packet_pool() PacketPool {
 	p.register(fn () Packet {
 		return &ServerboundDiagnosticsPacket{}
 	})
+	p.register(fn () Packet {
+		return &ServerboundDataStorePacket{}
+	})
+	p.register(fn () Packet {
+		return &SyncWorldClocksPacket{}
+	})
+	p.register(fn () Packet {
+		return &ClientboundAttributeLayerSyncPacket{}
+	})
+	p.register(fn () Packet {
+		return &ClientboundDataStorePacket{}
+	})
+	p.register(fn () Packet {
+		return &VoxelShapesPacket{}
+	})
+	p.register(fn () Packet {
+		return &PrimitiveShapesPacket{}
+	})
 	return p
 }
 

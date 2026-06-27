@@ -1472,5 +1472,153 @@ fn main() {
 		println('  -> ServerboundDiagnostics fps=${d72.avg_fps} mem=${d72.memory_category_values.len} OK')
 	}
 
+	sds := &protocol.ServerboundDataStorePacket{
+		update: protocol.DataStoreUpdate{
+			name:              'inv'
+			property:          'slot'
+			path:              'a.b'
+			value_type:        protocol.data_store_value_string
+			string_value:      'gold'
+			update_count:      3
+			path_update_count: 1
+		}
+	}
+	d73 := roundtrip(sds, mut pool)!
+	if d73 is protocol.ServerboundDataStorePacket {
+		assert d73.update.name == 'inv'
+		assert d73.update.string_value == 'gold'
+		assert d73.update.update_count == 3
+		println('  -> ServerboundDataStore name=${d73.update.name} val=${d73.update.string_value} OK')
+	}
+
+	swc := &protocol.SyncWorldClocksPacket{
+		payload_type: protocol.clock_payload_type_add_time_marker
+		add_clock_id: 7
+		add_time_markers: [protocol.TimeMarkerData{
+			id:         11
+			name:       'dawn'
+			time:       100
+			has_period: true
+			period:     20
+		}]
+	}
+	d74 := roundtrip(swc, mut pool)!
+	if d74 is protocol.SyncWorldClocksPacket {
+		assert d74.add_clock_id == 7
+		assert d74.add_time_markers[0].name == 'dawn'
+		assert d74.add_time_markers[0].period == 20
+		println('  -> SyncWorldClocks clock=${d74.add_clock_id} marker=${d74.add_time_markers[0].name} OK')
+	}
+
+	cals := &protocol.ClientboundAttributeLayerSyncPacket{
+		payload_type: protocol.attribute_layer_payload_update_environment
+		layer_name:   'overworld'
+		dimension_id: 0
+		environment_attributes: [protocol.EnvironmentAttributeData{
+			attribute_name:           'fog'
+			attribute:                protocol.AttributeData{
+				type_id:     protocol.attribute_data_type_float
+				float_value: 1.5
+			}
+			current_transition_ticks: 5
+			total_transition_ticks:   10
+			ease_type:                'Linear'
+			local_transition_ticks:   2
+			noise_transition:         true
+		}]
+	}
+	d75 := roundtrip(cals, mut pool)!
+	if d75 is protocol.ClientboundAttributeLayerSyncPacket {
+		assert d75.layer_name == 'overworld'
+		assert d75.environment_attributes[0].attribute_name == 'fog'
+		assert d75.environment_attributes[0].attribute.float_value == 1.5
+		assert d75.environment_attributes[0].ease_type == 'Linear'
+		println('  -> ClientboundAttributeLayerSync layer=${d75.layer_name} attr=${d75.environment_attributes[0].attribute_name} OK')
+	}
+
+	cdsp := &protocol.ClientboundDataStorePacket{
+		updates: [
+			protocol.DataStoreChangeEntry{
+				change_type:         protocol.data_store_change_change
+				change_name:         'inv'
+				change_property:     'p'
+				change_update_count: 4
+				change_new_value:    protocol.DataStorePropertyValue{
+					type_id:   protocol.data_store_property_map
+					map_value: [protocol.DataStoreMapEntry{
+						key:   'k'
+						value: protocol.DataStorePropertyValue{
+							type_id:      protocol.data_store_property_string
+							string_value: 'v'
+						}
+					}]
+				}
+			},
+			protocol.DataStoreChangeEntry{
+				change_type:  protocol.data_store_change_removal
+				removal_name: 'old'
+			},
+		]
+	}
+	d76 := roundtrip(cds, mut pool)!
+	if d76 is protocol.ClientboundDataStorePacket {
+		assert d76.updates.len == 2
+		assert d76.updates[0].change_new_value.map_value[0].value.string_value == 'v'
+		assert d76.updates[1].removal_name == 'old'
+		println('  -> ClientboundDataStore entries=${d76.updates.len} mapval=${d76.updates[0].change_new_value.map_value[0].value.string_value} OK')
+	}
+
+	vs := &protocol.VoxelShapesPacket{
+		shapes: [protocol.VoxelShape{
+			cells:         protocol.VoxelCells{
+				x_size:  2
+				y_size:  2
+				z_size:  2
+				storage: [u8(1), 0, 1, 0]
+			}
+			x_coordinates: [f32(0.0), 1.0]
+			y_coordinates: [f32(0.0), 1.0]
+			z_coordinates: [f32(0.0), 1.0]
+		}]
+		name_map: [protocol.VoxelShapeNameEntry{
+			name: 'stone'
+			id:   5
+		}]
+		custom_shape_count: 1
+	}
+	d77 := roundtrip(vs, mut pool)!
+	if d77 is protocol.VoxelShapesPacket {
+		assert d77.shapes[0].cells.storage == [u8(1), 0, 1, 0]
+		assert d77.name_map[0].name == 'stone'
+		assert d77.custom_shape_count == 1
+		println('  -> VoxelShapes shapes=${d77.shapes.len} name=${d77.name_map[0].name} OK')
+	}
+
+	pshp := &protocol.PrimitiveShapesPacket{
+		shapes: [protocol.PacketShapeData{
+			network_id:   99
+			has_location: true
+			location:     types.Vector3{
+				x: 1.0
+				y: 2.0
+				z: 3.0
+			}
+			has_color:    true
+			color:        0xff00ff00
+			payload_type: protocol.primitive_shape_payload_text
+			text:         'hello'
+			use_rotation: true
+			depth_test:   true
+		}]
+	}
+	d78 := roundtrip(pshp, mut pool)!
+	if d78 is protocol.PrimitiveShapesPacket {
+		assert d78.shapes[0].network_id == 99
+		assert d78.shapes[0].location.x == 1.0
+		assert d78.shapes[0].text == 'hello'
+		assert d78.shapes[0].color == 0xff00ff00
+		println('  -> PrimitiveShapes net=${d78.shapes[0].network_id} text=${d78.shapes[0].text} OK')
+	}
+
 	println('All round-trip tests passed.')
 }
