@@ -692,6 +692,9 @@ pub fn new_packet_pool() PacketPool {
 	p.register(fn () Packet {
 		return &CraftingDataPacket{}
 	})
+	p.register(fn () Packet {
+		return &StartGamePacket{}
+	})
 	return p
 }
 

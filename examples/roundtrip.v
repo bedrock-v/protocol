@@ -1966,5 +1966,55 @@ fn main() {
 		println('  -> CraftingData recipes=${d87.recipes.len} potions=${d87.potion_recipes.len} OK')
 	}
 
+	mut sg_props := nbt.new_compound()
+	sg_props.set('test', nbt.Tag(i32(1)))
+	sg := &protocol.StartGamePacket{
+		entity_unique_id:  10
+		entity_runtime_id: 20
+		player_game_mode:  1
+		player_position:   types.Vector3{1.0, 64.0, 2.0}
+		pitch:             0.0
+		yaw:               90.0
+		world_seed:        123456789
+		spawn_biome_type:  0
+		dimension:         0
+		generator:         1
+		world_game_mode:   0
+		difficulty:        2
+		world_spawn:       types.BlockPosition{0, 64, 0}
+		base_game_version: '1.21.0'
+		level_id:          'level'
+		world_name:        'My World'
+		game_version:      '1.21.0'
+		multi_player_correlation_id: 'corr-1'
+		property_data:     nbt.RootTag{
+			name: ''
+			tag:  nbt.Tag(sg_props)
+		}
+		world_template_id: types.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+		has_force_experimental_gameplay: false
+		blocks: [protocol.BlockEntry{
+			name:       'minecraft:custom_block'
+			properties: nbt.RootTag{
+				name: ''
+				tag:  nbt.Tag(nbt.new_compound())
+			}
+		}]
+		server_id: 'srv'
+		world_id:  'wid'
+		owner_id:  'own'
+	}
+	d88 := roundtrip(sg, mut pool)!
+	if d88 is protocol.StartGamePacket {
+		assert d88.entity_unique_id == 10
+		assert d88.world_name == 'My World'
+		assert d88.player_position.y == 64.0
+		assert d88.blocks[0].name == 'minecraft:custom_block'
+		dprops := d88.property_data.tag as nbt.Compound
+		assert (dprops.get('test') or { nbt.Tag(i32(0)) } as i32) == 1
+		assert d88.owner_id == 'own'
+		println('  -> StartGame world=${d88.world_name} blocks=${d88.blocks.len} OK')
+	}
+
 	println('All round-trip tests passed.')
 }
