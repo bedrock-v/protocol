@@ -1892,5 +1892,79 @@ fn main() {
 		println('  -> PlayerAuthInput tick=${d86.tick} blockActions=${d86.block_actions.len} OK')
 	}
 
+	cd_pkt := &protocol.CraftingDataPacket{
+		recipes: [
+			protocol.Recipe{
+				recipe_type: protocol.recipe_shapeless
+				recipe_id:   'minecraft:shapeless_1'
+				input: [types.ItemDescriptorCount{
+					descriptor_type: types.item_descriptor_default
+					network_id:      5
+					metadata_value:  0
+					count:           1
+				}]
+				output: [types.ItemStack{
+					id:    280
+					count: 4
+				}]
+				uuid:              types.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+				block:             'crafting_table'
+				priority:          0
+				recipe_network_id: 1
+			},
+			protocol.Recipe{
+				recipe_type: protocol.recipe_shaped
+				recipe_id:   'minecraft:shaped_1'
+				width:       1
+				height:      2
+				input: [
+					types.ItemDescriptorCount{
+						descriptor_type: types.item_descriptor_default
+						network_id:      5
+						count:           1
+					},
+					types.ItemDescriptorCount{
+						descriptor_type: types.item_descriptor_default
+						network_id:      6
+						count:           1
+					},
+				]
+				output: [types.ItemStack{
+					id:    50
+					count: 1
+				}]
+				uuid:              types.uuid_from_bytes([u8(1), 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4])
+				block:             'crafting_table'
+				assume_symmetry:   true
+				recipe_network_id: 2
+			},
+		]
+		potion_recipes: [protocol.PotionRecipe{
+			input_potion_id: 373
+			output_potion_id: 438
+		}]
+		material_reducers: [protocol.MaterialReducer{
+			input_mix: 100
+			outputs:   [protocol.MaterialReducerOutput{
+				network_id: 5
+				count:      2
+			}]
+		}]
+		clear_recipes: true
+	}
+	d87 := roundtrip(cd_pkt, mut pool)!
+	if d87 is protocol.CraftingDataPacket {
+		assert d87.recipes.len == 2
+		assert d87.recipes[0].recipe_id == 'minecraft:shapeless_1'
+		assert d87.recipes[0].output[0].id == 280
+		assert d87.recipes[1].width == 1
+		assert d87.recipes[1].input.len == 2
+		assert d87.recipes[1].assume_symmetry == true
+		assert d87.potion_recipes[0].output_potion_id == 438
+		assert d87.material_reducers[0].outputs[0].count == 2
+		assert d87.clear_recipes == true
+		println('  -> CraftingData recipes=${d87.recipes.len} potions=${d87.potion_recipes.len} OK')
+	}
+
 	println('All round-trip tests passed.')
 }
