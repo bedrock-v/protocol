@@ -1747,5 +1747,74 @@ fn main() {
 		println('  -> BiomeDefinitionList defs=${d82.biome_definitions.len} strings=${d82.string_list.len} OK')
 	}
 
+	isreq := &protocol.ItemStackRequestPacket{
+		requests: [protocol.ItemStackRequestEntry{
+			request_id: 7
+			actions: [
+				protocol.StackRequestAction{
+					action_type: protocol.stack_request_action_take
+					count:       3
+					source:      protocol.StackRequestSlotInfo{
+						container:        types.FullContainerName{
+							container_id: 1
+						}
+						slot:             5
+						stack_network_id: 10
+					}
+					destination: protocol.StackRequestSlotInfo{
+						container:        types.FullContainerName{
+							container_id: 2
+						}
+						slot:             6
+						stack_network_id: 11
+					}
+				},
+				protocol.StackRequestAction{
+					action_type:       protocol.stack_request_action_craft_recipe
+					recipe_network_id: 99
+					number_of_crafts:  1
+				},
+			]
+			filter_strings: ['hello']
+			filter_cause:   3
+		}]
+	}
+	d83 := roundtrip(isreq, mut pool)!
+	if d83 is protocol.ItemStackRequestPacket {
+		assert d83.requests[0].request_id == 7
+		assert d83.requests[0].actions[0].count == 3
+		assert d83.requests[0].actions[0].destination.slot == 6
+		assert d83.requests[0].actions[1].recipe_network_id == 99
+		assert d83.requests[0].filter_strings[0] == 'hello'
+		println('  -> ItemStackRequest reqs=${d83.requests.len} actions=${d83.requests[0].actions.len} OK')
+	}
+
+	isresp := &protocol.ItemStackResponsePacket{
+		responses: [protocol.ItemStackResponseEntry{
+			status:     protocol.item_stack_response_status_ok
+			request_id: 7
+			container_info: [protocol.StackResponseContainerInfo{
+				container: types.FullContainerName{
+					container_id: 1
+				}
+				slot_info: [protocol.StackResponseSlotInfo{
+					slot:                  5
+					hotbar_slot:           5
+					count:                 3
+					stack_network_id:      10
+					custom_name:           'sword'
+					durability_correction: -1
+				}]
+			}]
+		}]
+	}
+	d84 := roundtrip(isresp, mut pool)!
+	if d84 is protocol.ItemStackResponsePacket {
+		assert d84.responses[0].request_id == 7
+		assert d84.responses[0].container_info[0].slot_info[0].custom_name == 'sword'
+		assert d84.responses[0].container_info[0].slot_info[0].durability_correction == -1
+		println('  -> ItemStackResponse resps=${d84.responses.len} name=${d84.responses[0].container_info[0].slot_info[0].custom_name} OK')
+	}
+
 	println('All round-trip tests passed.')
 }

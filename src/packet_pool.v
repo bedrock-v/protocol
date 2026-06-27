@@ -677,6 +677,12 @@ pub fn new_packet_pool() PacketPool {
 	p.register(fn () Packet {
 		return &BiomeDefinitionListPacket{}
 	})
+	p.register(fn () Packet {
+		return &ItemStackRequestPacket{}
+	})
+	p.register(fn () Packet {
+		return &ItemStackResponsePacket{}
+	})
 	return p
 }
 
