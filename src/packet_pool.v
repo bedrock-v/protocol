@@ -671,6 +671,12 @@ pub fn new_packet_pool() PacketPool {
 	p.register(fn () Packet {
 		return &CameraPresetsPacket{}
 	})
+	p.register(fn () Packet {
+		return &ClientboundMapItemDataPacket{}
+	})
+	p.register(fn () Packet {
+		return &BiomeDefinitionListPacket{}
+	})
 	return p
 }
 

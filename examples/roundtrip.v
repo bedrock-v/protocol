@@ -1681,5 +1681,71 @@ fn main() {
 		println('  -> CameraPresets presets=${d80.presets.len} name=${d80.presets[0].name} OK')
 	}
 
+	mid := &protocol.ClientboundMapItemDataPacket{
+		map_id:       42
+		update_flags: protocol.map_update_flag_decoration | protocol.map_update_flag_texture
+		dimension:    0
+		locked_map:   false
+		origin:       types.BlockPosition{1, 2, 3}
+		scale:        1
+		tracked_objects: [protocol.MapTrackedObject{
+			type:             protocol.map_object_type_block
+			block_position:   types.BlockPosition{4, 5, 6}
+		}]
+		decorations: [protocol.MapDecoration{
+			type:   1
+			label:  'home'
+			colour: 0xffaabbcc
+		}]
+		width:    2
+		height:   2
+		x_offset: 0
+		y_offset: 0
+		pixels:   [u32(0xff000000), 0xffffffff, 0xff112233, 0xff445566]
+	}
+	d81 := roundtrip(mid, mut pool)!
+	if d81 is protocol.ClientboundMapItemDataPacket {
+		assert d81.map_id == 42
+		assert d81.tracked_objects[0].block_position.x == 4
+		assert d81.decorations[0].label == 'home'
+		assert d81.pixels.len == 4
+		assert d81.pixels[1] == 0xffffffff
+		println('  -> ClientboundMapItemData id=${d81.map_id} decos=${d81.decorations.len} pixels=${d81.pixels.len} OK')
+	}
+
+	bdl := &protocol.BiomeDefinitionListPacket{
+		biome_definitions: [protocol.BiomeDefinition{
+			name_index:       0
+			biome_id:         1
+			temperature:      0.8
+			map_water_colour: 0x44aaffff
+			rain:             true
+			has_tags:         true
+			tags:             [u16(0), 1]
+			has_chunk_generation: true
+			chunk_generation: protocol.BiomeChunkGeneration{
+				has_climate: true
+				climate:     protocol.BiomeClimate{
+					temperature: 0.8
+					downfall:    0.4
+				}
+				has_multi_noise_rules: true
+				multi_noise_rules:     protocol.BiomeMultiNoiseRules{
+					temperature: 0.1
+					weight:      1.0
+				}
+			}
+		}]
+		string_list: ['plains', 'mc:overworld']
+	}
+	d82 := roundtrip(bdl, mut pool)!
+	if d82 is protocol.BiomeDefinitionListPacket {
+		assert d82.biome_definitions[0].biome_id == 1
+		assert d82.biome_definitions[0].tags == [u16(0), 1]
+		assert d82.biome_definitions[0].chunk_generation.climate.downfall == 0.4
+		assert d82.string_list[1] == 'mc:overworld'
+		println('  -> BiomeDefinitionList defs=${d82.biome_definitions.len} strings=${d82.string_list.len} OK')
+	}
+
 	println('All round-trip tests passed.')
 }
