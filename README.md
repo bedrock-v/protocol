@@ -15,15 +15,15 @@ git clone https://github.com/bedrock-v/nbt ~/.vmodules/nbt
 ## Build and Run
 
 ```bash
-v -shared -skip-unused src        # compile the library
-v run examples/roundtrip.v        # example round-trip
+v -shared -skip-unused .          # compile the library
+v -path 'src|@vlib|@vmodules' run examples/roundtrip.v
 ```
 
 ## Usage
 
 ```v
-import src as protocol
-import src.serializer
+import protocol
+import serializer
 
 pkt := &protocol.RequestNetworkSettingsPacket{
 	protocol_version: protocol.current_protocol

@@ -1,6 +1,6 @@
 module serializer
 
-import src.types
+import types
 
 pub fn (mut r Reader) read_command_origin_data() !types.CommandOriginData {
 	return types.CommandOriginData{

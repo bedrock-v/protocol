@@ -1,6 +1,6 @@
-module src
+module protocol
 
-import src.serializer
+import serializer
 
 pub const attribute_layer_payload_update_layers = u32(0)
 pub const attribute_layer_payload_update_settings = u32(1)

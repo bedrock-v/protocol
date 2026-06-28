@@ -1,7 +1,7 @@
-module src
+module protocol
 
-import src.serializer
-import src.types
+import serializer
+import types
 
 pub const move_player_mode_normal = 0
 pub const move_player_mode_reset = 1

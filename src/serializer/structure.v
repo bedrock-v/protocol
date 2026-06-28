@@ -1,6 +1,6 @@
 module serializer
 
-import src.types
+import types
 
 pub fn (mut r Reader) read_structure_settings() !types.StructureSettings {
 	return types.StructureSettings{

@@ -1,6 +1,6 @@
-module src
+module protocol
 
-import src.serializer
+import serializer
 
 pub const move_actor_delta_flag_has_x = 0x01
 pub const move_actor_delta_flag_has_y = 0x02

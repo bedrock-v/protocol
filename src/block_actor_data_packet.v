@@ -1,7 +1,7 @@
-module src
+module protocol
 
-import src.serializer
-import src.types
+import serializer
+import types
 import nbt
 
 pub struct BlockActorDataPacket {

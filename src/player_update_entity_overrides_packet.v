@@ -1,6 +1,6 @@
-module src
+module protocol
 
-import src.serializer
+import serializer
 
 pub const override_update_type_clear = u8(0)
 pub const override_update_type_set_int = u8(1)

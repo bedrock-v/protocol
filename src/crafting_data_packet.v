@@ -1,7 +1,7 @@
-module src
+module protocol
 
-import src.serializer
-import src.types
+import serializer
+import types
 
 pub const recipe_shapeless = 0
 pub const recipe_shaped = 1

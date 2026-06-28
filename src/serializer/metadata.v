@@ -1,6 +1,6 @@
 module serializer
 
-import src.types
+import types
 
 pub fn (mut r Reader) read_metadata_property(type_id u32) !types.MetadataProperty {
 	match type_id {

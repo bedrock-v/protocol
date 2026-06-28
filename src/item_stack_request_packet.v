@@ -1,7 +1,7 @@
-module src
+module protocol
 
-import src.serializer
-import src.types
+import serializer
+import types
 
 pub const stack_request_action_take = u8(0)
 pub const stack_request_action_place = u8(1)

@@ -1,7 +1,7 @@
-module src
+module protocol
 
-import src.serializer
-import src.types
+import serializer
+import types
 
 pub const player_action_start_break = 0
 pub const player_action_abort_break = 1

@@ -1,6 +1,6 @@
 module serializer
 
-import src.types
+import types
 
 pub fn (mut r Reader) read_experiments() !types.Experiments {
 	mut e := types.Experiments{

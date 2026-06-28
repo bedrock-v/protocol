@@ -1,6 +1,6 @@
-module src
+module protocol
 
-import src.serializer
+import serializer
 
 pub const pid_mask = u32(0x3ff)
 pub const subclient_id_mask = u32(0x03)

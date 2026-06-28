@@ -1,7 +1,7 @@
-module src
+module protocol
 
-import src.serializer
-import src.types
+import serializer
+import types
 
 pub const inventory_transaction_type_normal = u32(0)
 pub const inventory_transaction_type_mismatch = u32(1)

@@ -1,6 +1,6 @@
 module serializer
 
-import src.types
+import types
 
 pub fn (mut r Reader) read_item_stack_without_stack_id() !types.ItemStack {
 	id := int(r.read_varint32()!)

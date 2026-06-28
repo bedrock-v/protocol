@@ -1,7 +1,7 @@
-module src
+module protocol
 
-import src.serializer
-import src.types
+import serializer
+import types
 
 pub const map_update_flag_texture = u32(0x02)
 pub const map_update_flag_decoration = u32(0x04)

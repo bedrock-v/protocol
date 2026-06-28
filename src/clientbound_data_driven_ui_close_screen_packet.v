@@ -1,6 +1,6 @@
-module src
+module protocol
 
-import src.serializer
+import serializer
 
 pub struct ClientboundDataDrivenUICloseScreenPacket {
 pub mut:

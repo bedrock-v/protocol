@@ -1,7 +1,7 @@
-module src
+module protocol
 
-import src.serializer
-import src.types
+import serializer
+import types
 
 pub const player_list_type_add = u8(0)
 pub const player_list_type_remove = u8(1)

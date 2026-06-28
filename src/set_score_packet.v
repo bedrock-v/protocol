@@ -1,7 +1,7 @@
-module src
+module protocol
 
-import src.serializer
-import src.types
+import serializer
+import types
 
 pub const set_score_type_change = 0
 pub const set_score_type_remove = 1

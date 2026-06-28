@@ -1,6 +1,6 @@
 module serializer
 
-import src.types
+import types
 
 pub fn (mut r Reader) read_creative_item_net_id() !int {
 	return int(r.read_varuint32()!)

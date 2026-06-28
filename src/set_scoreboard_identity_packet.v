@@ -1,7 +1,7 @@
-module src
+module protocol
 
-import src.serializer
-import src.types
+import serializer
+import types
 
 pub const scoreboard_identity_type_register = 0
 pub const scoreboard_identity_type_clear = 1

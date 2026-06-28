@@ -1,6 +1,6 @@
 module serializer
 
-import src.types
+import types
 
 pub fn (mut r Reader) read_item_descriptor_count() !types.ItemDescriptorCount {
 	mut d := types.ItemDescriptorCount{

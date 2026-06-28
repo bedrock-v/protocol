@@ -1,6 +1,6 @@
-module src
+module protocol
 
-import src.serializer
+import serializer
 
 pub const ability_value_type_bool = 1
 pub const ability_value_type_float = 2

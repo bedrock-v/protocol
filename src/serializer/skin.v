@@ -1,6 +1,6 @@
 module serializer
 
-import src.types
+import types
 
 fn (mut r Reader) read_skin_image() !types.SkinImage {
 	return types.SkinImage{

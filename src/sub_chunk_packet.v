@@ -1,6 +1,6 @@
-module src
+module protocol
 
-import src.serializer
+import serializer
 
 pub const subchunk_result_success_all_air = u8(6)
 pub const subchunk_heightmap_no_data = u8(0)

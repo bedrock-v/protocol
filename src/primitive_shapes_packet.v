@@ -1,7 +1,7 @@
-module src
+module protocol
 
-import src.serializer
-import src.types
+import serializer
+import types
 
 pub const primitive_shape_payload_none = u32(0)
 pub const primitive_shape_payload_arrow = u32(1)

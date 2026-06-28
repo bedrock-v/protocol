@@ -1,7 +1,7 @@
-module src
+module protocol
 
-import src.serializer
-import src.types
+import serializer
+import types
 
 pub const pack_setting_type_float = u8(0)
 pub const pack_setting_type_bool = u8(1)

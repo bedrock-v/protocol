@@ -1,6 +1,6 @@
-module src
+module protocol
 
-import src.serializer
+import serializer
 
 pub const book_edit_type_replace_page = 0
 pub const book_edit_type_add_page = 1

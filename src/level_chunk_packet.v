@@ -1,7 +1,7 @@
-module src
+module protocol
 
-import src.serializer
-import src.types
+import serializer
+import types
 
 pub const level_chunk_request_explicit = u8(0)
 pub const level_chunk_request_full = u8(1)

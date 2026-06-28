@@ -1,6 +1,6 @@
 module serializer
 
-import src.types
+import types
 
 pub fn (mut r Reader) read_chunk_position() !types.ChunkPosition {
 	return types.ChunkPosition{

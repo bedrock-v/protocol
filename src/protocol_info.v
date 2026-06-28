@@ -1,4 +1,4 @@
-module src
+module protocol
 
 pub const current_protocol = 1001
 pub const minecraft_version = 'v26.30'

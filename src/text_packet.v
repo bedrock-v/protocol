@@ -1,6 +1,6 @@
-module src
+module protocol
 
-import src.serializer
+import serializer
 
 pub const text_category_message_only = 0
 pub const text_category_authored_message = 1

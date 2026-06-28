@@ -1,6 +1,6 @@
 module serializer
 
-import src.types
+import types
 
 pub fn (mut r Reader) read_game_rules(is_start_game bool) ![]types.GameRule {
 	count := int(r.read_varuint32()!)

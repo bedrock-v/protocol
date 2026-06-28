@@ -1,6 +1,6 @@
-module src
+module protocol
 
-import src.serializer
+import serializer
 
 pub const data_store_change_update = u32(0)
 pub const data_store_change_change = u32(1)

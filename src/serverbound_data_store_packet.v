@@ -1,6 +1,6 @@
-module src
+module protocol
 
-import src.serializer
+import serializer
 
 pub const data_store_value_double = u8(0)
 pub const data_store_value_bool = u8(1)

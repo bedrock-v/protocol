@@ -1,6 +1,6 @@
-module src
+module protocol
 
-import src.serializer
+import serializer
 
 pub const clock_payload_type_sync_state = u32(0)
 pub const clock_payload_type_initialize_registry = u32(1)
