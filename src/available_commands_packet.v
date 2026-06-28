@@ -27,7 +27,7 @@ pub mut:
 	name                      string
 	description               string
 	flags                     u16
-	permission                u8
+	permission                string
 	alias_enum_index          int
 	chained_subcommand_offsets []u32
 	overloads                 []CommandOverload
@@ -141,7 +141,7 @@ pub fn (mut p AvailableCommandsPacket) decode_payload(mut r serializer.Reader) !
 			name:        r.read_string()!
 			description: r.read_string()!
 			flags:       r.le_u16()!
-			permission:  r.u8()!
+			permission:  r.read_string()!
 		}
 		cmd.alias_enum_index = r.le_i32()!
 		off_count := r.read_varuint32()!
@@ -224,7 +224,7 @@ pub fn (p &AvailableCommandsPacket) encode_payload(mut w serializer.Writer) {
 		w.write_string(cmd.name)
 		w.write_string(cmd.description)
 		w.le_u16(cmd.flags)
-		w.u8(cmd.permission)
+		w.write_string(cmd.permission)
 		w.le_i32(cmd.alias_enum_index)
 		w.write_varuint32(u32(cmd.chained_subcommand_offsets.len))
 		for off in cmd.chained_subcommand_offsets {
