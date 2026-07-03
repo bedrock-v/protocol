@@ -20,7 +20,7 @@ pub fn (r &Reader) remaining() int {
 }
 
 fn (mut r Reader) need(n int) ! {
-	if r.offset + n > r.data.len {
+	if n < 0 || r.offset + n > r.data.len {
 		return error('unexpected end of buffer: need ${n} bytes at offset ${r.offset}, have ${r.data.len}')
 	}
 }
