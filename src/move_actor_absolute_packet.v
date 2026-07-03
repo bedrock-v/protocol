@@ -3,6 +3,8 @@ module protocol
 import serializer
 import types
 
+pub const move_actor_flag_on_ground = int(1)
+
 pub struct MoveActorAbsolutePacket {
 pub mut:
 	actor_runtime_id u64

@@ -3,6 +3,8 @@ module protocol
 import serializer
 import types
 
+pub const level_event_particles_destroy_block = int(2001)
+
 pub struct LevelEventPacket {
 pub mut:
 	event_id   int

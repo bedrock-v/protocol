@@ -2,6 +2,9 @@ module protocol
 
 import serializer
 
+pub const animate_action_swing_arm = int(1)
+pub const animate_action_critical_hit = int(4)
+
 pub struct AnimatePacket {
 pub mut:
 	action           int

@@ -3,6 +3,13 @@ module protocol
 import serializer
 import types
 
+pub const item_use_action_click_block = int(0)
+pub const item_use_action_click_air = int(1)
+pub const item_use_action_destroy_block = int(2)
+
+pub const item_use_on_entity_action_interact = int(0)
+pub const item_use_on_entity_action_attack = int(1)
+
 pub const inventory_transaction_type_normal = u32(0)
 pub const inventory_transaction_type_mismatch = u32(1)
 pub const inventory_transaction_type_use_item = u32(2)

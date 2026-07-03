@@ -3,6 +3,10 @@ module protocol
 import serializer
 import types
 
+pub const respawn_state_searching = int(0)
+pub const respawn_state_ready_to_spawn = int(1)
+pub const respawn_state_client_ready = int(2)
+
 pub struct RespawnPacket {
 pub mut:
 	position         types.Vector3

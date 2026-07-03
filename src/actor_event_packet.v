@@ -3,6 +3,9 @@ module protocol
 import serializer
 import types
 
+pub const actor_event_hurt = int(2)
+pub const actor_event_death = int(3)
+
 pub struct ActorEventPacket {
 pub mut:
 	actor_runtime_id u64

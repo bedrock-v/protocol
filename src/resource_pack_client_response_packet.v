@@ -2,6 +2,11 @@ module protocol
 
 import serializer
 
+pub const resource_response_refused = int(1)
+pub const resource_response_send_packs = int(2)
+pub const resource_response_have_all_packs = int(3)
+pub const resource_response_completed = int(4)
+
 pub struct ResourcePackClientResponsePacket {
 pub mut:
 	status   int

@@ -3,6 +3,8 @@ module protocol
 import serializer
 import types
 
+pub const interact_action_open_inventory = int(6)
+
 pub struct InteractPacket {
 pub mut:
 	action                 int

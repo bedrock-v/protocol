@@ -3,6 +3,8 @@ module protocol
 import serializer
 import types
 
+pub const update_block_flag_network = int(3)
+
 pub struct UpdateBlockPacket {
 pub mut:
 	block_position  types.BlockPosition

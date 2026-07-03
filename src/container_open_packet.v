@@ -3,6 +3,8 @@ module protocol
 import serializer
 import types
 
+pub const container_type_inventory = int(0xff)
+
 pub struct ContainerOpenPacket {
 pub mut:
 	window_id       int
