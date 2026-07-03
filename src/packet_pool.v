@@ -11,693 +11,235 @@ pub fn new_packet_pool() PacketPool {
 	mut p := PacketPool{
 		factories: map[u16]fn () Packet{}
 	}
-	p.register(fn () Packet {
-		return &LoginPacket{}
-	})
-	p.register(fn () Packet {
-		return &PlayStatusPacket{}
-	})
-	p.register(fn () Packet {
-		return &ServerToClientHandshakePacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientToServerHandshakePacket{}
-	})
-	p.register(fn () Packet {
-		return &DisconnectPacket{}
-	})
-	p.register(fn () Packet {
-		return &SetTimePacket{}
-	})
-	p.register(fn () Packet {
-		return &TextPacket{}
-	})
-	p.register(fn () Packet {
-		return &RequestNetworkSettingsPacket{}
-	})
-	p.register(fn () Packet {
-		return &NetworkSettingsPacket{}
-	})
-	p.register(fn () Packet {
-		return &RequestChunkRadiusPacket{}
-	})
-	p.register(fn () Packet {
-		return &ChunkRadiusUpdatedPacket{}
-	})
-	p.register(fn () Packet {
-		return &SetLocalPlayerAsInitializedPacket{}
-	})
-	p.register(fn () Packet {
-		return &RespawnPacket{}
-	})
-	p.register(fn () Packet {
-		return &AnimatePacket{}
-	})
-	p.register(fn () Packet {
-		return &ContainerClosePacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientCacheStatusPacket{}
-	})
-	p.register(fn () Packet {
-		return &SetDifficultyPacket{}
-	})
-	p.register(fn () Packet {
-		return &NetworkStackLatencyPacket{}
-	})
-	p.register(fn () Packet {
-		return &InteractPacket{}
-	})
-	p.register(fn () Packet {
-		return &EmotePacket{}
-	})
-	p.register(fn () Packet {
-		return &PlayerActionPacket{}
-	})
-	p.register(fn () Packet {
-		return &ResourcePackClientResponsePacket{}
-	})
-	p.register(fn () Packet {
-		return &ResourcePackChunkRequestPacket{}
-	})
-	p.register(fn () Packet {
-		return &ResourcePackDataInfoPacket{}
-	})
-	p.register(fn () Packet {
-		return &ResourcePackChunkDataPacket{}
-	})
-	p.register(fn () Packet {
-		return &RemoveActorPacket{}
-	})
-	p.register(fn () Packet {
-		return &TakeItemActorPacket{}
-	})
-	p.register(fn () Packet {
-		return &SetActorMotionPacket{}
-	})
-	p.register(fn () Packet {
-		return &MoveActorAbsolutePacket{}
-	})
-	p.register(fn () Packet {
-		return &SetHealthPacket{}
-	})
-	p.register(fn () Packet {
-		return &SetSpawnPositionPacket{}
-	})
-	p.register(fn () Packet {
-		return &ShowCreditsPacket{}
-	})
-	p.register(fn () Packet {
-		return &BlockPickRequestPacket{}
-	})
-	p.register(fn () Packet {
-		return &ActorPickRequestPacket{}
-	})
-	p.register(fn () Packet {
-		return &SetPlayerGameTypePacket{}
-	})
-	p.register(fn () Packet {
-		return &SpawnExperienceOrbPacket{}
-	})
-	p.register(fn () Packet {
-		return &OnScreenTextureAnimationPacket{}
-	})
-	p.register(fn () Packet {
-		return &SimpleEventPacket{}
-	})
-	p.register(fn () Packet {
-		return &RefreshEntitlementsPacket{}
-	})
-	p.register(fn () Packet {
-		return &TickingAreasLoadStatusPacket{}
-	})
-	p.register(fn () Packet {
-		return &PlayerHotbarPacket{}
-	})
-	p.register(fn () Packet {
-		return &GuiDataPickItemPacket{}
-	})
-	p.register(fn () Packet {
-		return &HurtArmorPacket{}
-	})
-	p.register(fn () Packet {
-		return &MobEquipmentPacket{}
-	})
-	p.register(fn () Packet {
-		return &MobArmorEquipmentPacket{}
-	})
-	p.register(fn () Packet {
-		return &InventorySlotPacket{}
-	})
-	p.register(fn () Packet {
-		return &InventoryContentPacket{}
-	})
-	p.register(fn () Packet {
-		return &ContainerOpenPacket{}
-	})
-	p.register(fn () Packet {
-		return &ContainerSetDataPacket{}
-	})
-	p.register(fn () Packet {
-		return &CreativeContentPacket{}
-	})
-	p.register(fn () Packet {
-		return &BlockActorDataPacket{}
-	})
-	p.register(fn () Packet {
-		return &ItemRegistryPacket{}
-	})
-	p.register(fn () Packet {
-		return &UpdateEquipPacket{}
-	})
-	p.register(fn () Packet {
-		return &SetActorDataPacket{}
-	})
-	p.register(fn () Packet {
-		return &AddItemActorPacket{}
-	})
-	p.register(fn () Packet {
-		return &MobEffectPacket{}
-	})
-	p.register(fn () Packet {
-		return &MovePlayerPacket{}
-	})
-	p.register(fn () Packet {
-		return &AddActorPacket{}
-	})
-	p.register(fn () Packet {
-		return &UpdateAttributesPacket{}
-	})
-	p.register(fn () Packet {
-		return &ChangeDimensionPacket{}
-	})
-	p.register(fn () Packet {
-		return &SetCommandsEnabledPacket{}
-	})
-	p.register(fn () Packet {
-		return &UpdateBlockPacket{}
-	})
-	p.register(fn () Packet {
-		return &BlockEventPacket{}
-	})
-	p.register(fn () Packet {
-		return &ActorEventPacket{}
-	})
-	p.register(fn () Packet {
-		return &SetActorLinkPacket{}
-	})
-	p.register(fn () Packet {
-		return &NetworkChunkPublisherUpdatePacket{}
-	})
-	p.register(fn () Packet {
-		return &GameRulesChangedPacket{}
-	})
-	p.register(fn () Packet {
-		return &SettingsCommandPacket{}
-	})
-	p.register(fn () Packet {
-		return &UpdateSoftEnumPacket{}
-	})
-	p.register(fn () Packet {
-		return &ModalFormRequestPacket{}
-	})
-	p.register(fn () Packet {
-		return &ModalFormResponsePacket{}
-	})
-	p.register(fn () Packet {
-		return &ServerSettingsRequestPacket{}
-	})
-	p.register(fn () Packet {
-		return &ServerSettingsResponsePacket{}
-	})
-	p.register(fn () Packet {
-		return &RemoveObjectivePacket{}
-	})
-	p.register(fn () Packet {
-		return &ToastRequestPacket{}
-	})
-	p.register(fn () Packet {
-		return &SetTitlePacket{}
-	})
-	p.register(fn () Packet {
-		return &SetDisplayObjectivePacket{}
-	})
-	p.register(fn () Packet {
-		return &NpcDialoguePacket{}
-	})
-	p.register(fn () Packet {
-		return &LevelEventPacket{}
-	})
-	p.register(fn () Packet {
-		return &StopSoundPacket{}
-	})
-	p.register(fn () Packet {
-		return &PlaySoundPacket{}
-	})
-	p.register(fn () Packet {
-		return &SpawnParticleEffectPacket{}
-	})
-	p.register(fn () Packet {
-		return &PlayerFogPacket{}
-	})
-	p.register(fn () Packet {
-		return &CameraShakePacket{}
-	})
-	p.register(fn () Packet {
-		return &AddPaintingPacket{}
-	})
-	p.register(fn () Packet {
-		return &TransferPacket{}
-	})
-	p.register(fn () Packet {
-		return &OpenSignPacket{}
-	})
-	p.register(fn () Packet {
-		return &AnvilDamagePacket{}
-	})
-	p.register(fn () Packet {
-		return &PlayerStartItemCooldownPacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientboundCloseFormPacket{}
-	})
-	p.register(fn () Packet {
-		return &ScriptMessagePacket{}
-	})
-	p.register(fn () Packet {
-		return &SimulationTypePacket{}
-	})
-	p.register(fn () Packet {
-		return &DeathInfoPacket{}
-	})
-	p.register(fn () Packet {
-		return &AwardAchievementPacket{}
-	})
-	p.register(fn () Packet {
-		return &LevelSoundEventPacket{}
-	})
-	p.register(fn () Packet {
-		return &AnimateEntityPacket{}
-	})
-	p.register(fn () Packet {
-		return &MotionPredictionHintsPacket{}
-	})
-	p.register(fn () Packet {
-		return &NpcRequestPacket{}
-	})
-	p.register(fn () Packet {
-		return &CompletedUsingItemPacket{}
-	})
-	p.register(fn () Packet {
-		return &MoveActorDeltaPacket{}
-	})
-	p.register(fn () Packet {
-		return &SetLastHurtByPacket{}
-	})
-	p.register(fn () Packet {
-		return &CurrentStructureFeaturePacket{}
-	})
-	p.register(fn () Packet {
-		return &ServerboundLoadingScreenPacket{}
-	})
-	p.register(fn () Packet {
-		return &PlayerToggleCrafterSlotRequestPacket{}
-	})
-	p.register(fn () Packet {
-		return &SetDefaultGameTypePacket{}
-	})
-	p.register(fn () Packet {
-		return &UpdatePlayerGameTypePacket{}
-	})
-	p.register(fn () Packet {
-		return &CodeBuilderPacket{}
-	})
-	p.register(fn () Packet {
-		return &LecternUpdatePacket{}
-	})
-	p.register(fn () Packet {
-		return &PurchaseReceiptPacket{}
-	})
-	p.register(fn () Packet {
-		return &ShowProfilePacket{}
-	})
-	p.register(fn () Packet {
-		return &RequestPermissionsPacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientCacheBlobStatusPacket{}
-	})
-	p.register(fn () Packet {
-		return &BossEventPacket{}
-	})
-	p.register(fn () Packet {
-		return &UpdateBlockSyncedPacket{}
-	})
-	p.register(fn () Packet {
-		return &BookEditPacket{}
-	})
-	p.register(fn () Packet {
-		return &CommandRequestPacket{}
-	})
-	p.register(fn () Packet {
-		return &SetScorePacket{}
-	})
-	p.register(fn () Packet {
-		return &SetScoreboardIdentityPacket{}
-	})
-	p.register(fn () Packet {
-		return &ShowStoreOfferPacket{}
-	})
-	p.register(fn () Packet {
-		return &AgentAnimationPacket{}
-	})
-	p.register(fn () Packet {
-		return &ServerPlayerPostMovePositionPacket{}
-	})
-	p.register(fn () Packet {
-		return &UpdateClientInputLocksPacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientboundControlSchemeSetPacket{}
-	})
-	p.register(fn () Packet {
-		return &UpdateAdventureSettingsPacket{}
-	})
-	p.register(fn () Packet {
-		return &MultiplayerSettingsPacket{}
-	})
-	p.register(fn () Packet {
-		return &SetPlayerInventoryOptionsPacket{}
-	})
-	p.register(fn () Packet {
-		return &EmoteListPacket{}
-	})
-	p.register(fn () Packet {
-		return &SetHudPacket{}
-	})
-	p.register(fn () Packet {
-		return &RequestAbilityPacket{}
-	})
-	p.register(fn () Packet {
-		return &CodeBuilderSourcePacket{}
-	})
-	p.register(fn () Packet {
-		return &GameTestRequestPacket{}
-	})
-	p.register(fn () Packet {
-		return &LessonProgressPacket{}
-	})
-	p.register(fn () Packet {
-		return &ServerStatsPacket{}
-	})
-	p.register(fn () Packet {
-		return &PartyChangedPacket{}
-	})
-	p.register(fn () Packet {
-		return &CommandBlockUpdatePacket{}
-	})
-	p.register(fn () Packet {
-		return &AddBehaviorTreePacket{}
-	})
-	p.register(fn () Packet {
-		return &RemoveVolumeEntityPacket{}
-	})
-	p.register(fn () Packet {
-		return &SyncActorPropertyPacket{}
-	})
-	p.register(fn () Packet {
-		return &ServerboundDataDrivenScreenClosedPacket{}
-	})
-	p.register(fn () Packet {
-		return &PartyDestinationCookieResponsePacket{}
-	})
-	p.register(fn () Packet {
-		return &SendPartyDestinationCookiePacket{}
-	})
-	p.register(fn () Packet {
-		return &PlayerVideoCapturePacket{}
-	})
-	p.register(fn () Packet {
-		return &UpdateClientOptionsPacket{}
-	})
-	p.register(fn () Packet {
-		return &PacketViolationWarningPacket{}
-	})
-	p.register(fn () Packet {
-		return &MovementEffectPacket{}
-	})
-	p.register(fn () Packet {
-		return &LegacyTelemetryEventPacket{}
-	})
-	p.register(fn () Packet {
-		return &CorrectPlayerMovePredictionPacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientboundTextureShiftPacket{}
-	})
-	p.register(fn () Packet {
-		return &ChangeMobPropertyPacket{}
-	})
-	p.register(fn () Packet {
-		return &UpdateTradePacket{}
-	})
-	p.register(fn () Packet {
-		return &PlayerArmorDamagePacket{}
-	})
-	p.register(fn () Packet {
-		return &MapInfoRequestPacket{}
-	})
-	p.register(fn () Packet {
-		return &CameraPacket{}
-	})
-	p.register(fn () Packet {
-		return &PlayerLocationPacket{}
-	})
-	p.register(fn () Packet {
-		return &AgentActionEventPacket{}
-	})
-	p.register(fn () Packet {
-		return &CreatePhotoPacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientCameraAimAssistPacket{}
-	})
-	p.register(fn () Packet {
-		return &AutomationClientConnectPacket{}
-	})
-	p.register(fn () Packet {
-		return &UnlockedRecipesPacket{}
-	})
-	p.register(fn () Packet {
-		return &EditorNetworkPacket{}
-	})
-	p.register(fn () Packet {
-		return &EduUriResourcePacket{}
-	})
-	p.register(fn () Packet {
-		return &FeatureRegistryPacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientboundDataDrivenUIReloadPacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientboundDataDrivenUICloseScreenPacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientboundDataDrivenUIShowScreenPacket{}
-	})
-	p.register(fn () Packet {
-		return &ResourcePacksReadyForValidationPacket{}
-	})
-	p.register(fn () Packet {
-		return &ContainerRegistryCleanupPacket{}
-	})
-	p.register(fn () Packet {
-		return &PlayerUpdateEntityOverridesPacket{}
-	})
-	p.register(fn () Packet {
-		return &DebugInfoPacket{}
-	})
-	p.register(fn () Packet {
-		return &PositionTrackingDBClientRequestPacket{}
-	})
-	p.register(fn () Packet {
-		return &PositionTrackingDBServerBroadcastPacket{}
-	})
-	p.register(fn () Packet {
-		return &AddVolumeEntityPacket{}
-	})
-	p.register(fn () Packet {
-		return &MapCreateLockedCopyPacket{}
-	})
-	p.register(fn () Packet {
-		return &StructureTemplateDataResponsePacket{}
-	})
-	p.register(fn () Packet {
-		return &SubChunkRequestPacket{}
-	})
-	p.register(fn () Packet {
-		return &AvailableActorIdentifiersPacket{}
-	})
-	p.register(fn () Packet {
-		return &GameTestResultsPacket{}
-	})
-	p.register(fn () Packet {
-		return &LabTablePacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientboundUpdateSoundDataPacket{}
-	})
-	p.register(fn () Packet {
-		return &PhotoTransferPacket{}
-	})
-	p.register(fn () Packet {
-		return &SubClientLoginPacket{}
-	})
-	p.register(fn () Packet {
-		return &CameraAimAssistPacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientCacheMissResponsePacket{}
-	})
-	p.register(fn () Packet {
-		return &UpdateAbilitiesPacket{}
-	})
-	p.register(fn () Packet {
-		return &JigsawStructureDataPacket{}
-	})
-	p.register(fn () Packet {
-		return &DimensionDataPacket{}
-	})
-	p.register(fn () Packet {
-		return &UpdateSubChunkBlocksPacket{}
-	})
-	p.register(fn () Packet {
-		return &CommandOutputPacket{}
-	})
-	p.register(fn () Packet {
-		return &LevelChunkPacket{}
-	})
-	p.register(fn () Packet {
-		return &TrimDataPacket{}
-	})
-	p.register(fn () Packet {
-		return &ResourcePackStackPacket{}
-	})
-	p.register(fn () Packet {
-		return &ResourcePacksInfoPacket{}
-	})
-	p.register(fn () Packet {
-		return &StructureBlockUpdatePacket{}
-	})
-	p.register(fn () Packet {
-		return &StructureTemplateDataRequestPacket{}
-	})
-	p.register(fn () Packet {
-		return &SubChunkPacket{}
-	})
-	p.register(fn () Packet {
-		return &PlayerEnchantOptionsPacket{}
-	})
-	p.register(fn () Packet {
-		return &LocatorBarPacket{}
-	})
-	p.register(fn () Packet {
-		return &GraphicsOverrideParameterPacket{}
-	})
-	p.register(fn () Packet {
-		return &CameraSplinePacket{}
-	})
-	p.register(fn () Packet {
-		return &CameraAimAssistActorPriorityPacket{}
-	})
-	p.register(fn () Packet {
-		return &CameraInstructionPacket{}
-	})
-	p.register(fn () Packet {
-		return &EducationSettingsPacket{}
-	})
-	p.register(fn () Packet {
-		return &ServerboundPackSettingChangePacket{}
-	})
-	p.register(fn () Packet {
-		return &ServerStoreInfoPacket{}
-	})
-	p.register(fn () Packet {
-		return &ServerPresenceInfoPacket{}
-	})
-	p.register(fn () Packet {
-		return &PlayerSkinPacket{}
-	})
-	p.register(fn () Packet {
-		return &AddPlayerPacket{}
-	})
-	p.register(fn () Packet {
-		return &PlayerListPacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientboundDebugRendererPacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientMovementPredictionSyncPacket{}
-	})
-	p.register(fn () Packet {
-		return &LevelEventGenericPacket{}
-	})
-	p.register(fn () Packet {
-		return &ServerboundDiagnosticsPacket{}
-	})
-	p.register(fn () Packet {
-		return &ServerboundDataStorePacket{}
-	})
-	p.register(fn () Packet {
-		return &SyncWorldClocksPacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientboundAttributeLayerSyncPacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientboundDataStorePacket{}
-	})
-	p.register(fn () Packet {
-		return &VoxelShapesPacket{}
-	})
-	p.register(fn () Packet {
-		return &PrimitiveShapesPacket{}
-	})
-	p.register(fn () Packet {
-		return &CameraAimAssistPresetsPacket{}
-	})
-	p.register(fn () Packet {
-		return &CameraPresetsPacket{}
-	})
-	p.register(fn () Packet {
-		return &ClientboundMapItemDataPacket{}
-	})
-	p.register(fn () Packet {
-		return &BiomeDefinitionListPacket{}
-	})
-	p.register(fn () Packet {
-		return &ItemStackRequestPacket{}
-	})
-	p.register(fn () Packet {
-		return &ItemStackResponsePacket{}
-	})
-	p.register(fn () Packet {
-		return &InventoryTransactionPacket{}
-	})
-	p.register(fn () Packet {
-		return &PlayerAuthInputPacket{}
-	})
-	p.register(fn () Packet {
-		return &CraftingDataPacket{}
-	})
-	p.register(fn () Packet {
-		return &StartGamePacket{}
-	})
-	p.register(fn () Packet {
-		return &AvailableCommandsPacket{}
-	})
+	p.register(|| Packet(&LoginPacket{}))
+	p.register(|| Packet(&PlayStatusPacket{}))
+	p.register(|| Packet(&ServerToClientHandshakePacket{}))
+	p.register(|| Packet(&ClientToServerHandshakePacket{}))
+	p.register(|| Packet(&DisconnectPacket{}))
+	p.register(|| Packet(&SetTimePacket{}))
+	p.register(|| Packet(&TextPacket{}))
+	p.register(|| Packet(&RequestNetworkSettingsPacket{}))
+	p.register(|| Packet(&NetworkSettingsPacket{}))
+	p.register(|| Packet(&RequestChunkRadiusPacket{}))
+	p.register(|| Packet(&ChunkRadiusUpdatedPacket{}))
+	p.register(|| Packet(&SetLocalPlayerAsInitializedPacket{}))
+	p.register(|| Packet(&RespawnPacket{}))
+	p.register(|| Packet(&AnimatePacket{}))
+	p.register(|| Packet(&ContainerClosePacket{}))
+	p.register(|| Packet(&ClientCacheStatusPacket{}))
+	p.register(|| Packet(&SetDifficultyPacket{}))
+	p.register(|| Packet(&NetworkStackLatencyPacket{}))
+	p.register(|| Packet(&InteractPacket{}))
+	p.register(|| Packet(&EmotePacket{}))
+	p.register(|| Packet(&PlayerActionPacket{}))
+	p.register(|| Packet(&ResourcePackClientResponsePacket{}))
+	p.register(|| Packet(&ResourcePackChunkRequestPacket{}))
+	p.register(|| Packet(&ResourcePackDataInfoPacket{}))
+	p.register(|| Packet(&ResourcePackChunkDataPacket{}))
+	p.register(|| Packet(&RemoveActorPacket{}))
+	p.register(|| Packet(&TakeItemActorPacket{}))
+	p.register(|| Packet(&SetActorMotionPacket{}))
+	p.register(|| Packet(&MoveActorAbsolutePacket{}))
+	p.register(|| Packet(&SetHealthPacket{}))
+	p.register(|| Packet(&SetSpawnPositionPacket{}))
+	p.register(|| Packet(&ShowCreditsPacket{}))
+	p.register(|| Packet(&BlockPickRequestPacket{}))
+	p.register(|| Packet(&ActorPickRequestPacket{}))
+	p.register(|| Packet(&SetPlayerGameTypePacket{}))
+	p.register(|| Packet(&SpawnExperienceOrbPacket{}))
+	p.register(|| Packet(&OnScreenTextureAnimationPacket{}))
+	p.register(|| Packet(&SimpleEventPacket{}))
+	p.register(|| Packet(&RefreshEntitlementsPacket{}))
+	p.register(|| Packet(&TickingAreasLoadStatusPacket{}))
+	p.register(|| Packet(&PlayerHotbarPacket{}))
+	p.register(|| Packet(&GuiDataPickItemPacket{}))
+	p.register(|| Packet(&HurtArmorPacket{}))
+	p.register(|| Packet(&MobEquipmentPacket{}))
+	p.register(|| Packet(&MobArmorEquipmentPacket{}))
+	p.register(|| Packet(&InventorySlotPacket{}))
+	p.register(|| Packet(&InventoryContentPacket{}))
+	p.register(|| Packet(&ContainerOpenPacket{}))
+	p.register(|| Packet(&ContainerSetDataPacket{}))
+	p.register(|| Packet(&CreativeContentPacket{}))
+	p.register(|| Packet(&BlockActorDataPacket{}))
+	p.register(|| Packet(&ItemRegistryPacket{}))
+	p.register(|| Packet(&UpdateEquipPacket{}))
+	p.register(|| Packet(&SetActorDataPacket{}))
+	p.register(|| Packet(&AddItemActorPacket{}))
+	p.register(|| Packet(&MobEffectPacket{}))
+	p.register(|| Packet(&MovePlayerPacket{}))
+	p.register(|| Packet(&AddActorPacket{}))
+	p.register(|| Packet(&UpdateAttributesPacket{}))
+	p.register(|| Packet(&ChangeDimensionPacket{}))
+	p.register(|| Packet(&SetCommandsEnabledPacket{}))
+	p.register(|| Packet(&UpdateBlockPacket{}))
+	p.register(|| Packet(&BlockEventPacket{}))
+	p.register(|| Packet(&ActorEventPacket{}))
+	p.register(|| Packet(&SetActorLinkPacket{}))
+	p.register(|| Packet(&NetworkChunkPublisherUpdatePacket{}))
+	p.register(|| Packet(&GameRulesChangedPacket{}))
+	p.register(|| Packet(&SettingsCommandPacket{}))
+	p.register(|| Packet(&UpdateSoftEnumPacket{}))
+	p.register(|| Packet(&ModalFormRequestPacket{}))
+	p.register(|| Packet(&ModalFormResponsePacket{}))
+	p.register(|| Packet(&ServerSettingsRequestPacket{}))
+	p.register(|| Packet(&ServerSettingsResponsePacket{}))
+	p.register(|| Packet(&RemoveObjectivePacket{}))
+	p.register(|| Packet(&ToastRequestPacket{}))
+	p.register(|| Packet(&SetTitlePacket{}))
+	p.register(|| Packet(&SetDisplayObjectivePacket{}))
+	p.register(|| Packet(&NpcDialoguePacket{}))
+	p.register(|| Packet(&LevelEventPacket{}))
+	p.register(|| Packet(&StopSoundPacket{}))
+	p.register(|| Packet(&PlaySoundPacket{}))
+	p.register(|| Packet(&SpawnParticleEffectPacket{}))
+	p.register(|| Packet(&PlayerFogPacket{}))
+	p.register(|| Packet(&CameraShakePacket{}))
+	p.register(|| Packet(&AddPaintingPacket{}))
+	p.register(|| Packet(&TransferPacket{}))
+	p.register(|| Packet(&OpenSignPacket{}))
+	p.register(|| Packet(&AnvilDamagePacket{}))
+	p.register(|| Packet(&PlayerStartItemCooldownPacket{}))
+	p.register(|| Packet(&ClientboundCloseFormPacket{}))
+	p.register(|| Packet(&ScriptMessagePacket{}))
+	p.register(|| Packet(&SimulationTypePacket{}))
+	p.register(|| Packet(&DeathInfoPacket{}))
+	p.register(|| Packet(&AwardAchievementPacket{}))
+	p.register(|| Packet(&LevelSoundEventPacket{}))
+	p.register(|| Packet(&AnimateEntityPacket{}))
+	p.register(|| Packet(&MotionPredictionHintsPacket{}))
+	p.register(|| Packet(&NpcRequestPacket{}))
+	p.register(|| Packet(&CompletedUsingItemPacket{}))
+	p.register(|| Packet(&MoveActorDeltaPacket{}))
+	p.register(|| Packet(&SetLastHurtByPacket{}))
+	p.register(|| Packet(&CurrentStructureFeaturePacket{}))
+	p.register(|| Packet(&ServerboundLoadingScreenPacket{}))
+	p.register(|| Packet(&PlayerToggleCrafterSlotRequestPacket{}))
+	p.register(|| Packet(&SetDefaultGameTypePacket{}))
+	p.register(|| Packet(&UpdatePlayerGameTypePacket{}))
+	p.register(|| Packet(&CodeBuilderPacket{}))
+	p.register(|| Packet(&LecternUpdatePacket{}))
+	p.register(|| Packet(&PurchaseReceiptPacket{}))
+	p.register(|| Packet(&ShowProfilePacket{}))
+	p.register(|| Packet(&RequestPermissionsPacket{}))
+	p.register(|| Packet(&ClientCacheBlobStatusPacket{}))
+	p.register(|| Packet(&BossEventPacket{}))
+	p.register(|| Packet(&UpdateBlockSyncedPacket{}))
+	p.register(|| Packet(&BookEditPacket{}))
+	p.register(|| Packet(&CommandRequestPacket{}))
+	p.register(|| Packet(&SetScorePacket{}))
+	p.register(|| Packet(&SetScoreboardIdentityPacket{}))
+	p.register(|| Packet(&ShowStoreOfferPacket{}))
+	p.register(|| Packet(&AgentAnimationPacket{}))
+	p.register(|| Packet(&ServerPlayerPostMovePositionPacket{}))
+	p.register(|| Packet(&UpdateClientInputLocksPacket{}))
+	p.register(|| Packet(&ClientboundControlSchemeSetPacket{}))
+	p.register(|| Packet(&UpdateAdventureSettingsPacket{}))
+	p.register(|| Packet(&MultiplayerSettingsPacket{}))
+	p.register(|| Packet(&SetPlayerInventoryOptionsPacket{}))
+	p.register(|| Packet(&EmoteListPacket{}))
+	p.register(|| Packet(&SetHudPacket{}))
+	p.register(|| Packet(&RequestAbilityPacket{}))
+	p.register(|| Packet(&CodeBuilderSourcePacket{}))
+	p.register(|| Packet(&GameTestRequestPacket{}))
+	p.register(|| Packet(&LessonProgressPacket{}))
+	p.register(|| Packet(&ServerStatsPacket{}))
+	p.register(|| Packet(&PartyChangedPacket{}))
+	p.register(|| Packet(&CommandBlockUpdatePacket{}))
+	p.register(|| Packet(&AddBehaviorTreePacket{}))
+	p.register(|| Packet(&RemoveVolumeEntityPacket{}))
+	p.register(|| Packet(&SyncActorPropertyPacket{}))
+	p.register(|| Packet(&ServerboundDataDrivenScreenClosedPacket{}))
+	p.register(|| Packet(&PartyDestinationCookieResponsePacket{}))
+	p.register(|| Packet(&SendPartyDestinationCookiePacket{}))
+	p.register(|| Packet(&PlayerVideoCapturePacket{}))
+	p.register(|| Packet(&UpdateClientOptionsPacket{}))
+	p.register(|| Packet(&PacketViolationWarningPacket{}))
+	p.register(|| Packet(&MovementEffectPacket{}))
+	p.register(|| Packet(&LegacyTelemetryEventPacket{}))
+	p.register(|| Packet(&CorrectPlayerMovePredictionPacket{}))
+	p.register(|| Packet(&ClientboundTextureShiftPacket{}))
+	p.register(|| Packet(&ChangeMobPropertyPacket{}))
+	p.register(|| Packet(&UpdateTradePacket{}))
+	p.register(|| Packet(&PlayerArmorDamagePacket{}))
+	p.register(|| Packet(&MapInfoRequestPacket{}))
+	p.register(|| Packet(&CameraPacket{}))
+	p.register(|| Packet(&PlayerLocationPacket{}))
+	p.register(|| Packet(&AgentActionEventPacket{}))
+	p.register(|| Packet(&CreatePhotoPacket{}))
+	p.register(|| Packet(&ClientCameraAimAssistPacket{}))
+	p.register(|| Packet(&AutomationClientConnectPacket{}))
+	p.register(|| Packet(&UnlockedRecipesPacket{}))
+	p.register(|| Packet(&EditorNetworkPacket{}))
+	p.register(|| Packet(&EduUriResourcePacket{}))
+	p.register(|| Packet(&FeatureRegistryPacket{}))
+	p.register(|| Packet(&ClientboundDataDrivenUIReloadPacket{}))
+	p.register(|| Packet(&ClientboundDataDrivenUICloseScreenPacket{}))
+	p.register(|| Packet(&ClientboundDataDrivenUIShowScreenPacket{}))
+	p.register(|| Packet(&ResourcePacksReadyForValidationPacket{}))
+	p.register(|| Packet(&ContainerRegistryCleanupPacket{}))
+	p.register(|| Packet(&PlayerUpdateEntityOverridesPacket{}))
+	p.register(|| Packet(&DebugInfoPacket{}))
+	p.register(|| Packet(&PositionTrackingDBClientRequestPacket{}))
+	p.register(|| Packet(&PositionTrackingDBServerBroadcastPacket{}))
+	p.register(|| Packet(&AddVolumeEntityPacket{}))
+	p.register(|| Packet(&MapCreateLockedCopyPacket{}))
+	p.register(|| Packet(&StructureTemplateDataResponsePacket{}))
+	p.register(|| Packet(&SubChunkRequestPacket{}))
+	p.register(|| Packet(&AvailableActorIdentifiersPacket{}))
+	p.register(|| Packet(&GameTestResultsPacket{}))
+	p.register(|| Packet(&LabTablePacket{}))
+	p.register(|| Packet(&ClientboundUpdateSoundDataPacket{}))
+	p.register(|| Packet(&PhotoTransferPacket{}))
+	p.register(|| Packet(&SubClientLoginPacket{}))
+	p.register(|| Packet(&CameraAimAssistPacket{}))
+	p.register(|| Packet(&ClientCacheMissResponsePacket{}))
+	p.register(|| Packet(&UpdateAbilitiesPacket{}))
+	p.register(|| Packet(&JigsawStructureDataPacket{}))
+	p.register(|| Packet(&DimensionDataPacket{}))
+	p.register(|| Packet(&UpdateSubChunkBlocksPacket{}))
+	p.register(|| Packet(&CommandOutputPacket{}))
+	p.register(|| Packet(&LevelChunkPacket{}))
+	p.register(|| Packet(&TrimDataPacket{}))
+	p.register(|| Packet(&ResourcePackStackPacket{}))
+	p.register(|| Packet(&ResourcePacksInfoPacket{}))
+	p.register(|| Packet(&StructureBlockUpdatePacket{}))
+	p.register(|| Packet(&StructureTemplateDataRequestPacket{}))
+	p.register(|| Packet(&SubChunkPacket{}))
+	p.register(|| Packet(&PlayerEnchantOptionsPacket{}))
+	p.register(|| Packet(&LocatorBarPacket{}))
+	p.register(|| Packet(&GraphicsOverrideParameterPacket{}))
+	p.register(|| Packet(&CameraSplinePacket{}))
+	p.register(|| Packet(&CameraAimAssistActorPriorityPacket{}))
+	p.register(|| Packet(&CameraInstructionPacket{}))
+	p.register(|| Packet(&EducationSettingsPacket{}))
+	p.register(|| Packet(&ServerboundPackSettingChangePacket{}))
+	p.register(|| Packet(&ServerStoreInfoPacket{}))
+	p.register(|| Packet(&ServerPresenceInfoPacket{}))
+	p.register(|| Packet(&PlayerSkinPacket{}))
+	p.register(|| Packet(&AddPlayerPacket{}))
+	p.register(|| Packet(&PlayerListPacket{}))
+	p.register(|| Packet(&ClientboundDebugRendererPacket{}))
+	p.register(|| Packet(&ClientMovementPredictionSyncPacket{}))
+	p.register(|| Packet(&LevelEventGenericPacket{}))
+	p.register(|| Packet(&ServerboundDiagnosticsPacket{}))
+	p.register(|| Packet(&ServerboundDataStorePacket{}))
+	p.register(|| Packet(&SyncWorldClocksPacket{}))
+	p.register(|| Packet(&ClientboundAttributeLayerSyncPacket{}))
+	p.register(|| Packet(&ClientboundDataStorePacket{}))
+	p.register(|| Packet(&VoxelShapesPacket{}))
+	p.register(|| Packet(&PrimitiveShapesPacket{}))
+	p.register(|| Packet(&CameraAimAssistPresetsPacket{}))
+	p.register(|| Packet(&CameraPresetsPacket{}))
+	p.register(|| Packet(&ClientboundMapItemDataPacket{}))
+	p.register(|| Packet(&BiomeDefinitionListPacket{}))
+	p.register(|| Packet(&ItemStackRequestPacket{}))
+	p.register(|| Packet(&ItemStackResponsePacket{}))
+	p.register(|| Packet(&InventoryTransactionPacket{}))
+	p.register(|| Packet(&PlayerAuthInputPacket{}))
+	p.register(|| Packet(&CraftingDataPacket{}))
+	p.register(|| Packet(&StartGamePacket{}))
+	p.register(|| Packet(&AvailableCommandsPacket{}))
 	return p
 }
 
