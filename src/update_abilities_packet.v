@@ -2,6 +2,23 @@ module protocol
 
 import serializer
 
+pub const ability_build = 0
+pub const ability_mine = 1
+pub const ability_doors_and_switches = 2
+pub const ability_open_containers = 3
+pub const ability_attack_players = 4
+pub const ability_attack_mobs = 5
+pub const ability_operator_commands = 6
+pub const ability_teleport = 7
+pub const ability_flying = 9
+pub const ability_may_fly = 10
+pub const ability_instabuild = 11
+pub const ability_walk_speed = 14
+
+pub const ability_count = 19
+
+pub const ability_layer_base = u16(1)
+
 pub struct AbilitiesLayer {
 pub mut:
 	layer_id            u16

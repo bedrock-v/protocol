@@ -53,6 +53,23 @@ pub mut:
 	presence_info            JoinPresenceInfo
 }
 
+pub const world_generator_legacy = int(0)
+pub const world_generator_overworld = int(1)
+pub const world_generator_flat = int(2)
+pub const world_generator_nether = int(3)
+pub const world_generator_end = int(4)
+pub const world_generator_void = int(5)
+
+pub const difficulty_peaceful = int(0)
+pub const difficulty_easy = int(1)
+pub const difficulty_normal = int(2)
+pub const difficulty_hard = int(3)
+
+pub const permission_level_visitor = int(0)
+pub const permission_level_member = int(1)
+pub const permission_level_operator = int(2)
+pub const permission_level_custom = int(3)
+
 pub struct StartGamePacket {
 pub mut:
 	entity_unique_id                i64
