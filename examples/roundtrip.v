@@ -1,13 +1,11 @@
 module main
 
 import protocol
-import serializer
-import types
 import nbt
 
 fn roundtrip(p protocol.Packet, mut pool protocol.PacketPool) !protocol.Packet {
 	encoded := protocol.encode_packet_to_bytes(p)
-	mut r := serializer.new_reader(encoded)
+	mut r := protocol.new_reader(encoded)
 	return pool.decode(mut r)!
 }
 
@@ -28,7 +26,7 @@ fn main() {
 	mov := &protocol.MoveActorAbsolutePacket{
 		actor_runtime_id: 123456
 		flags:            1
-		position:         types.Vector3{10.5, 64.0, -20.25}
+		position:         protocol.Vector3{10.5, 64.0, -20.25}
 		pitch:            45.0
 		yaw:              90.0
 		head_yaw:         180.0
@@ -80,9 +78,9 @@ fn main() {
 
 	equip := &protocol.MobEquipmentPacket{
 		actor_runtime_id: 777
-		item: types.ItemStackWrapper{
+		item: protocol.ItemStackWrapper{
 			stack_id: 5
-			item_stack: types.ItemStack{
+			item_stack: protocol.ItemStack{
 				id:               280
 				meta:             0
 				count:            64
@@ -106,21 +104,21 @@ fn main() {
 	content := &protocol.InventoryContentPacket{
 		window_id: 0
 		items: [
-			types.ItemStackWrapper{
-				item_stack: types.ItemStack{
+			protocol.ItemStackWrapper{
+				item_stack: protocol.ItemStack{
 					id: 0
 				}
 			},
-			types.item_stack_wrapper_legacy(types.ItemStack{
+			protocol.item_stack_wrapper_legacy(protocol.ItemStack{
 				id:    5
 				count: 1
 			}),
 		]
-		container_name: types.FullContainerName{
+		container_name: protocol.FullContainerName{
 			container_id: 0
 		}
-		storage: types.ItemStackWrapper{
-			item_stack: types.ItemStack{
+		storage: protocol.ItemStackWrapper{
+			item_stack: protocol.ItemStack{
 				id: 0
 			}
 		}
@@ -135,26 +133,26 @@ fn main() {
 
 	creative := &protocol.CreativeContentPacket{
 		groups: [
-			types.CreativeGroupEntry{
+			protocol.CreativeGroupEntry{
 				category_id:   1
 				category_name: 'construction'
-				icon:          types.ItemStack{
+				icon:          protocol.ItemStack{
 					id: 5
 				}
 			},
 		]
 		items: [
-			types.CreativeItemEntry{
+			protocol.CreativeItemEntry{
 				entry_id: 1
-				item:     types.ItemStack{
+				item:     protocol.ItemStack{
 					id:    5
 					count: 1
 				}
 				group_id: 0
 			},
-			types.CreativeItemEntry{
+			protocol.CreativeItemEntry{
 				entry_id: 2
-				item:     types.ItemStack{
+				item:     protocol.ItemStack{
 					id:    280
 					count: 1
 				}
@@ -176,7 +174,7 @@ fn main() {
 	tile_nbt.set('x', nbt.Tag(i32(10)))
 	tile_nbt.set('CustomName', nbt.Tag('Treasure'))
 	bad := &protocol.BlockActorDataPacket{
-		block_position: types.BlockPosition{10, 64, -3}
+		block_position: protocol.BlockPosition{10, 64, -3}
 		nbt:            nbt.RootTag{
 			name: ''
 			tag:  nbt.Tag(tile_nbt)
@@ -188,38 +186,39 @@ fn main() {
 		dc := d9.nbt.tag as nbt.Compound
 		assert (dc.get('id') or { nbt.Tag('') } as string) == 'Chest'
 		assert (dc.get('x') or { nbt.Tag(i32(0)) } as i32) == 10
-		name := dc.get('CustomName') or { nbt.Tag('') } as string
+		name_tag := dc.get('CustomName') or { nbt.Tag('') }
+		name := name_tag as string
 		println('  -> BlockActorData pos.y=${d9.block_position.y} nbt.id=Chest name=${name} OK')
 	}
 
 	sad := &protocol.SetActorDataPacket{
 		actor_runtime_id: 555
 		metadata: [
-			types.MetadataEntry{
+			protocol.MetadataEntry{
 				key:   0
-				value: types.MetadataProperty(types.MetaLong{
+				value: protocol.MetadataProperty(protocol.MetaLong{
 					value: i64(0x1234)
 				})
 			},
-			types.MetadataEntry{
+			protocol.MetadataEntry{
 				key:   3
-				value: types.MetadataProperty(types.MetaFloat{
+				value: protocol.MetadataProperty(protocol.MetaFloat{
 					value: f32(1.5)
 				})
 			},
-			types.MetadataEntry{
+			protocol.MetadataEntry{
 				key:   16
-				value: types.MetadataProperty(types.MetaString{
+				value: protocol.MetadataProperty(protocol.MetaString{
 					value: 'Slime'
 				})
 			},
 		]
-		synced_properties: types.PropertySyncData{
-			int_properties:   [types.IntProperty{
+		synced_properties: protocol.PropertySyncData{
+			int_properties:   [protocol.IntProperty{
 				key:   1
 				value: -7
 			}]
-			float_properties: [types.FloatProperty{
+			float_properties: [protocol.FloatProperty{
 				key:   2
 				value: f32(3.25)
 			}]
@@ -230,7 +229,7 @@ fn main() {
 	if d10 is protocol.SetActorDataPacket {
 		assert d10.metadata.len == 3
 		assert d10.tick == 999
-		assert (d10.metadata[2].value as types.MetaString).value == 'Slime'
+		assert (d10.metadata[2].value as protocol.MetaString).value == 'Slime'
 		assert d10.synced_properties.int_properties[0].value == -7
 		println('  -> SetActorData meta=${d10.metadata.len} prop.int0=${d10.synced_properties.int_properties[0].value} tick=${d10.tick} OK')
 	}
@@ -239,14 +238,14 @@ fn main() {
 		actor_unique_id:  100
 		actor_runtime_id: 200
 		type:             'minecraft:zombie'
-		position:         types.Vector3{1, 2, 3}
-		motion:           types.Vector3{0, 0, 0}
+		position:         protocol.Vector3{1, 2, 3}
+		motion:           protocol.Vector3{0, 0, 0}
 		pitch:            10.0
 		yaw:              20.0
 		head_yaw:         20.0
 		body_yaw:         20.0
 		attributes: [
-			types.ActorAttribute{
+			protocol.ActorAttribute{
 				id:      'minecraft:health'
 				min:     0.0
 				current: 20.0
@@ -254,15 +253,15 @@ fn main() {
 			},
 		]
 		metadata: [
-			types.MetadataEntry{
+			protocol.MetadataEntry{
 				key:   0
-				value: types.MetadataProperty(types.MetaByte{
+				value: protocol.MetadataProperty(protocol.MetaByte{
 					value: i8(1)
 				})
 			},
 		]
 		links: [
-			types.EntityLink{
+			protocol.EntityLink{
 				from_actor_unique_id: 1
 				to_actor_unique_id:   2
 				type:                 0
@@ -283,7 +282,7 @@ fn main() {
 
 	mp := &protocol.MovePlayerPacket{
 		actor_runtime_id: 5
-		position:         types.Vector3{8, 70, -2}
+		position:         protocol.Vector3{8, 70, -2}
 		pitch:            0.0
 		yaw:              90.0
 		head_yaw:         90.0
@@ -304,7 +303,7 @@ fn main() {
 
 	cd := &protocol.ChangeDimensionPacket{
 		dimension:         1
-		position:          types.Vector3{0, 100, 0}
+		position:          protocol.Vector3{0, 100, 0}
 		respawn:           false
 		loading_screen_id: u32(123)
 	}
@@ -316,11 +315,11 @@ fn main() {
 	}
 
 	ncpu := &protocol.NetworkChunkPublisherUpdatePacket{
-		block_position: types.BlockPosition{0, 64, 0}
+		block_position: protocol.BlockPosition{0, 64, 0}
 		radius:         80
 		saved_chunks: [
-			types.ChunkPosition{1, 2},
-			types.ChunkPosition{-3, 4},
+			protocol.ChunkPosition{1, 2},
+			protocol.ChunkPosition{-3, 4},
 		]
 	}
 	d14 := roundtrip(ncpu, mut pool)!
@@ -333,17 +332,17 @@ fn main() {
 
 	grc := &protocol.GameRulesChangedPacket{
 		game_rules: [
-			types.GameRule{
+			protocol.GameRule{
 				name:                 'doDaylightCycle'
 				is_player_modifiable: true
-				value:                types.GameRuleValue(types.BoolRule{
+				value:                protocol.GameRuleValue(protocol.BoolRule{
 					value: true
 				})
 			},
-			types.GameRule{
+			protocol.GameRule{
 				name:                 'randomTickSpeed'
 				is_player_modifiable: true
-				value:                types.GameRuleValue(types.IntRule{
+				value:                protocol.GameRuleValue(protocol.IntRule{
 					value: u32(3)
 				})
 			},
@@ -352,8 +351,8 @@ fn main() {
 	d15 := roundtrip(grc, mut pool)!
 	if d15 is protocol.GameRulesChangedPacket {
 		assert d15.game_rules.len == 2
-		assert (d15.game_rules[0].value as types.BoolRule).value == true
-		assert (d15.game_rules[1].value as types.IntRule).value == 3
+		assert (d15.game_rules[0].value as protocol.BoolRule).value == true
+		assert (d15.game_rules[1].value as protocol.IntRule).value == 3
 		println('  -> GameRulesChanged rules=${d15.game_rules.len} (${d15.game_rules[0].name}, ${d15.game_rules[1].name}) OK')
 	}
 
@@ -389,7 +388,7 @@ fn main() {
 
 	ps := &protocol.PlaySoundPacket{
 		sound_name:          'random.pop'
-		position:            types.BlockPosition{80, 512, -16}
+		position:            protocol.BlockPosition{80, 512, -16}
 		volume:              1.0
 		pitch:               1.25
 		server_sound_handle: u64(42)
@@ -442,7 +441,7 @@ fn main() {
 
 	lse := &protocol.LevelSoundEventPacket{
 		sound:           'mob.zombie.say'
-		position:        types.Vector3{1, 2, 3}
+		position:        protocol.Vector3{1, 2, 3}
 		extra_data:      -1
 		entity_type:     'minecraft:zombie'
 		is_baby_mob:     false
@@ -503,18 +502,18 @@ fn main() {
 	ss := &protocol.SetScorePacket{
 		type: protocol.set_score_type_change
 		entries: [
-			types.ScorePacketEntry{
+			protocol.ScorePacketEntry{
 				scoreboard_id:   1
 				objective_name:  'kills'
 				score:           42
-				type:            types.score_entry_type_fake_player
+				type:            protocol.score_entry_type_fake_player
 				custom_name:     'Bot'
 			},
-			types.ScorePacketEntry{
+			protocol.ScorePacketEntry{
 				scoreboard_id:   2
 				objective_name:  'kills'
 				score:           7
-				type:            types.score_entry_type_player
+				type:            protocol.score_entry_type_player
 				actor_unique_id: 9001
 			},
 		]
@@ -529,9 +528,9 @@ fn main() {
 
 	cr := &protocol.CommandRequestPacket{
 		command: '/say hi'
-		origin_data: types.CommandOriginData{
+		origin_data: protocol.CommandOriginData{
 			type:                   'player'
-			uuid:                   types.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+			uuid:                   protocol.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
 			request_id:             'req-1'
 			player_actor_unique_id: 5
 		}
@@ -549,7 +548,7 @@ fn main() {
 	el := &protocol.EmoteListPacket{
 		player_actor_runtime_id: 3
 		emote_ids: [
-			types.uuid_from_bytes([u8(16), 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]),
+			protocol.uuid_from_bytes([u8(16), 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]),
 		]
 	}
 	d28 := roundtrip(el, mut pool)!
@@ -561,7 +560,7 @@ fn main() {
 
 	cbu := &protocol.CommandBlockUpdatePacket{
 		is_block:           true
-		block_position:     types.BlockPosition{1, 2, 3}
+		block_position:     protocol.BlockPosition{1, 2, 3}
 		command_block_mode: 0
 		is_redstone_mode:   true
 		is_conditional:     false
@@ -605,8 +604,10 @@ fn main() {
 	d31 := roundtrip(sap, mut pool)!
 	if d31 is protocol.SyncActorPropertyPacket {
 		dc := d31.nbt.tag as nbt.Compound
-		assert (dc.get('speed') or { nbt.Tag(f32(0)) } as f32) == 0.25
-		println('  -> SyncActorProperty nbt.speed=${dc.get('speed') or { nbt.Tag(f32(0)) } as f32} OK')
+		speed_tag := dc.get('speed') or { nbt.Tag(f32(0)) }
+		speed := speed_tag as f32
+		assert speed == 0.25
+		println('  -> SyncActorProperty nbt.speed=${speed} OK')
 	}
 
 	pvw := &protocol.PacketViolationWarningPacket{
@@ -624,9 +625,9 @@ fn main() {
 
 	cmpp := &protocol.CorrectPlayerMovePredictionPacket{
 		prediction_type:          1
-		position:                 types.Vector3{1, 2, 3}
-		delta:                    types.Vector3{0.1, 0.2, 0.3}
-		vehicle_rotation:         types.Vector2{10, 20}
+		position:                 protocol.Vector3{1, 2, 3}
+		delta:                    protocol.Vector3{0.1, 0.2, 0.3}
+		vehicle_rotation:         protocol.Vector2{10, 20}
 		vehicle_angular_velocity: none
 		on_ground:                true
 		tick:                     42
@@ -658,7 +659,7 @@ fn main() {
 	plp := &protocol.PlayerLocationPacket{
 		type:            protocol.player_location_type_coordinates
 		actor_unique_id: 99
-		position:        types.Vector3{5, 6, 7}
+		position:        protocol.Vector3{5, 6, 7}
 	}
 	d35 := roundtrip(plp, mut pool)!
 	if d35 is protocol.PlayerLocationPacket {
@@ -836,10 +837,10 @@ fn main() {
 	}
 
 	usb := &protocol.UpdateSubChunkBlocksPacket{
-		base_block_position: types.BlockPosition{16, 0, 16}
+		base_block_position: protocol.BlockPosition{16, 0, 16}
 		layer0_updates:      [
 			protocol.UpdateSubChunkBlocksEntry{
-				block_position:         types.BlockPosition{1, 2, 3}
+				block_position:         protocol.BlockPosition{1, 2, 3}
 				block_runtime_id:       55
 				update_flags:           2
 				synced_update_actor_id: 999
@@ -857,9 +858,9 @@ fn main() {
 	}
 
 	co := &protocol.CommandOutputPacket{
-		origin_data: types.CommandOriginData{
+		origin_data: protocol.CommandOriginData{
 			type:                   'player'
-			uuid:                   types.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+			uuid:                   protocol.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
 			request_id:             'req-9'
 			player_actor_unique_id: 7
 		}
@@ -884,7 +885,7 @@ fn main() {
 	}
 
 	lc := &protocol.LevelChunkPacket{
-		chunk_position:  types.ChunkPosition{3, -4}
+		chunk_position:  protocol.ChunkPosition{3, -4}
 		dimension_id:    0
 		request_type:    protocol.level_chunk_request_truncated
 		sub_chunk_count: 5
@@ -914,7 +915,8 @@ fn main() {
 	d50 := roundtrip(js, mut pool)!
 	if d50 is protocol.JigsawStructureDataPacket {
 		jc := d50.nbt.tag as nbt.Compound
-		cnt := (jc.get('count') or { nbt.Tag(i32(0)) }) as i32
+		cnt_tag := jc.get('count') or { nbt.Tag(i32(0)) }
+		cnt := cnt_tag as i32
 		assert cnt == 3
 		println('  -> JigsawStructureData nbt.count=${cnt} OK')
 	}
@@ -952,9 +954,9 @@ fn main() {
 			},
 		]
 		base_game_version: '1.21.0'
-		experiments:       types.Experiments{
+		experiments:       protocol.Experiments{
 			entries: [
-				types.ExperimentEntry{
+				protocol.ExperimentEntry{
 					name:    'gametest'
 					enabled: true
 				},
@@ -977,11 +979,11 @@ fn main() {
 		must_accept:            false
 		has_addons:             true
 		has_scripts:            false
-		world_template_id:      types.uuid_from_bytes([u8(9), 8, 7, 6, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6])
+		world_template_id:      protocol.uuid_from_bytes([u8(9), 8, 7, 6, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6])
 		world_template_version: '2.0'
 		entries:                [
 			protocol.ResourcePackInfoEntry{
-				uuid:           types.uuid_from_bytes([u8(1), 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4])
+				uuid:           protocol.uuid_from_bytes([u8(1), 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4])
 				version:        '1.0'
 				size_bytes:     123456789
 				encryption_key: ''
@@ -1004,18 +1006,18 @@ fn main() {
 	}
 
 	sbu := &protocol.StructureBlockUpdatePacket{
-		block_position:        types.BlockPosition{1, 2, 3}
-		structure_editor_data: types.StructureEditorData{
+		block_position:        protocol.BlockPosition{1, 2, 3}
+		structure_editor_data: protocol.StructureEditorData{
 			structure_name:           'house'
 			filtered_structure_name:  'house'
 			structure_data_field:     ''
 			include_players:          true
 			show_bounding_box:        false
 			structure_block_type:     2
-			structure_settings:       types.StructureSettings{
+			structure_settings:       protocol.StructureSettings{
 				palette_name:              'default'
-				dimensions:                types.BlockPosition{5, 5, 5}
-				offset:                    types.BlockPosition{0, 1, 0}
+				dimensions:                protocol.BlockPosition{5, 5, 5}
+				offset:                    protocol.BlockPosition{0, 1, 0}
 				last_touched_by_player_id: 42
 				rotation:                  1
 				mirror:                    0
@@ -1023,7 +1025,7 @@ fn main() {
 				animation_seconds:         0.0
 				integrity_value:           1.0
 				integrity_seed:            7
-				pivot:                     types.Vector3{0, 0, 0}
+				pivot:                     protocol.Vector3{0, 0, 0}
 			}
 			structure_redstone_save_mode: 1
 		}
@@ -1094,12 +1096,12 @@ fn main() {
 	lb := &protocol.LocatorBarPacket{
 		waypoints: [
 			protocol.LocatorBarWaypointPayload{
-				group:    types.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+				group:    protocol.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
 				waypoint: protocol.LocatorBarWaypoint{
 					update_flag:     7
 					visible:         true
 					world_position:  protocol.WorldPosition{
-						position:  types.Vector3{1, 2, 3}
+						position:  protocol.Vector3{1, 2, 3}
 						dimension: 0
 					}
 					texture_path:    none
@@ -1127,11 +1129,11 @@ fn main() {
 		values: [
 			protocol.ParameterKeyframeValue{
 				time:  0.5
-				value: types.Vector3{1, 0, 0}
+				value: protocol.Vector3{1, 0, 0}
 			},
 		]
 		unknown_float:     none
-		unknown_vector3:   types.Vector3{9, 8, 7}
+		unknown_vector3:   protocol.Vector3{9, 8, 7}
 		biome_identifier:  'minecraft:plains'
 		player_identifier: none
 		parameter_type:    2
@@ -1141,7 +1143,7 @@ fn main() {
 	if d58 is protocol.GraphicsOverrideParameterPacket {
 		assert d58.values.len == 1
 		assert d58.unknown_float == none
-		assert (d58.unknown_vector3 or { types.Vector3{} }).x == 9
+		assert (d58.unknown_vector3 or { protocol.Vector3{} }).x == 9
 		assert d58.biome_identifier == 'minecraft:plains'
 		assert d58.reset == true
 		println('  -> GraphicsOverrideParameter values=${d58.values.len} biome=${d58.biome_identifier} OK')
@@ -1154,14 +1156,14 @@ fn main() {
 				instruction: protocol.CameraSplineInstruction{
 					total_time:          5.0
 					ease_type:           1
-					curve:               [types.Vector3{0, 0, 0}, types.Vector3{1, 2, 3}]
+					curve:               [protocol.Vector3{0, 0, 0}, protocol.Vector3{1, 2, 3}]
 					progress_key_frames: [protocol.CameraProgressOption{
 						value:     0.5
 						time:      1.0
 						ease_type: 'linear'
 					}]
 					rotation_options: [protocol.CameraRotationOption{
-						value: types.Vector3{0, 90, 0}
+						value: protocol.Vector3{0, 90, 0}
 						time:  2.0
 						ease:  'in_out'
 					}]
@@ -1206,7 +1208,7 @@ fn main() {
 				type:     1
 				duration: 0.5
 			}
-			camera_position:        types.Vector3{10, 20, 30}
+			camera_position:        protocol.Vector3{10, 20, 30}
 			rotation:               none
 			facing_position:        none
 			view_offset:            none
@@ -1235,7 +1237,7 @@ fn main() {
 		s := d61.set or { protocol.CameraSetInstruction{} }
 		assert s.preset == 4
 		assert (s.ease or { protocol.CameraSetInstructionEase{} }).duration == 0.5
-		assert (s.camera_position or { types.Vector3{} }).x == 10
+		assert (s.camera_position or { protocol.Vector3{} }).x == 10
 		assert s.rotation == none
 		f := d61.fade or { protocol.CameraFadeInstruction{} }
 		assert (f.time or { protocol.CameraFadeInstructionTime{} }).stay == 2.0
@@ -1271,7 +1273,7 @@ fn main() {
 	}
 
 	psc := &protocol.ServerboundPackSettingChangePacket{
-		pack_id:      types.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+		pack_id:      protocol.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
 		setting_name: 'render_distance'
 		setting_type: protocol.pack_setting_type_float
 		float_value:  12.5
@@ -1313,30 +1315,30 @@ fn main() {
 		println('  -> ServerPresenceInfo world=${pinfo.world_name or { '' }} OK')
 	}
 
-	sample_skin := types.SkinData{
+	sample_skin := protocol.SkinData{
 		skin_id:        'skin-1'
 		resource_patch: '{}'
-		skin_image:     types.SkinImage{
+		skin_image:     protocol.SkinImage{
 			width:  2
 			height: 2
 			data:   'abcd'
 		}
-		cape_image:        types.SkinImage{}
-		persona_pieces:    [types.PersonaSkinPiece{
+		cape_image:        protocol.SkinImage{}
+		persona_pieces:    [protocol.PersonaSkinPiece{
 			piece_id:   'p1'
 			piece_type: 'body'
 			pack_id:    'pk'
 			is_default: true
 			product_id: ''
 		}]
-		piece_tint_colors: [types.PersonaPieceTintColor{
+		piece_tint_colors: [protocol.PersonaPieceTintColor{
 			piece_type: 'body'
 			colors:     ['#fff', '#000']
 		}]
 		premium: true
 	}
 	psk := &protocol.PlayerSkinPacket{
-		uuid:          types.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+		uuid:          protocol.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
 		skin:          sample_skin
 		new_skin_name: 'new'
 		old_skin_name: 'old'
@@ -1356,7 +1358,7 @@ fn main() {
 		type:    protocol.player_list_type_add
 		entries: [
 			protocol.PlayerListEntry{
-				uuid:            types.uuid_from_bytes([u8(1), 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4])
+				uuid:            protocol.uuid_from_bytes([u8(1), 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4])
 				actor_unique_id: 50
 				username:        'Steve'
 				xbox_user_id:    'xuid'
@@ -1378,13 +1380,13 @@ fn main() {
 	}
 
 	ap := &protocol.AddPlayerPacket{
-		uuid:             types.uuid_from_bytes([u8(9), 9, 9, 9, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6])
+		uuid:             protocol.uuid_from_bytes([u8(9), 9, 9, 9, 8, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6])
 		username:         'Alex'
 		actor_runtime_id: 321
-		position:         types.Vector3{1, 2, 3}
-		motion:           types.Vector3{0, 0, 0}
-		item:             types.ItemStackWrapper{
-			item_stack: types.ItemStack{
+		position:         protocol.Vector3{1, 2, 3}
+		motion:           protocol.Vector3{0, 0, 0}
+		item:             protocol.ItemStackWrapper{
+			item_stack: protocol.ItemStack{
 				id: 0
 			}
 		}
@@ -1410,7 +1412,7 @@ fn main() {
 		type: 'add_marker'
 		data: protocol.DebugMarkerData{
 			text:            'here'
-			position:        types.Vector3{1, 2, 3}
+			position:        protocol.Vector3{1, 2, 3}
 			color:           0xff00ff00
 			duration_millis: 5000
 		}
@@ -1598,7 +1600,7 @@ fn main() {
 		shapes: [protocol.PacketShapeData{
 			network_id:   99
 			has_location: true
-			location:     types.Vector3{
+			location:     protocol.Vector3{
 				x: 1.0
 				y: 2.0
 				z: 3.0
@@ -1686,11 +1688,11 @@ fn main() {
 		update_flags: protocol.map_update_flag_decoration | protocol.map_update_flag_texture
 		dimension:    0
 		locked_map:   false
-		origin:       types.BlockPosition{1, 2, 3}
+		origin:       protocol.BlockPosition{1, 2, 3}
 		scale:        1
 		tracked_objects: [protocol.MapTrackedObject{
 			type:             protocol.map_object_type_block
-			block_position:   types.BlockPosition{4, 5, 6}
+			block_position:   protocol.BlockPosition{4, 5, 6}
 		}]
 		decorations: [protocol.MapDecoration{
 			type:   1
@@ -1755,14 +1757,14 @@ fn main() {
 					action_type: protocol.stack_request_action_take
 					count:       3
 					source:      protocol.StackRequestSlotInfo{
-						container:        types.FullContainerName{
+						container:        protocol.FullContainerName{
 							container_id: 1
 						}
 						slot:             5
 						stack_network_id: 10
 					}
 					destination: protocol.StackRequestSlotInfo{
-						container:        types.FullContainerName{
+						container:        protocol.FullContainerName{
 							container_id: 2
 						}
 						slot:             6
@@ -1794,7 +1796,7 @@ fn main() {
 			status:     protocol.item_stack_response_status_ok
 			request_id: 7
 			container_info: [protocol.StackResponseContainerInfo{
-				container: types.FullContainerName{
+				container: protocol.FullContainerName{
 					container_id: 1
 				}
 				slot_info: [protocol.StackResponseSlotInfo{
@@ -1824,13 +1826,13 @@ fn main() {
 			has_window_id:  true
 			window_id:      0
 			inventory_slot: 5
-			old_item:       types.ItemStackWrapper{
-				item_stack: types.ItemStack{
+			old_item:       protocol.ItemStackWrapper{
+				item_stack: protocol.ItemStack{
 					id: 0
 				}
 			}
-			new_item: types.ItemStackWrapper{
-				item_stack: types.ItemStack{
+			new_item: protocol.ItemStackWrapper{
+				item_stack: protocol.ItemStack{
 					id: 0
 				}
 			}
@@ -1838,16 +1840,16 @@ fn main() {
 		use_item: protocol.UseItemTransactionData{
 			action_type:      0
 			trigger_type:     1
-			block_position:   types.BlockPosition{1, 2, 3}
+			block_position:   protocol.BlockPosition{1, 2, 3}
 			block_face:       4
 			hotbar_slot:      2
-			held_item:        types.ItemStackWrapper{
-				item_stack: types.ItemStack{
+			held_item:        protocol.ItemStackWrapper{
+				item_stack: protocol.ItemStack{
 					id: 0
 				}
 			}
-			position:         types.Vector3{1.0, 2.0, 3.0}
-			clicked_position: types.Vector3{0.5, 0.5, 0.5}
+			position:         protocol.Vector3{1.0, 2.0, 3.0}
+			clicked_position: protocol.Vector3{0.5, 0.5, 0.5}
 			block_runtime_id: 77
 		}
 	}
@@ -1863,23 +1865,23 @@ fn main() {
 	pai := &protocol.PlayerAuthInputPacket{
 		pitch:             10.0
 		yaw:               20.0
-		position:          types.Vector3{1.0, 2.0, 3.0}
-		move_vector:       types.Vector2{0.5, -0.5}
+		position:          protocol.Vector3{1.0, 2.0, 3.0}
+		move_vector:       protocol.Vector2{0.5, -0.5}
 		head_yaw:          15.0
 		input_data:        [u8(0x80), 0x80, 0x80, 0x80, 0x80, 0x01]
 		input_mode:        1
 		play_mode:         0
 		interaction_model: 1
 		tick:              12345
-		delta:             types.Vector3{0.1, 0.0, -0.1}
+		delta:             protocol.Vector3{0.1, 0.0, -0.1}
 		block_actions: [protocol.PlayerBlockAction{
 			action:         protocol.player_action_start_break
-			block_position: types.BlockPosition{4, 5, 6}
+			block_position: protocol.BlockPosition{4, 5, 6}
 			face:           2
 		}]
-		analogue_move_vector: types.Vector2{0.0, 1.0}
-		camera_orientation:   types.Vector3{0.0, 0.0, 1.0}
-		raw_move_vector:      types.Vector2{0.5, -0.5}
+		analogue_move_vector: protocol.Vector2{0.0, 1.0}
+		camera_orientation:   protocol.Vector3{0.0, 0.0, 1.0}
+		raw_move_vector:      protocol.Vector2{0.5, -0.5}
 	}
 	d86 := roundtrip(pai, mut pool)!
 	if d86 is protocol.PlayerAuthInputPacket {
@@ -1897,17 +1899,17 @@ fn main() {
 			protocol.Recipe{
 				recipe_type: protocol.recipe_shapeless
 				recipe_id:   'minecraft:shapeless_1'
-				input: [types.ItemDescriptorCount{
-					descriptor_type: types.item_descriptor_default
+				input: [protocol.ItemDescriptorCount{
+					descriptor_type: protocol.item_descriptor_default
 					network_id:      5
 					metadata_value:  0
 					count:           1
 				}]
-				output: [types.ItemStack{
+				output: [protocol.ItemStack{
 					id:    280
 					count: 4
 				}]
-				uuid:              types.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+				uuid:              protocol.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
 				block:             'crafting_table'
 				priority:          0
 				recipe_network_id: 1
@@ -1918,22 +1920,22 @@ fn main() {
 				width:       1
 				height:      2
 				input: [
-					types.ItemDescriptorCount{
-						descriptor_type: types.item_descriptor_default
+					protocol.ItemDescriptorCount{
+						descriptor_type: protocol.item_descriptor_default
 						network_id:      5
 						count:           1
 					},
-					types.ItemDescriptorCount{
-						descriptor_type: types.item_descriptor_default
+					protocol.ItemDescriptorCount{
+						descriptor_type: protocol.item_descriptor_default
 						network_id:      6
 						count:           1
 					},
 				]
-				output: [types.ItemStack{
+				output: [protocol.ItemStack{
 					id:    50
 					count: 1
 				}]
-				uuid:              types.uuid_from_bytes([u8(1), 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4])
+				uuid:              protocol.uuid_from_bytes([u8(1), 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4])
 				block:             'crafting_table'
 				assume_symmetry:   true
 				recipe_network_id: 2
@@ -1972,7 +1974,7 @@ fn main() {
 		entity_unique_id:  10
 		entity_runtime_id: 20
 		player_game_mode:  1
-		player_position:   types.Vector3{1.0, 64.0, 2.0}
+		player_position:   protocol.Vector3{1.0, 64.0, 2.0}
 		pitch:             0.0
 		yaw:               90.0
 		world_seed:        123456789
@@ -1981,7 +1983,7 @@ fn main() {
 		generator:         1
 		world_game_mode:   0
 		difficulty:        2
-		world_spawn:       types.BlockPosition{0, 64, 0}
+		world_spawn:       protocol.BlockPosition{0, 64, 0}
 		base_game_version: '1.21.0'
 		level_id:          'level'
 		world_name:        'My World'
@@ -1991,7 +1993,7 @@ fn main() {
 			name: ''
 			tag:  nbt.Tag(sg_props)
 		}
-		world_template_id: types.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+		world_template_id: protocol.uuid_from_bytes([u8(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
 		has_force_experimental_gameplay: false
 		blocks: [protocol.BlockEntry{
 			name:       'minecraft:custom_block'
