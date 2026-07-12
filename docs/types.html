@@ -1,0 +1,1101 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="x-ua-compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>types | vdoc</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+		<link rel="manifest" href="site.webmanifest" />
+		<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5" />
+		<meta name="msapplication-TileColor" content="#da532c" />
+		<meta name="theme-color" content="#ffffff" />
+		<link rel="stylesheet" href="doc.css" />
+		<link rel="stylesheet" href="normalize.css" />
+		<script src="dark-mode.js"></script>
+	</head>
+
+	<body>
+		<div><a id="skip-to-content-link" href="#main-content">Skip to content</a></div>
+		<div id="page">
+			<header class="doc-nav hidden">
+				<div class="heading-container">
+					<div class="heading">
+						<div class="info">
+							<div class="module">protocol</div>
+							<div class="toggle-version-container">
+								<span>0.1.0 3e6ccec</span>
+								<div
+									id="dark-mode-toggle"
+									role="switch"
+									aria-checked="false"
+									aria-label="Toggle dark mode"
+								>
+									<svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg>
+
+								</div>
+							</div>
+							<svg xmlns="http://www.w3.org/2000/svg" id="toggle-menu" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+
+						</div>
+						<div id="search">
+							<input type="text" placeholder="Search... (beta)" autocomplete="off" />
+						</div>
+					</div>
+				</div>
+				<nav class="search hidden"></nav>
+				<nav class="content hidden">
+					<ul>
+						<li class="open">
+<div class="menu-row"><a href="./main.html">main</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./protocol.html">protocol</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./enums.html">enums</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./serializer.html">serializer</a></div>
+</li>
+<li class="open active">
+<div class="menu-row"><a href="./types.html">types</a></div>
+</li>
+
+					</ul>
+				</nav>
+			</header>
+			<div class="doc-scrollview" tabindex="-1" id="main-content">
+				<div class="doc-container">
+					<div class="doc-content">
+								<section id="types" class="doc-node">
+			<div class="title"><h1> types</h1></div>
+
+
+</section>
+
+		<section id="Constants" class="doc-node const">
+			<div class="title"><h2>Constants <a href="#Constants">#</a></h2></div>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> game_rule_type_bool <span class="token operator">=</span> <span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> game_rule_type_int <span class="token operator">=</span> <span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> game_rule_type_float <span class="token operator">=</span> <span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> item_descriptor_invalid <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> item_descriptor_default <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> item_descriptor_molang <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> item_descriptor_item_tag <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> item_descriptor_deferred <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> item_descriptor_complex_alias <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> metadata_type_byte <span class="token operator">=</span> <span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> metadata_type_short <span class="token operator">=</span> <span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> metadata_type_int <span class="token operator">=</span> <span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> metadata_type_float <span class="token operator">=</span> <span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> metadata_type_string <span class="token operator">=</span> <span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> metadata_type_compound_tag <span class="token operator">=</span> <span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> metadata_type_pos <span class="token operator">=</span> <span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> metadata_type_long <span class="token operator">=</span> <span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> metadata_type_vec3 <span class="token operator">=</span> <span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> score_entry_type_player <span class="token operator">=</span> <span class="token number">1</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> score_entry_type_entity <span class="token operator">=</span> <span class="token number">2</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> score_entry_type_fake_player <span class="token operator">=</span> <span class="token number">3</span></code></pre>
+
+
+</section>
+
+		<section id="game_rule_type_id" class="doc-node">
+			<div class="title"><h2>fn game_rule_type_id <a href="#game_rule_type_id">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">game_rule_type_id</span><span class="token punctuation">(</span>v GameRuleValue<span class="token punctuation">)</span> <span class="token builtin">u32</span></code></pre>
+
+
+</section>
+
+		<section id="item_stack_null" class="doc-node">
+			<div class="title"><h2>fn item_stack_null <a href="#item_stack_null">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">item_stack_null</span><span class="token punctuation">(</span><span class="token punctuation">)</span> ItemStack</code></pre>
+
+
+</section>
+
+		<section id="item_stack_wrapper_legacy" class="doc-node">
+			<div class="title"><h2>fn item_stack_wrapper_legacy <a href="#item_stack_wrapper_legacy">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">item_stack_wrapper_legacy</span><span class="token punctuation">(</span>item_stack ItemStack<span class="token punctuation">)</span> ItemStackWrapper</code></pre>
+
+
+</section>
+
+		<section id="metadata_type_id" class="doc-node">
+			<div class="title"><h2>fn metadata_type_id <a href="#metadata_type_id">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">metadata_type_id</span><span class="token punctuation">(</span>p MetadataProperty<span class="token punctuation">)</span> <span class="token builtin">u32</span></code></pre>
+
+
+</section>
+
+		<section id="uuid_from_bytes" class="doc-node">
+			<div class="title"><h2>fn uuid_from_bytes <a href="#uuid_from_bytes">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">uuid_from_bytes</span><span class="token punctuation">(</span>b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span><span class="token punctuation">)</span> UUID</code></pre>
+
+
+</section>
+
+		<section id="GameRuleValue" class="doc-node">
+			<div class="title"><h2>type GameRuleValue <a href="#GameRuleValue">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">type</span> GameRuleValue <span class="token operator">=</span> BoolRule <span class="token operator">|</span> FloatRule <span class="token operator">|</span> IntRule</code></pre>
+
+
+</section>
+
+		<section id="MetadataProperty" class="doc-node">
+			<div class="title"><h2>type MetadataProperty <a href="#MetadataProperty">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">type</span> MetadataProperty <span class="token operator">=</span> MetaBlockPos
+	<span class="token operator">|</span> MetaByte
+	<span class="token operator">|</span> MetaCompound
+	<span class="token operator">|</span> MetaFloat
+	<span class="token operator">|</span> MetaInt
+	<span class="token operator">|</span> MetaLong
+	<span class="token operator">|</span> MetaShort
+	<span class="token operator">|</span> MetaString
+	<span class="token operator">|</span> MetaVec3</code></pre>
+
+
+</section>
+
+		<section id="ActorAttribute" class="doc-node">
+			<div class="title"><h2>struct ActorAttribute <a href="#ActorAttribute">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">ActorAttribute</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	id      <span class="token builtin">string</span>
+	min     <span class="token builtin">f32</span>
+	current <span class="token builtin">f32</span>
+	max     <span class="token builtin">f32</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="AttributeModifier" class="doc-node">
+			<div class="title"><h2>struct AttributeModifier <a href="#AttributeModifier">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">AttributeModifier</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	id           <span class="token builtin">string</span>
+	name         <span class="token builtin">string</span>
+	amount       <span class="token builtin">f32</span>
+	operation    <span class="token builtin">int</span>
+	operand      <span class="token builtin">int</span>
+	serializable <span class="token builtin">bool</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="BlockPosition" class="doc-node">
+			<div class="title"><h2>struct BlockPosition <a href="#BlockPosition">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">BlockPosition</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	x <span class="token builtin">int</span>
+	y <span class="token builtin">int</span>
+	z <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="BoolRule" class="doc-node">
+			<div class="title"><h2>struct BoolRule <a href="#BoolRule">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">BoolRule</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	value <span class="token builtin">bool</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="ChunkPosition" class="doc-node">
+			<div class="title"><h2>struct ChunkPosition <a href="#ChunkPosition">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">ChunkPosition</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	x <span class="token builtin">int</span>
+	z <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="CommandOriginData" class="doc-node">
+			<div class="title"><h2>struct CommandOriginData <a href="#CommandOriginData">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">CommandOriginData</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	<span class="token keyword">type</span>                   <span class="token builtin">string</span>
+	uuid                   UUID
+	request_id             <span class="token builtin">string</span>
+	player_actor_unique_id <span class="token builtin">i64</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="CreativeGroupEntry" class="doc-node">
+			<div class="title"><h2>struct CreativeGroupEntry <a href="#CreativeGroupEntry">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">CreativeGroupEntry</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	category_id   <span class="token builtin">int</span>
+	category_name <span class="token builtin">string</span>
+	icon          ItemStack
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="CreativeItemEntry" class="doc-node">
+			<div class="title"><h2>struct CreativeItemEntry <a href="#CreativeItemEntry">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">CreativeItemEntry</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	entry_id <span class="token builtin">int</span>
+	item     ItemStack
+	group_id <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="EntityLink" class="doc-node">
+			<div class="title"><h2>struct EntityLink <a href="#EntityLink">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">EntityLink</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	from_actor_unique_id     <span class="token builtin">i64</span>
+	to_actor_unique_id       <span class="token builtin">i64</span>
+	<span class="token keyword">type</span>                     <span class="token builtin">int</span>
+	immediate                <span class="token builtin">bool</span>
+	caused_by_rider          <span class="token builtin">bool</span>
+	vehicle_angular_velocity <span class="token builtin">f32</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="ExperimentEntry" class="doc-node">
+			<div class="title"><h2>struct ExperimentEntry <a href="#ExperimentEntry">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">ExperimentEntry</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	name    <span class="token builtin">string</span>
+	enabled <span class="token builtin">bool</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="Experiments" class="doc-node">
+			<div class="title"><h2>struct Experiments <a href="#Experiments">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">Experiments</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	entries             <span class="token punctuation">[</span><span class="token punctuation">]</span>ExperimentEntry
+	has_previously_used <span class="token builtin">bool</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="FloatProperty" class="doc-node">
+			<div class="title"><h2>struct FloatProperty <a href="#FloatProperty">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">FloatProperty</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	key   <span class="token builtin">u32</span>
+	value <span class="token builtin">f32</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="FloatRule" class="doc-node">
+			<div class="title"><h2>struct FloatRule <a href="#FloatRule">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">FloatRule</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	value <span class="token builtin">f32</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="FullContainerName" class="doc-node">
+			<div class="title"><h2>struct FullContainerName <a href="#FullContainerName">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">FullContainerName</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	container_id <span class="token builtin">int</span>
+	dynamic_id   <span class="token operator">?</span><span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="GameRule" class="doc-node">
+			<div class="title"><h2>struct GameRule <a href="#GameRule">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">GameRule</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	name                 <span class="token builtin">string</span>
+	is_player_modifiable <span class="token builtin">bool</span>
+	value                GameRuleValue
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="IntProperty" class="doc-node">
+			<div class="title"><h2>struct IntProperty <a href="#IntProperty">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">IntProperty</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	key   <span class="token builtin">u32</span>
+	value <span class="token builtin">i32</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="IntRule" class="doc-node">
+			<div class="title"><h2>struct IntRule <a href="#IntRule">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">IntRule</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	value <span class="token builtin">u32</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="ItemDescriptorCount" class="doc-node">
+			<div class="title"><h2>struct ItemDescriptorCount <a href="#ItemDescriptorCount">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">ItemDescriptorCount</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	descriptor_type <span class="token builtin">u8</span>
+	network_id      <span class="token builtin">i16</span>
+	metadata_value  <span class="token builtin">i16</span>
+	expression      <span class="token builtin">string</span>
+	version         <span class="token builtin">u8</span>
+	tag             <span class="token builtin">string</span>
+	name            <span class="token builtin">string</span>
+	count           <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="ItemStack" class="doc-node">
+			<div class="title"><h2>struct ItemStack <a href="#ItemStack">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">ItemStack</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	id               <span class="token builtin">int</span>
+	meta             <span class="token builtin">int</span>
+	count            <span class="token builtin">int</span>
+	block_runtime_id <span class="token builtin">int</span>
+	raw_extra_data   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="ItemStack.is_null" class="doc-node">
+			<div class="title"><h2>fn (ItemStack) is_null <a href="#ItemStack.is_null">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>s <span class="token operator">&amp;</span>ItemStack<span class="token punctuation">)</span> <span class="token function">is_null</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+
+</section>
+
+		<section id="ItemStackWrapper" class="doc-node">
+			<div class="title"><h2>struct ItemStackWrapper <a href="#ItemStackWrapper">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">ItemStackWrapper</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	stack_id         <span class="token builtin">int</span>
+	stack_id_variant <span class="token builtin">int</span>
+	item_stack       ItemStack
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="ItemTypeEntry" class="doc-node">
+			<div class="title"><h2>struct ItemTypeEntry <a href="#ItemTypeEntry">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">ItemTypeEntry</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	string_id       <span class="token builtin">string</span>
+	numeric_id      <span class="token builtin">int</span>
+	component_based <span class="token builtin">bool</span>
+	version         <span class="token builtin">int</span>
+	component_nbt   nbt<span class="token punctuation">.</span>RootTag
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="MetaBlockPos" class="doc-node">
+			<div class="title"><h2>struct MetaBlockPos <a href="#MetaBlockPos">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">MetaBlockPos</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	value BlockPosition
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="MetaByte" class="doc-node">
+			<div class="title"><h2>struct MetaByte <a href="#MetaByte">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">MetaByte</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	value <span class="token builtin">i8</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="MetaCompound" class="doc-node">
+			<div class="title"><h2>struct MetaCompound <a href="#MetaCompound">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">MetaCompound</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	value nbt<span class="token punctuation">.</span>RootTag
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="MetaFloat" class="doc-node">
+			<div class="title"><h2>struct MetaFloat <a href="#MetaFloat">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">MetaFloat</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	value <span class="token builtin">f32</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="MetaInt" class="doc-node">
+			<div class="title"><h2>struct MetaInt <a href="#MetaInt">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">MetaInt</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	value <span class="token builtin">i32</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="MetaLong" class="doc-node">
+			<div class="title"><h2>struct MetaLong <a href="#MetaLong">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">MetaLong</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	value <span class="token builtin">i64</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="MetaShort" class="doc-node">
+			<div class="title"><h2>struct MetaShort <a href="#MetaShort">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">MetaShort</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	value <span class="token builtin">i16</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="MetaString" class="doc-node">
+			<div class="title"><h2>struct MetaString <a href="#MetaString">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">MetaString</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	value <span class="token builtin">string</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="MetaVec3" class="doc-node">
+			<div class="title"><h2>struct MetaVec3 <a href="#MetaVec3">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">MetaVec3</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	value Vector3
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="MetadataEntry" class="doc-node">
+			<div class="title"><h2>struct MetadataEntry <a href="#MetadataEntry">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">MetadataEntry</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	key   <span class="token builtin">u32</span>
+	value MetadataProperty
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="PersonaPieceTintColor" class="doc-node">
+			<div class="title"><h2>struct PersonaPieceTintColor <a href="#PersonaPieceTintColor">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">PersonaPieceTintColor</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	piece_type <span class="token builtin">string</span>
+	colors     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="PersonaSkinPiece" class="doc-node">
+			<div class="title"><h2>struct PersonaSkinPiece <a href="#PersonaSkinPiece">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">PersonaSkinPiece</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	piece_id   <span class="token builtin">string</span>
+	piece_type <span class="token builtin">string</span>
+	pack_id    <span class="token builtin">string</span>
+	is_default <span class="token builtin">bool</span>
+	product_id <span class="token builtin">string</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="PropertySyncData" class="doc-node">
+			<div class="title"><h2>struct PropertySyncData <a href="#PropertySyncData">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">PropertySyncData</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	int_properties   <span class="token punctuation">[</span><span class="token punctuation">]</span>IntProperty
+	float_properties <span class="token punctuation">[</span><span class="token punctuation">]</span>FloatProperty
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="ScorePacketEntry" class="doc-node">
+			<div class="title"><h2>struct ScorePacketEntry <a href="#ScorePacketEntry">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">ScorePacketEntry</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	scoreboard_id   <span class="token builtin">i64</span>
+	objective_name  <span class="token builtin">string</span>
+	score           <span class="token builtin">int</span>
+	<span class="token keyword">type</span>            <span class="token builtin">int</span>
+	actor_unique_id <span class="token builtin">i64</span>
+	custom_name     <span class="token builtin">string</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="ScoreboardIdentityEntry" class="doc-node">
+			<div class="title"><h2>struct ScoreboardIdentityEntry <a href="#ScoreboardIdentityEntry">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">ScoreboardIdentityEntry</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	scoreboard_id   <span class="token builtin">i64</span>
+	actor_unique_id <span class="token builtin">i64</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="SkinAnimation" class="doc-node">
+			<div class="title"><h2>struct SkinAnimation <a href="#SkinAnimation">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">SkinAnimation</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	image           SkinImage
+	<span class="token keyword">type</span>            <span class="token builtin">u32</span>
+	frames          <span class="token builtin">f32</span>
+	expression_type <span class="token builtin">u32</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="SkinData" class="doc-node">
+			<div class="title"><h2>struct SkinData <a href="#SkinData">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">SkinData</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	skin_id               <span class="token builtin">string</span>
+	play_fab_id           <span class="token builtin">string</span>
+	resource_patch        <span class="token builtin">string</span>
+	skin_image            SkinImage
+	animations            <span class="token punctuation">[</span><span class="token punctuation">]</span>SkinAnimation
+	cape_image            SkinImage
+	geometry_data         <span class="token builtin">string</span>
+	geometry_data_version <span class="token builtin">string</span>
+	animation_data        <span class="token builtin">string</span>
+	cape_id               <span class="token builtin">string</span>
+	full_skin_id          <span class="token builtin">string</span>
+	arm_size              <span class="token builtin">string</span>
+	skin_color            <span class="token builtin">string</span>
+	persona_pieces        <span class="token punctuation">[</span><span class="token punctuation">]</span>PersonaSkinPiece
+	piece_tint_colors     <span class="token punctuation">[</span><span class="token punctuation">]</span>PersonaPieceTintColor
+	premium               <span class="token builtin">bool</span>
+	persona               <span class="token builtin">bool</span>
+	cape_on_classic       <span class="token builtin">bool</span>
+	is_primary_user       <span class="token builtin">bool</span>
+	override              <span class="token builtin">bool</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="SkinImage" class="doc-node">
+			<div class="title"><h2>struct SkinImage <a href="#SkinImage">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">SkinImage</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	width  <span class="token builtin">u32</span>
+	height <span class="token builtin">u32</span>
+	data   <span class="token builtin">string</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="StructureEditorData" class="doc-node">
+			<div class="title"><h2>struct StructureEditorData <a href="#StructureEditorData">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">StructureEditorData</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	structure_name               <span class="token builtin">string</span>
+	filtered_structure_name      <span class="token builtin">string</span>
+	structure_data_field         <span class="token builtin">string</span>
+	include_players              <span class="token builtin">bool</span>
+	show_bounding_box            <span class="token builtin">bool</span>
+	structure_block_type         <span class="token builtin">int</span>
+	structure_settings           StructureSettings
+	structure_redstone_save_mode <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="StructureSettings" class="doc-node">
+			<div class="title"><h2>struct StructureSettings <a href="#StructureSettings">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">StructureSettings</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	palette_name              <span class="token builtin">string</span>
+	ignore_entities           <span class="token builtin">bool</span>
+	ignore_blocks             <span class="token builtin">bool</span>
+	allow_non_ticking_chunks  <span class="token builtin">bool</span>
+	dimensions                BlockPosition
+	offset                    BlockPosition
+	last_touched_by_player_id <span class="token builtin">i64</span>
+	rotation                  <span class="token builtin">u8</span>
+	mirror                    <span class="token builtin">u8</span>
+	animation_mode            <span class="token builtin">u8</span>
+	animation_seconds         <span class="token builtin">f32</span>
+	integrity_value           <span class="token builtin">f32</span>
+	integrity_seed            <span class="token builtin">u32</span>
+	pivot                     Vector3
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="UUID" class="doc-node">
+			<div class="title"><h2>struct UUID <a href="#UUID">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">UUID</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	bytes <span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span><span class="token builtin">u8</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="UUID.to_array" class="doc-node">
+			<div class="title"><h2>fn (UUID) to_array <a href="#UUID.to_array">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>u <span class="token operator">&amp;</span>UUID<span class="token punctuation">)</span> <span class="token function">to_array</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span></code></pre>
+
+
+</section>
+
+		<section id="UpdateAttribute" class="doc-node">
+			<div class="title"><h2>struct UpdateAttribute <a href="#UpdateAttribute">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">UpdateAttribute</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	id          <span class="token builtin">string</span>
+	min         <span class="token builtin">f32</span>
+	max         <span class="token builtin">f32</span>
+	current     <span class="token builtin">f32</span>
+	default_min <span class="token builtin">f32</span>
+	default_max <span class="token builtin">f32</span>
+	default     <span class="token builtin">f32</span>
+	modifiers   <span class="token punctuation">[</span><span class="token punctuation">]</span>AttributeModifier
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="Vector2" class="doc-node">
+			<div class="title"><h2>struct Vector2 <a href="#Vector2">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">Vector2</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	x <span class="token builtin">f32</span>
+	y <span class="token builtin">f32</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="Vector3" class="doc-node">
+			<div class="title"><h2>struct Vector3 <a href="#Vector3">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">Vector3</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	x <span class="token builtin">f32</span>
+	y <span class="token builtin">f32</span>
+	z <span class="token builtin">f32</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+
+						<div class="footer">Powered by vdoc. Generated on: 13 Jul 2026 00:00:41</div>
+					</div>
+					<div class="doc-toc"><ul><li class="open"><a href="#Constants">Constants</a></li>
+<li class="open"><a href="#game_rule_type_id">fn game_rule_type_id</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#item_stack_null">fn item_stack_null</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#item_stack_wrapper_legacy">fn item_stack_wrapper_legacy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#metadata_type_id">fn metadata_type_id</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#uuid_from_bytes">fn uuid_from_bytes</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#GameRuleValue">type GameRuleValue</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MetadataProperty">type MetadataProperty</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#ActorAttribute">struct ActorAttribute</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#AttributeModifier">struct AttributeModifier</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#BlockPosition">struct BlockPosition</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#BoolRule">struct BoolRule</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#ChunkPosition">struct ChunkPosition</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#CommandOriginData">struct CommandOriginData</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#CreativeGroupEntry">struct CreativeGroupEntry</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#CreativeItemEntry">struct CreativeItemEntry</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#EntityLink">struct EntityLink</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#ExperimentEntry">struct ExperimentEntry</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Experiments">struct Experiments</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#FloatProperty">struct FloatProperty</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#FloatRule">struct FloatRule</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#FullContainerName">struct FullContainerName</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#GameRule">struct GameRule</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#IntProperty">struct IntProperty</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#IntRule">struct IntRule</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#ItemDescriptorCount">struct ItemDescriptorCount</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#ItemStack">struct ItemStack</a>        <ul>
+<li><a href="#ItemStack.is_null">fn is_null</a></li>
+</ul>
+</li>
+<li class="open"><a href="#ItemStackWrapper">struct ItemStackWrapper</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#ItemTypeEntry">struct ItemTypeEntry</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MetaBlockPos">struct MetaBlockPos</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MetaByte">struct MetaByte</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MetaCompound">struct MetaCompound</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MetaFloat">struct MetaFloat</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MetaInt">struct MetaInt</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MetaLong">struct MetaLong</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MetaShort">struct MetaShort</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MetaString">struct MetaString</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MetaVec3">struct MetaVec3</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MetadataEntry">struct MetadataEntry</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#PersonaPieceTintColor">struct PersonaPieceTintColor</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#PersonaSkinPiece">struct PersonaSkinPiece</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#PropertySyncData">struct PropertySyncData</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#ScorePacketEntry">struct ScorePacketEntry</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#ScoreboardIdentityEntry">struct ScoreboardIdentityEntry</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#SkinAnimation">struct SkinAnimation</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#SkinData">struct SkinData</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#SkinImage">struct SkinImage</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#StructureEditorData">struct StructureEditorData</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#StructureSettings">struct StructureSettings</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#UUID">struct UUID</a>        <ul>
+<li><a href="#UUID.to_array">fn to_array</a></li>
+</ul>
+</li>
+<li class="open"><a href="#UpdateAttribute">struct UpdateAttribute</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Vector2">struct Vector2</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Vector3">struct Vector3</a>        <ul>
+</ul>
+</li>
+</ul></div>
+				</div>
+			</div>
+		</div>
+		<script src="doc.js"></script>
+		<script async src="search_index.js"></script>
+	</body>
+</html>

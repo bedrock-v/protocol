@@ -1,0 +1,1160 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="x-ua-compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>serializer | vdoc</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+		<link rel="manifest" href="site.webmanifest" />
+		<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5" />
+		<meta name="msapplication-TileColor" content="#da532c" />
+		<meta name="theme-color" content="#ffffff" />
+		<link rel="stylesheet" href="doc.css" />
+		<link rel="stylesheet" href="normalize.css" />
+		<script src="dark-mode.js"></script>
+	</head>
+
+	<body>
+		<div><a id="skip-to-content-link" href="#main-content">Skip to content</a></div>
+		<div id="page">
+			<header class="doc-nav hidden">
+				<div class="heading-container">
+					<div class="heading">
+						<div class="info">
+							<div class="module">protocol</div>
+							<div class="toggle-version-container">
+								<span>0.1.0 3e6ccec</span>
+								<div
+									id="dark-mode-toggle"
+									role="switch"
+									aria-checked="false"
+									aria-label="Toggle dark mode"
+								>
+									<svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg>
+
+								</div>
+							</div>
+							<svg xmlns="http://www.w3.org/2000/svg" id="toggle-menu" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+
+						</div>
+						<div id="search">
+							<input type="text" placeholder="Search... (beta)" autocomplete="off" />
+						</div>
+					</div>
+				</div>
+				<nav class="search hidden"></nav>
+				<nav class="content hidden">
+					<ul>
+						<li class="open">
+<div class="menu-row"><a href="./main.html">main</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./protocol.html">protocol</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./enums.html">enums</a></div>
+</li>
+<li class="open active">
+<div class="menu-row"><a href="./serializer.html">serializer</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./types.html">types</a></div>
+</li>
+
+					</ul>
+				</nav>
+			</header>
+			<div class="doc-scrollview" tabindex="-1" id="main-content">
+				<div class="doc-container">
+					<div class="doc-content">
+								<section id="serializer" class="doc-node">
+			<div class="title"><h1> serializer</h1></div>
+
+
+</section>
+
+		<section id="new_reader" class="doc-node">
+			<div class="title"><h2>fn new_reader <a href="#new_reader">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">new_reader</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span><span class="token punctuation">)</span> Reader</code></pre>
+
+
+</section>
+
+		<section id="new_writer" class="doc-node">
+			<div class="title"><h2>fn new_writer <a href="#new_writer">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">new_writer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> Writer</code></pre>
+
+
+</section>
+
+		<section id="Reader" class="doc-node">
+			<div class="title"><h2>struct Reader <a href="#Reader">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">Reader</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	offset <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.be_f32" class="doc-node">
+			<div class="title"><h2>fn (Reader) be_f32 <a href="#Reader.be_f32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">be_f32</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f32</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.be_i16" class="doc-node">
+			<div class="title"><h2>fn (Reader) be_i16 <a href="#Reader.be_i16">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">be_i16</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">i16</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.be_i32" class="doc-node">
+			<div class="title"><h2>fn (Reader) be_i32 <a href="#Reader.be_i32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">be_i32</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">i32</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.be_i64" class="doc-node">
+			<div class="title"><h2>fn (Reader) be_i64 <a href="#Reader.be_i64">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">be_i64</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">i64</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.be_u16" class="doc-node">
+			<div class="title"><h2>fn (Reader) be_u16 <a href="#Reader.be_u16">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">be_u16</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">u16</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.be_u32" class="doc-node">
+			<div class="title"><h2>fn (Reader) be_u32 <a href="#Reader.be_u32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">be_u32</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">u32</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.be_u64" class="doc-node">
+			<div class="title"><h2>fn (Reader) be_u64 <a href="#Reader.be_u64">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">be_u64</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">u64</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.bool" class="doc-node">
+			<div class="title"><h2>fn (Reader) bool <a href="#Reader.bool">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token builtin">bool</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">bool</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.i8" class="doc-node">
+			<div class="title"><h2>fn (Reader) i8 <a href="#Reader.i8">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token builtin">i8</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">i8</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.le_f32" class="doc-node">
+			<div class="title"><h2>fn (Reader) le_f32 <a href="#Reader.le_f32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">le_f32</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f32</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.le_f64" class="doc-node">
+			<div class="title"><h2>fn (Reader) le_f64 <a href="#Reader.le_f64">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">le_f64</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.le_i16" class="doc-node">
+			<div class="title"><h2>fn (Reader) le_i16 <a href="#Reader.le_i16">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">le_i16</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">i16</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.le_i32" class="doc-node">
+			<div class="title"><h2>fn (Reader) le_i32 <a href="#Reader.le_i32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">le_i32</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">i32</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.le_i64" class="doc-node">
+			<div class="title"><h2>fn (Reader) le_i64 <a href="#Reader.le_i64">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">le_i64</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">i64</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.le_u16" class="doc-node">
+			<div class="title"><h2>fn (Reader) le_u16 <a href="#Reader.le_u16">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">le_u16</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">u16</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.le_u32" class="doc-node">
+			<div class="title"><h2>fn (Reader) le_u32 <a href="#Reader.le_u32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">le_u32</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">u32</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.le_u64" class="doc-node">
+			<div class="title"><h2>fn (Reader) le_u64 <a href="#Reader.le_u64">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">le_u64</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">u64</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.read_actor_runtime_id" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_actor_runtime_id <a href="#Reader.read_actor_runtime_id">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_actor_runtime_id</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">u64</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.read_actor_unique_id" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_actor_unique_id <a href="#Reader.read_actor_unique_id">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_actor_unique_id</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">i64</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.read_attribute_modifier" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_attribute_modifier <a href="#Reader.read_attribute_modifier">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_attribute_modifier</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>AttributeModifier</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_block_position" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_block_position <a href="#Reader.read_block_position">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_block_position</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>BlockPosition</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_chunk_position" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_chunk_position <a href="#Reader.read_chunk_position">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_chunk_position</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>ChunkPosition</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_command_origin_data" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_command_origin_data <a href="#Reader.read_command_origin_data">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_command_origin_data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>CommandOriginData</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_creative_group_entry" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_creative_group_entry <a href="#Reader.read_creative_group_entry">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_creative_group_entry</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>CreativeGroupEntry</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_creative_item_entry" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_creative_item_entry <a href="#Reader.read_creative_item_entry">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_creative_item_entry</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>CreativeItemEntry</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_creative_item_net_id" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_creative_item_net_id <a href="#Reader.read_creative_item_net_id">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_creative_item_net_id</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">int</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.read_entity_link" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_entity_link <a href="#Reader.read_entity_link">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_entity_link</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>EntityLink</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_entity_metadata" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_entity_metadata <a href="#Reader.read_entity_metadata">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_entity_metadata</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span>types<span class="token punctuation">.</span>MetadataEntry</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_experiments" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_experiments <a href="#Reader.read_experiments">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_experiments</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>Experiments</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_full_container_name" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_full_container_name <a href="#Reader.read_full_container_name">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_full_container_name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>FullContainerName</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_game_rule_value" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_game_rule_value <a href="#Reader.read_game_rule_value">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_game_rule_value</span><span class="token punctuation">(</span>type_id <span class="token builtin">u32</span><span class="token punctuation">,</span> is_start_game <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>GameRuleValue</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_game_rules" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_game_rules <a href="#Reader.read_game_rules">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_game_rules</span><span class="token punctuation">(</span>is_start_game <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span>types<span class="token punctuation">.</span>GameRule</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_item_descriptor_count" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_item_descriptor_count <a href="#Reader.read_item_descriptor_count">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_item_descriptor_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>ItemDescriptorCount</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_item_stack_without_stack_id" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_item_stack_without_stack_id <a href="#Reader.read_item_stack_without_stack_id">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_item_stack_without_stack_id</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>ItemStack</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_item_stack_wrapper" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_item_stack_wrapper <a href="#Reader.read_item_stack_wrapper">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_item_stack_wrapper</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>ItemStackWrapper</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_metadata_property" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_metadata_property <a href="#Reader.read_metadata_property">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_metadata_property</span><span class="token punctuation">(</span>type_id <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>MetadataProperty</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_nbt_compound_root" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_nbt_compound_root <a href="#Reader.read_nbt_compound_root">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_nbt_compound_root</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>nbt<span class="token punctuation">.</span>RootTag</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_network_item_stack_descriptor" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_network_item_stack_descriptor <a href="#Reader.read_network_item_stack_descriptor">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_network_item_stack_descriptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>ItemStackWrapper</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_property_sync_data" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_property_sync_data <a href="#Reader.read_property_sync_data">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_property_sync_data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>PropertySyncData</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_raw" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_raw <a href="#Reader.read_raw">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_raw</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.read_rotation_byte" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_rotation_byte <a href="#Reader.read_rotation_byte">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_rotation_byte</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f32</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.read_skin" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_skin <a href="#Reader.read_skin">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_skin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>SkinData</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_string" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_string <a href="#Reader.read_string">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_string</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">string</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.read_string_bytes" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_string_bytes <a href="#Reader.read_string_bytes">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_string_bytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.read_structure_editor_data" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_structure_editor_data <a href="#Reader.read_structure_editor_data">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_structure_editor_data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>StructureEditorData</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_structure_settings" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_structure_settings <a href="#Reader.read_structure_settings">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_structure_settings</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>StructureSettings</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_update_attribute" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_update_attribute <a href="#Reader.read_update_attribute">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_update_attribute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>UpdateAttribute</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_uuid" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_uuid <a href="#Reader.read_uuid">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_uuid</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>UUID</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_varint32" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_varint32 <a href="#Reader.read_varint32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_varint32</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">i32</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.read_varint64" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_varint64 <a href="#Reader.read_varint64">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_varint64</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">i64</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.read_varuint32" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_varuint32 <a href="#Reader.read_varuint32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_varuint32</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">u32</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.read_varuint64" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_varuint64 <a href="#Reader.read_varuint64">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_varuint64</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">u64</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.read_vector2" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_vector2 <a href="#Reader.read_vector2">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_vector2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>Vector2</code></pre>
+
+
+</section>
+
+		<section id="Reader.read_vector3" class="doc-node">
+			<div class="title"><h2>fn (Reader) read_vector3 <a href="#Reader.read_vector3">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token function">read_vector3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>types<span class="token punctuation">.</span>Vector3</code></pre>
+
+
+</section>
+
+		<section id="Reader.remaining" class="doc-node">
+			<div class="title"><h2>fn (Reader) remaining <a href="#Reader.remaining">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>r <span class="token operator">&amp;</span>Reader<span class="token punctuation">)</span> <span class="token function">remaining</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+
+
+</section>
+
+		<section id="Reader.u8" class="doc-node">
+			<div class="title"><h2>fn (Reader) u8 <a href="#Reader.u8">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r Reader<span class="token punctuation">)</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">u8</span></code></pre>
+
+
+</section>
+
+		<section id="Writer" class="doc-node">
+			<div class="title"><h2>struct Writer <a href="#Writer">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">Writer</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.be_f32" class="doc-node">
+			<div class="title"><h2>fn (Writer) be_f32 <a href="#Writer.be_f32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">be_f32</span><span class="token punctuation">(</span>v <span class="token builtin">f32</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.be_i16" class="doc-node">
+			<div class="title"><h2>fn (Writer) be_i16 <a href="#Writer.be_i16">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">be_i16</span><span class="token punctuation">(</span>v <span class="token builtin">i16</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.be_i32" class="doc-node">
+			<div class="title"><h2>fn (Writer) be_i32 <a href="#Writer.be_i32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">be_i32</span><span class="token punctuation">(</span>v <span class="token builtin">i32</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.be_i64" class="doc-node">
+			<div class="title"><h2>fn (Writer) be_i64 <a href="#Writer.be_i64">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">be_i64</span><span class="token punctuation">(</span>v <span class="token builtin">i64</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.be_u16" class="doc-node">
+			<div class="title"><h2>fn (Writer) be_u16 <a href="#Writer.be_u16">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">be_u16</span><span class="token punctuation">(</span>v <span class="token builtin">u16</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.be_u32" class="doc-node">
+			<div class="title"><h2>fn (Writer) be_u32 <a href="#Writer.be_u32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">be_u32</span><span class="token punctuation">(</span>v <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.be_u64" class="doc-node">
+			<div class="title"><h2>fn (Writer) be_u64 <a href="#Writer.be_u64">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">be_u64</span><span class="token punctuation">(</span>v <span class="token builtin">u64</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.bool" class="doc-node">
+			<div class="title"><h2>fn (Writer) bool <a href="#Writer.bool">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token builtin">bool</span><span class="token punctuation">(</span>v <span class="token builtin">bool</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.bytes" class="doc-node">
+			<div class="title"><h2>fn (Writer) bytes <a href="#Writer.bytes">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>w <span class="token operator">&amp;</span>Writer<span class="token punctuation">)</span> <span class="token function">bytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.i8" class="doc-node">
+			<div class="title"><h2>fn (Writer) i8 <a href="#Writer.i8">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token builtin">i8</span><span class="token punctuation">(</span>v <span class="token builtin">i8</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.le_f32" class="doc-node">
+			<div class="title"><h2>fn (Writer) le_f32 <a href="#Writer.le_f32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">le_f32</span><span class="token punctuation">(</span>v <span class="token builtin">f32</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.le_f64" class="doc-node">
+			<div class="title"><h2>fn (Writer) le_f64 <a href="#Writer.le_f64">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">le_f64</span><span class="token punctuation">(</span>v <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.le_i16" class="doc-node">
+			<div class="title"><h2>fn (Writer) le_i16 <a href="#Writer.le_i16">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">le_i16</span><span class="token punctuation">(</span>v <span class="token builtin">i16</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.le_i32" class="doc-node">
+			<div class="title"><h2>fn (Writer) le_i32 <a href="#Writer.le_i32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">le_i32</span><span class="token punctuation">(</span>v <span class="token builtin">i32</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.le_i64" class="doc-node">
+			<div class="title"><h2>fn (Writer) le_i64 <a href="#Writer.le_i64">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">le_i64</span><span class="token punctuation">(</span>v <span class="token builtin">i64</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.le_u16" class="doc-node">
+			<div class="title"><h2>fn (Writer) le_u16 <a href="#Writer.le_u16">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">le_u16</span><span class="token punctuation">(</span>v <span class="token builtin">u16</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.le_u32" class="doc-node">
+			<div class="title"><h2>fn (Writer) le_u32 <a href="#Writer.le_u32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">le_u32</span><span class="token punctuation">(</span>v <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.le_u64" class="doc-node">
+			<div class="title"><h2>fn (Writer) le_u64 <a href="#Writer.le_u64">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">le_u64</span><span class="token punctuation">(</span>v <span class="token builtin">u64</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.u8" class="doc-node">
+			<div class="title"><h2>fn (Writer) u8 <a href="#Writer.u8">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token builtin">u8</span><span class="token punctuation">(</span>v <span class="token builtin">u8</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_actor_runtime_id" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_actor_runtime_id <a href="#Writer.write_actor_runtime_id">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_actor_runtime_id</span><span class="token punctuation">(</span>v <span class="token builtin">u64</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_actor_unique_id" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_actor_unique_id <a href="#Writer.write_actor_unique_id">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_actor_unique_id</span><span class="token punctuation">(</span>v <span class="token builtin">i64</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_attribute_modifier" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_attribute_modifier <a href="#Writer.write_attribute_modifier">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_attribute_modifier</span><span class="token punctuation">(</span>m types<span class="token punctuation">.</span>AttributeModifier<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_block_position" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_block_position <a href="#Writer.write_block_position">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_block_position</span><span class="token punctuation">(</span>v types<span class="token punctuation">.</span>BlockPosition<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_chunk_position" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_chunk_position <a href="#Writer.write_chunk_position">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_chunk_position</span><span class="token punctuation">(</span>pos types<span class="token punctuation">.</span>ChunkPosition<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_command_origin_data" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_command_origin_data <a href="#Writer.write_command_origin_data">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_command_origin_data</span><span class="token punctuation">(</span>data types<span class="token punctuation">.</span>CommandOriginData<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_creative_group_entry" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_creative_group_entry <a href="#Writer.write_creative_group_entry">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_creative_group_entry</span><span class="token punctuation">(</span>entry types<span class="token punctuation">.</span>CreativeGroupEntry<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_creative_item_entry" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_creative_item_entry <a href="#Writer.write_creative_item_entry">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_creative_item_entry</span><span class="token punctuation">(</span>entry types<span class="token punctuation">.</span>CreativeItemEntry<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_creative_item_net_id" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_creative_item_net_id <a href="#Writer.write_creative_item_net_id">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_creative_item_net_id</span><span class="token punctuation">(</span>id <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_entity_link" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_entity_link <a href="#Writer.write_entity_link">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_entity_link</span><span class="token punctuation">(</span>link types<span class="token punctuation">.</span>EntityLink<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_entity_metadata" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_entity_metadata <a href="#Writer.write_entity_metadata">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_entity_metadata</span><span class="token punctuation">(</span>entries <span class="token punctuation">[</span><span class="token punctuation">]</span>types<span class="token punctuation">.</span>MetadataEntry<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_experiments" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_experiments <a href="#Writer.write_experiments">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_experiments</span><span class="token punctuation">(</span>e types<span class="token punctuation">.</span>Experiments<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_full_container_name" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_full_container_name <a href="#Writer.write_full_container_name">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_full_container_name</span><span class="token punctuation">(</span>name types<span class="token punctuation">.</span>FullContainerName<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_game_rule_value" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_game_rule_value <a href="#Writer.write_game_rule_value">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_game_rule_value</span><span class="token punctuation">(</span>value types<span class="token punctuation">.</span>GameRuleValue<span class="token punctuation">,</span> is_start_game <span class="token builtin">bool</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_game_rules" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_game_rules <a href="#Writer.write_game_rules">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_game_rules</span><span class="token punctuation">(</span>rules <span class="token punctuation">[</span><span class="token punctuation">]</span>types<span class="token punctuation">.</span>GameRule<span class="token punctuation">,</span> is_start_game <span class="token builtin">bool</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_item_descriptor_count" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_item_descriptor_count <a href="#Writer.write_item_descriptor_count">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_item_descriptor_count</span><span class="token punctuation">(</span>d types<span class="token punctuation">.</span>ItemDescriptorCount<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_item_stack_without_stack_id" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_item_stack_without_stack_id <a href="#Writer.write_item_stack_without_stack_id">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_item_stack_without_stack_id</span><span class="token punctuation">(</span>s types<span class="token punctuation">.</span>ItemStack<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_item_stack_wrapper" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_item_stack_wrapper <a href="#Writer.write_item_stack_wrapper">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_item_stack_wrapper</span><span class="token punctuation">(</span>wrapper types<span class="token punctuation">.</span>ItemStackWrapper<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_metadata_property" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_metadata_property <a href="#Writer.write_metadata_property">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_metadata_property</span><span class="token punctuation">(</span>p types<span class="token punctuation">.</span>MetadataProperty<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_nbt_compound_root" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_nbt_compound_root <a href="#Writer.write_nbt_compound_root">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_nbt_compound_root</span><span class="token punctuation">(</span>root nbt<span class="token punctuation">.</span>RootTag<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_network_item_stack_descriptor" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_network_item_stack_descriptor <a href="#Writer.write_network_item_stack_descriptor">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_network_item_stack_descriptor</span><span class="token punctuation">(</span>wrapper types<span class="token punctuation">.</span>ItemStackWrapper<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_property_sync_data" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_property_sync_data <a href="#Writer.write_property_sync_data">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_property_sync_data</span><span class="token punctuation">(</span>data types<span class="token punctuation">.</span>PropertySyncData<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_raw" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_raw <a href="#Writer.write_raw">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_raw</span><span class="token punctuation">(</span>b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_rotation_byte" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_rotation_byte <a href="#Writer.write_rotation_byte">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_rotation_byte</span><span class="token punctuation">(</span>v <span class="token builtin">f32</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_skin" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_skin <a href="#Writer.write_skin">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_skin</span><span class="token punctuation">(</span>s types<span class="token punctuation">.</span>SkinData<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_string" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_string <a href="#Writer.write_string">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_string</span><span class="token punctuation">(</span>v <span class="token builtin">string</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_string_bytes" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_string_bytes <a href="#Writer.write_string_bytes">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_string_bytes</span><span class="token punctuation">(</span>v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_structure_editor_data" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_structure_editor_data <a href="#Writer.write_structure_editor_data">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_structure_editor_data</span><span class="token punctuation">(</span>d types<span class="token punctuation">.</span>StructureEditorData<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_structure_settings" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_structure_settings <a href="#Writer.write_structure_settings">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_structure_settings</span><span class="token punctuation">(</span>s types<span class="token punctuation">.</span>StructureSettings<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_update_attribute" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_update_attribute <a href="#Writer.write_update_attribute">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_update_attribute</span><span class="token punctuation">(</span>a types<span class="token punctuation">.</span>UpdateAttribute<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_uuid" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_uuid <a href="#Writer.write_uuid">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_uuid</span><span class="token punctuation">(</span>u types<span class="token punctuation">.</span>UUID<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_varint32" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_varint32 <a href="#Writer.write_varint32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_varint32</span><span class="token punctuation">(</span>value <span class="token builtin">i32</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_varint64" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_varint64 <a href="#Writer.write_varint64">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_varint64</span><span class="token punctuation">(</span>value <span class="token builtin">i64</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_varuint32" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_varuint32 <a href="#Writer.write_varuint32">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_varuint32</span><span class="token punctuation">(</span>value <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_varuint64" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_varuint64 <a href="#Writer.write_varuint64">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_varuint64</span><span class="token punctuation">(</span>value <span class="token builtin">u64</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_vector2" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_vector2 <a href="#Writer.write_vector2">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_vector2</span><span class="token punctuation">(</span>v types<span class="token punctuation">.</span>Vector2<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="Writer.write_vector3" class="doc-node">
+			<div class="title"><h2>fn (Writer) write_vector3 <a href="#Writer.write_vector3">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> w Writer<span class="token punctuation">)</span> <span class="token function">write_vector3</span><span class="token punctuation">(</span>v types<span class="token punctuation">.</span>Vector3<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+
+						<div class="footer">Powered by vdoc. Generated on: 13 Jul 2026 00:00:41</div>
+					</div>
+					<div class="doc-toc"><ul><li class="open"><a href="#new_reader">fn new_reader</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#new_writer">fn new_writer</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Reader">struct Reader</a>        <ul>
+<li><a href="#Reader.be_f32">fn be_f32</a></li>
+<li><a href="#Reader.be_i16">fn be_i16</a></li>
+<li><a href="#Reader.be_i32">fn be_i32</a></li>
+<li><a href="#Reader.be_i64">fn be_i64</a></li>
+<li><a href="#Reader.be_u16">fn be_u16</a></li>
+<li><a href="#Reader.be_u32">fn be_u32</a></li>
+<li><a href="#Reader.be_u64">fn be_u64</a></li>
+<li><a href="#Reader.bool">fn bool</a></li>
+<li><a href="#Reader.i8">fn i8</a></li>
+<li><a href="#Reader.le_f32">fn le_f32</a></li>
+<li><a href="#Reader.le_f64">fn le_f64</a></li>
+<li><a href="#Reader.le_i16">fn le_i16</a></li>
+<li><a href="#Reader.le_i32">fn le_i32</a></li>
+<li><a href="#Reader.le_i64">fn le_i64</a></li>
+<li><a href="#Reader.le_u16">fn le_u16</a></li>
+<li><a href="#Reader.le_u32">fn le_u32</a></li>
+<li><a href="#Reader.le_u64">fn le_u64</a></li>
+<li><a href="#Reader.read_actor_runtime_id">fn read_actor_runtime_id</a></li>
+<li><a href="#Reader.read_actor_unique_id">fn read_actor_unique_id</a></li>
+<li><a href="#Reader.read_attribute_modifier">fn read_attribute_modifier</a></li>
+<li><a href="#Reader.read_block_position">fn read_block_position</a></li>
+<li><a href="#Reader.read_chunk_position">fn read_chunk_position</a></li>
+<li><a href="#Reader.read_command_origin_data">fn read_command_origin_data</a></li>
+<li><a href="#Reader.read_creative_group_entry">fn read_creative_group_entry</a></li>
+<li><a href="#Reader.read_creative_item_entry">fn read_creative_item_entry</a></li>
+<li><a href="#Reader.read_creative_item_net_id">fn read_creative_item_net_id</a></li>
+<li><a href="#Reader.read_entity_link">fn read_entity_link</a></li>
+<li><a href="#Reader.read_entity_metadata">fn read_entity_metadata</a></li>
+<li><a href="#Reader.read_experiments">fn read_experiments</a></li>
+<li><a href="#Reader.read_full_container_name">fn read_full_container_name</a></li>
+<li><a href="#Reader.read_game_rule_value">fn read_game_rule_value</a></li>
+<li><a href="#Reader.read_game_rules">fn read_game_rules</a></li>
+<li><a href="#Reader.read_item_descriptor_count">fn read_item_descriptor_count</a></li>
+<li><a href="#Reader.read_item_stack_without_stack_id">fn read_item_stack_without_stack_id</a></li>
+<li><a href="#Reader.read_item_stack_wrapper">fn read_item_stack_wrapper</a></li>
+<li><a href="#Reader.read_metadata_property">fn read_metadata_property</a></li>
+<li><a href="#Reader.read_nbt_compound_root">fn read_nbt_compound_root</a></li>
+<li><a href="#Reader.read_network_item_stack_descriptor">fn read_network_item_stack_descriptor</a></li>
+<li><a href="#Reader.read_property_sync_data">fn read_property_sync_data</a></li>
+<li><a href="#Reader.read_raw">fn read_raw</a></li>
+<li><a href="#Reader.read_rotation_byte">fn read_rotation_byte</a></li>
+<li><a href="#Reader.read_skin">fn read_skin</a></li>
+<li><a href="#Reader.read_string">fn read_string</a></li>
+<li><a href="#Reader.read_string_bytes">fn read_string_bytes</a></li>
+<li><a href="#Reader.read_structure_editor_data">fn read_structure_editor_data</a></li>
+<li><a href="#Reader.read_structure_settings">fn read_structure_settings</a></li>
+<li><a href="#Reader.read_update_attribute">fn read_update_attribute</a></li>
+<li><a href="#Reader.read_uuid">fn read_uuid</a></li>
+<li><a href="#Reader.read_varint32">fn read_varint32</a></li>
+<li><a href="#Reader.read_varint64">fn read_varint64</a></li>
+<li><a href="#Reader.read_varuint32">fn read_varuint32</a></li>
+<li><a href="#Reader.read_varuint64">fn read_varuint64</a></li>
+<li><a href="#Reader.read_vector2">fn read_vector2</a></li>
+<li><a href="#Reader.read_vector3">fn read_vector3</a></li>
+<li><a href="#Reader.remaining">fn remaining</a></li>
+<li><a href="#Reader.u8">fn u8</a></li>
+</ul>
+</li>
+<li class="open"><a href="#Writer">struct Writer</a>        <ul>
+<li><a href="#Writer.be_f32">fn be_f32</a></li>
+<li><a href="#Writer.be_i16">fn be_i16</a></li>
+<li><a href="#Writer.be_i32">fn be_i32</a></li>
+<li><a href="#Writer.be_i64">fn be_i64</a></li>
+<li><a href="#Writer.be_u16">fn be_u16</a></li>
+<li><a href="#Writer.be_u32">fn be_u32</a></li>
+<li><a href="#Writer.be_u64">fn be_u64</a></li>
+<li><a href="#Writer.bool">fn bool</a></li>
+<li><a href="#Writer.bytes">fn bytes</a></li>
+<li><a href="#Writer.i8">fn i8</a></li>
+<li><a href="#Writer.le_f32">fn le_f32</a></li>
+<li><a href="#Writer.le_f64">fn le_f64</a></li>
+<li><a href="#Writer.le_i16">fn le_i16</a></li>
+<li><a href="#Writer.le_i32">fn le_i32</a></li>
+<li><a href="#Writer.le_i64">fn le_i64</a></li>
+<li><a href="#Writer.le_u16">fn le_u16</a></li>
+<li><a href="#Writer.le_u32">fn le_u32</a></li>
+<li><a href="#Writer.le_u64">fn le_u64</a></li>
+<li><a href="#Writer.u8">fn u8</a></li>
+<li><a href="#Writer.write_actor_runtime_id">fn write_actor_runtime_id</a></li>
+<li><a href="#Writer.write_actor_unique_id">fn write_actor_unique_id</a></li>
+<li><a href="#Writer.write_attribute_modifier">fn write_attribute_modifier</a></li>
+<li><a href="#Writer.write_block_position">fn write_block_position</a></li>
+<li><a href="#Writer.write_chunk_position">fn write_chunk_position</a></li>
+<li><a href="#Writer.write_command_origin_data">fn write_command_origin_data</a></li>
+<li><a href="#Writer.write_creative_group_entry">fn write_creative_group_entry</a></li>
+<li><a href="#Writer.write_creative_item_entry">fn write_creative_item_entry</a></li>
+<li><a href="#Writer.write_creative_item_net_id">fn write_creative_item_net_id</a></li>
+<li><a href="#Writer.write_entity_link">fn write_entity_link</a></li>
+<li><a href="#Writer.write_entity_metadata">fn write_entity_metadata</a></li>
+<li><a href="#Writer.write_experiments">fn write_experiments</a></li>
+<li><a href="#Writer.write_full_container_name">fn write_full_container_name</a></li>
+<li><a href="#Writer.write_game_rule_value">fn write_game_rule_value</a></li>
+<li><a href="#Writer.write_game_rules">fn write_game_rules</a></li>
+<li><a href="#Writer.write_item_descriptor_count">fn write_item_descriptor_count</a></li>
+<li><a href="#Writer.write_item_stack_without_stack_id">fn write_item_stack_without_stack_id</a></li>
+<li><a href="#Writer.write_item_stack_wrapper">fn write_item_stack_wrapper</a></li>
+<li><a href="#Writer.write_metadata_property">fn write_metadata_property</a></li>
+<li><a href="#Writer.write_nbt_compound_root">fn write_nbt_compound_root</a></li>
+<li><a href="#Writer.write_network_item_stack_descriptor">fn write_network_item_stack_descriptor</a></li>
+<li><a href="#Writer.write_property_sync_data">fn write_property_sync_data</a></li>
+<li><a href="#Writer.write_raw">fn write_raw</a></li>
+<li><a href="#Writer.write_rotation_byte">fn write_rotation_byte</a></li>
+<li><a href="#Writer.write_skin">fn write_skin</a></li>
+<li><a href="#Writer.write_string">fn write_string</a></li>
+<li><a href="#Writer.write_string_bytes">fn write_string_bytes</a></li>
+<li><a href="#Writer.write_structure_editor_data">fn write_structure_editor_data</a></li>
+<li><a href="#Writer.write_structure_settings">fn write_structure_settings</a></li>
+<li><a href="#Writer.write_update_attribute">fn write_update_attribute</a></li>
+<li><a href="#Writer.write_uuid">fn write_uuid</a></li>
+<li><a href="#Writer.write_varint32">fn write_varint32</a></li>
+<li><a href="#Writer.write_varint64">fn write_varint64</a></li>
+<li><a href="#Writer.write_varuint32">fn write_varuint32</a></li>
+<li><a href="#Writer.write_varuint64">fn write_varuint64</a></li>
+<li><a href="#Writer.write_vector2">fn write_vector2</a></li>
+<li><a href="#Writer.write_vector3">fn write_vector3</a></li>
+</ul>
+</li>
+</ul></div>
+				</div>
+			</div>
+		</div>
+		<script src="doc.js"></script>
+		<script async src="search_index.js"></script>
+	</body>
+</html>

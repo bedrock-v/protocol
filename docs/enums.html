@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="x-ua-compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>enums | vdoc</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+		<link rel="manifest" href="site.webmanifest" />
+		<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5" />
+		<meta name="msapplication-TileColor" content="#da532c" />
+		<meta name="theme-color" content="#ffffff" />
+		<link rel="stylesheet" href="doc.css" />
+		<link rel="stylesheet" href="normalize.css" />
+		<script src="dark-mode.js"></script>
+	</head>
+
+	<body>
+		<div><a id="skip-to-content-link" href="#main-content">Skip to content</a></div>
+		<div id="page">
+			<header class="doc-nav hidden">
+				<div class="heading-container">
+					<div class="heading">
+						<div class="info">
+							<div class="module">protocol</div>
+							<div class="toggle-version-container">
+								<span>0.1.0 3e6ccec</span>
+								<div
+									id="dark-mode-toggle"
+									role="switch"
+									aria-checked="false"
+									aria-label="Toggle dark mode"
+								>
+									<svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg>
+
+								</div>
+							</div>
+							<svg xmlns="http://www.w3.org/2000/svg" id="toggle-menu" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+
+						</div>
+						<div id="search">
+							<input type="text" placeholder="Search... (beta)" autocomplete="off" />
+						</div>
+					</div>
+				</div>
+				<nav class="search hidden"></nav>
+				<nav class="content hidden">
+					<ul>
+						<li class="open">
+<div class="menu-row"><a href="./main.html">main</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./protocol.html">protocol</a></div>
+</li>
+<li class="open active">
+<div class="menu-row"><a href="./enums.html">enums</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./serializer.html">serializer</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./types.html">types</a></div>
+</li>
+
+					</ul>
+				</nav>
+			</header>
+			<div class="doc-scrollview" tabindex="-1" id="main-content">
+				<div class="doc-container">
+					<div class="doc-content">
+								<section id="enums" class="doc-node">
+			<div class="title"><h1> enums</h1></div>
+
+
+</section>
+
+		<section id="CompressionAlgorithm.from" class="doc-node">
+			<div class="title"><h2>fn CompressionAlgorithm.from <a href="#CompressionAlgorithm.from">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> CompressionAlgorithm<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>CompressionAlgorithm</code></pre>
+
+
+</section>
+
+		<section id="DimensionIds.from" class="doc-node">
+			<div class="title"><h2>fn DimensionIds.from <a href="#DimensionIds.from">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> DimensionIds<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>DimensionIds</code></pre>
+
+
+</section>
+
+		<section id="PlayStatus.from" class="doc-node">
+			<div class="title"><h2>fn PlayStatus.from <a href="#PlayStatus.from">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> PlayStatus<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>PlayStatus</code></pre>
+
+
+</section>
+
+		<section id="PlayerAction.from" class="doc-node">
+			<div class="title"><h2>fn PlayerAction.from <a href="#PlayerAction.from">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> PlayerAction<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>PlayerAction</code></pre>
+
+
+</section>
+
+		<section id="TextType.from" class="doc-node">
+			<div class="title"><h2>fn TextType.from <a href="#TextType.from">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> TextType<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>TextType</code></pre>
+
+
+</section>
+
+		<section id="CompressionAlgorithm" class="doc-node">
+			<div class="title"><h2>enum CompressionAlgorithm <a href="#CompressionAlgorithm">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> CompressionAlgorithm <span class="token keyword">as</span> <span class="token builtin">u16</span> <span class="token punctuation">{</span>
+	zlib   <span class="token operator">=</span> <span class="token number">0</span>
+	snappy <span class="token operator">=</span> <span class="token number">1</span>
+	<span class="token keyword">none</span>   <span class="token operator">=</span> <span class="token number">255</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="DimensionIds" class="doc-node">
+			<div class="title"><h2>enum DimensionIds <a href="#DimensionIds">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token symbol">DimensionIds</span> <span class="token punctuation">{</span>
+	overworld <span class="token operator">=</span> <span class="token number">0</span>
+	nether    <span class="token operator">=</span> <span class="token number">1</span>
+	the_end   <span class="token operator">=</span> <span class="token number">2</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="PlayStatus" class="doc-node">
+			<div class="title"><h2>enum PlayStatus <a href="#PlayStatus">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token symbol">PlayStatus</span> <span class="token punctuation">{</span>
+	login_success               <span class="token operator">=</span> <span class="token number">0</span>
+	login_failed_client         <span class="token operator">=</span> <span class="token number">1</span>
+	login_failed_server         <span class="token operator">=</span> <span class="token number">2</span>
+	player_spawn                <span class="token operator">=</span> <span class="token number">3</span>
+	login_failed_invalid_tenant <span class="token operator">=</span> <span class="token number">4</span>
+	login_failed_vanilla_edu    <span class="token operator">=</span> <span class="token number">5</span>
+	login_failed_edu_vanilla    <span class="token operator">=</span> <span class="token number">6</span>
+	login_failed_server_full    <span class="token operator">=</span> <span class="token number">7</span>
+	login_failed_editor_vanilla <span class="token operator">=</span> <span class="token number">8</span>
+	login_failed_vanilla_editor <span class="token operator">=</span> <span class="token number">9</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="PlayerAction" class="doc-node">
+			<div class="title"><h2>enum PlayerAction <a href="#PlayerAction">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token symbol">PlayerAction</span> <span class="token punctuation">{</span>
+	start_break                   <span class="token operator">=</span> <span class="token number">0</span>
+	abort_break                   <span class="token operator">=</span> <span class="token number">1</span>
+	stop_break                    <span class="token operator">=</span> <span class="token number">2</span>
+	get_updated_block             <span class="token operator">=</span> <span class="token number">3</span>
+	drop_item                     <span class="token operator">=</span> <span class="token number">4</span>
+	start_sleeping                <span class="token operator">=</span> <span class="token number">5</span>
+	stop_sleeping                 <span class="token operator">=</span> <span class="token number">6</span>
+	respawn                       <span class="token operator">=</span> <span class="token number">7</span>
+	jump                          <span class="token operator">=</span> <span class="token number">8</span>
+	start_sprint                  <span class="token operator">=</span> <span class="token number">9</span>
+	stop_sprint                   <span class="token operator">=</span> <span class="token number">10</span>
+	start_sneak                   <span class="token operator">=</span> <span class="token number">11</span>
+	stop_sneak                    <span class="token operator">=</span> <span class="token number">12</span>
+	creative_player_destroy_block <span class="token operator">=</span> <span class="token number">13</span>
+	dimension_change_ack          <span class="token operator">=</span> <span class="token number">14</span>
+	start_glide                   <span class="token operator">=</span> <span class="token number">15</span>
+	stop_glide                    <span class="token operator">=</span> <span class="token number">16</span>
+	build_denied                  <span class="token operator">=</span> <span class="token number">17</span>
+	crack_break                   <span class="token operator">=</span> <span class="token number">18</span>
+	change_skin                   <span class="token operator">=</span> <span class="token number">19</span>
+	set_enchantment_seed          <span class="token operator">=</span> <span class="token number">20</span>
+	start_swimming                <span class="token operator">=</span> <span class="token number">21</span>
+	stop_swimming                 <span class="token operator">=</span> <span class="token number">22</span>
+	start_spin_attack             <span class="token operator">=</span> <span class="token number">23</span>
+	stop_spin_attack              <span class="token operator">=</span> <span class="token number">24</span>
+	interact_block                <span class="token operator">=</span> <span class="token number">25</span>
+	predict_destroy_block         <span class="token operator">=</span> <span class="token number">26</span>
+	continue_destroy_block        <span class="token operator">=</span> <span class="token number">27</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+		<section id="TextType" class="doc-node">
+			<div class="title"><h2>enum TextType <a href="#TextType">#</a></h2></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> TextType <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	raw               <span class="token operator">=</span> <span class="token number">0</span>
+	chat              <span class="token operator">=</span> <span class="token number">1</span>
+	translation       <span class="token operator">=</span> <span class="token number">2</span>
+	popup             <span class="token operator">=</span> <span class="token number">3</span>
+	jukebox_popup     <span class="token operator">=</span> <span class="token number">4</span>
+	tip               <span class="token operator">=</span> <span class="token number">5</span>
+	system            <span class="token operator">=</span> <span class="token number">6</span>
+	whisper           <span class="token operator">=</span> <span class="token number">7</span>
+	announcement      <span class="token operator">=</span> <span class="token number">8</span>
+	json_whisper      <span class="token operator">=</span> <span class="token number">9</span>
+	json              <span class="token operator">=</span> <span class="token number">10</span>
+	json_announcement <span class="token operator">=</span> <span class="token number">11</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+
+
+						<div class="footer">Powered by vdoc. Generated on: 13 Jul 2026 00:00:41</div>
+					</div>
+					<div class="doc-toc"><ul><li class="open"><a href="#CompressionAlgorithm.from">fn CompressionAlgorithm.from</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#DimensionIds.from">fn DimensionIds.from</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#PlayStatus.from">fn PlayStatus.from</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#PlayerAction.from">fn PlayerAction.from</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#TextType.from">fn TextType.from</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#CompressionAlgorithm">enum CompressionAlgorithm</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#DimensionIds">enum DimensionIds</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#PlayStatus">enum PlayStatus</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#PlayerAction">enum PlayerAction</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#TextType">enum TextType</a>        <ul>
+</ul>
+</li>
+</ul></div>
+				</div>
+			</div>
+		</div>
+		<script src="doc.js"></script>
+		<script async src="search_index.js"></script>
+	</body>
+</html>
