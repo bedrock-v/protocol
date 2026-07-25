@@ -1,6 +1,8 @@
-inspirations/
-nbt/
-STEPS.md
 *.so
 *.c
 *.o
+.idea
+.vscode
+
+inspiration/
+.oldproto_research/

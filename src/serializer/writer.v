@@ -105,6 +105,15 @@ pub fn (mut w Writer) be_f32(v f32) {
 	w.be_u32(math.f32_bits(v))
 }
 
+pub fn (mut w Writer) be_f64(v f64) {
+	w.be_u64(math.f64_bits(v))
+}
+
+pub fn (mut w Writer) write_string_be(v string) {
+	w.be_u16(u16(v.len))
+	w.write_raw(v.bytes())
+}
+
 pub fn (mut w Writer) write_varuint32(value u32) {
 	mut v := value
 	for v >= 0x80 {

@@ -47,3 +47,31 @@ pub fn encode_packet_to_bytes(p Packet) []u8 {
 	encode_packet(p, mut w)
 	return w.bytes()
 }
+
+// Old-era (MCPE 0.6-0.15, proto 9..84) framing: a single raw byte packet id,
+// no varint packing and no sub-client bytes.
+pub fn encode_packet_old(p Packet, mut w serializer.Writer) {
+	w.u8(u8(p.pid()))
+	p.encode_payload(mut w)
+}
+
+pub fn encode_packet_old_to_bytes(p Packet) []u8 {
+	mut w := serializer.new_writer()
+	encode_packet_old(p, mut w)
+	return w.bytes()
+}
+
+// Split header (MCPE 1.2-1.5, proto 130..274): a varuint packet id followed by
+// two separate sub-client id bytes.
+pub fn encode_packet_split(p Packet, mut w serializer.Writer) {
+	w.write_varuint32(u32(p.pid()))
+	w.u8(0)
+	w.u8(0)
+	p.encode_payload(mut w)
+}
+
+pub fn encode_packet_split_to_bytes(p Packet) []u8 {
+	mut w := serializer.new_writer()
+	encode_packet_split(p, mut w)
+	return w.bytes()
+}
