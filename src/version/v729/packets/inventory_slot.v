@@ -1,0 +1,36 @@
+module packets
+
+import serializer
+import version.v729.types
+import version.v662.types as types_662
+
+pub struct InventorySlotPacket {
+pub mut:
+	container_id           u32
+	slot                   u32
+	container_name_data    types.FullContainerName
+	dynamic_container_size u32
+	item                   types_662.NetworkItemStackDescriptor
+}
+
+pub fn (p &InventorySlotPacket) pid() u16 { return 50 }
+
+pub fn (p &InventorySlotPacket) name() string { return 'InventorySlotPacket' }
+
+pub fn (p &InventorySlotPacket) can_be_sent_before_login() bool { return false }
+
+pub fn (p &InventorySlotPacket) encode_payload(mut w serializer.Writer) {
+	w.write_varuint32(p.container_id)
+	w.write_varuint32(p.slot)
+	p.container_name_data.encode(mut w)
+	w.write_varuint32(p.dynamic_container_size)
+	p.item.encode(mut w)
+}
+
+pub fn (mut p InventorySlotPacket) decode_payload(mut r serializer.Reader) ! {
+	p.container_id = r.read_varuint32()!
+	p.slot = r.read_varuint32()!
+	p.container_name_data = types.FullContainerName.decode(mut r)!
+	p.dynamic_container_size = r.read_varuint32()!
+	p.item = types_662.NetworkItemStackDescriptor.decode(mut r)!
+}

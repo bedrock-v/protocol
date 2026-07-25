@@ -1,0 +1,35 @@
+module packets
+
+import serializer
+import version.v361.types as types_361
+
+pub struct SetEntityDataPacket {
+pub mut:
+	runtime_entity_id u64
+	metadata          []types_361.DataItem
+	tick              u64
+}
+
+pub fn (p &SetEntityDataPacket) pid() u16 {
+	return 39
+}
+
+pub fn (p &SetEntityDataPacket) name() string {
+	return 'SetEntityDataPacket'
+}
+
+pub fn (p &SetEntityDataPacket) can_be_sent_before_login() bool {
+	return false
+}
+
+pub fn (p &SetEntityDataPacket) encode_payload(mut w serializer.Writer) {
+	w.write_varuint64(p.runtime_entity_id)
+	types_361.write_entity_data(mut w, p.metadata)
+	w.write_varuint64(p.tick)
+}
+
+pub fn (mut p SetEntityDataPacket) decode_payload(mut r serializer.Reader) ! {
+	p.runtime_entity_id = r.read_varuint64()!
+	p.metadata = types_361.read_entity_data(mut r)!
+	p.tick = r.read_varuint64()!
+}

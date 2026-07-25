@@ -131,6 +131,15 @@ pub fn (mut r Reader) be_f32() !f32 {
 	return math.f32_from_bits(r.be_u32()!)
 }
 
+pub fn (mut r Reader) be_f64() !f64 {
+	return math.f64_from_bits(r.be_u64()!)
+}
+
+pub fn (mut r Reader) read_string_be() !string {
+	length := int(r.be_u16()!)
+	return r.read_raw(length)!.bytestr()
+}
+
 pub fn (mut r Reader) read_varuint32() !u32 {
 	mut value := u32(0)
 	mut shift := u32(0)
