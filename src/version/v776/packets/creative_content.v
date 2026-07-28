@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub enum CreativeItemCategory as i32 {
 	all               = 0
@@ -69,11 +69,17 @@ pub mut:
 	contents []CreativeItemData
 }
 
-pub fn (p &CreativeContentPacket) pid() u16 { return 145 }
+pub fn (p &CreativeContentPacket) pid() u16 {
+	return 145
+}
 
-pub fn (p &CreativeContentPacket) name() string { return 'CreativeContentPacket' }
+pub fn (p &CreativeContentPacket) name() string {
+	return 'CreativeContentPacket'
+}
 
-pub fn (p &CreativeContentPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &CreativeContentPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &CreativeContentPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.groups.len))

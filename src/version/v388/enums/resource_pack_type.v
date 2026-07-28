@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ResourcePackType as u8 {
 	invalid        = 0

@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ControlScheme as i8 {
 	locked_player_relative_strafe = 0

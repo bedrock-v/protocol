@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct ClientCacheBlobStatusPacket {
 pub mut:
@@ -8,11 +8,17 @@ pub mut:
 	obtained_blobs []u64
 }
 
-pub fn (p &ClientCacheBlobStatusPacket) pid() u16 { return 135 }
+pub fn (p &ClientCacheBlobStatusPacket) pid() u16 {
+	return 135
+}
 
-pub fn (p &ClientCacheBlobStatusPacket) name() string { return 'ClientCacheBlobStatusPacket' }
+pub fn (p &ClientCacheBlobStatusPacket) name() string {
+	return 'ClientCacheBlobStatusPacket'
+}
 
-pub fn (p &ClientCacheBlobStatusPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ClientCacheBlobStatusPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ClientCacheBlobStatusPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.missing_blobs.len))

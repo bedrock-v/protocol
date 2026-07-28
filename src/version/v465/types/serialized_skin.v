@@ -1,8 +1,8 @@
 module types
 
-import serializer
-import version.v388.types as types_388
-import version.v419.types as types_419
+import protocol.serializer
+import protocol.version.v388.types as types_388
+import protocol.version.v419.types as types_419
 
 pub struct PersonaPieceData {
 pub mut:

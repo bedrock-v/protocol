@@ -1,9 +1,9 @@
 module packets
 
-import serializer
+import protocol.serializer
 import nbt
-import version.v662.types as types_662
-import version.v944.types
+import protocol.version.v662.types as types_662
+import protocol.version.v944.types
 
 pub struct AddVolumeEntityPacket {
 pub mut:
@@ -17,11 +17,17 @@ pub mut:
 	engine_version    string
 }
 
-pub fn (p &AddVolumeEntityPacket) pid() u16 { return 166 }
+pub fn (p &AddVolumeEntityPacket) pid() u16 {
+	return 166
+}
 
-pub fn (p &AddVolumeEntityPacket) name() string { return 'AddVolumeEntityPacket' }
+pub fn (p &AddVolumeEntityPacket) name() string {
+	return 'AddVolumeEntityPacket'
+}
 
-pub fn (p &AddVolumeEntityPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &AddVolumeEntityPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &AddVolumeEntityPacket) encode_payload(mut w serializer.Writer) {
 	p.entity_network_id.encode(mut w)

@@ -1,10 +1,10 @@
 module v685
 
 import protocol
-import version
-import version.v685.packets
-import version.v671.packets as packets_671
-import version.v662.packets as packets_662
+import protocol.version
+import protocol.version.v685.packets
+import protocol.version.v671.packets as packets_671
+import protocol.version.v662.packets as packets_662
 
 pub const proto_version = version.ProtoVersion.v685
 

@@ -1,11 +1,11 @@
 module v70
 
 import protocol
-import version.v70.packets
-import version.v60.packets as packets_60
-import version.v45.packets as packets_45
-import version.v38.packets as packets_38
-import version.v34.packets as packets_34
+import protocol.version.v70.packets
+import protocol.version.v60.packets as packets_60
+import protocol.version.v45.packets as packets_45
+import protocol.version.v38.packets as packets_38
+import protocol.version.v34.packets as packets_34
 
 pub fn new_pool() protocol.PacketPool {
 	mut pool := protocol.new_empty_pool()

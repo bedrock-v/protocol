@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v291.types as types_291
+import protocol.serializer
+import protocol.version.v291.types as types_291
 
 pub enum RespawnState as u8 {
 	server_searching = 0

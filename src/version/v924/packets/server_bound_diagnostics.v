@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum MemoryCategoryCounterType as u8 {
 	unknown                                    = 0

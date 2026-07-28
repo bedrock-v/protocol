@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum SpawnBiomeType as i16 {
 	default      = 0

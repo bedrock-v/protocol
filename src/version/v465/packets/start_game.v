@@ -1,12 +1,12 @@
 module packets
 
-import serializer
+import protocol.serializer
 import nbt
-import version.v465.types
-import version.v291.enums as enums_291
-import version.v291.types as types_291
-import version.v419.types as types_419
-import version.v440.types as types_440
+import protocol.version.v465.types
+import protocol.version.v291.enums as enums_291
+import protocol.version.v291.types as types_291
+import protocol.version.v419.types as types_419
+import protocol.version.v440.types as types_440
 
 pub enum GamePublishSetting as i32 {
 	no_multi_play      = 0

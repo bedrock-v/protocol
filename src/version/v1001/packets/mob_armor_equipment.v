@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types as types_662
-import version.v975.types as types_975
+import protocol.serializer
+import protocol.version.v662.types as types_662
+import protocol.version.v975.types as types_975
 
 pub struct MobArmorEquipmentPacket {
 pub mut:

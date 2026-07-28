@@ -1,7 +1,7 @@
 module types
 
 import nbt
-import serializer
+import protocol.serializer
 
 pub struct CameraEaseData {
 pub mut:

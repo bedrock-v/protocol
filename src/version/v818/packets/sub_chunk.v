@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub enum SubChunkRequestResult as i8 {
 	undefined                = 0
@@ -40,11 +40,17 @@ pub mut:
 	sub_chunk_data []SubChunkDataEntry
 }
 
-pub fn (p &SubChunkPacket) pid() u16 { return 174 }
+pub fn (p &SubChunkPacket) pid() u16 {
+	return 174
+}
 
-pub fn (p &SubChunkPacket) name() string { return 'SubChunkPacket' }
+pub fn (p &SubChunkPacket) name() string {
+	return 'SubChunkPacket'
+}
 
-pub fn (p &SubChunkPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &SubChunkPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &SubChunkPacket) encode_payload(mut w serializer.Writer) {
 	w.bool(p.cache_enabled)

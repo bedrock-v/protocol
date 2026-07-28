@@ -1,8 +1,8 @@
 module packets
 
 import nbt
-import serializer
-import version.v582.enums
+import protocol.serializer
+import protocol.version.v582.enums
 
 pub struct LevelEventGenericPacket {
 pub mut:

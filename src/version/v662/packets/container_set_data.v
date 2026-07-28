@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct ContainerSetDataPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	value        i32
 }
 
-pub fn (p &ContainerSetDataPacket) pid() u16 { return 51 }
+pub fn (p &ContainerSetDataPacket) pid() u16 {
+	return 51
+}
 
-pub fn (p &ContainerSetDataPacket) name() string { return 'ContainerSetDataPacket' }
+pub fn (p &ContainerSetDataPacket) name() string {
+	return 'ContainerSetDataPacket'
+}
 
-pub fn (p &ContainerSetDataPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ContainerSetDataPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ContainerSetDataPacket) encode_payload(mut w serializer.Writer) {
 	p.container_id.encode(mut w)

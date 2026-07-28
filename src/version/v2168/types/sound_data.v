@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub struct SoundDataStop {}
 
@@ -39,7 +39,9 @@ pub type SoundData = SoundDataFade
 
 pub fn (t SoundData) encode(mut w serializer.Writer) {
 	match t {
-		SoundDataStop { w.write_varuint32(0) }
+		SoundDataStop {
+			w.write_varuint32(0)
+		}
 		SoundDataSetVolume {
 			w.write_varuint32(1)
 			w.le_f32(t.volume)
@@ -57,8 +59,12 @@ pub fn (t SoundData) encode(mut w serializer.Writer) {
 			w.write_varuint32(4)
 			w.le_f32(t.seconds)
 		}
-		SoundDataPause { w.write_varuint32(5) }
-		SoundDataResume { w.write_varuint32(6) }
+		SoundDataPause {
+			w.write_varuint32(5)
+		}
+		SoundDataResume {
+			w.write_varuint32(6)
+		}
 	}
 }
 
@@ -66,10 +72,19 @@ pub fn SoundData.decode(mut r serializer.Reader) !SoundData {
 	d := r.read_varuint32()!
 	match d {
 		0 { return SoundDataStop{} }
-		1 { return SoundDataSetVolume{ volume: r.le_f32()! } }
-		2 { return SoundDataSetPitch{ pitch: r.le_f32()! } }
-		3 { return SoundDataFade{ duration: r.le_f32()!, target_volume: r.le_f32()! } }
-		4 { return SoundDataSeekTo{ seconds: r.le_f32()! } }
+		1 { return SoundDataSetVolume{
+				volume: r.le_f32()!
+			} }
+		2 { return SoundDataSetPitch{
+				pitch: r.le_f32()!
+			} }
+		3 { return SoundDataFade{
+				duration:      r.le_f32()!
+				target_volume: r.le_f32()!
+			} }
+		4 { return SoundDataSeekTo{
+				seconds: r.le_f32()!
+			} }
 		5 { return SoundDataPause{} }
 		6 { return SoundDataResume{} }
 		else { return error('invalid SoundData ${d}') }

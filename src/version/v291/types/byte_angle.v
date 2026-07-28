@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub fn write_byte_angle(mut w serializer.Writer, angle f32) {
 	w.i8(i8(angle / (360.0 / 256.0)))

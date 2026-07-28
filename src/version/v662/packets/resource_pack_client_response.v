@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct ResourcePackClientResponsePacket {
 pub mut:
@@ -9,11 +9,17 @@ pub mut:
 	downloading_packs []string
 }
 
-pub fn (p &ResourcePackClientResponsePacket) pid() u16 { return 8 }
+pub fn (p &ResourcePackClientResponsePacket) pid() u16 {
+	return 8
+}
 
-pub fn (p &ResourcePackClientResponsePacket) name() string { return 'ResourcePackClientResponsePacket' }
+pub fn (p &ResourcePackClientResponsePacket) name() string {
+	return 'ResourcePackClientResponsePacket'
+}
 
-pub fn (p &ResourcePackClientResponsePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ResourcePackClientResponsePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ResourcePackClientResponsePacket) encode_payload(mut w serializer.Writer) {
 	p.response.encode(mut w)

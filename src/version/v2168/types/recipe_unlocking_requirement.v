@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub enum UnlockingContext as i32 {
 	@none                 = 0

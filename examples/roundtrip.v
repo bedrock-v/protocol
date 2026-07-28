@@ -1,11 +1,11 @@
 module main
 
 import protocol
-import serializer
-import version
-import version.v1001
-import version.v1001.packets
-import version.v662.packets as packets_662
+import protocol.serializer
+import protocol.version
+import protocol.version.v1001
+import protocol.version.v1001.packets
+import protocol.version.v662.packets as packets_662
 
 fn roundtrip(p protocol.Packet, mut pool protocol.PacketPool) !protocol.Packet {
 	encoded := protocol.encode_packet_to_bytes(p)

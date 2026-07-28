@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub struct GameRuleBool {
 pub mut:
@@ -39,18 +39,24 @@ pub fn (t GameRuleType) encode(mut w serializer.Writer) {
 pub fn GameRuleType.decode(mut r serializer.Reader) !GameRuleType {
 	d := r.read_varuint32()!
 	match d {
-		1 { return GameRuleBool{ value: r.bool()! } }
-		2 { return GameRuleInt{ value: r.read_varuint32()! } }
-		3 { return GameRuleFloat{ value: r.le_f32()! } }
+		1 { return GameRuleBool{
+				value: r.bool()!
+			} }
+		2 { return GameRuleInt{
+				value: r.read_varuint32()!
+			} }
+		3 { return GameRuleFloat{
+				value: r.le_f32()!
+			} }
 		else { return error('invalid GameRuleType ${d}') }
 	}
 }
 
 pub struct GameRuleChanged {
 pub mut:
-	rule_name                  string
-	can_be_modified_by_player  bool
-	rule_type                  GameRuleType = GameRuleBool{}
+	rule_name                 string
+	can_be_modified_by_player bool
+	rule_type                 GameRuleType = GameRuleBool{}
 }
 
 pub fn (t GameRuleChanged) encode(mut w serializer.Writer) {

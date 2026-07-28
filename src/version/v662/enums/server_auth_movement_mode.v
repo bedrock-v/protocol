@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ServerAuthMovementMode as i32 {
 	client_authoritative             = 0

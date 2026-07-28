@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct DebugRendererInvalid {}
 
@@ -23,8 +23,12 @@ pub type ClientBoundDebugRendererType = DebugRendererAddDebugMarkerCube
 
 pub fn (t ClientBoundDebugRendererType) encode(mut w serializer.Writer) {
 	match t {
-		DebugRendererInvalid { w.le_u32(0) }
-		DebugRendererClearDebugMarkers { w.le_u32(1) }
+		DebugRendererInvalid {
+			w.le_u32(0)
+		}
+		DebugRendererClearDebugMarkers {
+			w.le_u32(1)
+		}
 		DebugRendererAddDebugMarkerCube {
 			w.le_u32(2)
 			w.write_string(t.text)
@@ -43,12 +47,17 @@ pub fn (t ClientBoundDebugRendererType) encode(mut w serializer.Writer) {
 pub fn ClientBoundDebugRendererType.decode(mut r serializer.Reader) !ClientBoundDebugRendererType {
 	d := r.le_u32()!
 	match d {
-		0 { return DebugRendererInvalid{} }
-		1 { return DebugRendererClearDebugMarkers{} }
+		0 {
+			return DebugRendererInvalid{}
+		}
+		1 {
+			return DebugRendererClearDebugMarkers{}
+		}
 		2 {
 			return DebugRendererAddDebugMarkerCube{
 				text:                 r.read_string()!
-				position:             [r.le_f32()!, r.le_f32()!, r.le_f32()!]!
+				position:             [r.le_f32()!, r.le_f32()!,
+					r.le_f32()!]!
 				r:                    r.le_f32()!
 				g:                    r.le_f32()!
 				b:                    r.le_f32()!
@@ -56,7 +65,9 @@ pub fn ClientBoundDebugRendererType.decode(mut r serializer.Reader) !ClientBound
 				millisecond_duration: r.le_u64()!
 			}
 		}
-		else { return error('invalid ClientBoundDebugRendererType ${d}') }
+		else {
+			return error('invalid ClientBoundDebugRendererType ${d}')
+		}
 	}
 }
 
@@ -65,11 +76,17 @@ pub mut:
 	debug_marker_type ClientBoundDebugRendererType = DebugRendererInvalid{}
 }
 
-pub fn (p &ClientBoundDebugRendererPacket) pid() u16 { return 164 }
+pub fn (p &ClientBoundDebugRendererPacket) pid() u16 {
+	return 164
+}
 
-pub fn (p &ClientBoundDebugRendererPacket) name() string { return 'ClientBoundDebugRendererPacket' }
+pub fn (p &ClientBoundDebugRendererPacket) name() string {
+	return 'ClientBoundDebugRendererPacket'
+}
 
-pub fn (p &ClientBoundDebugRendererPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ClientBoundDebugRendererPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ClientBoundDebugRendererPacket) encode_payload(mut w serializer.Writer) {
 	p.debug_marker_type.encode(mut w)

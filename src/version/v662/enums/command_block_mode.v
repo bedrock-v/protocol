@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum CommandBlockMode as u32 {
 	normal    = 0

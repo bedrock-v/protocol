@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v105.types
+import protocol.serializer
+import protocol.version.v105.types
 
 pub struct AddEntityAttribute {
 pub mut:

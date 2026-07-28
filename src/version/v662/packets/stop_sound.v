@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct StopSoundPacket {
 pub mut:
@@ -8,11 +8,17 @@ pub mut:
 	stop_all_sounds bool
 }
 
-pub fn (p &StopSoundPacket) pid() u16 { return 87 }
+pub fn (p &StopSoundPacket) pid() u16 {
+	return 87
+}
 
-pub fn (p &StopSoundPacket) name() string { return 'StopSoundPacket' }
+pub fn (p &StopSoundPacket) name() string {
+	return 'StopSoundPacket'
+}
 
-pub fn (p &StopSoundPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &StopSoundPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &StopSoundPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.sound_name)

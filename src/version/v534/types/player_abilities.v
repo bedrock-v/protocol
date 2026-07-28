@@ -1,8 +1,8 @@
 module types
 
-import serializer
-import version.v534.enums
-import version.v291.enums as enums_291
+import protocol.serializer
+import protocol.version.v534.enums
+import protocol.version.v291.enums as enums_291
 
 pub enum AbilityLayerType as u16 {
 	cache          = 0

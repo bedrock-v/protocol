@@ -1,8 +1,8 @@
 module types
 
-import serializer
-import version.v340.types as types_340
-import version.v407.enums
+import protocol.serializer
+import protocol.version.v340.types as types_340
+import protocol.version.v407.enums
 
 pub struct ItemStackRequestSlotData {
 pub mut:

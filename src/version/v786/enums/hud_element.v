@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum HudElement as u32 {
 	paper_doll     = 0

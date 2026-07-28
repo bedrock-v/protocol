@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct PlayerLocationCoordinates {
 pub mut:
@@ -40,8 +40,14 @@ pub fn PlayerLocationType.decode(mut r serializer.Reader) !PlayerLocationType {
 				position: [r.le_f32()!, r.le_f32()!, r.le_f32()!]!
 			}
 		}
-		1 { return PlayerLocationHide{ unknown: r.read_varint32()! } }
-		else { return error('invalid PlayerLocationType ${d}') }
+		1 {
+			return PlayerLocationHide{
+				unknown: r.read_varint32()!
+			}
+		}
+		else {
+			return error('invalid PlayerLocationType ${d}')
+		}
 	}
 }
 
@@ -51,11 +57,17 @@ pub mut:
 	update           PlayerLocationType = PlayerLocationHide{}
 }
 
-pub fn (p &PlayerLocationPacket) pid() u16 { return 326 }
+pub fn (p &PlayerLocationPacket) pid() u16 {
+	return 326
+}
 
-pub fn (p &PlayerLocationPacket) name() string { return 'PlayerLocationPacket' }
+pub fn (p &PlayerLocationPacket) name() string {
+	return 'PlayerLocationPacket'
+}
 
-pub fn (p &PlayerLocationPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlayerLocationPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlayerLocationPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varint64(p.target_entity_id)

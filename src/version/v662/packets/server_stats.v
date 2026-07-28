@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct ServerStatsPacket {
 pub mut:
@@ -8,11 +8,17 @@ pub mut:
 	network_time f32
 }
 
-pub fn (p &ServerStatsPacket) pid() u16 { return 192 }
+pub fn (p &ServerStatsPacket) pid() u16 {
+	return 192
+}
 
-pub fn (p &ServerStatsPacket) name() string { return 'ServerStatsPacket' }
+pub fn (p &ServerStatsPacket) name() string {
+	return 'ServerStatsPacket'
+}
 
-pub fn (p &ServerStatsPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ServerStatsPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ServerStatsPacket) encode_payload(mut w serializer.Writer) {
 	w.le_f32(p.server_time)

@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v662.types as types_662
+import protocol.serializer
+import protocol.version.v662.types as types_662
 
 pub struct CraftingEntryShapeless {
 pub mut:
@@ -124,8 +124,16 @@ pub fn (t CraftingDataEntryType) encode(mut w serializer.Writer) {
 pub fn CraftingDataEntryType.decode(mut r serializer.Reader) !CraftingDataEntryType {
 	d := r.read_varint32()!
 	match d {
-		0 { return CraftingEntryShapeless{ recipe: types_662.ShapelessRecipe.decode(mut r)! } }
-		1 { return CraftingEntryShaped{ recipe: ShapedRecipe.decode(mut r)! } }
+		0 {
+			return CraftingEntryShapeless{
+				recipe: types_662.ShapelessRecipe.decode(mut r)!
+			}
+		}
+		1 {
+			return CraftingEntryShaped{
+				recipe: ShapedRecipe.decode(mut r)!
+			}
+		}
 		2 {
 			return CraftingEntryFurnace{
 				item_data:   r.read_varint32()!
@@ -147,11 +155,33 @@ pub fn CraftingDataEntryType.decode(mut r serializer.Reader) !CraftingDataEntryT
 				net_id:       r.read_varuint32()!
 			}
 		}
-		5 { return CraftingEntryShulkerBox{ recipe: types_662.ShulkerBoxRecipe.decode(mut r)! } }
-		6 { return CraftingEntryShapelessChemistry{ recipe: types_662.ShapelessRecipe.decode(mut r)! } }
-		7 { return CraftingEntryShapedChemistry{ recipe: ShapedRecipe.decode(mut r)! } }
-		8 { return CraftingEntrySmithingTransform{ recipe: types_662.SmithingTransformRecipe.decode(mut r)! } }
-		9 { return CraftingEntrySmithingTrim{ recipe: types_662.SmithingTrimRecipe.decode(mut r)! } }
-		else { return error('invalid CraftingDataEntryType ${d}') }
+		5 {
+			return CraftingEntryShulkerBox{
+				recipe: types_662.ShulkerBoxRecipe.decode(mut r)!
+			}
+		}
+		6 {
+			return CraftingEntryShapelessChemistry{
+				recipe: types_662.ShapelessRecipe.decode(mut r)!
+			}
+		}
+		7 {
+			return CraftingEntryShapedChemistry{
+				recipe: ShapedRecipe.decode(mut r)!
+			}
+		}
+		8 {
+			return CraftingEntrySmithingTransform{
+				recipe: types_662.SmithingTransformRecipe.decode(mut r)!
+			}
+		}
+		9 {
+			return CraftingEntrySmithingTrim{
+				recipe: types_662.SmithingTrimRecipe.decode(mut r)!
+			}
+		}
+		else {
+			return error('invalid CraftingDataEntryType ${d}')
+		}
 	}
 }

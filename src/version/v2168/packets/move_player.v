@@ -1,9 +1,9 @@
 module packets
 
-import serializer
-import version.v2168.types
-import version.v2168.enums
-import version.v662.types as types_662
+import protocol.serializer
+import protocol.version.v2168.types
+import protocol.version.v2168.enums
+import protocol.version.v662.types as types_662
 
 pub struct MovePlayerPacket {
 pub mut:
@@ -18,11 +18,17 @@ pub mut:
 	tick              u64
 }
 
-pub fn (p &MovePlayerPacket) pid() u16 { return 19 }
+pub fn (p &MovePlayerPacket) pid() u16 {
+	return 19
+}
 
-pub fn (p &MovePlayerPacket) name() string { return 'MovePlayerPacket' }
+pub fn (p &MovePlayerPacket) name() string {
+	return 'MovePlayerPacket'
+}
 
-pub fn (p &MovePlayerPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &MovePlayerPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &MovePlayerPacket) encode_payload(mut w serializer.Writer) {
 	p.player_runtime_id.encode(mut w)

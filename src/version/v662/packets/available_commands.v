@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct EnumDataEntry {
 pub mut:
@@ -213,11 +213,17 @@ pub mut:
 	constraints              []ConstraintsEntry
 }
 
-pub fn (p &AvailableCommandsPacket) pid() u16 { return 76 }
+pub fn (p &AvailableCommandsPacket) pid() u16 {
+	return 76
+}
 
-pub fn (p &AvailableCommandsPacket) name() string { return 'AvailableCommandsPacket' }
+pub fn (p &AvailableCommandsPacket) name() string {
+	return 'AvailableCommandsPacket'
+}
 
-pub fn (p &AvailableCommandsPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &AvailableCommandsPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 fn write_string_list(mut w serializer.Writer, list []string) {
 	w.write_varuint32(u32(list.len))

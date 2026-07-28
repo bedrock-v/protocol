@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub enum CommandEnumConstraint as u8 {
 	cheats_enabled       = 0

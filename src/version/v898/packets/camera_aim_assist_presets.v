@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v898.types
-import version.v776.enums as enums_776
+import protocol.serializer
+import protocol.version.v898.types
+import protocol.version.v776.enums as enums_776
 
 pub struct CameraAimAssistPresetsPacket {
 pub mut:

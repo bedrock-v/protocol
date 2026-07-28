@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct UpdateBlockPacket {
 pub mut:
@@ -11,11 +11,17 @@ pub mut:
 	layer            u32
 }
 
-pub fn (p &UpdateBlockPacket) pid() u16 { return 21 }
+pub fn (p &UpdateBlockPacket) pid() u16 {
+	return 21
+}
 
-pub fn (p &UpdateBlockPacket) name() string { return 'UpdateBlockPacket' }
+pub fn (p &UpdateBlockPacket) name() string {
+	return 'UpdateBlockPacket'
+}
 
-pub fn (p &UpdateBlockPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &UpdateBlockPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &UpdateBlockPacket) encode_payload(mut w serializer.Writer) {
 	p.block_position.encode(mut w)

@@ -1,9 +1,9 @@
 module packets
 
-import serializer
+import protocol.serializer
 import nbt
-import version.v662.types
-import version.v662.enums
+import protocol.version.v662.types
+import protocol.version.v662.enums
 
 pub struct UpdateEquipPacket {
 pub mut:
@@ -14,11 +14,17 @@ pub mut:
 	data_tags       nbt.RootTag
 }
 
-pub fn (p &UpdateEquipPacket) pid() u16 { return 81 }
+pub fn (p &UpdateEquipPacket) pid() u16 {
+	return 81
+}
 
-pub fn (p &UpdateEquipPacket) name() string { return 'UpdateEquipPacket' }
+pub fn (p &UpdateEquipPacket) name() string {
+	return 'UpdateEquipPacket'
+}
 
-pub fn (p &UpdateEquipPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &UpdateEquipPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &UpdateEquipPacket) encode_payload(mut w serializer.Writer) {
 	p.container_id.encode(mut w)

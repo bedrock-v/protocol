@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum PacketCompressionAlgorithm as u16 {
 	z_lib  = 0

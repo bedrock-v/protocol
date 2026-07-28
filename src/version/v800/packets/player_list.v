@@ -1,9 +1,9 @@
 module packets
 
-import serializer
-import version.v800.types
-import version.v662.types as types_662
-import version.v662.enums as enums_662
+import protocol.serializer
+import protocol.version.v800.types
+import protocol.version.v662.types as types_662
+import protocol.version.v662.enums as enums_662
 
 pub struct AddPlayerListEntry {
 pub mut:
@@ -128,11 +128,17 @@ pub mut:
 	action PlayerListAction = PlayerListAdd{}
 }
 
-pub fn (p &PlayerListPacket) pid() u16 { return 63 }
+pub fn (p &PlayerListPacket) pid() u16 {
+	return 63
+}
 
-pub fn (p &PlayerListPacket) name() string { return 'PlayerListPacket' }
+pub fn (p &PlayerListPacket) name() string {
+	return 'PlayerListPacket'
+}
 
-pub fn (p &PlayerListPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlayerListPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlayerListPacket) encode_payload(mut w serializer.Writer) {
 	p.action.encode(mut w)

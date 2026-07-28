@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ItemUseInventoryTransactionType as u32 {
 	place   = 0

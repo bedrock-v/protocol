@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct AgentActionEventPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	response    string
 }
 
-pub fn (p &AgentActionEventPacket) pid() u16 { return 181 }
+pub fn (p &AgentActionEventPacket) pid() u16 {
+	return 181
+}
 
-pub fn (p &AgentActionEventPacket) name() string { return 'AgentActionEventPacket' }
+pub fn (p &AgentActionEventPacket) name() string {
+	return 'AgentActionEventPacket'
+}
 
-pub fn (p &AgentActionEventPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &AgentActionEventPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &AgentActionEventPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.request_id)

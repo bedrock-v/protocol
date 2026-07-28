@@ -1,7 +1,7 @@
 module enums
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct BossEventAdd {
 pub mut:
@@ -79,7 +79,9 @@ pub fn (t BossEventUpdateType) encode(mut w serializer.Writer) {
 			w.le_i32(1)
 			t.player_id.encode(mut w)
 		}
-		BossEventRemove { w.le_i32(2) }
+		BossEventRemove {
+			w.le_i32(2)
+		}
 		BossEventPlayerRemoved {
 			w.le_i32(3)
 			t.player_id.encode(mut w)
@@ -124,11 +126,30 @@ pub fn BossEventUpdateType.decode(mut r serializer.Reader) !BossEventUpdateType 
 				overlay:        r.read_varuint32()!
 			}
 		}
-		1 { return BossEventPlayerAdded{ player_id: types.ActorUniqueID.decode(mut r)! } }
-		2 { return BossEventRemove{} }
-		3 { return BossEventPlayerRemoved{ player_id: types.ActorUniqueID.decode(mut r)! } }
-		4 { return BossEventUpdatePercent{ health_percent: r.le_f32()! } }
-		5 { return BossEventUpdateName{ name: r.read_string()!, filtered_name: r.read_string()! } }
+		1 {
+			return BossEventPlayerAdded{
+				player_id: types.ActorUniqueID.decode(mut r)!
+			}
+		}
+		2 {
+			return BossEventRemove{}
+		}
+		3 {
+			return BossEventPlayerRemoved{
+				player_id: types.ActorUniqueID.decode(mut r)!
+			}
+		}
+		4 {
+			return BossEventUpdatePercent{
+				health_percent: r.le_f32()!
+			}
+		}
+		5 {
+			return BossEventUpdateName{
+				name:          r.read_string()!
+				filtered_name: r.read_string()!
+			}
+		}
 		6 {
 			return BossEventUpdateProperties{
 				darken_screen: r.le_u16()!
@@ -136,8 +157,19 @@ pub fn BossEventUpdateType.decode(mut r serializer.Reader) !BossEventUpdateType 
 				overlay:       r.read_varuint32()!
 			}
 		}
-		7 { return BossEventUpdateStyle{ color: r.read_varuint32()!, overlay: r.read_varuint32()! } }
-		8 { return BossEventQuery{ player_id: types.ActorUniqueID.decode(mut r)! } }
-		else { return error('invalid BossEventUpdateType ${d}') }
+		7 {
+			return BossEventUpdateStyle{
+				color:   r.read_varuint32()!
+				overlay: r.read_varuint32()!
+			}
+		}
+		8 {
+			return BossEventQuery{
+				player_id: types.ActorUniqueID.decode(mut r)!
+			}
+		}
+		else {
+			return error('invalid BossEventUpdateType ${d}')
+		}
 	}
 }

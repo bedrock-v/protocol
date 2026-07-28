@@ -1,18 +1,18 @@
 module types
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct CameraPreset {
 pub mut:
-	name          string
-	inherit_from  string
-	pos_x         ?f32
-	pos_y         ?f32
-	pos_z         ?f32
-	rot_x         ?f32
-	rot_y         ?f32
-	listener      ?enums.AudioListener
+	name           string
+	inherit_from   string
+	pos_x          ?f32
+	pos_y          ?f32
+	pos_z          ?f32
+	rot_x          ?f32
+	rot_y          ?f32
+	listener       ?enums.AudioListener
 	player_effects ?bool
 }
 

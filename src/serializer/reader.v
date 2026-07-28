@@ -71,7 +71,8 @@ pub fn (mut r Reader) be_i16() !i16 {
 
 pub fn (mut r Reader) le_u32() !u32 {
 	r.need(4)!
-	v := u32(r.data[r.offset]) | (u32(r.data[r.offset + 1]) << 8) | (u32(r.data[r.offset + 2]) << 16) | (u32(r.data[r.offset + 3]) << 24)
+	v := u32(r.data[r.offset]) | (u32(r.data[r.offset + 1]) << 8) | (u32(r.data[r.offset + 2]) << 16) | (u32(r.data[
+		r.offset + 3]) << 24)
 	r.offset += 4
 	return v
 }
@@ -82,7 +83,8 @@ pub fn (mut r Reader) le_i32() !i32 {
 
 pub fn (mut r Reader) be_u32() !u32 {
 	r.need(4)!
-	v := (u32(r.data[r.offset]) << 24) | (u32(r.data[r.offset + 1]) << 16) | (u32(r.data[r.offset + 2]) << 8) | u32(r.data[r.offset + 3])
+	v := (u32(r.data[r.offset]) << 24) | (u32(r.data[r.offset + 1]) << 16) | (u32(r.data[r.offset +
+		2]) << 8) | u32(r.data[r.offset + 3])
 	r.offset += 4
 	return v
 }

@@ -1,13 +1,13 @@
 module v361
 
 import protocol
-import version
-import version.v361.packets
-import version.v291.packets as packets_291
-import version.v313.packets as packets_313
-import version.v332.packets as packets_332
-import version.v340.packets as packets_340
-import version.v354.packets as packets_354
+import protocol.version
+import protocol.version.v361.packets
+import protocol.version.v291.packets as packets_291
+import protocol.version.v313.packets as packets_313
+import protocol.version.v332.packets as packets_332
+import protocol.version.v340.packets as packets_340
+import protocol.version.v354.packets as packets_354
 
 pub const proto_version = version.ProtoVersion.v361
 

@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum CameraAimAssistOperation as i8 {
 	set             = 0

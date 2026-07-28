@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v137.types
+import protocol.serializer
+import protocol.version.v137.types
 
 pub struct MoveEntityPacket {
 pub mut:

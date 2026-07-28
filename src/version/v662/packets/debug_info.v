@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct DebugInfoPacket {
 pub mut:
@@ -9,11 +9,17 @@ pub mut:
 	data     []u8
 }
 
-pub fn (p &DebugInfoPacket) pid() u16 { return 155 }
+pub fn (p &DebugInfoPacket) pid() u16 {
+	return 155
+}
 
-pub fn (p &DebugInfoPacket) name() string { return 'DebugInfoPacket' }
+pub fn (p &DebugInfoPacket) name() string {
+	return 'DebugInfoPacket'
+}
 
-pub fn (p &DebugInfoPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &DebugInfoPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &DebugInfoPacket) encode_payload(mut w serializer.Writer) {
 	p.actor_id.encode(mut w)

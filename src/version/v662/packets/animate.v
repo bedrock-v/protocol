@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct AnimateNoAction {}
 
@@ -58,8 +58,12 @@ pub fn AnimateAction.decode_payload(id i32, mut r serializer.Reader) !AnimateAct
 		3 { return AnimateWakeUp{} }
 		4 { return AnimateCriticalHit{} }
 		5 { return AnimateMagicCriticalHit{} }
-		128 { return AnimateRowRight{ rowing_time: r.le_f32()! } }
-		129 { return AnimateRowLeft{ rowing_time: r.le_f32()! } }
+		128 { return AnimateRowRight{
+				rowing_time: r.le_f32()!
+			} }
+		129 { return AnimateRowLeft{
+				rowing_time: r.le_f32()!
+			} }
 		else { return error('invalid AnimateAction ${id}') }
 	}
 }
@@ -70,11 +74,17 @@ pub mut:
 	target_runtime_id types.ActorRuntimeID
 }
 
-pub fn (p &AnimatePacket) pid() u16 { return 44 }
+pub fn (p &AnimatePacket) pid() u16 {
+	return 44
+}
 
-pub fn (p &AnimatePacket) name() string { return 'AnimatePacket' }
+pub fn (p &AnimatePacket) name() string {
+	return 'AnimatePacket'
+}
 
-pub fn (p &AnimatePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &AnimatePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &AnimatePacket) encode_payload(mut w serializer.Writer) {
 	w.write_varint32(p.action.id())

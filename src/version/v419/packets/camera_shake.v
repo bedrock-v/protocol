@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum CameraShakeType as u8 {
 	positional = 0

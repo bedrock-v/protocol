@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v924.enums
+import protocol.serializer
+import protocol.version.v924.enums
 
 pub struct TextPacket {
 pub mut:

@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v34.types
+import protocol.serializer
+import protocol.version.v34.types
 
 pub struct UseItemPacket {
 pub mut:

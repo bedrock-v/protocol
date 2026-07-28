@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct ResourcePackEntry {
 pub mut:
@@ -68,11 +68,17 @@ pub mut:
 	cdn_urls               []CDNUrl
 }
 
-pub fn (p &ResourcePacksInfoPacket) pid() u16 { return 6 }
+pub fn (p &ResourcePacksInfoPacket) pid() u16 {
+	return 6
+}
 
-pub fn (p &ResourcePacksInfoPacket) name() string { return 'ResourcePacksInfoPacket' }
+pub fn (p &ResourcePacksInfoPacket) name() string {
+	return 'ResourcePacksInfoPacket'
+}
 
-pub fn (p &ResourcePacksInfoPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ResourcePacksInfoPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ResourcePacksInfoPacket) encode_payload(mut w serializer.Writer) {
 	w.bool(p.resource_pack_required)

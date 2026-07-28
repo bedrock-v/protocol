@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ContainerEnumName as i8 {
 	anvil_input_container                   = 0

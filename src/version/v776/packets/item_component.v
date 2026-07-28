@@ -1,8 +1,8 @@
 module packets
 
-import serializer
+import protocol.serializer
 import nbt
-import version.v776.enums
+import protocol.version.v776.enums
 
 pub struct ItemsEntry {
 pub mut:
@@ -36,11 +36,17 @@ pub mut:
 	items []ItemsEntry
 }
 
-pub fn (p &ItemComponentPacket) pid() u16 { return 162 }
+pub fn (p &ItemComponentPacket) pid() u16 {
+	return 162
+}
 
-pub fn (p &ItemComponentPacket) name() string { return 'ItemComponentPacket' }
+pub fn (p &ItemComponentPacket) name() string {
+	return 'ItemComponentPacket'
+}
 
-pub fn (p &ItemComponentPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ItemComponentPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ItemComponentPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.items.len))

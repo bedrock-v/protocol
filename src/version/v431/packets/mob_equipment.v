@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v431.types
+import protocol.serializer
+import protocol.version.v431.types
 
 pub struct MobEquipmentPacket {
 pub mut:

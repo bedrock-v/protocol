@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v649.enums
+import protocol.serializer
+import protocol.version.v649.enums
 
 pub struct SetHudPacket {
 pub mut:

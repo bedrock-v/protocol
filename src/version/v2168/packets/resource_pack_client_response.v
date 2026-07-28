@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct ResourcePackResponseCancel {}
 
@@ -47,7 +47,9 @@ pub fn ResourcePackClientResponse.decode(mut r serializer.Reader) !ResourcePackC
 	d := r.read_varuint32()!
 	r.read_string()!
 	match d {
-		0 { return ResourcePackResponseCancel{} }
+		0 {
+			return ResourcePackResponseCancel{}
+		}
 		1 {
 			count := int(r.read_varuint32()!)
 			mut packs := []string{cap: count}
@@ -58,9 +60,15 @@ pub fn ResourcePackClientResponse.decode(mut r serializer.Reader) !ResourcePackC
 				downloading_packs: packs
 			}
 		}
-		2 { return ResourcePackResponseDownloadingFinished{} }
-		3 { return ResourcePackResponseStackFinished{} }
-		else { return error('invalid ResourcePackClientResponse ${d}') }
+		2 {
+			return ResourcePackResponseDownloadingFinished{}
+		}
+		3 {
+			return ResourcePackResponseStackFinished{}
+		}
+		else {
+			return error('invalid ResourcePackClientResponse ${d}')
+		}
 	}
 }
 
@@ -69,11 +77,17 @@ pub mut:
 	response ResourcePackClientResponse = ResourcePackResponseCancel{}
 }
 
-pub fn (p &ResourcePackClientResponsePacket) pid() u16 { return 8 }
+pub fn (p &ResourcePackClientResponsePacket) pid() u16 {
+	return 8
+}
 
-pub fn (p &ResourcePackClientResponsePacket) name() string { return 'ResourcePackClientResponsePacket' }
+pub fn (p &ResourcePackClientResponsePacket) name() string {
+	return 'ResourcePackClientResponsePacket'
+}
 
-pub fn (p &ResourcePackClientResponsePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ResourcePackClientResponsePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ResourcePackClientResponsePacket) encode_payload(mut w serializer.Writer) {
 	p.response.encode(mut w)

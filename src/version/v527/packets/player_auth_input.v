@@ -1,9 +1,9 @@
 module packets
 
-import serializer
-import version.v291.types as types_291
-import version.v422.types as types_422
-import version.v431.types as types_431
+import protocol.serializer
+import protocol.version.v291.types as types_291
+import protocol.version.v422.types as types_422
+import protocol.version.v431.types as types_431
 
 pub const input_flag_perform_item_interaction = u64(1) << 34
 pub const input_flag_perform_block_actions = u64(1) << 35

@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum SoundEvent as u8 {
 	item_use_on                  = 0

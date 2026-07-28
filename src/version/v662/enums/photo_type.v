@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum PhotoType as i8 {
 	portfolio  = 0

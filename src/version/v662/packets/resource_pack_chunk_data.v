@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct ResourcePackChunkDataPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	chunk_data    []u8
 }
 
-pub fn (p &ResourcePackChunkDataPacket) pid() u16 { return 83 }
+pub fn (p &ResourcePackChunkDataPacket) pid() u16 {
+	return 83
+}
 
-pub fn (p &ResourcePackChunkDataPacket) name() string { return 'ResourcePackChunkDataPacket' }
+pub fn (p &ResourcePackChunkDataPacket) name() string {
+	return 'ResourcePackChunkDataPacket'
+}
 
-pub fn (p &ResourcePackChunkDataPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ResourcePackChunkDataPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ResourcePackChunkDataPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.resource_name)

@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types
-import version.v1001.enums
+import protocol.serializer
+import protocol.version.v662.types
+import protocol.version.v1001.enums
 
 pub struct MovementEffectPacket {
 pub mut:

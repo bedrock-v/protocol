@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v766.types
+import protocol.serializer
+import protocol.version.v766.types
 
 pub struct ItemStackResponsePacket {
 pub mut:

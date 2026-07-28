@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct PresenceConfiguration {
 pub mut:
@@ -29,11 +29,17 @@ pub mut:
 	presence_configuration ?PresenceConfiguration
 }
 
-pub fn (p &ServerPresenceInfoPacket) pid() u16 { return 347 }
+pub fn (p &ServerPresenceInfoPacket) pid() u16 {
+	return 347
+}
 
-pub fn (p &ServerPresenceInfoPacket) name() string { return 'ServerPresenceInfoPacket' }
+pub fn (p &ServerPresenceInfoPacket) name() string {
+	return 'ServerPresenceInfoPacket'
+}
 
-pub fn (p &ServerPresenceInfoPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ServerPresenceInfoPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ServerPresenceInfoPacket) encode_payload(mut w serializer.Writer) {
 	if v := p.presence_configuration {

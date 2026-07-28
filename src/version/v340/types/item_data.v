@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 import nbt
 
 pub const shield_runtime_id = i32(513)

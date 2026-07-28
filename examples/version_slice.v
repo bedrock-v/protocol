@@ -1,11 +1,11 @@
 module main
 
 import protocol
-import serializer
-import version.v662
-import version.v662.packets
-import version.v662.types
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662
+import protocol.version.v662.packets
+import protocol.version.v662.types
+import protocol.version.v662.enums
 
 fn roundtrip(p protocol.Packet, mut pool protocol.PacketPool) !protocol.Packet {
 	bytes := protocol.encode_packet_to_bytes(p)
@@ -23,8 +23,8 @@ fn main() {
 		target_runtime_id: types.ActorRuntimeID{
 			value: 123456
 		}
-		event_id: enums.ActorEvent.hurt
-		data:     7
+		event_id:          enums.ActorEvent.hurt
+		data:              7
 	}
 	d1 := roundtrip(ae, mut pool)!
 	if d1 is packets.ActorEventPacket {
@@ -39,9 +39,9 @@ fn main() {
 			player_name: 'eris'
 			message:     'selam'
 		}
-		localize:    true
-		sender_xuid: 'xuid123'
-		platform_id: 'plat'
+		localize:     true
+		sender_xuid:  'xuid123'
+		platform_id:  'plat'
 	}
 	d2 := roundtrip(tp, mut pool)!
 	if d2 is packets.TextPacket {
@@ -61,10 +61,10 @@ fn main() {
 		player_runtime_id: types.ActorRuntimeID{
 			value: 42
 		}
-		position:        [f32(1.5), 2.5, 3.5]!
-		rotation:        [f32(10.0), 20.0]!
-		y_head_rotation: 30.0
-		position_mode:   enums.PlayerPositionTeleport{
+		position:          [f32(1.5), 2.5, 3.5]!
+		rotation:          [f32(10.0), 20.0]!
+		y_head_rotation:   30.0
+		position_mode:     enums.PlayerPositionTeleport{
 			teleportation_cause: 5
 			source_actor_type:   9
 		}
@@ -72,7 +72,7 @@ fn main() {
 		riding_runtime_id: types.ActorRuntimeID{
 			value: 0
 		}
-		tick: 999
+		tick:              999
 	}
 	d3 := roundtrip(mp, mut pool)!
 	if d3 is packets.MovePlayerPacket {
@@ -90,16 +90,16 @@ fn main() {
 
 	// UpdateAttributes - nested entry vecs
 	ua := &packets.UpdateAttributesPacket{
-		target_runtime_id: types.ActorRuntimeID{
+		target_runtime_id:       types.ActorRuntimeID{
 			value: 7
 		}
-		attribute_list: [
+		attribute_list:          [
 			packets.AttributeData{
-				min_value:      0.0
-				max_value:      20.0
-				current_value:  15.0
-				default_value:  20.0
-				attribute_name: 'minecraft:health'
+				min_value:           0.0
+				max_value:           20.0
+				current_value:       15.0
+				default_value:       20.0
+				attribute_name:      'minecraft:health'
 				attribute_modifiers: []
 			},
 		]

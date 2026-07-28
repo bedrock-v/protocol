@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct VoxelShapeCells {
 pub mut:
@@ -97,11 +97,17 @@ pub mut:
 	custom_shape_count u16
 }
 
-pub fn (p &VoxelShapesPacket) pid() u16 { return 337 }
+pub fn (p &VoxelShapesPacket) pid() u16 {
+	return 337
+}
 
-pub fn (p &VoxelShapesPacket) name() string { return 'VoxelShapesPacket' }
+pub fn (p &VoxelShapesPacket) name() string {
+	return 'VoxelShapesPacket'
+}
 
-pub fn (p &VoxelShapesPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &VoxelShapesPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &VoxelShapesPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.shapes.len))

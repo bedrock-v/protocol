@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct ToastRequestPacket {
 pub mut:
@@ -8,11 +8,17 @@ pub mut:
 	content string
 }
 
-pub fn (p &ToastRequestPacket) pid() u16 { return 186 }
+pub fn (p &ToastRequestPacket) pid() u16 {
+	return 186
+}
 
-pub fn (p &ToastRequestPacket) name() string { return 'ToastRequestPacket' }
+pub fn (p &ToastRequestPacket) name() string {
+	return 'ToastRequestPacket'
+}
 
-pub fn (p &ToastRequestPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ToastRequestPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ToastRequestPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.title)

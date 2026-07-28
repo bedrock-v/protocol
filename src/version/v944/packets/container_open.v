@@ -1,9 +1,9 @@
 module packets
 
-import serializer
-import version.v662.types as types_662
-import version.v662.enums
-import version.v944.types
+import protocol.serializer
+import protocol.version.v662.types as types_662
+import protocol.version.v662.enums
+import protocol.version.v944.types
 
 pub struct ContainerOpenPacket {
 pub mut:
@@ -13,11 +13,17 @@ pub mut:
 	target_actor_id types_662.ActorUniqueID
 }
 
-pub fn (p &ContainerOpenPacket) pid() u16 { return 46 }
+pub fn (p &ContainerOpenPacket) pid() u16 {
+	return 46
+}
 
-pub fn (p &ContainerOpenPacket) name() string { return 'ContainerOpenPacket' }
+pub fn (p &ContainerOpenPacket) name() string {
+	return 'ContainerOpenPacket'
+}
 
-pub fn (p &ContainerOpenPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ContainerOpenPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ContainerOpenPacket) encode_payload(mut w serializer.Writer) {
 	p.container_id.encode(mut w)

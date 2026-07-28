@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct AddItemActorPacket {
 pub mut:
@@ -14,11 +14,17 @@ pub mut:
 	from_fishing      bool
 }
 
-pub fn (p &AddItemActorPacket) pid() u16 { return 15 }
+pub fn (p &AddItemActorPacket) pid() u16 {
+	return 15
+}
 
-pub fn (p &AddItemActorPacket) name() string { return 'AddItemActorPacket' }
+pub fn (p &AddItemActorPacket) name() string {
+	return 'AddItemActorPacket'
+}
 
-pub fn (p &AddItemActorPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &AddItemActorPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &AddItemActorPacket) encode_payload(mut w serializer.Writer) {
 	p.target_actor_id.encode(mut w)

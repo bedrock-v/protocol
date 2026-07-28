@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ChatRestrictionLevel as i8 {
 	@none    = 0

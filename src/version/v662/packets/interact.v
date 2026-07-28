@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct InteractInvalid {}
 
@@ -65,9 +65,15 @@ pub fn (t InteractAction) encode_payload(mut w serializer.Writer) {
 
 pub fn InteractAction.decode_payload(id i8, mut r serializer.Reader) !InteractAction {
 	match id {
-		0 { return InteractInvalid{} }
-		1 { return InteractInteract{} }
-		2 { return InteractDamage{} }
+		0 {
+			return InteractInvalid{}
+		}
+		1 {
+			return InteractInteract{}
+		}
+		2 {
+			return InteractDamage{}
+		}
 		3 {
 			return InteractStopRiding{
 				position_x: r.le_f32()!
@@ -82,9 +88,15 @@ pub fn InteractAction.decode_payload(id i8, mut r serializer.Reader) !InteractAc
 				position_z: r.le_f32()!
 			}
 		}
-		5 { return InteractNpcOpen{} }
-		6 { return InteractOpenInventory{} }
-		else { return error('invalid InteractAction ${id}') }
+		5 {
+			return InteractNpcOpen{}
+		}
+		6 {
+			return InteractOpenInventory{}
+		}
+		else {
+			return error('invalid InteractAction ${id}')
+		}
 	}
 }
 
@@ -94,11 +106,17 @@ pub mut:
 	target_runtime_id types.ActorRuntimeID
 }
 
-pub fn (p &InteractPacket) pid() u16 { return 33 }
+pub fn (p &InteractPacket) pid() u16 {
+	return 33
+}
 
-pub fn (p &InteractPacket) name() string { return 'InteractPacket' }
+pub fn (p &InteractPacket) name() string {
+	return 'InteractPacket'
+}
 
-pub fn (p &InteractPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &InteractPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &InteractPacket) encode_payload(mut w serializer.Writer) {
 	w.i8(p.action.id())

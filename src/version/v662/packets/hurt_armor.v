@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct HurtArmorPacket {
 pub mut:
@@ -9,11 +9,17 @@ pub mut:
 	armor_slots u64
 }
 
-pub fn (p &HurtArmorPacket) pid() u16 { return 38 }
+pub fn (p &HurtArmorPacket) pid() u16 {
+	return 38
+}
 
-pub fn (p &HurtArmorPacket) name() string { return 'HurtArmorPacket' }
+pub fn (p &HurtArmorPacket) name() string {
+	return 'HurtArmorPacket'
+}
 
-pub fn (p &HurtArmorPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &HurtArmorPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &HurtArmorPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varint32(p.cause)

@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum PlayerRespawnState as i8 {
 	searching_for_spawn   = 0

@@ -1,17 +1,23 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct RemoveObjectivePacket {
 pub mut:
 	objective_name string
 }
 
-pub fn (p &RemoveObjectivePacket) pid() u16 { return 106 }
+pub fn (p &RemoveObjectivePacket) pid() u16 {
+	return 106
+}
 
-pub fn (p &RemoveObjectivePacket) name() string { return 'RemoveObjectivePacket' }
+pub fn (p &RemoveObjectivePacket) name() string {
+	return 'RemoveObjectivePacket'
+}
 
-pub fn (p &RemoveObjectivePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &RemoveObjectivePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &RemoveObjectivePacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.objective_name)

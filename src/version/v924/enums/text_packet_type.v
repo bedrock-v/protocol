@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 // wire value is category << 8 | discriminant, written as a big endian u16
 // so the bytes land as [category][discriminant] like vanilla writes them

@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v729.enums
+import protocol.serializer
+import protocol.version.v729.enums
 
 pub struct CameraAimAssistInstructionPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	allow_aim_assist bool
 }
 
-pub fn (p &CameraAimAssistInstructionPacket) pid() u16 { return 321 }
+pub fn (p &CameraAimAssistInstructionPacket) pid() u16 {
+	return 321
+}
 
-pub fn (p &CameraAimAssistInstructionPacket) name() string { return 'CameraAimAssistInstructionPacket' }
+pub fn (p &CameraAimAssistInstructionPacket) name() string {
+	return 'CameraAimAssistInstructionPacket'
+}
 
-pub fn (p &CameraAimAssistInstructionPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &CameraAimAssistInstructionPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &CameraAimAssistInstructionPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.preset_id)

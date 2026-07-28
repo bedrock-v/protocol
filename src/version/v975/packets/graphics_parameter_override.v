@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum GraphicsParameterOverrideType as i8 {
 	sky_zenith_color          = 0
@@ -95,11 +95,17 @@ pub mut:
 	reset            bool
 }
 
-pub fn (p &GraphicsParameterOverridePacket) pid() u16 { return 331 }
+pub fn (p &GraphicsParameterOverridePacket) pid() u16 {
+	return 331
+}
 
-pub fn (p &GraphicsParameterOverridePacket) name() string { return 'GraphicsParameterOverridePacket' }
+pub fn (p &GraphicsParameterOverridePacket) name() string {
+	return 'GraphicsParameterOverridePacket'
+}
 
-pub fn (p &GraphicsParameterOverridePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &GraphicsParameterOverridePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &GraphicsParameterOverridePacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.values.len))

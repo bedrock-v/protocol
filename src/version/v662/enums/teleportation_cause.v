@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum TeleportationCause as i32 {
 	unknown                   = 0

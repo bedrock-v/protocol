@@ -1,8 +1,8 @@
 module types
 
-import serializer
-import version.v859.enums as enums_859
-import version.v924.enums as enums_924
+import protocol.serializer
+import protocol.version.v859.enums as enums_859
+import protocol.version.v924.enums as enums_924
 
 pub struct ProgressKeyFrame {
 pub mut:

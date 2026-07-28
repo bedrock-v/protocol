@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub enum NpcRequestType as i8 {
 	set_actions              = 0
@@ -22,11 +22,17 @@ pub mut:
 	scene_name     string
 }
 
-pub fn (p &NpcRequestPacket) pid() u16 { return 98 }
+pub fn (p &NpcRequestPacket) pid() u16 {
+	return 98
+}
 
-pub fn (p &NpcRequestPacket) name() string { return 'NpcRequestPacket' }
+pub fn (p &NpcRequestPacket) name() string {
+	return 'NpcRequestPacket'
+}
 
-pub fn (p &NpcRequestPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &NpcRequestPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &NpcRequestPacket) encode_payload(mut w serializer.Writer) {
 	p.npc_runtime_id.encode(mut w)

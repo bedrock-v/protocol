@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct PlayerInputPacket {
 pub mut:
@@ -9,11 +9,17 @@ pub mut:
 	sneaking    bool
 }
 
-pub fn (p &PlayerInputPacket) pid() u16 { return 57 }
+pub fn (p &PlayerInputPacket) pid() u16 {
+	return 57
+}
 
-pub fn (p &PlayerInputPacket) name() string { return 'PlayerInputPacket' }
+pub fn (p &PlayerInputPacket) name() string {
+	return 'PlayerInputPacket'
+}
 
-pub fn (p &PlayerInputPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlayerInputPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlayerInputPacket) encode_payload(mut w serializer.Writer) {
 	w.le_f32(p.move_vector[0])

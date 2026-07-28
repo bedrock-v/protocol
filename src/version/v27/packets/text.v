@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub const text_type_raw = u8(0)
 pub const text_type_chat = u8(1)

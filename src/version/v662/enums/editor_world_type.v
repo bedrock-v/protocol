@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum EditorWorldType as i32 {
 	non_editor        = 0

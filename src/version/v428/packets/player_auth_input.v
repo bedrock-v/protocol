@@ -1,10 +1,10 @@
 module packets
 
-import serializer
-import version.v291.types as types_291
-import version.v340.types as types_340
-import version.v407.types as types_407
-import version.v422.types as types_422
+import protocol.serializer
+import protocol.version.v291.types as types_291
+import protocol.version.v340.types as types_340
+import protocol.version.v407.types as types_407
+import protocol.version.v422.types as types_422
 
 const input_flag_perform_item_interaction = u64(1) << 34
 const input_flag_perform_block_actions = u64(1) << 35
@@ -164,7 +164,8 @@ pub fn (mut p PlayerAuthInputPacket) decode_payload(mut r serializer.Reader) ! {
 		action_count := int(r.read_varuint32()!)
 		p.item_use_actions = []types_407.InventoryActionData{cap: action_count}
 		for _ in 0 .. action_count {
-			p.item_use_actions << types_407.InventoryActionData.decode(mut r, p.item_use_has_network_ids)!
+			p.item_use_actions << types_407.InventoryActionData.decode(mut r,
+				p.item_use_has_network_ids)!
 		}
 		p.item_use = types_340.ItemUseTransaction.decode(mut r)!
 		p.item_use_block_runtime_id = r.read_varuint32()!

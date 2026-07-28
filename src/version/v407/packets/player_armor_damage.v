@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub const armor_damage_flag_helmet = u8(0x01)
 pub const armor_damage_flag_chestplate = u8(0x02)

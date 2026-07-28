@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum BuildPlatform as i32 {
 	google        = 1

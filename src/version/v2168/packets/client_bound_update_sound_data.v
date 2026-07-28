@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v2168.types
+import protocol.serializer
+import protocol.version.v2168.types
 
 pub struct ClientBoundUpdateSoundDataPacket {
 pub mut:
@@ -15,11 +15,17 @@ pub mut:
 	resume              ?types.SoundData
 }
 
-pub fn (p &ClientBoundUpdateSoundDataPacket) pid() u16 { return 348 }
+pub fn (p &ClientBoundUpdateSoundDataPacket) pid() u16 {
+	return 348
+}
 
-pub fn (p &ClientBoundUpdateSoundDataPacket) name() string { return 'ClientBoundUpdateSoundDataPacket' }
+pub fn (p &ClientBoundUpdateSoundDataPacket) name() string {
+	return 'ClientBoundUpdateSoundDataPacket'
+}
 
-pub fn (p &ClientBoundUpdateSoundDataPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ClientBoundUpdateSoundDataPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ClientBoundUpdateSoundDataPacket) encode_payload(mut w serializer.Writer) {
 	w.le_i64(p.server_sound_handle)

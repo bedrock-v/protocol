@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v630.enums
+import protocol.serializer
+import protocol.version.v630.enums
 
 pub struct SetPlayerInventoryOptionsPacket {
 pub mut:

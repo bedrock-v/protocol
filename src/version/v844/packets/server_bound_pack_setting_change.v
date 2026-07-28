@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct PackSettingFloat {
 pub mut:
@@ -40,9 +40,15 @@ pub fn (t PackSettingValue) encode(mut w serializer.Writer) {
 pub fn PackSettingValue.decode(mut r serializer.Reader) !PackSettingValue {
 	d := r.read_varuint32()!
 	match d {
-		0 { return PackSettingFloat{ value: r.le_f32()! } }
-		1 { return PackSettingBool{ value: r.bool()! } }
-		2 { return PackSettingString{ value: r.read_string()! } }
+		0 { return PackSettingFloat{
+				value: r.le_f32()!
+			} }
+		1 { return PackSettingBool{
+				value: r.bool()!
+			} }
+		2 { return PackSettingString{
+				value: r.read_string()!
+			} }
 		else { return error('invalid PackSettingValue ${d}') }
 	}
 }
@@ -71,11 +77,17 @@ pub mut:
 	pack_setting PackSetting
 }
 
-pub fn (p &ServerBoundPackSettingChangePacket) pid() u16 { return 329 }
+pub fn (p &ServerBoundPackSettingChangePacket) pid() u16 {
+	return 329
+}
 
-pub fn (p &ServerBoundPackSettingChangePacket) name() string { return 'ServerBoundPackSettingChangePacket' }
+pub fn (p &ServerBoundPackSettingChangePacket) name() string {
+	return 'ServerBoundPackSettingChangePacket'
+}
 
-pub fn (p &ServerBoundPackSettingChangePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ServerBoundPackSettingChangePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ServerBoundPackSettingChangePacket) encode_payload(mut w serializer.Writer) {
 	p.pack_id.encode(mut w)

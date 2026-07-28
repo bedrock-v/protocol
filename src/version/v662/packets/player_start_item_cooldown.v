@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct PlayerStartItemCooldownPacket {
 pub mut:
@@ -8,11 +8,17 @@ pub mut:
 	duration_ticks i32
 }
 
-pub fn (p &PlayerStartItemCooldownPacket) pid() u16 { return 176 }
+pub fn (p &PlayerStartItemCooldownPacket) pid() u16 {
+	return 176
+}
 
-pub fn (p &PlayerStartItemCooldownPacket) name() string { return 'PlayerStartItemCooldownPacket' }
+pub fn (p &PlayerStartItemCooldownPacket) name() string {
+	return 'PlayerStartItemCooldownPacket'
+}
 
-pub fn (p &PlayerStartItemCooldownPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlayerStartItemCooldownPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlayerStartItemCooldownPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.item_category)

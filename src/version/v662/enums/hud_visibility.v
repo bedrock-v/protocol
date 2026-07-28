@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum HudVisibility as i8 {
 	hide  = 0

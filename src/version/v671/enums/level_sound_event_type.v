@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum LevelSoundEventType as u32 {
 	item_use_on                           = 0

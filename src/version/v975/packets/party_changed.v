@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct PlayerPartyInfo {
 pub mut:
@@ -25,11 +25,17 @@ pub mut:
 	party_info ?PlayerPartyInfo
 }
 
-pub fn (p &PartyChangedPacket) pid() u16 { return 342 }
+pub fn (p &PartyChangedPacket) pid() u16 {
+	return 342
+}
 
-pub fn (p &PartyChangedPacket) name() string { return 'PartyChangedPacket' }
+pub fn (p &PartyChangedPacket) name() string {
+	return 'PartyChangedPacket'
+}
 
-pub fn (p &PartyChangedPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PartyChangedPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PartyChangedPacket) encode_payload(mut w serializer.Writer) {
 	if v := p.party_info {

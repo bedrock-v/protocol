@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum UnlockedRecipesActionType as i32 {
 	empty              = 0

@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum AuthoritativeMovementMode as i8 {
 	client             = 0

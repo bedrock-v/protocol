@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v291.enums
+import protocol.serializer
+import protocol.version.v291.enums
 
 pub const arg_flag_valid = i32(0x100000)
 pub const arg_flag_enum = i32(0x200000)

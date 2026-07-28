@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.types
+import protocol.version.v662.enums
 
 pub struct MobEquipmentPacket {
 pub mut:
@@ -13,11 +13,17 @@ pub mut:
 	container_id      enums.ContainerID
 }
 
-pub fn (p &MobEquipmentPacket) pid() u16 { return 31 }
+pub fn (p &MobEquipmentPacket) pid() u16 {
+	return 31
+}
 
-pub fn (p &MobEquipmentPacket) name() string { return 'MobEquipmentPacket' }
+pub fn (p &MobEquipmentPacket) name() string {
+	return 'MobEquipmentPacket'
+}
 
-pub fn (p &MobEquipmentPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &MobEquipmentPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &MobEquipmentPacket) encode_payload(mut w serializer.Writer) {
 	p.target_runtime_id.encode(mut w)

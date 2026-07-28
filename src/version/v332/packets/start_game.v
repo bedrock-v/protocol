@@ -1,9 +1,9 @@
 module packets
 
-import serializer
-import version.v291.enums
-import version.v291.types
-import version.v291.packets as packets_291
+import protocol.serializer
+import protocol.version.v291.enums
+import protocol.version.v291.types
+import protocol.version.v291.packets as packets_291
 
 pub struct StartGamePacket {
 pub mut:

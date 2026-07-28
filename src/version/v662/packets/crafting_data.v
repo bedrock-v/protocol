@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct CraftingDataPacket {
 pub mut:
@@ -12,11 +12,17 @@ pub mut:
 	clear_recipes     bool
 }
 
-pub fn (p &CraftingDataPacket) pid() u16 { return 52 }
+pub fn (p &CraftingDataPacket) pid() u16 {
+	return 52
+}
 
-pub fn (p &CraftingDataPacket) name() string { return 'CraftingDataPacket' }
+pub fn (p &CraftingDataPacket) name() string {
+	return 'CraftingDataPacket'
+}
 
-pub fn (p &CraftingDataPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &CraftingDataPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &CraftingDataPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.crafting_entries.len))

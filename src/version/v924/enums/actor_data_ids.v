@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ActorDataIDs as u32 {
 	reserved0                            = 0

@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum TextProcessingEventOrigin as i32 {
 	unknown               = -1

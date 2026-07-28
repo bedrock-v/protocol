@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v534.types
+import protocol.serializer
+import protocol.version.v534.types
 
 pub struct UpdateAbilitiesPacket {
 pub mut:

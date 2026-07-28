@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct CommandRequestPacket {
 pub mut:
@@ -11,11 +11,17 @@ pub mut:
 	version        i32
 }
 
-pub fn (p &CommandRequestPacket) pid() u16 { return 77 }
+pub fn (p &CommandRequestPacket) pid() u16 {
+	return 77
+}
 
-pub fn (p &CommandRequestPacket) name() string { return 'CommandRequestPacket' }
+pub fn (p &CommandRequestPacket) name() string {
+	return 'CommandRequestPacket'
+}
 
-pub fn (p &CommandRequestPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &CommandRequestPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &CommandRequestPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.command)

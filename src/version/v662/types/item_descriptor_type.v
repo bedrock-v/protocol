@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub struct ItemDescInvalid {}
 
@@ -41,7 +41,9 @@ pub type ItemDescriptorType = ItemDescComplexAlias
 
 pub fn (t ItemDescriptorType) encode(mut w serializer.Writer) {
 	match t {
-		ItemDescInvalid { w.i8(0) }
+		ItemDescInvalid {
+			w.i8(0)
+		}
 		ItemDescDefault {
 			w.i8(1)
 			w.le_i16(t.item_id)
@@ -72,11 +74,24 @@ pub fn ItemDescriptorType.decode(mut r serializer.Reader) !ItemDescriptorType {
 	d := r.i8()!
 	match d {
 		0 { return ItemDescInvalid{} }
-		1 { return ItemDescDefault{ item_id: r.le_i16()!, aux_value: r.le_i16()! } }
-		2 { return ItemDescMolang{ tag_expression: r.read_string()!, molang_version: r.u8()! } }
-		3 { return ItemDescItemTag{ item_tag: r.read_string()! } }
-		4 { return ItemDescDeferred{ full_name: r.read_string()!, aux_value: r.le_i16()! } }
-		5 { return ItemDescComplexAlias{ name: r.read_string()! } }
+		1 { return ItemDescDefault{
+				item_id:   r.le_i16()!
+				aux_value: r.le_i16()!
+			} }
+		2 { return ItemDescMolang{
+				tag_expression: r.read_string()!
+				molang_version: r.u8()!
+			} }
+		3 { return ItemDescItemTag{
+				item_tag: r.read_string()!
+			} }
+		4 { return ItemDescDeferred{
+				full_name: r.read_string()!
+				aux_value: r.le_i16()!
+			} }
+		5 { return ItemDescComplexAlias{
+				name: r.read_string()!
+			} }
 		else { return error('invalid ItemDescriptorType ${d}') }
 	}
 }

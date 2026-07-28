@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.types
+import protocol.version.v662.enums
 
 pub struct UpdateBlockSyncedPacket {
 pub mut:
@@ -14,11 +14,17 @@ pub mut:
 	actor_sync_message enums.ActorBlockSyncMessageID
 }
 
-pub fn (p &UpdateBlockSyncedPacket) pid() u16 { return 110 }
+pub fn (p &UpdateBlockSyncedPacket) pid() u16 {
+	return 110
+}
 
-pub fn (p &UpdateBlockSyncedPacket) name() string { return 'UpdateBlockSyncedPacket' }
+pub fn (p &UpdateBlockSyncedPacket) name() string {
+	return 'UpdateBlockSyncedPacket'
+}
 
-pub fn (p &UpdateBlockSyncedPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &UpdateBlockSyncedPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &UpdateBlockSyncedPacket) encode_payload(mut w serializer.Writer) {
 	p.block_position.encode(mut w)

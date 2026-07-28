@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum SimpleEventType as u16 {
 	@none                          = 0

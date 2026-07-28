@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum InventoryLeftTabIndex as i32 {
 	@none               = 0

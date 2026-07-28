@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum Difficulty as i32 {
 	peaceful = 0

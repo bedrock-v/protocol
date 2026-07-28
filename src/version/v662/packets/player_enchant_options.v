@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct OptionsEntry {
 pub mut:
@@ -32,11 +32,17 @@ pub mut:
 	options []OptionsEntry
 }
 
-pub fn (p &PlayerEnchantOptionsPacket) pid() u16 { return 146 }
+pub fn (p &PlayerEnchantOptionsPacket) pid() u16 {
+	return 146
+}
 
-pub fn (p &PlayerEnchantOptionsPacket) name() string { return 'PlayerEnchantOptionsPacket' }
+pub fn (p &PlayerEnchantOptionsPacket) name() string {
+	return 'PlayerEnchantOptionsPacket'
+}
 
-pub fn (p &PlayerEnchantOptionsPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlayerEnchantOptionsPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlayerEnchantOptionsPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.options.len))

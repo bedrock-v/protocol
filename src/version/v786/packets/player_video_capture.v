@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct PlayerVideoCaptureStop {}
 
@@ -18,13 +18,17 @@ pub type PlayerVideoCapturePacketAction = PlayerVideoCaptureStart
 
 pub fn (t PlayerVideoCapturePacketAction) encode(mut w serializer.Writer) {
 	match t {
-		PlayerVideoCaptureStop { w.i8(0) }
+		PlayerVideoCaptureStop {
+			w.i8(0)
+		}
 		PlayerVideoCaptureStart {
 			w.i8(1)
 			w.le_i32(t.frame_rate)
 			w.write_string(t.file_prefix)
 		}
-		PlayerVideoCaptureUnknown { w.i8(2) }
+		PlayerVideoCaptureUnknown {
+			w.i8(2)
+		}
 	}
 }
 
@@ -32,7 +36,10 @@ pub fn PlayerVideoCapturePacketAction.decode(mut r serializer.Reader) !PlayerVid
 	d := r.i8()!
 	match d {
 		0 { return PlayerVideoCaptureStop{} }
-		1 { return PlayerVideoCaptureStart{ frame_rate: r.le_i32()!, file_prefix: r.read_string()! } }
+		1 { return PlayerVideoCaptureStart{
+				frame_rate:  r.le_i32()!
+				file_prefix: r.read_string()!
+			} }
 		2 { return PlayerVideoCaptureUnknown{} }
 		else { return error('invalid PlayerVideoCapturePacketAction ${d}') }
 	}
@@ -43,11 +50,17 @@ pub mut:
 	action PlayerVideoCapturePacketAction = PlayerVideoCaptureStop{}
 }
 
-pub fn (p &PlayerVideoCapturePacket) pid() u16 { return 324 }
+pub fn (p &PlayerVideoCapturePacket) pid() u16 {
+	return 324
+}
 
-pub fn (p &PlayerVideoCapturePacket) name() string { return 'PlayerVideoCapturePacket' }
+pub fn (p &PlayerVideoCapturePacket) name() string {
+	return 'PlayerVideoCapturePacket'
+}
 
-pub fn (p &PlayerVideoCapturePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlayerVideoCapturePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlayerVideoCapturePacket) encode_payload(mut w serializer.Writer) {
 	p.action.encode(mut w)

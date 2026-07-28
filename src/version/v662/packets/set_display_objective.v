@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct SetDisplayObjectivePacket {
 pub mut:
@@ -12,11 +12,17 @@ pub mut:
 	sort_order             enums.ObjectiveSortOrder
 }
 
-pub fn (p &SetDisplayObjectivePacket) pid() u16 { return 107 }
+pub fn (p &SetDisplayObjectivePacket) pid() u16 {
+	return 107
+}
 
-pub fn (p &SetDisplayObjectivePacket) name() string { return 'SetDisplayObjectivePacket' }
+pub fn (p &SetDisplayObjectivePacket) name() string {
+	return 'SetDisplayObjectivePacket'
+}
 
-pub fn (p &SetDisplayObjectivePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &SetDisplayObjectivePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &SetDisplayObjectivePacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.display_slot_name)

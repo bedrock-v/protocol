@@ -1,8 +1,8 @@
 module types
 
-import serializer
-import version.v662.enums
-import version.v662.types as types_662
+import protocol.serializer
+import protocol.version.v662.enums
+import protocol.version.v662.types as types_662
 
 pub struct GameRuleLegacyBool {
 pub mut:

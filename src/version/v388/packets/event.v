@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v388.types
+import protocol.serializer
+import protocol.version.v388.types
 
 pub struct EventPacket {
 pub mut:

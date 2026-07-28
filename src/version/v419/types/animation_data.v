@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v388.types as types_388
+import protocol.serializer
+import protocol.version.v388.types as types_388
 
 pub enum AnimatedTextureType as i32 {
 	@none        = 0

@@ -1,8 +1,8 @@
 module types
 
-import serializer
+import protocol.serializer
 import nbt
-import version.v291.types as types_291
+import protocol.version.v291.types as types_291
 
 pub struct EntityDataByte {
 pub mut:

@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v944.types
+import protocol.serializer
+import protocol.version.v944.types
 
 pub struct CameraSplineDefinition {
 pub mut:
@@ -26,11 +26,17 @@ pub mut:
 	splines []CameraSplineDefinition
 }
 
-pub fn (p &CameraSplinePacket) pid() u16 { return 338 }
+pub fn (p &CameraSplinePacket) pid() u16 {
+	return 338
+}
 
-pub fn (p &CameraSplinePacket) name() string { return 'CameraSplinePacket' }
+pub fn (p &CameraSplinePacket) name() string {
+	return 'CameraSplinePacket'
+}
 
-pub fn (p &CameraSplinePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &CameraSplinePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &CameraSplinePacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.splines.len))

@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub fn from_aux_value(value i32) i32 {
 	if value == 0x7fff {

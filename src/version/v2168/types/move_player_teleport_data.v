@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub struct MovePlayerTeleportData {
 pub mut:

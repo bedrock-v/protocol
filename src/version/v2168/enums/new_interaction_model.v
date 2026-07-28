@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum NewInteractionModel as i32 {
 	touch     = 0

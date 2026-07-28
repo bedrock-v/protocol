@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v1001.enums
+import protocol.serializer
+import protocol.version.v1001.enums
 
 pub struct DisconnectMessage {
 pub mut:

@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct ClientPixelsListEntry {
 pub mut:
@@ -27,11 +27,17 @@ pub mut:
 	client_pixels_list []ClientPixelsListEntry
 }
 
-pub fn (p &MapInfoRequestPacket) pid() u16 { return 68 }
+pub fn (p &MapInfoRequestPacket) pid() u16 {
+	return 68
+}
 
-pub fn (p &MapInfoRequestPacket) name() string { return 'MapInfoRequestPacket' }
+pub fn (p &MapInfoRequestPacket) name() string {
+	return 'MapInfoRequestPacket'
+}
 
-pub fn (p &MapInfoRequestPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &MapInfoRequestPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &MapInfoRequestPacket) encode_payload(mut w serializer.Writer) {
 	p.map_unique_id.encode(mut w)

@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct DeathInfoPacket {
 pub mut:
@@ -8,11 +8,17 @@ pub mut:
 	death_cause_message_list []string
 }
 
-pub fn (p &DeathInfoPacket) pid() u16 { return 189 }
+pub fn (p &DeathInfoPacket) pid() u16 {
+	return 189
+}
 
-pub fn (p &DeathInfoPacket) name() string { return 'DeathInfoPacket' }
+pub fn (p &DeathInfoPacket) name() string {
+	return 'DeathInfoPacket'
+}
 
-pub fn (p &DeathInfoPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &DeathInfoPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &DeathInfoPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.death_cause_attack_name)

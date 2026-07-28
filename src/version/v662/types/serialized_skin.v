@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct SerializedSkinAnimationFrame {
 pub mut:
@@ -80,30 +80,30 @@ pub fn PieceTintColorsEntry.decode(mut r serializer.Reader) !PieceTintColorsEntr
 
 pub struct SerializedSkin {
 pub mut:
-	skin_id                          string
-	play_fab_id                      string
-	skin_resource_patch              string
-	skin_image_width                 u32
-	skin_image_height                u32
-	skin_image_bytes                 []u8
-	animations                       []SerializedSkinAnimationFrame
-	cape_image_width                 u32
-	cape_image_height                u32
-	cape_image_bytes                 []u8
-	geometry_data                    string
-	geometry_data_engine_version     string
-	animation_data                   string
-	cape_id                          string
-	full_id                          string
-	arm_size                         string
-	skin_color                       string
-	persona_pieces                   []PersonaPiecesEntry
-	piece_tint_colors                []PieceTintColorsEntry
-	is_premium_skin                  bool
-	is_persona_skin                  bool
-	is_persona_cape_on_classic_skin  bool
-	is_primary_user                  bool
-	overrides_player_appearance      bool
+	skin_id                         string
+	play_fab_id                     string
+	skin_resource_patch             string
+	skin_image_width                u32
+	skin_image_height               u32
+	skin_image_bytes                []u8
+	animations                      []SerializedSkinAnimationFrame
+	cape_image_width                u32
+	cape_image_height               u32
+	cape_image_bytes                []u8
+	geometry_data                   string
+	geometry_data_engine_version    string
+	animation_data                  string
+	cape_id                         string
+	full_id                         string
+	arm_size                        string
+	skin_color                      string
+	persona_pieces                  []PersonaPiecesEntry
+	piece_tint_colors               []PieceTintColorsEntry
+	is_premium_skin                 bool
+	is_persona_skin                 bool
+	is_persona_cape_on_classic_skin bool
+	is_primary_user                 bool
+	overrides_player_appearance     bool
 }
 
 pub fn (t SerializedSkin) encode(mut w serializer.Writer) {

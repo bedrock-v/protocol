@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum InventorySourceFlags as u32 {
 	no_flag                  = 0

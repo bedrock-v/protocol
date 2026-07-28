@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum SetTitleType as i32 {
 	clear                 = 0
@@ -26,11 +26,17 @@ pub mut:
 	filtered_title_text string
 }
 
-pub fn (p &SetTitlePacket) pid() u16 { return 88 }
+pub fn (p &SetTitlePacket) pid() u16 {
+	return 88
+}
 
-pub fn (p &SetTitlePacket) name() string { return 'SetTitlePacket' }
+pub fn (p &SetTitlePacket) name() string {
+	return 'SetTitlePacket'
+}
 
-pub fn (p &SetTitlePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &SetTitlePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &SetTitlePacket) encode_payload(mut w serializer.Writer) {
 	w.write_varint32(i32(p.title_type))

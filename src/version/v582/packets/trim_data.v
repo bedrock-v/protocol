@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v582.types
+import protocol.serializer
+import protocol.version.v582.types
 
 pub struct TrimDataPacket {
 pub mut:

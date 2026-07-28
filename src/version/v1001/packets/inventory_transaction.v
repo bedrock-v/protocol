@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.enums
-import version.v1001.types
+import protocol.serializer
+import protocol.version.v662.enums
+import protocol.version.v1001.types
 
 pub struct LegacySetItemSlotsEntry {
 pub mut:

@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum SerializedAbilitiesLayer as u16 {
 	custom_cache = 0

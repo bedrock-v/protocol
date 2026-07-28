@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum MultiplayerMode as i32 {
 	enable_multiplayer  = 0

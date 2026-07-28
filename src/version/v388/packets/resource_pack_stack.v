@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v291.packets as packets_291
+import protocol.serializer
+import protocol.version.v291.packets as packets_291
 
 pub struct ResourcePackStackPacket {
 pub mut:

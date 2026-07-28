@@ -1,18 +1,24 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct MoveActorDeltaPacket {
 pub mut:
 	move_data types.MoveActorDeltaData
 }
 
-pub fn (p &MoveActorDeltaPacket) pid() u16 { return 111 }
+pub fn (p &MoveActorDeltaPacket) pid() u16 {
+	return 111
+}
 
-pub fn (p &MoveActorDeltaPacket) name() string { return 'MoveActorDeltaPacket' }
+pub fn (p &MoveActorDeltaPacket) name() string {
+	return 'MoveActorDeltaPacket'
+}
 
-pub fn (p &MoveActorDeltaPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &MoveActorDeltaPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &MoveActorDeltaPacket) encode_payload(mut w serializer.Writer) {
 	p.move_data.encode(mut w)

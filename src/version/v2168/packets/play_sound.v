@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v944.types as types_944
+import protocol.serializer
+import protocol.version.v944.types as types_944
 
 pub struct PlaySoundPacket {
 pub mut:
@@ -13,11 +13,17 @@ pub mut:
 	server_sound_handle ?i64
 }
 
-pub fn (p &PlaySoundPacket) pid() u16 { return 86 }
+pub fn (p &PlaySoundPacket) pid() u16 {
+	return 86
+}
 
-pub fn (p &PlaySoundPacket) name() string { return 'PlaySoundPacket' }
+pub fn (p &PlaySoundPacket) name() string {
+	return 'PlaySoundPacket'
+}
 
-pub fn (p &PlaySoundPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlaySoundPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlaySoundPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.name)

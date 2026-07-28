@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum CameraSplineType as i8 {
 	catmull_rom = 0

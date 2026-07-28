@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ComplexInventoryTransactionType as u32 {
 	normal_transaction             = 0

@@ -1,7 +1,7 @@
 module packets
 
 import nbt
-import serializer
+import protocol.serializer
 
 pub struct AddVolumeEntityPacket {
 pub mut:

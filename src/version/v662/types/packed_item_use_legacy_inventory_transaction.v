@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct ContainerSlotEntry {
 pub mut:
@@ -32,21 +32,21 @@ pub fn ContainerSlotEntry.decode(mut r serializer.Reader) !ContainerSlotEntry {
 
 pub struct PackedItemUseLegacyInventoryTransaction {
 pub mut:
-	id              i32
-	container_slots []ContainerSlotEntry
-	action          InventoryTransaction
-	action_type     enums.ItemUseInventoryTransactionType
-	position        NetworkBlockPosition
-	face            i32
-	slot            i32
-	item            NetworkItemStackDescriptor
-	from_position_x f32
-	from_position_y f32
-	from_position_z f32
+	id               i32
+	container_slots  []ContainerSlotEntry
+	action           InventoryTransaction
+	action_type      enums.ItemUseInventoryTransactionType
+	position         NetworkBlockPosition
+	face             i32
+	slot             i32
+	item             NetworkItemStackDescriptor
+	from_position_x  f32
+	from_position_y  f32
+	from_position_z  f32
 	click_position_x f32
 	click_position_y f32
 	click_position_z f32
-	target_block_id u32
+	target_block_id  u32
 }
 
 pub fn (t PackedItemUseLegacyInventoryTransaction) encode(mut w serializer.Writer) {

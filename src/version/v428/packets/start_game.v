@@ -1,10 +1,10 @@
 module packets
 
-import serializer
+import protocol.serializer
 import nbt
-import version.v291.types as types_291
-import version.v291.enums as enums_291
-import version.v419.types as types_419
+import protocol.version.v291.types as types_291
+import protocol.version.v291.enums as enums_291
+import protocol.version.v419.types as types_419
 
 pub struct BlockPropertyData {
 pub mut:

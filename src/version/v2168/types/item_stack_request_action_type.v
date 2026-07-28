@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub struct ItemStackActionTake {
 pub mut:
@@ -299,8 +299,14 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 				source: ItemStackRequestSlotInfo.decode(mut r)!
 			}
 		}
-		6 { return ItemStackActionCreate{ slot: r.i8()! } }
-		7 { return ItemStackActionScreenLabTableCombine{} }
+		6 {
+			return ItemStackActionCreate{
+				slot: r.i8()!
+			}
+		}
+		7 {
+			return ItemStackActionScreenLabTableCombine{}
+		}
 		8 {
 			return ItemStackActionScreenBeaconPayment{
 				primary_effect:   r.read_varint32()!
@@ -359,7 +365,9 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 				number_of_requested_crafts: r.i8()!
 			}
 		}
-		16 { return ItemStackActionCraftNonImplemented{} }
+		16 {
+			return ItemStackActionCraftNonImplemented{}
+		}
 		17 {
 			count := int(r.read_varuint32()!)
 			mut items := []ItemStackRequestNetworkItemInstanceDescriptor{cap: count}
@@ -371,6 +379,8 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 				times_crafted: r.i8()!
 			}
 		}
-		else { return error('invalid ItemStackRequestActionType ${d}') }
+		else {
+			return error('invalid ItemStackRequestActionType ${d}')
+		}
 	}
 }

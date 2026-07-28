@@ -1,14 +1,14 @@
 module v274
 
 import protocol
-import version
-import version.v137.packets as packets_137
-import version.v141.packets as packets_141
-import version.v150.packets as packets_150
-import version.v201.packets as packets_201
-import version.v223.packets as packets_223
-import version.v261.packets as packets_261
-import version.v274.packets
+import protocol.version
+import protocol.version.v137.packets as packets_137
+import protocol.version.v141.packets as packets_141
+import protocol.version.v150.packets as packets_150
+import protocol.version.v201.packets as packets_201
+import protocol.version.v223.packets as packets_223
+import protocol.version.v261.packets as packets_261
+import protocol.version.v274.packets
 
 pub const proto_version = version.ProtoVersion.v274
 

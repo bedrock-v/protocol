@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types as types_662
-import version.v776.types
+import protocol.serializer
+import protocol.version.v662.types as types_662
+import protocol.version.v776.types
 
 pub struct StructureBlockUpdatePacket {
 pub mut:
@@ -12,11 +12,17 @@ pub mut:
 	is_waterlogged bool
 }
 
-pub fn (p &StructureBlockUpdatePacket) pid() u16 { return 90 }
+pub fn (p &StructureBlockUpdatePacket) pid() u16 {
+	return 90
+}
 
-pub fn (p &StructureBlockUpdatePacket) name() string { return 'StructureBlockUpdatePacket' }
+pub fn (p &StructureBlockUpdatePacket) name() string {
+	return 'StructureBlockUpdatePacket'
+}
 
-pub fn (p &StructureBlockUpdatePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &StructureBlockUpdatePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &StructureBlockUpdatePacket) encode_payload(mut w serializer.Writer) {
 	p.block_position.encode(mut w)

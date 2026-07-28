@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct ChangeDimensionPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	loading_screen_id ?i32
 }
 
-pub fn (p &ChangeDimensionPacket) pid() u16 { return 61 }
+pub fn (p &ChangeDimensionPacket) pid() u16 {
+	return 61
+}
 
-pub fn (p &ChangeDimensionPacket) name() string { return 'ChangeDimensionPacket' }
+pub fn (p &ChangeDimensionPacket) name() string {
+	return 'ChangeDimensionPacket'
+}
 
-pub fn (p &ChangeDimensionPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ChangeDimensionPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ChangeDimensionPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varint32(p.dimension_id)

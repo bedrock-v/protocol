@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct UpdateSoftEnumPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	update_type enums.SoftEnumUpdateType
 }
 
-pub fn (p &UpdateSoftEnumPacket) pid() u16 { return 114 }
+pub fn (p &UpdateSoftEnumPacket) pid() u16 {
+	return 114
+}
 
-pub fn (p &UpdateSoftEnumPacket) name() string { return 'UpdateSoftEnumPacket' }
+pub fn (p &UpdateSoftEnumPacket) name() string {
+	return 'UpdateSoftEnumPacket'
+}
 
-pub fn (p &UpdateSoftEnumPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &UpdateSoftEnumPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &UpdateSoftEnumPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.enum_name)

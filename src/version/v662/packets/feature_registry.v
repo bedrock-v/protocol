@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct FeaturesDataListEntry {
 pub mut:
@@ -25,11 +25,17 @@ pub mut:
 	features_data_list []FeaturesDataListEntry
 }
 
-pub fn (p &FeatureRegistryPacket) pid() u16 { return 191 }
+pub fn (p &FeatureRegistryPacket) pid() u16 {
+	return 191
+}
 
-pub fn (p &FeatureRegistryPacket) name() string { return 'FeatureRegistryPacket' }
+pub fn (p &FeatureRegistryPacket) name() string {
+	return 'FeatureRegistryPacket'
+}
 
-pub fn (p &FeatureRegistryPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &FeatureRegistryPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &FeatureRegistryPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.features_data_list.len))

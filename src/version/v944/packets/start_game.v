@@ -1,11 +1,11 @@
 module packets
 
-import serializer
+import protocol.serializer
 import nbt
-import version.v662.types as types_662
-import version.v662.enums
-import version.v818.types as types_818
-import version.v944.types
+import protocol.version.v662.types as types_662
+import protocol.version.v662.enums
+import protocol.version.v818.types as types_818
+import protocol.version.v944.types
 
 pub struct BlockProperty {
 pub mut:
@@ -171,11 +171,17 @@ pub mut:
 	owner_id                              string
 }
 
-pub fn (p &StartGamePacket) pid() u16 { return 11 }
+pub fn (p &StartGamePacket) pid() u16 {
+	return 11
+}
 
-pub fn (p &StartGamePacket) name() string { return 'StartGamePacket' }
+pub fn (p &StartGamePacket) name() string {
+	return 'StartGamePacket'
+}
 
-pub fn (p &StartGamePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &StartGamePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &StartGamePacket) encode_payload(mut w serializer.Writer) {
 	p.target_actor_id.encode(mut w)

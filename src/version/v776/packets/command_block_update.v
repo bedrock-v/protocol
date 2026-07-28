@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.types
+import protocol.version.v662.enums
 
 pub struct CommandBlockUpdatePacket {
 pub mut:
@@ -21,11 +21,17 @@ pub mut:
 	should_execute_on_first_tick bool
 }
 
-pub fn (p &CommandBlockUpdatePacket) pid() u16 { return 78 }
+pub fn (p &CommandBlockUpdatePacket) pid() u16 {
+	return 78
+}
 
-pub fn (p &CommandBlockUpdatePacket) name() string { return 'CommandBlockUpdatePacket' }
+pub fn (p &CommandBlockUpdatePacket) name() string {
+	return 'CommandBlockUpdatePacket'
+}
 
-pub fn (p &CommandBlockUpdatePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &CommandBlockUpdatePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &CommandBlockUpdatePacket) encode_payload(mut w serializer.Writer) {
 	w.bool(p.is_block)

@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ClientPlayMode as u32 {
 	normal                 = 0

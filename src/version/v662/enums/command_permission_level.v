@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum CommandPermissionLevel as i8 {
 	any            = 0

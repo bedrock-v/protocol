@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 import nbt
 
 pub struct ItemData {

@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.types
+import protocol.version.v662.enums
 
 pub struct UpdatePlayerGameTypePacket {
 pub mut:
@@ -11,11 +11,17 @@ pub mut:
 	tick             u32
 }
 
-pub fn (p &UpdatePlayerGameTypePacket) pid() u16 { return 151 }
+pub fn (p &UpdatePlayerGameTypePacket) pid() u16 {
+	return 151
+}
 
-pub fn (p &UpdatePlayerGameTypePacket) name() string { return 'UpdatePlayerGameTypePacket' }
+pub fn (p &UpdatePlayerGameTypePacket) name() string {
+	return 'UpdatePlayerGameTypePacket'
+}
 
-pub fn (p &UpdatePlayerGameTypePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &UpdatePlayerGameTypePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &UpdatePlayerGameTypePacket) encode_payload(mut w serializer.Writer) {
 	p.player_game_type.encode(mut w)

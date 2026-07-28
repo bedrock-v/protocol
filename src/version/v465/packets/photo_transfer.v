@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum PhotoType as u8 {
 	portfolio  = 0

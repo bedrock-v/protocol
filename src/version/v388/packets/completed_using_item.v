@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum ItemUseType as i32 {
 	unknown     = -1

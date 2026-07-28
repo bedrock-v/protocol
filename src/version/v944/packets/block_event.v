@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v944.types
+import protocol.serializer
+import protocol.version.v944.types
 
 pub struct BlockEventPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	event_value    i32
 }
 
-pub fn (p &BlockEventPacket) pid() u16 { return 26 }
+pub fn (p &BlockEventPacket) pid() u16 {
+	return 26
+}
 
-pub fn (p &BlockEventPacket) name() string { return 'BlockEventPacket' }
+pub fn (p &BlockEventPacket) name() string {
+	return 'BlockEventPacket'
+}
 
-pub fn (p &BlockEventPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &BlockEventPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &BlockEventPacket) encode_payload(mut w serializer.Writer) {
 	p.block_position.encode(mut w)

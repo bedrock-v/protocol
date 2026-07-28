@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct MotionPredictionHintsPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	on_ground  bool
 }
 
-pub fn (p &MotionPredictionHintsPacket) pid() u16 { return 157 }
+pub fn (p &MotionPredictionHintsPacket) pid() u16 {
+	return 157
+}
 
-pub fn (p &MotionPredictionHintsPacket) name() string { return 'MotionPredictionHintsPacket' }
+pub fn (p &MotionPredictionHintsPacket) name() string {
+	return 'MotionPredictionHintsPacket'
+}
 
-pub fn (p &MotionPredictionHintsPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &MotionPredictionHintsPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &MotionPredictionHintsPacket) encode_payload(mut w serializer.Writer) {
 	p.runtime_id.encode(mut w)

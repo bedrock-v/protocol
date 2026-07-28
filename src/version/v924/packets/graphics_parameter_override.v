@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum GraphicsParameterOverrideType as i8 {
 	sky_zenith_color          = 0

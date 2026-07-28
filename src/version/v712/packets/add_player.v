@@ -1,9 +1,9 @@
 module packets
 
-import serializer
-import version.v712.types
-import version.v662.types as types_662
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v712.types
+import protocol.version.v662.types as types_662
+import protocol.version.v662.enums
 
 pub struct AddPlayerPacket {
 pub mut:
@@ -25,11 +25,17 @@ pub mut:
 	build_platform    enums.BuildPlatform
 }
 
-pub fn (p &AddPlayerPacket) pid() u16 { return 12 }
+pub fn (p &AddPlayerPacket) pid() u16 {
+	return 12
+}
 
-pub fn (p &AddPlayerPacket) name() string { return 'AddPlayerPacket' }
+pub fn (p &AddPlayerPacket) name() string {
+	return 'AddPlayerPacket'
+}
 
-pub fn (p &AddPlayerPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &AddPlayerPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &AddPlayerPacket) encode_payload(mut w serializer.Writer) {
 	p.uuid.encode(mut w)

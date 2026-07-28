@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct ClientStoreEntryPointConfiguration {
 pub mut:
@@ -25,11 +25,17 @@ pub mut:
 	client_store_entry_point_configuration ?ClientStoreEntryPointConfiguration
 }
 
-pub fn (p &ServerStoreInfoPacket) pid() u16 { return 346 }
+pub fn (p &ServerStoreInfoPacket) pid() u16 {
+	return 346
+}
 
-pub fn (p &ServerStoreInfoPacket) name() string { return 'ServerStoreInfoPacket' }
+pub fn (p &ServerStoreInfoPacket) name() string {
+	return 'ServerStoreInfoPacket'
+}
 
-pub fn (p &ServerStoreInfoPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ServerStoreInfoPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ServerStoreInfoPacket) encode_payload(mut w serializer.Writer) {
 	if v := p.client_store_entry_point_configuration {

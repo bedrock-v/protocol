@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ContainerSlotType as i8 {
 	anvil_input                = 0

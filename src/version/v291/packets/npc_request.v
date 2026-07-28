@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum NpcRequestType as u8 {
 	set_action               = 0

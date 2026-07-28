@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum GraphicsMode as i8 {
 	simple     = 0
@@ -23,11 +23,17 @@ pub mut:
 	filter_profanity_change ?bool
 }
 
-pub fn (p &UpdateClientOptionsPacket) pid() u16 { return 323 }
+pub fn (p &UpdateClientOptionsPacket) pid() u16 {
+	return 323
+}
 
-pub fn (p &UpdateClientOptionsPacket) name() string { return 'UpdateClientOptionsPacket' }
+pub fn (p &UpdateClientOptionsPacket) name() string {
+	return 'UpdateClientOptionsPacket'
+}
 
-pub fn (p &UpdateClientOptionsPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &UpdateClientOptionsPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &UpdateClientOptionsPacket) encode_payload(mut w serializer.Writer) {
 	if v := p.graphics_mode {

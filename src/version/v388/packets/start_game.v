@@ -1,11 +1,11 @@
 module packets
 
-import serializer
+import protocol.serializer
 import nbt
-import version.v291.enums as enums_291
-import version.v291.packets as packets_291
-import version.v291.types as types_291
-import version.v388.types
+import protocol.version.v291.enums as enums_291
+import protocol.version.v291.packets as packets_291
+import protocol.version.v291.types as types_291
+import protocol.version.v388.types
 
 pub struct ItemDefinition {
 pub mut:

@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v662.types as types_662
+import protocol.serializer
+import protocol.version.v662.types as types_662
 
 pub struct GatheringsConfig {
 pub mut:

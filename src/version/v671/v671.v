@@ -1,9 +1,9 @@
 module v671
 
 import protocol
-import version
-import version.v671.packets
-import version.v662.packets as packets_662
+import protocol.version
+import protocol.version.v671.packets
+import protocol.version.v662.packets as packets_662
 
 pub const proto_version = version.ProtoVersion.v671
 

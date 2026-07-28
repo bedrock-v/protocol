@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v361.enums
+import protocol.serializer
+import protocol.version.v361.enums
 
 pub struct ResourcePackDataInfoPacket {
 pub mut:

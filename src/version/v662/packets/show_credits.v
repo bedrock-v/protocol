@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub enum ShowCreditsState as i32 {
 	start    = 0
@@ -14,11 +14,17 @@ pub mut:
 	credits_state     ShowCreditsState
 }
 
-pub fn (p &ShowCreditsPacket) pid() u16 { return 75 }
+pub fn (p &ShowCreditsPacket) pid() u16 {
+	return 75
+}
 
-pub fn (p &ShowCreditsPacket) name() string { return 'ShowCreditsPacket' }
+pub fn (p &ShowCreditsPacket) name() string {
+	return 'ShowCreditsPacket'
+}
 
-pub fn (p &ShowCreditsPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ShowCreditsPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ShowCreditsPacket) encode_payload(mut w serializer.Writer) {
 	p.player_runtime_id.encode(mut w)

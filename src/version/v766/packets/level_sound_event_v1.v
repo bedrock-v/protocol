@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v766.enums
-import version.v662.enums as enums_662
+import protocol.serializer
+import protocol.version.v766.enums
+import protocol.version.v662.enums as enums_662
 
 pub struct LevelSoundEventV1Packet {
 pub mut:

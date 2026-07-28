@@ -1,9 +1,9 @@
 module packets
 
-import serializer
-import version.v662.types as types_662
-import version.v662.enums
-import version.v944.types
+import protocol.serializer
+import protocol.version.v662.types as types_662
+import protocol.version.v662.enums
+import protocol.version.v944.types
 
 pub enum ClientPlayMode as u32 {
 	normal                 = 0
@@ -255,11 +255,17 @@ pub mut:
 	raw_move_vector          [2]f32
 }
 
-pub fn (p &PlayerAuthInputPacket) pid() u16 { return 144 }
+pub fn (p &PlayerAuthInputPacket) pid() u16 {
+	return 144
+}
 
-pub fn (p &PlayerAuthInputPacket) name() string { return 'PlayerAuthInputPacket' }
+pub fn (p &PlayerAuthInputPacket) name() string {
+	return 'PlayerAuthInputPacket'
+}
 
-pub fn (p &PlayerAuthInputPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlayerAuthInputPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlayerAuthInputPacket) encode_payload(mut w serializer.Writer) {
 	w.le_f32(p.player_rotation[0])

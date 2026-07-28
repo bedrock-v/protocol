@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum PacketViolationType as i32 {
 	unknown          = -1

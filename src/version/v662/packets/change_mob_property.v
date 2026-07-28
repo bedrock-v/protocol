@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct ChangeMobPropertyPacket {
 pub mut:
@@ -13,11 +13,17 @@ pub mut:
 	float_component_value  f32
 }
 
-pub fn (p &ChangeMobPropertyPacket) pid() u16 { return 182 }
+pub fn (p &ChangeMobPropertyPacket) pid() u16 {
+	return 182
+}
 
-pub fn (p &ChangeMobPropertyPacket) name() string { return 'ChangeMobPropertyPacket' }
+pub fn (p &ChangeMobPropertyPacket) name() string {
+	return 'ChangeMobPropertyPacket'
+}
 
-pub fn (p &ChangeMobPropertyPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ChangeMobPropertyPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ChangeMobPropertyPacket) encode_payload(mut w serializer.Writer) {
 	p.actor_id.encode(mut w)

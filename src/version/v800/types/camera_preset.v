@@ -1,8 +1,8 @@
 module types
 
-import serializer
-import version.v800.enums
-import version.v766.types as types_766
+import protocol.serializer
+import protocol.version.v800.enums
+import protocol.version.v766.types as types_766
 
 pub enum AudioListener as i8 {
 	camera = 0

@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct ScorePacketInfoChangeEntry {
 pub mut:
@@ -65,11 +65,17 @@ pub mut:
 	action SetScoreAction = SetScoreChange{}
 }
 
-pub fn (p &SetScorePacket) pid() u16 { return 108 }
+pub fn (p &SetScorePacket) pid() u16 {
+	return 108
+}
 
-pub fn (p &SetScorePacket) name() string { return 'SetScorePacket' }
+pub fn (p &SetScorePacket) name() string {
+	return 'SetScorePacket'
+}
 
-pub fn (p &SetScorePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &SetScorePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &SetScorePacket) encode_payload(mut w serializer.Writer) {
 	match p.action {

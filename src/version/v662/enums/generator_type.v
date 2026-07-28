@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum GeneratorType as i32 {
 	legacy    = 0

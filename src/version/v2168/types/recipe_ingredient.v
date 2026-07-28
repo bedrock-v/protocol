@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v2168.enums
+import protocol.serializer
+import protocol.version.v2168.enums
 
 pub struct RecipeIngredient {
 pub mut:

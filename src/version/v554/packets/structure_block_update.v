@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v291.types as types_291
-import version.v503.types as types_503
+import protocol.serializer
+import protocol.version.v291.types as types_291
+import protocol.version.v503.types as types_503
 
 pub struct StructureBlockUpdatePacket {
 pub mut:

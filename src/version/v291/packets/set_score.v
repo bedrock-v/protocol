@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum SetScoreAction as u8 {
 	set    = 0

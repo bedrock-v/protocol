@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum ClientBoundTextureShiftAction as u8 {
 	invalid     = 0

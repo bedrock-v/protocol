@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v291.types as types_291
+import protocol.serializer
+import protocol.version.v291.types as types_291
 
 fn action_has_block_data(action i32) bool {
 	return action in [i32(0), 1, 18, 26, 27]

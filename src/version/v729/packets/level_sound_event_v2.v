@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v729.enums
+import protocol.serializer
+import protocol.version.v729.enums
 
 pub struct LevelSoundEventV2Packet {
 pub mut:
@@ -13,11 +13,17 @@ pub mut:
 	global           bool
 }
 
-pub fn (p &LevelSoundEventV2Packet) pid() u16 { return 120 }
+pub fn (p &LevelSoundEventV2Packet) pid() u16 {
+	return 120
+}
 
-pub fn (p &LevelSoundEventV2Packet) name() string { return 'LevelSoundEventV2Packet' }
+pub fn (p &LevelSoundEventV2Packet) name() string {
+	return 'LevelSoundEventV2Packet'
+}
 
-pub fn (p &LevelSoundEventV2Packet) can_be_sent_before_login() bool { return false }
+pub fn (p &LevelSoundEventV2Packet) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &LevelSoundEventV2Packet) encode_payload(mut w serializer.Writer) {
 	w.u8(u8(u32(p.event_id)))

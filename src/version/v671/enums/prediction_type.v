@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub struct PredictionPlayer {}
 
@@ -41,7 +41,9 @@ pub fn PredictionType.decode(mut r serializer.Reader) !PredictionType {
 pub fn PredictionType.decode_payload(d u8, mut r serializer.Reader) !PredictionType {
 	match d {
 		0 { return PredictionPlayer{} }
-		1 { return PredictionVehicle{ rotation: [r.le_f32()!, r.le_f32()!]! } }
+		1 { return PredictionVehicle{
+				rotation: [r.le_f32()!, r.le_f32()!]!
+			} }
 		else { return error('invalid PredictionType ${d}') }
 	}
 }

@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum ResourcePackResponseStatus as u8 {
 	@none          = 0

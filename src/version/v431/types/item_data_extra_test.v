@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 fn structured_extra_data(raw []u8) []u8 {
 	mut inner := serializer.new_writer()

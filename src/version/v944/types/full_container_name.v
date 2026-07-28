@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v944.enums
+import protocol.serializer
+import protocol.version.v944.enums
 
 pub struct FullContainerName {
 pub mut:

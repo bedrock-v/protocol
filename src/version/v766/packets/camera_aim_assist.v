@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v729.enums as enums_729
+import protocol.serializer
+import protocol.version.v729.enums as enums_729
 
 pub enum CameraAimAssistTargetMode as i8 {
 	angle    = 0

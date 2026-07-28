@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v14.types as types_14
+import protocol.serializer
+import protocol.version.v14.types as types_14
 
 pub struct AddPlayerPacket {
 pub mut:

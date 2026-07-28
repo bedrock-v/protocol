@@ -1,18 +1,18 @@
 module v419
 
 import protocol
-import version
-import version.v291.packets as packets_291
-import version.v313.packets as packets_313
-import version.v332.packets as packets_332
-import version.v340.packets as packets_340
-import version.v354.packets as packets_354
-import version.v361.packets as packets_361
-import version.v388.packets as packets_388
-import version.v389.packets as packets_389
-import version.v390.packets as packets_390
-import version.v407.packets as packets_407
-import version.v419.packets
+import protocol.version
+import protocol.version.v291.packets as packets_291
+import protocol.version.v313.packets as packets_313
+import protocol.version.v332.packets as packets_332
+import protocol.version.v340.packets as packets_340
+import protocol.version.v354.packets as packets_354
+import protocol.version.v361.packets as packets_361
+import protocol.version.v388.packets as packets_388
+import protocol.version.v389.packets as packets_389
+import protocol.version.v390.packets as packets_390
+import protocol.version.v407.packets as packets_407
+import protocol.version.v419.packets
 
 pub const proto_version = version.ProtoVersion.v419
 

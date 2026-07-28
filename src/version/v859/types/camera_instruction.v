@@ -1,9 +1,9 @@
 module types
 
-import serializer
-import version.v662.types as types_662
-import version.v662.enums as enums_662
-import version.v859.enums
+import protocol.serializer
+import protocol.version.v662.types as types_662
+import protocol.version.v662.enums as enums_662
+import protocol.version.v859.enums
 
 pub struct EaseData {
 pub mut:

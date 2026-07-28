@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ObjectiveSortOrder as i32 {
 	ascending  = 0

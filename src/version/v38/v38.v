@@ -1,8 +1,8 @@
 module v38
 
 import protocol
-import version.v38.packets
-import version.v34.packets as packets_34
+import protocol.version.v38.packets
+import protocol.version.v34.packets as packets_34
 
 pub fn new_pool() protocol.PacketPool {
 	mut pool := protocol.new_empty_pool()

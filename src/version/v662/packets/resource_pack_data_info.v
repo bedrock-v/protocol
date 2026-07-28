@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct ResourcePackDataInfoPacket {
 pub mut:
@@ -14,11 +14,17 @@ pub mut:
 	pack_type     enums.PackType
 }
 
-pub fn (p &ResourcePackDataInfoPacket) pid() u16 { return 82 }
+pub fn (p &ResourcePackDataInfoPacket) pid() u16 {
+	return 82
+}
 
-pub fn (p &ResourcePackDataInfoPacket) name() string { return 'ResourcePackDataInfoPacket' }
+pub fn (p &ResourcePackDataInfoPacket) name() string {
+	return 'ResourcePackDataInfoPacket'
+}
 
-pub fn (p &ResourcePackDataInfoPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ResourcePackDataInfoPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ResourcePackDataInfoPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.resource_name)

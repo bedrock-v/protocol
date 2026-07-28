@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v291.enums as enums_291
+import protocol.serializer
+import protocol.version.v291.enums as enums_291
 
 pub struct EntityLinkData {
 pub mut:

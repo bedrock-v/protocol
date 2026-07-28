@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum CommandParameterOption as u32 {
 	@none                       = 0
