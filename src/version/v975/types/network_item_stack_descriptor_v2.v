@@ -39,9 +39,15 @@ pub fn (t ItemStackNetIdVariant) encode(mut w serializer.Writer) {
 pub fn ItemStackNetIdVariant.decode(mut r serializer.Reader) !ItemStackNetIdVariant {
 	d := r.read_varuint32()!
 	match d {
-		0 { return ItemStackNetId{ value: r.read_varint32()! } }
-		1 { return ItemStackRequestId{ value: r.read_varint32()! } }
-		2 { return ItemStackLegacyRequestId{ value: r.read_varint32()! } }
+		0 { return ItemStackNetId{
+				value: r.read_varint32()!
+			} }
+		1 { return ItemStackRequestId{
+				value: r.read_varint32()!
+			} }
+		2 { return ItemStackLegacyRequestId{
+				value: r.read_varint32()!
+			} }
 		else { return error('invalid ItemStackNetIdVariant ${d}') }
 	}
 }
@@ -67,8 +73,7 @@ pub fn (t NetworkItemStackDescriptorV2) encode(mut w serializer.Writer) {
 		w.bool(false)
 	}
 	w.write_varuint32(t.block_runtime_id)
-	w.write_varuint32(u32(t.user_data_buffer.len))
-	w.write_raw(t.user_data_buffer)
+	w.write_item_extra_data(t.user_data_buffer)
 }
 
 pub fn NetworkItemStackDescriptorV2.decode(mut r serializer.Reader) !NetworkItemStackDescriptorV2 {
@@ -80,7 +85,6 @@ pub fn NetworkItemStackDescriptorV2.decode(mut r serializer.Reader) !NetworkItem
 		t.net_id = ItemStackNetIdVariant.decode(mut r)!
 	}
 	t.block_runtime_id = r.read_varuint32()!
-	count := int(r.read_varuint32()!)
-	t.user_data_buffer = r.read_raw(count)!
+	t.user_data_buffer = r.read_item_extra_data()!
 	return t
 }

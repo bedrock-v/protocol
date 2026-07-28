@@ -17,7 +17,7 @@ pub fn (t NetworkItemInstanceDescriptor) encode(mut w serializer.Writer) {
 		w.le_u16(t.stack_size)
 		w.write_varuint32(t.aux_value)
 		w.write_varint32(t.block_runtime_id)
-		w.write_string_bytes(t.user_data_buffer)
+		w.write_item_extra_data(t.user_data_buffer)
 	}
 }
 
@@ -28,7 +28,7 @@ pub fn NetworkItemInstanceDescriptor.decode(mut r serializer.Reader) !NetworkIte
 		t.stack_size = r.le_u16()!
 		t.aux_value = r.read_varuint32()!
 		t.block_runtime_id = r.read_varint32()!
-		t.user_data_buffer = r.read_string_bytes()!
+		t.user_data_buffer = r.read_item_extra_data()!
 	}
 	return t
 }

@@ -14,15 +14,11 @@ pub mut:
 }
 
 fn (t ItemData) encode_user_data(mut w serializer.Writer) {
-	w.write_varuint32(u32(t.user_data.len))
-	w.write_raw(t.user_data)
+	w.write_item_extra_data(t.user_data)
 }
 
 fn (mut t ItemData) decode_user_data(mut r serializer.Reader) ! {
-	size := int(r.read_varuint32()!)
-	if size > 0 {
-		t.user_data = r.read_raw(size)!
-	}
+	t.user_data = r.read_item_extra_data()!
 }
 
 pub fn (t ItemData) encode(mut w serializer.Writer) {
