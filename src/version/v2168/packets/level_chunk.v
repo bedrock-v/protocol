@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types as types_662
+import protocol.serializer
+import protocol.version.v662.types as types_662
 
 pub struct LevelChunkPacket {
 pub mut:
@@ -14,11 +14,17 @@ pub mut:
 	serialized_chunk_data          []u8
 }
 
-pub fn (p &LevelChunkPacket) pid() u16 { return 58 }
+pub fn (p &LevelChunkPacket) pid() u16 {
+	return 58
+}
 
-pub fn (p &LevelChunkPacket) name() string { return 'LevelChunkPacket' }
+pub fn (p &LevelChunkPacket) name() string {
+	return 'LevelChunkPacket'
+}
 
-pub fn (p &LevelChunkPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &LevelChunkPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &LevelChunkPacket) encode_payload(mut w serializer.Writer) {
 	p.chunk_position.encode(mut w)

@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.enums
-import version.v944.types
+import protocol.serializer
+import protocol.version.v662.enums
+import protocol.version.v944.types
 
 pub struct SetSpawnPositionPacket {
 pub mut:
@@ -12,11 +12,17 @@ pub mut:
 	spawn_block_pos     types.NetworkBlockPosition
 }
 
-pub fn (p &SetSpawnPositionPacket) pid() u16 { return 43 }
+pub fn (p &SetSpawnPositionPacket) pid() u16 {
+	return 43
+}
 
-pub fn (p &SetSpawnPositionPacket) name() string { return 'SetSpawnPositionPacket' }
+pub fn (p &SetSpawnPositionPacket) name() string {
+	return 'SetSpawnPositionPacket'
+}
 
-pub fn (p &SetSpawnPositionPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &SetSpawnPositionPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &SetSpawnPositionPacket) encode_payload(mut w serializer.Writer) {
 	p.spawn_position_type.encode(mut w)

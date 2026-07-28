@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum EntityEventType as u8 {
 	@none                             = 0

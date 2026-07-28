@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct SpawnExperienceOrbPacket {
 pub mut:
@@ -8,11 +8,17 @@ pub mut:
 	xp_value i32
 }
 
-pub fn (p &SpawnExperienceOrbPacket) pid() u16 { return 66 }
+pub fn (p &SpawnExperienceOrbPacket) pid() u16 {
+	return 66
+}
 
-pub fn (p &SpawnExperienceOrbPacket) name() string { return 'SpawnExperienceOrbPacket' }
+pub fn (p &SpawnExperienceOrbPacket) name() string {
+	return 'SpawnExperienceOrbPacket'
+}
 
-pub fn (p &SpawnExperienceOrbPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &SpawnExperienceOrbPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &SpawnExperienceOrbPacket) encode_payload(mut w serializer.Writer) {
 	w.le_f32(p.position[0])

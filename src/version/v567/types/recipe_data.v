@@ -1,9 +1,9 @@
 module types
 
-import serializer
-import version.v291.types as types_291
-import version.v431.types as types_431
-import version.v554.types as types_554
+import protocol.serializer
+import protocol.version.v291.types as types_291
+import protocol.version.v431.types as types_431
+import protocol.version.v554.types as types_554
 
 pub const crafting_data_type_shapeless = i32(0)
 

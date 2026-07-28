@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum PlayerPermissionLevel as i32 {
 	visitor  = 0

@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum MovementEffectType as i32 {
 	invalid     = -1

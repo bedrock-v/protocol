@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct TimeMarker {
 pub mut:
@@ -201,11 +201,17 @@ pub mut:
 	data SyncWorldClocks = WorldClocksSyncState{}
 }
 
-pub fn (p &SyncWorldClocksPacket) pid() u16 { return 344 }
+pub fn (p &SyncWorldClocksPacket) pid() u16 {
+	return 344
+}
 
-pub fn (p &SyncWorldClocksPacket) name() string { return 'SyncWorldClocksPacket' }
+pub fn (p &SyncWorldClocksPacket) name() string {
+	return 'SyncWorldClocksPacket'
+}
 
-pub fn (p &SyncWorldClocksPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &SyncWorldClocksPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &SyncWorldClocksPacket) encode_payload(mut w serializer.Writer) {
 	p.data.encode(mut w)

@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v898.types
-import version.v898.enums
+import protocol.serializer
+import protocol.version.v898.types
+import protocol.version.v898.enums
 
 pub struct OutputMessagesEntry {
 pub mut:

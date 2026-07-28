@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub enum InteractPacketAction as i8 {
 	invalid         = 0

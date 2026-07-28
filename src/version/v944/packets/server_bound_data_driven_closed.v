@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum DataDrivenScreenClosedReason as u8 {
 	programmatic_close     = 0
@@ -24,11 +24,17 @@ pub mut:
 	close_reason DataDrivenScreenClosedReason
 }
 
-pub fn (p &ServerBoundDataDrivenClosedPacket) pid() u16 { return 343 }
+pub fn (p &ServerBoundDataDrivenClosedPacket) pid() u16 {
+	return 343
+}
 
-pub fn (p &ServerBoundDataDrivenClosedPacket) name() string { return 'ServerBoundDataDrivenClosedPacket' }
+pub fn (p &ServerBoundDataDrivenClosedPacket) name() string {
+	return 'ServerBoundDataDrivenClosedPacket'
+}
 
-pub fn (p &ServerBoundDataDrivenClosedPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ServerBoundDataDrivenClosedPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ServerBoundDataDrivenClosedPacket) encode_payload(mut w serializer.Writer) {
 	w.le_i32(p.form_id)

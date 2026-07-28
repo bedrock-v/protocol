@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum NpcDialogueActionType as i32 {
 	open  = 0
@@ -9,19 +9,25 @@ pub enum NpcDialogueActionType as i32 {
 
 pub struct NpcDialoguePacket {
 pub mut:
-	npc_raw_id              u64
+	npc_raw_id               u64
 	npc_dialogue_action_type NpcDialogueActionType
-	dialogue                string
-	scene_name              string
-	npc_name                string
-	action_json             string
+	dialogue                 string
+	scene_name               string
+	npc_name                 string
+	action_json              string
 }
 
-pub fn (p &NpcDialoguePacket) pid() u16 { return 169 }
+pub fn (p &NpcDialoguePacket) pid() u16 {
+	return 169
+}
 
-pub fn (p &NpcDialoguePacket) name() string { return 'NpcDialoguePacket' }
+pub fn (p &NpcDialoguePacket) name() string {
+	return 'NpcDialoguePacket'
+}
 
-pub fn (p &NpcDialoguePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &NpcDialoguePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &NpcDialoguePacket) encode_payload(mut w serializer.Writer) {
 	w.le_u64(p.npc_raw_id)

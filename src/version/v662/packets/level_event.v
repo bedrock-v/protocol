@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct LevelEventPacket {
 pub mut:
@@ -9,11 +9,17 @@ pub mut:
 	data     i32
 }
 
-pub fn (p &LevelEventPacket) pid() u16 { return 25 }
+pub fn (p &LevelEventPacket) pid() u16 {
+	return 25
+}
 
-pub fn (p &LevelEventPacket) name() string { return 'LevelEventPacket' }
+pub fn (p &LevelEventPacket) name() string {
+	return 'LevelEventPacket'
+}
 
-pub fn (p &LevelEventPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &LevelEventPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &LevelEventPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varint32(p.event_id)

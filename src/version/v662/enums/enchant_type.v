@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum EnchantType as i8 {
 	armor_all             = 0

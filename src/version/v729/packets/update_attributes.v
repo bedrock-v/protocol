@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.types
+import protocol.version.v662.enums
 
 pub struct AttributeModifier {
 pub mut:
@@ -84,11 +84,17 @@ pub mut:
 	ticks_since_sim_started u64
 }
 
-pub fn (p &UpdateAttributesPacket) pid() u16 { return 29 }
+pub fn (p &UpdateAttributesPacket) pid() u16 {
+	return 29
+}
 
-pub fn (p &UpdateAttributesPacket) name() string { return 'UpdateAttributesPacket' }
+pub fn (p &UpdateAttributesPacket) name() string {
+	return 'UpdateAttributesPacket'
+}
 
-pub fn (p &UpdateAttributesPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &UpdateAttributesPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &UpdateAttributesPacket) encode_payload(mut w serializer.Writer) {
 	p.target_runtime_id.encode(mut w)

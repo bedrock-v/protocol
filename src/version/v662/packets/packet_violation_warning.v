@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct PacketViolationWarningPacket {
 pub mut:
@@ -11,11 +11,17 @@ pub mut:
 	violation_context   string
 }
 
-pub fn (p &PacketViolationWarningPacket) pid() u16 { return 156 }
+pub fn (p &PacketViolationWarningPacket) pid() u16 {
+	return 156
+}
 
-pub fn (p &PacketViolationWarningPacket) name() string { return 'PacketViolationWarningPacket' }
+pub fn (p &PacketViolationWarningPacket) name() string {
+	return 'PacketViolationWarningPacket'
+}
 
-pub fn (p &PacketViolationWarningPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PacketViolationWarningPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PacketViolationWarningPacket) encode_payload(mut w serializer.Writer) {
 	p.violation_type.encode(mut w)

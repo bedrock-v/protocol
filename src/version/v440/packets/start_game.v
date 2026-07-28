@@ -1,12 +1,12 @@
 module packets
 
 import nbt
-import serializer
-import version.v440.types
-import version.v291.types as types_291
-import version.v291.enums as enums_291
-import version.v291.packets as packets_291
-import version.v419.types as types_419
+import protocol.serializer
+import protocol.version.v440.types
+import protocol.version.v291.types as types_291
+import protocol.version.v291.enums as enums_291
+import protocol.version.v291.packets as packets_291
+import protocol.version.v419.types as types_419
 
 pub enum SpawnBiomeType as i16 {
 	default      = 0

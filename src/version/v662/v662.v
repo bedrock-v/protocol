@@ -1,8 +1,8 @@
 module v662
 
 import protocol
-import version
-import version.v662.packets
+import protocol.version
+import protocol.version.v662.packets
 
 pub const proto_version = version.ProtoVersion.v662
 

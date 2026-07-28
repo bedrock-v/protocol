@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum AttributeModifierOperation as i32 {
 	addition         = 0

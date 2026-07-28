@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct SetPlayerInventoryOptionsPacket {
 pub mut:
@@ -12,11 +12,17 @@ pub mut:
 	layout_craft        enums.InventoryLayout
 }
 
-pub fn (p &SetPlayerInventoryOptionsPacket) pid() u16 { return 307 }
+pub fn (p &SetPlayerInventoryOptionsPacket) pid() u16 {
+	return 307
+}
 
-pub fn (p &SetPlayerInventoryOptionsPacket) name() string { return 'SetPlayerInventoryOptionsPacket' }
+pub fn (p &SetPlayerInventoryOptionsPacket) name() string {
+	return 'SetPlayerInventoryOptionsPacket'
+}
 
-pub fn (p &SetPlayerInventoryOptionsPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &SetPlayerInventoryOptionsPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &SetPlayerInventoryOptionsPacket) encode_payload(mut w serializer.Writer) {
 	p.left_inventory_tab.encode(mut w)

@@ -1,9 +1,9 @@
 module types
 
-import serializer
-import version.v800.types as types_800
-import version.v844.types as types_844
-import version.v859.types as types_859
+import protocol.serializer
+import protocol.version.v800.types as types_800
+import protocol.version.v844.types as types_844
+import protocol.version.v859.types as types_859
 
 pub struct BiomeDefinitionChunkGenData {
 pub mut:

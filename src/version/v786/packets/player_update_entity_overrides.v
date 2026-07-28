@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct EntityOverrideClear {}
 
@@ -24,8 +24,12 @@ pub type EntityOverrideUpdateType = EntityOverrideClear
 
 pub fn (t EntityOverrideUpdateType) encode(mut w serializer.Writer) {
 	match t {
-		EntityOverrideClear { w.i8(0) }
-		EntityOverrideRemove { w.i8(1) }
+		EntityOverrideClear {
+			w.i8(0)
+		}
+		EntityOverrideRemove {
+			w.i8(1)
+		}
 		EntityOverrideSetInt {
 			w.i8(2)
 			w.le_i32(t.value)
@@ -42,8 +46,12 @@ pub fn EntityOverrideUpdateType.decode(mut r serializer.Reader) !EntityOverrideU
 	match d {
 		0 { return EntityOverrideClear{} }
 		1 { return EntityOverrideRemove{} }
-		2 { return EntityOverrideSetInt{ value: r.le_i32()! } }
-		3 { return EntityOverrideSetFloat{ value: r.le_f32()! } }
+		2 { return EntityOverrideSetInt{
+				value: r.le_i32()!
+			} }
+		3 { return EntityOverrideSetFloat{
+				value: r.le_f32()!
+			} }
 		else { return error('invalid EntityOverrideUpdateType ${d}') }
 	}
 }
@@ -55,11 +63,17 @@ pub mut:
 	update_type      EntityOverrideUpdateType = EntityOverrideClear{}
 }
 
-pub fn (p &PlayerUpdateEntityOverridesPacket) pid() u16 { return 325 }
+pub fn (p &PlayerUpdateEntityOverridesPacket) pid() u16 {
+	return 325
+}
 
-pub fn (p &PlayerUpdateEntityOverridesPacket) name() string { return 'PlayerUpdateEntityOverridesPacket' }
+pub fn (p &PlayerUpdateEntityOverridesPacket) name() string {
+	return 'PlayerUpdateEntityOverridesPacket'
+}
 
-pub fn (p &PlayerUpdateEntityOverridesPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlayerUpdateEntityOverridesPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlayerUpdateEntityOverridesPacket) encode_payload(mut w serializer.Writer) {
 	p.entity_unique_id.encode(mut w)

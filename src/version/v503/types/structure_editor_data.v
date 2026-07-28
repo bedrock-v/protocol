@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub enum StructureBlockType as i32 {
 	data    = 0

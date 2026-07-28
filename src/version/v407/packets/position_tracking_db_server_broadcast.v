@@ -1,7 +1,7 @@
 module packets
 
 import nbt
-import serializer
+import protocol.serializer
 
 pub enum PositionTrackingBroadcastAction as u8 {
 	update    = 0

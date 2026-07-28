@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum VideoStreamAction as u8 {
 	open  = 0

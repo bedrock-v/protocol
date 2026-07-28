@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct GameTestResultsPacket {
 pub mut:
@@ -9,11 +9,17 @@ pub mut:
 	test_name string
 }
 
-pub fn (p &GameTestResultsPacket) pid() u16 { return 195 }
+pub fn (p &GameTestResultsPacket) pid() u16 {
+	return 195
+}
 
-pub fn (p &GameTestResultsPacket) name() string { return 'GameTestResultsPacket' }
+pub fn (p &GameTestResultsPacket) name() string {
+	return 'GameTestResultsPacket'
+}
 
-pub fn (p &GameTestResultsPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &GameTestResultsPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &GameTestResultsPacket) encode_payload(mut w serializer.Writer) {
 	w.bool(p.succeeded)

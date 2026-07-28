@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v827.enums
+import protocol.serializer
+import protocol.version.v827.enums
 
 pub struct CorrectPlayerMovePredictionPacket {
 pub mut:
@@ -14,11 +14,17 @@ pub mut:
 	tick                     u64
 }
 
-pub fn (p &CorrectPlayerMovePredictionPacket) pid() u16 { return 161 }
+pub fn (p &CorrectPlayerMovePredictionPacket) pid() u16 {
+	return 161
+}
 
-pub fn (p &CorrectPlayerMovePredictionPacket) name() string { return 'CorrectPlayerMovePredictionPacket' }
+pub fn (p &CorrectPlayerMovePredictionPacket) name() string {
+	return 'CorrectPlayerMovePredictionPacket'
+}
 
-pub fn (p &CorrectPlayerMovePredictionPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &CorrectPlayerMovePredictionPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &CorrectPlayerMovePredictionPacket) encode_payload(mut w serializer.Writer) {
 	p.prediction_type.encode(mut w)

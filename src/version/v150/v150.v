@@ -1,10 +1,10 @@
 module v150
 
 import protocol
-import version
-import version.v137.packets as packets_137
-import version.v141.packets as packets_141
-import version.v150.packets
+import protocol.version
+import protocol.version.v137.packets as packets_137
+import protocol.version.v141.packets as packets_141
+import protocol.version.v150.packets
 
 pub const proto_version = version.ProtoVersion.v150
 

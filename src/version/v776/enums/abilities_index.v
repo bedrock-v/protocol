@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum AbilitiesIndex as i32 {
 	invalid            = -1

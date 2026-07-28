@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v944.types
+import protocol.serializer
+import protocol.version.v944.types
 
 pub struct LecternUpdatePacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	position_of_lectern_to_update types.NetworkBlockPosition
 }
 
-pub fn (p &LecternUpdatePacket) pid() u16 { return 125 }
+pub fn (p &LecternUpdatePacket) pid() u16 {
+	return 125
+}
 
-pub fn (p &LecternUpdatePacket) name() string { return 'LecternUpdatePacket' }
+pub fn (p &LecternUpdatePacket) name() string {
+	return 'LecternUpdatePacket'
+}
 
-pub fn (p &LecternUpdatePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &LecternUpdatePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &LecternUpdatePacket) encode_payload(mut w serializer.Writer) {
 	w.i8(p.new_page_to_show)

@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum ServerBoundLoadingScreenPacketType as i32 {
 	unknown              = 0
@@ -14,11 +14,17 @@ pub mut:
 	loading_screen_id ?i32
 }
 
-pub fn (p &ServerBoundLoadingScreenPacket) pid() u16 { return 312 }
+pub fn (p &ServerBoundLoadingScreenPacket) pid() u16 {
+	return 312
+}
 
-pub fn (p &ServerBoundLoadingScreenPacket) name() string { return 'ServerBoundLoadingScreenPacket' }
+pub fn (p &ServerBoundLoadingScreenPacket) name() string {
+	return 'ServerBoundLoadingScreenPacket'
+}
 
-pub fn (p &ServerBoundLoadingScreenPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ServerBoundLoadingScreenPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ServerBoundLoadingScreenPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varint32(i32(p.packet_type))

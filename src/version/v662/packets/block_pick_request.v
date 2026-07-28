@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct BlockPickRequestPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	max_slots i8
 }
 
-pub fn (p &BlockPickRequestPacket) pid() u16 { return 34 }
+pub fn (p &BlockPickRequestPacket) pid() u16 {
+	return 34
+}
 
-pub fn (p &BlockPickRequestPacket) name() string { return 'BlockPickRequestPacket' }
+pub fn (p &BlockPickRequestPacket) name() string {
+	return 'BlockPickRequestPacket'
+}
 
-pub fn (p &BlockPickRequestPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &BlockPickRequestPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &BlockPickRequestPacket) encode_payload(mut w serializer.Writer) {
 	p.position.encode(mut w)

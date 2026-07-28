@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types as types_662
+import protocol.serializer
+import protocol.version.v662.types as types_662
 
 pub struct ResourcePackEntry {
 pub mut:
@@ -56,11 +56,17 @@ pub mut:
 	resource_packs                []ResourcePackEntry
 }
 
-pub fn (p &ResourcePacksInfoPacket) pid() u16 { return 6 }
+pub fn (p &ResourcePacksInfoPacket) pid() u16 {
+	return 6
+}
 
-pub fn (p &ResourcePacksInfoPacket) name() string { return 'ResourcePacksInfoPacket' }
+pub fn (p &ResourcePacksInfoPacket) name() string {
+	return 'ResourcePacksInfoPacket'
+}
 
-pub fn (p &ResourcePacksInfoPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ResourcePacksInfoPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ResourcePacksInfoPacket) encode_payload(mut w serializer.Writer) {
 	w.bool(p.resource_pack_required)

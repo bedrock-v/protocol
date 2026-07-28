@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v712.types
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v712.types
+import protocol.version.v662.enums
 
 pub struct RequestsEntry {
 pub mut:
@@ -47,11 +47,17 @@ pub mut:
 	requests []RequestsEntry
 }
 
-pub fn (p &ItemStackRequestPacket) pid() u16 { return 147 }
+pub fn (p &ItemStackRequestPacket) pid() u16 {
+	return 147
+}
 
-pub fn (p &ItemStackRequestPacket) name() string { return 'ItemStackRequestPacket' }
+pub fn (p &ItemStackRequestPacket) name() string {
+	return 'ItemStackRequestPacket'
+}
 
-pub fn (p &ItemStackRequestPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ItemStackRequestPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ItemStackRequestPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.requests.len))

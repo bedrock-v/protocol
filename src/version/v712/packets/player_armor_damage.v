@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct PlayerArmorDamagePacket {
 pub mut:
@@ -8,11 +8,17 @@ pub mut:
 	damage      [5]i32
 }
 
-pub fn (p &PlayerArmorDamagePacket) pid() u16 { return 149 }
+pub fn (p &PlayerArmorDamagePacket) pid() u16 {
+	return 149
+}
 
-pub fn (p &PlayerArmorDamagePacket) name() string { return 'PlayerArmorDamagePacket' }
+pub fn (p &PlayerArmorDamagePacket) name() string {
+	return 'PlayerArmorDamagePacket'
+}
 
-pub fn (p &PlayerArmorDamagePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlayerArmorDamagePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlayerArmorDamagePacket) encode_payload(mut w serializer.Writer) {
 	w.i8(p.slot_bitset)

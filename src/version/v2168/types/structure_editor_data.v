@@ -1,9 +1,9 @@
 module types
 
-import serializer
-import version.v2168.enums
-import version.v662.enums as enums_662
-import version.v944.types as types_944
+import protocol.serializer
+import protocol.version.v2168.enums
+import protocol.version.v662.enums as enums_662
+import protocol.version.v944.types as types_944
 
 pub struct StructureEditorData {
 pub mut:

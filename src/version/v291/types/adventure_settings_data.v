@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub const adventure_flag_world_immutable = u32(1 << 0)
 pub const adventure_flag_no_pvm = u32(1 << 1)

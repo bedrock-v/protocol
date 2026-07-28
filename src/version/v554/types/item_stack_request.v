@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v471.types as types_471
+import protocol.serializer
+import protocol.version.v471.types as types_471
 
 pub struct ItemStackRequest {
 pub mut:

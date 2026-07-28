@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v766.types as types_766
+import protocol.serializer
+import protocol.version.v766.types as types_766
 
 pub struct CameraAimAssistPresetDefinition {
 pub mut:

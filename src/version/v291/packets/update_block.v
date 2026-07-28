@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v291.types
+import protocol.serializer
+import protocol.version.v291.types
 
 pub const update_block_flag_neighbors = u32(1 << 0)
 pub const update_block_flag_network = u32(1 << 1)

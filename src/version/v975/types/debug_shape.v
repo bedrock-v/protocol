@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v800.types as types_800
+import protocol.serializer
+import protocol.version.v800.types as types_800
 
 pub enum DebugShapeType as i8 {
 	line   = 0
@@ -158,7 +158,8 @@ pub fn DebugShapeData.decode(mut r serializer.Reader) !DebugShapeData {
 		1 {
 			mut t := DebugShapeArrow{}
 			if r.bool()! {
-				t.arrow_end_position = [r.le_f32()!, r.le_f32()!, r.le_f32()!]!
+				t.arrow_end_position = [r.le_f32()!, r.le_f32()!,
+					r.le_f32()!]!
 			}
 			if r.bool()! {
 				t.arrow_head_length = r.le_f32()!
@@ -195,7 +196,8 @@ pub fn DebugShapeData.decode(mut r serializer.Reader) !DebugShapeData {
 		4 {
 			mut t := DebugShapeLine{}
 			if r.bool()! {
-				t.line_end_position = [r.le_f32()!, r.le_f32()!, r.le_f32()!]!
+				t.line_end_position = [r.le_f32()!, r.le_f32()!,
+					r.le_f32()!]!
 			}
 			return t
 		}

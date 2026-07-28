@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v729.types as types_729
+import protocol.serializer
+import protocol.version.v729.types as types_729
 
 pub struct ItemStackResponseContainerInfo {
 pub mut:

@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v313.types as types_313
+import protocol.serializer
+import protocol.version.v313.types as types_313
 
 pub struct InventoryActionData {
 pub mut:

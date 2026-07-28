@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct NetworkChunkPublisherUpdatePacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	server_built_chunks []types.ChunkPos
 }
 
-pub fn (p &NetworkChunkPublisherUpdatePacket) pid() u16 { return 121 }
+pub fn (p &NetworkChunkPublisherUpdatePacket) pid() u16 {
+	return 121
+}
 
-pub fn (p &NetworkChunkPublisherUpdatePacket) name() string { return 'NetworkChunkPublisherUpdatePacket' }
+pub fn (p &NetworkChunkPublisherUpdatePacket) name() string {
+	return 'NetworkChunkPublisherUpdatePacket'
+}
 
-pub fn (p &NetworkChunkPublisherUpdatePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &NetworkChunkPublisherUpdatePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &NetworkChunkPublisherUpdatePacket) encode_payload(mut w serializer.Writer) {
 	p.new_view_position.encode(mut w)

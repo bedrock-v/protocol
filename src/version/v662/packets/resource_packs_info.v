@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct BehaviourPackEntry {
 pub mut:
@@ -37,13 +37,13 @@ pub fn BehaviourPackEntry.decode(mut r serializer.Reader) !BehaviourPackEntry {
 
 pub struct ResourcePackEntry {
 pub mut:
-	id                    string
-	version               string
-	size                  u64
-	content_key           string
-	sub_pack_name         string
-	content_identity      string
-	has_scripts           bool
+	id                     string
+	version                string
+	size                   u64
+	content_key            string
+	sub_pack_name          string
+	content_identity       string
+	has_scripts            bool
 	is_ray_tracing_capable bool
 }
 
@@ -100,11 +100,17 @@ pub mut:
 	cdn_urls                   []CDNUrl
 }
 
-pub fn (p &ResourcePacksInfoPacket) pid() u16 { return 6 }
+pub fn (p &ResourcePacksInfoPacket) pid() u16 {
+	return 6
+}
 
-pub fn (p &ResourcePacksInfoPacket) name() string { return 'ResourcePacksInfoPacket' }
+pub fn (p &ResourcePacksInfoPacket) name() string {
+	return 'ResourcePacksInfoPacket'
+}
 
-pub fn (p &ResourcePacksInfoPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ResourcePacksInfoPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ResourcePacksInfoPacket) encode_payload(mut w serializer.Writer) {
 	w.bool(p.resource_pack_required)

@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct ServerBoundDiagnosticsPacket {
 pub mut:
@@ -15,11 +15,17 @@ pub mut:
 	avg_unnacounted_time_percent f32
 }
 
-pub fn (p &ServerBoundDiagnosticsPacket) pid() u16 { return 315 }
+pub fn (p &ServerBoundDiagnosticsPacket) pid() u16 {
+	return 315
+}
 
-pub fn (p &ServerBoundDiagnosticsPacket) name() string { return 'ServerBoundDiagnosticsPacket' }
+pub fn (p &ServerBoundDiagnosticsPacket) name() string {
+	return 'ServerBoundDiagnosticsPacket'
+}
 
-pub fn (p &ServerBoundDiagnosticsPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ServerBoundDiagnosticsPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ServerBoundDiagnosticsPacket) encode_payload(mut w serializer.Writer) {
 	w.le_f32(p.avg_fps)

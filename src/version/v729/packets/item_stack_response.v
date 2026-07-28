@@ -1,18 +1,24 @@
 module packets
 
-import serializer
-import version.v729.types
+import protocol.serializer
+import protocol.version.v729.types
 
 pub struct ItemStackResponsePacket {
 pub mut:
 	responses []types.ItemStackResponseInfo
 }
 
-pub fn (p &ItemStackResponsePacket) pid() u16 { return 148 }
+pub fn (p &ItemStackResponsePacket) pid() u16 {
+	return 148
+}
 
-pub fn (p &ItemStackResponsePacket) name() string { return 'ItemStackResponsePacket' }
+pub fn (p &ItemStackResponsePacket) name() string {
+	return 'ItemStackResponsePacket'
+}
 
-pub fn (p &ItemStackResponsePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ItemStackResponsePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ItemStackResponsePacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.responses.len))

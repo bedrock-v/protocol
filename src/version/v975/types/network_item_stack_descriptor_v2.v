@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub struct ItemStackNetId {
 pub mut:
@@ -39,16 +39,24 @@ pub fn (t ItemStackNetIdVariant) encode(mut w serializer.Writer) {
 pub fn ItemStackNetIdVariant.decode(mut r serializer.Reader) !ItemStackNetIdVariant {
 	d := r.read_varuint32()!
 	match d {
-		0 { return ItemStackNetId{
+		0 {
+			return ItemStackNetId{
 				value: r.read_varint32()!
-			} }
-		1 { return ItemStackRequestId{
+			}
+		}
+		1 {
+			return ItemStackRequestId{
 				value: r.read_varint32()!
-			} }
-		2 { return ItemStackLegacyRequestId{
+			}
+		}
+		2 {
+			return ItemStackLegacyRequestId{
 				value: r.read_varint32()!
-			} }
-		else { return error('invalid ItemStackNetIdVariant ${d}') }
+			}
+		}
+		else {
+			return error('invalid ItemStackNetIdVariant ${d}')
+		}
 	}
 }
 

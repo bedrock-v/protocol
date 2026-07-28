@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct SubChunkRequestPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	sub_chunk_pos_offsets []types.SubChunkPosOffset
 }
 
-pub fn (p &SubChunkRequestPacket) pid() u16 { return 175 }
+pub fn (p &SubChunkRequestPacket) pid() u16 {
+	return 175
+}
 
-pub fn (p &SubChunkRequestPacket) name() string { return 'SubChunkRequestPacket' }
+pub fn (p &SubChunkRequestPacket) name() string {
+	return 'SubChunkRequestPacket'
+}
 
-pub fn (p &SubChunkRequestPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &SubChunkRequestPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &SubChunkRequestPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varint32(p.dimension_type)

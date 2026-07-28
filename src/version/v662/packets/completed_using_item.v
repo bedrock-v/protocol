@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct CompletedUsingItemPacket {
 pub mut:
@@ -9,11 +9,17 @@ pub mut:
 	item_use_method enums.ItemUseMethod
 }
 
-pub fn (p &CompletedUsingItemPacket) pid() u16 { return 142 }
+pub fn (p &CompletedUsingItemPacket) pid() u16 {
+	return 142
+}
 
-pub fn (p &CompletedUsingItemPacket) name() string { return 'CompletedUsingItemPacket' }
+pub fn (p &CompletedUsingItemPacket) name() string {
+	return 'CompletedUsingItemPacket'
+}
 
-pub fn (p &CompletedUsingItemPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &CompletedUsingItemPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &CompletedUsingItemPacket) encode_payload(mut w serializer.Writer) {
 	w.le_u16(p.item_id)

@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v944.types as types_944
+import protocol.serializer
+import protocol.version.v944.types as types_944
 
 pub struct ItemStackRequestSlotInfo {
 pub mut:

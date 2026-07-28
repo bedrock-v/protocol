@@ -1,9 +1,9 @@
 module v12
 
 import protocol
-import version.v12.packets
-import version.v11.packets as packets_11
-import version.v9.packets as packets_9
+import protocol.version.v12.packets
+import protocol.version.v11.packets as packets_11
+import protocol.version.v9.packets as packets_9
 
 pub fn new_pool() protocol.PacketPool {
 	mut pool := protocol.new_empty_pool()

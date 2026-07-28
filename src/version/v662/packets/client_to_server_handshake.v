@@ -1,14 +1,20 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct ClientToServerHandshakePacket {}
 
-pub fn (p &ClientToServerHandshakePacket) pid() u16 { return 4 }
+pub fn (p &ClientToServerHandshakePacket) pid() u16 {
+	return 4
+}
 
-pub fn (p &ClientToServerHandshakePacket) name() string { return 'ClientToServerHandshakePacket' }
+pub fn (p &ClientToServerHandshakePacket) name() string {
+	return 'ClientToServerHandshakePacket'
+}
 
-pub fn (p &ClientToServerHandshakePacket) can_be_sent_before_login() bool { return true }
+pub fn (p &ClientToServerHandshakePacket) can_be_sent_before_login() bool {
+	return true
+}
 
 pub fn (p &ClientToServerHandshakePacket) encode_payload(mut w serializer.Writer) {
 }

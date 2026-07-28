@@ -1,9 +1,9 @@
 module packets
 
-import serializer
-import version.v2168.types
-import version.v662.types as types_662
-import version.v712.types as types_712
+import protocol.serializer
+import protocol.version.v2168.types
+import protocol.version.v662.types as types_662
+import protocol.version.v712.types as types_712
 
 pub struct AttributeEntry {
 pub mut:
@@ -45,11 +45,17 @@ pub mut:
 	actor_links       []types_712.ActorLink
 }
 
-pub fn (p &AddActorPacket) pid() u16 { return 13 }
+pub fn (p &AddActorPacket) pid() u16 {
+	return 13
+}
 
-pub fn (p &AddActorPacket) name() string { return 'AddActorPacket' }
+pub fn (p &AddActorPacket) name() string {
+	return 'AddActorPacket'
+}
 
-pub fn (p &AddActorPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &AddActorPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &AddActorPacket) encode_payload(mut w serializer.Writer) {
 	p.target_actor_id.encode(mut w)

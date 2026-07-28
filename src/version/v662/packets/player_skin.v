@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct PlayerSkinPacket {
 pub mut:
@@ -12,11 +12,17 @@ pub mut:
 	trusted_marketplace_skin bool
 }
 
-pub fn (p &PlayerSkinPacket) pid() u16 { return 93 }
+pub fn (p &PlayerSkinPacket) pid() u16 {
+	return 93
+}
 
-pub fn (p &PlayerSkinPacket) name() string { return 'PlayerSkinPacket' }
+pub fn (p &PlayerSkinPacket) name() string {
+	return 'PlayerSkinPacket'
+}
 
-pub fn (p &PlayerSkinPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlayerSkinPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlayerSkinPacket) encode_payload(mut w serializer.Writer) {
 	p.uuid.encode(mut w)

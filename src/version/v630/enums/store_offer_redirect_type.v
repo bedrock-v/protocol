@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum StoreOfferRedirectType as u8 {
 	marketplace             = 0

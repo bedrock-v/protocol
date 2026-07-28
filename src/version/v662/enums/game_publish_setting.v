@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum GamePublishSetting as i32 {
 	no_multi_play      = 0

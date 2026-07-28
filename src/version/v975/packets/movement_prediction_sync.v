@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types as types_662
+import protocol.serializer
+import protocol.version.v662.types as types_662
 
 pub struct MovementPredictionFlags {
 pub mut:
@@ -70,11 +70,17 @@ pub mut:
 	is_flying         bool
 }
 
-pub fn (p &MovementPredictionSyncPacket) pid() u16 { return 322 }
+pub fn (p &MovementPredictionSyncPacket) pid() u16 {
+	return 322
+}
 
-pub fn (p &MovementPredictionSyncPacket) name() string { return 'MovementPredictionSyncPacket' }
+pub fn (p &MovementPredictionSyncPacket) name() string {
+	return 'MovementPredictionSyncPacket'
+}
 
-pub fn (p &MovementPredictionSyncPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &MovementPredictionSyncPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &MovementPredictionSyncPacket) encode_payload(mut w serializer.Writer) {
 	p.flags.encode(mut w)

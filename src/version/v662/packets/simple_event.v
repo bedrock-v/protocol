@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum SimpleEventSubtype as u16 {
 	uninitialized_subtype          = 0
@@ -14,11 +14,17 @@ pub mut:
 	simple_event_type SimpleEventSubtype
 }
 
-pub fn (p &SimpleEventPacket) pid() u16 { return 64 }
+pub fn (p &SimpleEventPacket) pid() u16 {
+	return 64
+}
 
-pub fn (p &SimpleEventPacket) name() string { return 'SimpleEventPacket' }
+pub fn (p &SimpleEventPacket) name() string {
+	return 'SimpleEventPacket'
+}
 
-pub fn (p &SimpleEventPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &SimpleEventPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &SimpleEventPacket) encode_payload(mut w serializer.Writer) {
 	w.le_u16(u16(p.simple_event_type))

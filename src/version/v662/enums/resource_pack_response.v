@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ResourcePackResponse as i8 {
 	cancel                       = 1

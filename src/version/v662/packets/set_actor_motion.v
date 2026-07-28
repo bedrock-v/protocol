@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct SetActorMotionPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	server_tick       u64
 }
 
-pub fn (p &SetActorMotionPacket) pid() u16 { return 40 }
+pub fn (p &SetActorMotionPacket) pid() u16 {
+	return 40
+}
 
-pub fn (p &SetActorMotionPacket) name() string { return 'SetActorMotionPacket' }
+pub fn (p &SetActorMotionPacket) name() string {
+	return 'SetActorMotionPacket'
+}
 
-pub fn (p &SetActorMotionPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &SetActorMotionPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &SetActorMotionPacket) encode_payload(mut w serializer.Writer) {
 	p.target_runtime_id.encode(mut w)

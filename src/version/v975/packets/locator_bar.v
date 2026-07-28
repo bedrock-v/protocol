@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types as types_662
+import protocol.serializer
+import protocol.version.v662.types as types_662
 
 pub enum LocatorBarPayloadAction as u8 {
 	@none  = 0
@@ -136,11 +136,17 @@ pub mut:
 	waypoints []LocatorBarPayload
 }
 
-pub fn (p &LocatorBarPacket) pid() u16 { return 341 }
+pub fn (p &LocatorBarPacket) pid() u16 {
+	return 341
+}
 
-pub fn (p &LocatorBarPacket) name() string { return 'LocatorBarPacket' }
+pub fn (p &LocatorBarPacket) name() string {
+	return 'LocatorBarPacket'
+}
 
-pub fn (p &LocatorBarPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &LocatorBarPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &LocatorBarPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.waypoints.len))

@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.types
+import protocol.version.v662.enums
 
 pub struct LegacySetItemSlotsEntry {
 pub mut:
@@ -39,11 +39,17 @@ pub mut:
 	transaction           types.InventoryTransaction
 }
 
-pub fn (p &InventoryTransactionPacket) pid() u16 { return 30 }
+pub fn (p &InventoryTransactionPacket) pid() u16 {
+	return 30
+}
 
-pub fn (p &InventoryTransactionPacket) name() string { return 'InventoryTransactionPacket' }
+pub fn (p &InventoryTransactionPacket) name() string {
+	return 'InventoryTransactionPacket'
+}
 
-pub fn (p &InventoryTransactionPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &InventoryTransactionPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &InventoryTransactionPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varint32(p.raw_id)

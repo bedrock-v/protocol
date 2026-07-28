@@ -1,10 +1,10 @@
 module packets
 
-import serializer
-import version.v662.enums as enums_662
-import version.v662.types as types_662
-import version.v944.types as types_944
-import version.v1001.types
+import protocol.serializer
+import protocol.version.v662.enums as enums_662
+import protocol.version.v662.types as types_662
+import protocol.version.v944.types as types_944
+import protocol.version.v1001.types
 
 pub const input_flag_perform_item_interaction = u64(1) << 34
 pub const input_flag_perform_block_actions = u64(1) << 35

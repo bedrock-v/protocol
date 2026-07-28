@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum CameraSplineEaseType as i32 {
 	linear         = 0

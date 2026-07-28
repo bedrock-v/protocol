@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub struct ItemStackActionTake {
 pub mut:
@@ -163,9 +163,15 @@ pub fn (t ItemStackRequestActionType) encode(mut w serializer.Writer) {
 			w.i8(6)
 			w.i8(t.slot)
 		}
-		ItemStackActionPlaceInItemContainer { w.i8(7) }
-		ItemStackActionTakeFromItemContainer { w.i8(8) }
-		ItemStackActionScreenLabTableCombine { w.i8(9) }
+		ItemStackActionPlaceInItemContainer {
+			w.i8(7)
+		}
+		ItemStackActionTakeFromItemContainer {
+			w.i8(8)
+		}
+		ItemStackActionScreenLabTableCombine {
+			w.i8(9)
+		}
 		ItemStackActionScreenBeaconPayment {
 			w.i8(10)
 			w.write_varint32(t.primary_effect)
@@ -208,8 +214,12 @@ pub fn (t ItemStackRequestActionType) encode(mut w serializer.Writer) {
 			w.i8(17)
 			w.write_string(t.pattern_id)
 		}
-		ItemStackActionCraftNonImplemented { w.i8(18) }
-		ItemStackActionCraftResults { w.i8(19) }
+		ItemStackActionCraftNonImplemented {
+			w.i8(18)
+		}
+		ItemStackActionCraftResults {
+			w.i8(19)
+		}
 	}
 }
 
@@ -255,10 +265,20 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 				source: ItemStackRequestSlotInfo.decode(mut r)!
 			}
 		}
-		6 { return ItemStackActionCreate{ slot: r.i8()! } }
-		7 { return ItemStackActionPlaceInItemContainer{} }
-		8 { return ItemStackActionTakeFromItemContainer{} }
-		9 { return ItemStackActionScreenLabTableCombine{} }
+		6 {
+			return ItemStackActionCreate{
+				slot: r.i8()!
+			}
+		}
+		7 {
+			return ItemStackActionPlaceInItemContainer{}
+		}
+		8 {
+			return ItemStackActionTakeFromItemContainer{}
+		}
+		9 {
+			return ItemStackActionScreenLabTableCombine{}
+		}
 		10 {
 			return ItemStackActionScreenBeaconPayment{
 				primary_effect:   r.read_varint32()!
@@ -272,7 +292,11 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 				stack_network_id:     r.read_varint32()!
 			}
 		}
-		12 { return ItemStackActionCraftRecipe{ recipe_network_id: r.read_varint32()! } }
+		12 {
+			return ItemStackActionCraftRecipe{
+				recipe_network_id: r.read_varint32()!
+			}
+		}
 		13 {
 			recipe_network_id := r.read_varint32()!
 			times_crafted := r.i8()!
@@ -287,7 +311,11 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 				ingredients:       ings
 			}
 		}
-		14 { return ItemStackActionCraftCreative{ creative_item_network_id: r.read_varint32()! } }
+		14 {
+			return ItemStackActionCraftCreative{
+				creative_item_network_id: r.read_varint32()!
+			}
+		}
 		15 {
 			return ItemStackActionCraftRecipeOptional{
 				recipe_network_id:      r.read_varint32()!
@@ -300,9 +328,19 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 				repair_cost:       r.read_varint32()!
 			}
 		}
-		17 { return ItemStackActionCraftLoom{ pattern_id: r.read_string()! } }
-		18 { return ItemStackActionCraftNonImplemented{} }
-		19 { return ItemStackActionCraftResults{} }
-		else { return error('invalid ItemStackRequestActionType ${d}') }
+		17 {
+			return ItemStackActionCraftLoom{
+				pattern_id: r.read_string()!
+			}
+		}
+		18 {
+			return ItemStackActionCraftNonImplemented{}
+		}
+		19 {
+			return ItemStackActionCraftResults{}
+		}
+		else {
+			return error('invalid ItemStackRequestActionType ${d}')
+		}
 	}
 }

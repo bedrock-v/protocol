@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v2168.types
-import version.v662.types as types_662
+import protocol.serializer
+import protocol.version.v2168.types
+import protocol.version.v662.types as types_662
 
 pub struct PlayerSkinPacket {
 pub mut:
@@ -12,11 +12,17 @@ pub mut:
 	new_skin_name   string
 }
 
-pub fn (p &PlayerSkinPacket) pid() u16 { return 93 }
+pub fn (p &PlayerSkinPacket) pid() u16 {
+	return 93
+}
 
-pub fn (p &PlayerSkinPacket) name() string { return 'PlayerSkinPacket' }
+pub fn (p &PlayerSkinPacket) name() string {
+	return 'PlayerSkinPacket'
+}
 
-pub fn (p &PlayerSkinPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlayerSkinPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlayerSkinPacket) encode_payload(mut w serializer.Writer) {
 	p.uuid.encode(mut w)

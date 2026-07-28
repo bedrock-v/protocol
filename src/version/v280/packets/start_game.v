@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v291.enums
-import version.v291.types
+import protocol.serializer
+import protocol.version.v291.enums
+import protocol.version.v291.types
 
 pub enum GamePublishSetting as i32 {
 	no_multi_play      = 0

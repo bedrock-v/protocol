@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum AnimationExpression as u32 {
 	linear   = 0

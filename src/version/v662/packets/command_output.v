@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.types
+import protocol.version.v662.enums
 
 pub struct OutputMessagesEntry {
 pub mut:
@@ -40,11 +40,17 @@ pub mut:
 	output_messages []OutputMessagesEntry
 }
 
-pub fn (p &CommandOutputPacket) pid() u16 { return 79 }
+pub fn (p &CommandOutputPacket) pid() u16 {
+	return 79
+}
 
-pub fn (p &CommandOutputPacket) name() string { return 'CommandOutputPacket' }
+pub fn (p &CommandOutputPacket) name() string {
+	return 'CommandOutputPacket'
+}
 
-pub fn (p &CommandOutputPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &CommandOutputPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &CommandOutputPacket) encode_payload(mut w serializer.Writer) {
 	p.origin_data.encode(mut w)

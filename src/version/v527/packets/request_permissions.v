@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v291.enums as enums_291
+import protocol.serializer
+import protocol.version.v291.enums as enums_291
 
 pub struct RequestPermissionsPacket {
 pub mut:

@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum SpawnPositionType as i32 {
 	player_respawn = 0

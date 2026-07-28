@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.types
+import protocol.version.v662.enums
 
 pub struct ShowStoreOfferPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	redirect_type enums.ShowStoreOfferRedirectType
 }
 
-pub fn (p &ShowStoreOfferPacket) pid() u16 { return 91 }
+pub fn (p &ShowStoreOfferPacket) pid() u16 {
+	return 91
+}
 
-pub fn (p &ShowStoreOfferPacket) name() string { return 'ShowStoreOfferPacket' }
+pub fn (p &ShowStoreOfferPacket) name() string {
+	return 'ShowStoreOfferPacket'
+}
 
-pub fn (p &ShowStoreOfferPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ShowStoreOfferPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ShowStoreOfferPacket) encode_payload(mut w serializer.Writer) {
 	p.product_id.encode(mut w)

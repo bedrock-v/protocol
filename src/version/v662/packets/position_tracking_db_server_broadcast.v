@@ -1,8 +1,8 @@
 module packets
 
-import serializer
+import protocol.serializer
 import nbt
-import version.v662.types
+import protocol.version.v662.types
 
 pub enum PositionTrackingDBBroadcastAction as i8 {
 	update    = 0
@@ -17,11 +17,17 @@ pub mut:
 	position_tracking_data nbt.RootTag
 }
 
-pub fn (p &PositionTrackingDBServerBroadcastPacket) pid() u16 { return 153 }
+pub fn (p &PositionTrackingDBServerBroadcastPacket) pid() u16 {
+	return 153
+}
 
-pub fn (p &PositionTrackingDBServerBroadcastPacket) name() string { return 'PositionTrackingDBServerBroadcastPacket' }
+pub fn (p &PositionTrackingDBServerBroadcastPacket) name() string {
+	return 'PositionTrackingDBServerBroadcastPacket'
+}
 
-pub fn (p &PositionTrackingDBServerBroadcastPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PositionTrackingDBServerBroadcastPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PositionTrackingDBServerBroadcastPacket) encode_payload(mut w serializer.Writer) {
 	w.i8(i8(p.action))

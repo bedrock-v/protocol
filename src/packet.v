@@ -1,6 +1,6 @@
 module protocol
 
-import serializer
+import protocol.serializer
 
 pub const pid_mask = u32(0x3ff)
 pub const subclient_id_mask = u32(0x03)
@@ -23,8 +23,8 @@ pub fn write_packet_header(mut w serializer.Writer, pid u16, sender_sub_id u8, r
 
 pub struct DecodedHeader {
 pub:
-	pid             u16
-	sender_sub_id   u8
+	pid              u16
+	sender_sub_id    u8
 	recipient_sub_id u8
 }
 

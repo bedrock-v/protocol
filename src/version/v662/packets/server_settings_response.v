@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct ServerSettingsResponsePacket {
 pub mut:
@@ -8,11 +8,17 @@ pub mut:
 	form_ui_json string
 }
 
-pub fn (p &ServerSettingsResponsePacket) pid() u16 { return 103 }
+pub fn (p &ServerSettingsResponsePacket) pid() u16 {
+	return 103
+}
 
-pub fn (p &ServerSettingsResponsePacket) name() string { return 'ServerSettingsResponsePacket' }
+pub fn (p &ServerSettingsResponsePacket) name() string {
+	return 'ServerSettingsResponsePacket'
+}
 
-pub fn (p &ServerSettingsResponsePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ServerSettingsResponsePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ServerSettingsResponsePacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(p.form_id)

@@ -1,9 +1,9 @@
 module packets
 
-import serializer
-import version.v465.types
-import version.v407.types as types_407
-import version.v431.types as types_431
+import protocol.serializer
+import protocol.version.v465.types
+import protocol.version.v407.types as types_407
+import protocol.version.v431.types as types_431
 
 pub struct CraftingDataPacket {
 pub mut:

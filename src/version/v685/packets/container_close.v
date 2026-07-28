@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct ContainerClosePacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	server_initiated_close bool
 }
 
-pub fn (p &ContainerClosePacket) pid() u16 { return 47 }
+pub fn (p &ContainerClosePacket) pid() u16 {
+	return 47
+}
 
-pub fn (p &ContainerClosePacket) name() string { return 'ContainerClosePacket' }
+pub fn (p &ContainerClosePacket) name() string {
+	return 'ContainerClosePacket'
+}
 
-pub fn (p &ContainerClosePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ContainerClosePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ContainerClosePacket) encode_payload(mut w serializer.Writer) {
 	p.container_id.encode(mut w)

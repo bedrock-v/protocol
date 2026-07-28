@@ -1,8 +1,8 @@
 module types
 
-import serializer
-import version.v662.types as types_662
-import version.v662.enums as enums_662
+import protocol.serializer
+import protocol.version.v662.types as types_662
+import protocol.version.v662.enums as enums_662
 
 pub struct PlayerBlockActionData {
 pub mut:

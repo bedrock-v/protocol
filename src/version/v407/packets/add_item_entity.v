@@ -1,9 +1,9 @@
 module packets
 
-import serializer
-import version.v291.types as types_291
-import version.v340.types as types_340
-import version.v361.types as types_361
+import protocol.serializer
+import protocol.version.v291.types as types_291
+import protocol.version.v340.types as types_340
+import protocol.version.v361.types as types_361
 
 pub struct AddItemEntityPacket {
 pub mut:

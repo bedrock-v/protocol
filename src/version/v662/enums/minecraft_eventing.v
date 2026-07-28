@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum InteractionType as i32 {
 	breeding              = 1

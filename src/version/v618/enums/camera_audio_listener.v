@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum CameraAudioListener as u8 {
 	camera = 0

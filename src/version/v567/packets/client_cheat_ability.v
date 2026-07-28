@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v534.types as types_534
+import protocol.serializer
+import protocol.version.v534.types as types_534
 
 pub struct ClientCheatAbilityPacket {
 pub mut:

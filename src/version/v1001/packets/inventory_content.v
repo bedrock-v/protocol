@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v944.types as types_944
-import version.v975.types as types_975
+import protocol.serializer
+import protocol.version.v944.types as types_944
+import protocol.version.v975.types as types_975
 
 pub struct InventoryContentPacket {
 pub mut:

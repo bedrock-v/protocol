@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub struct PlayerPositionNormal {}
 
@@ -40,16 +40,24 @@ pub fn (t PlayerPositionMode) encode_payload(mut w serializer.Writer) {
 
 pub fn PlayerPositionMode.decode_payload(id i8, mut r serializer.Reader) !PlayerPositionMode {
 	match id {
-		0 { return PlayerPositionNormal{} }
-		1 { return PlayerPositionRespawn{} }
+		0 {
+			return PlayerPositionNormal{}
+		}
+		1 {
+			return PlayerPositionRespawn{}
+		}
 		2 {
 			return PlayerPositionTeleport{
 				teleportation_cause: r.le_i32()!
 				source_actor_type:   r.le_i32()!
 			}
 		}
-		3 { return PlayerPositionOnlyHeadRot{} }
-		else { return error('invalid PlayerPositionMode ${id}') }
+		3 {
+			return PlayerPositionOnlyHeadRot{}
+		}
+		else {
+			return error('invalid PlayerPositionMode ${id}')
+		}
 	}
 }
 

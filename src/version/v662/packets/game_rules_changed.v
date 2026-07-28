@@ -1,18 +1,24 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct GameRulesChangedPacket {
 pub mut:
 	rules_data types.GameRulesChangedPacketData
 }
 
-pub fn (p &GameRulesChangedPacket) pid() u16 { return 72 }
+pub fn (p &GameRulesChangedPacket) pid() u16 {
+	return 72
+}
 
-pub fn (p &GameRulesChangedPacket) name() string { return 'GameRulesChangedPacket' }
+pub fn (p &GameRulesChangedPacket) name() string {
+	return 'GameRulesChangedPacket'
+}
 
-pub fn (p &GameRulesChangedPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &GameRulesChangedPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &GameRulesChangedPacket) encode_payload(mut w serializer.Writer) {
 	p.rules_data.encode(mut w)

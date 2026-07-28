@@ -1,6 +1,6 @@
 module protocol
 
-import serializer
+import protocol.serializer
 
 pub struct PacketPool {
 pub mut:
@@ -36,9 +36,7 @@ pub fn (p &PacketPool) decode(mut r serializer.Reader) !Packet {
 // MCPE 0.6-0.15 / proto 9..84).
 pub fn (p &PacketPool) decode_old(mut r serializer.Reader) !Packet {
 	pid := u16(r.u8()!)
-	mut pkt := p.get_packet_by_id(pid) or {
-		return error('unknown packet id 0x${pid:x}')
-	}
+	mut pkt := p.get_packet_by_id(pid) or { return error('unknown packet id 0x${pid:x}') }
 	pkt.decode_payload(mut r)!
 	return pkt
 }
@@ -49,9 +47,7 @@ pub fn (p &PacketPool) decode_split(mut r serializer.Reader) !Packet {
 	pid := u16(r.read_varuint32()!)
 	r.u8()!
 	r.u8()!
-	mut pkt := p.get_packet_by_id(pid) or {
-		return error('unknown packet id 0x${pid:x}')
-	}
+	mut pkt := p.get_packet_by_id(pid) or { return error('unknown packet id 0x${pid:x}') }
 	pkt.decode_payload(mut r)!
 	return pkt
 }

@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub enum MapDecorationType as i8 {
 	marker_white       = 0

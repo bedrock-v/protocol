@@ -1,13 +1,13 @@
 module packets
 
-import serializer
-import version.v291.types as types_291
-import version.v291.enums as enums_291
-import version.v407.types as types_407
-import version.v431.types as types_431
-import version.v534.types as types_534
-import version.v557.types as types_557
-import version.v560.types
+import protocol.serializer
+import protocol.version.v291.types as types_291
+import protocol.version.v291.enums as enums_291
+import protocol.version.v407.types as types_407
+import protocol.version.v431.types as types_431
+import protocol.version.v534.types as types_534
+import protocol.version.v557.types as types_557
+import protocol.version.v560.types
 
 pub struct AddPlayerPacket {
 pub mut:

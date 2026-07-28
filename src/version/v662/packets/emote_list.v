@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct EmoteListPacket {
 pub mut:
@@ -9,11 +9,17 @@ pub mut:
 	emote_piece_ids []types.Uuid
 }
 
-pub fn (p &EmoteListPacket) pid() u16 { return 152 }
+pub fn (p &EmoteListPacket) pid() u16 {
+	return 152
+}
 
-pub fn (p &EmoteListPacket) name() string { return 'EmoteListPacket' }
+pub fn (p &EmoteListPacket) name() string {
+	return 'EmoteListPacket'
+}
 
-pub fn (p &EmoteListPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &EmoteListPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &EmoteListPacket) encode_payload(mut w serializer.Writer) {
 	p.runtime_id.encode(mut w)

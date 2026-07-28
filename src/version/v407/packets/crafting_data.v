@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v407.types
+import protocol.serializer
+import protocol.version.v407.types
 
 pub struct CraftingDataPacket {
 pub mut:

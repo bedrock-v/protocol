@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v975.enums
+import protocol.serializer
+import protocol.version.v975.enums
 
 pub struct LevelSoundEventPacket {
 pub mut:
@@ -15,11 +15,17 @@ pub mut:
 	fire_at_position ?[3]f32
 }
 
-pub fn (p &LevelSoundEventPacket) pid() u16 { return 123 }
+pub fn (p &LevelSoundEventPacket) pid() u16 {
+	return 123
+}
 
-pub fn (p &LevelSoundEventPacket) name() string { return 'LevelSoundEventPacket' }
+pub fn (p &LevelSoundEventPacket) name() string {
+	return 'LevelSoundEventPacket'
+}
 
-pub fn (p &LevelSoundEventPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &LevelSoundEventPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &LevelSoundEventPacket) encode_payload(mut w serializer.Writer) {
 	p.event_id.encode(mut w)

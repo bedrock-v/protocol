@@ -1,7 +1,7 @@
 module v105
 
 import protocol
-import version.v105.packets
+import protocol.version.v105.packets
 
 pub fn new_pool() protocol.PacketPool {
 	mut pool := protocol.new_empty_pool()

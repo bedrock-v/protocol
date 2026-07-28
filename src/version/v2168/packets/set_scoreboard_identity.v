@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types as types_662
+import protocol.serializer
+import protocol.version.v662.types as types_662
 
 pub struct IdentityInfoEntry {
 pub mut:
@@ -38,11 +38,17 @@ pub mut:
 	action SetScoreboardIdentityAction = SetScoreboardIdentityUpdate{}
 }
 
-pub fn (p &SetScoreboardIdentityPacket) pid() u16 { return 112 }
+pub fn (p &SetScoreboardIdentityPacket) pid() u16 {
+	return 112
+}
 
-pub fn (p &SetScoreboardIdentityPacket) name() string { return 'SetScoreboardIdentityPacket' }
+pub fn (p &SetScoreboardIdentityPacket) name() string {
+	return 'SetScoreboardIdentityPacket'
+}
 
-pub fn (p &SetScoreboardIdentityPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &SetScoreboardIdentityPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &SetScoreboardIdentityPacket) encode_payload(mut w serializer.Writer) {
 	action := p.action

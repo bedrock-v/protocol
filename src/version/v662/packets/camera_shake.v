@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct CameraShakePacket {
 pub mut:
@@ -11,11 +11,17 @@ pub mut:
 	shake_action enums.CameraShakeAction
 }
 
-pub fn (p &CameraShakePacket) pid() u16 { return 159 }
+pub fn (p &CameraShakePacket) pid() u16 {
+	return 159
+}
 
-pub fn (p &CameraShakePacket) name() string { return 'CameraShakePacket' }
+pub fn (p &CameraShakePacket) name() string {
+	return 'CameraShakePacket'
+}
 
-pub fn (p &CameraShakePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &CameraShakePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &CameraShakePacket) encode_payload(mut w serializer.Writer) {
 	w.le_f32(p.intensity)

@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ItemStackRequestActionType as u8 {
 	take                             = 0

@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v291.types as types_291
+import protocol.serializer
+import protocol.version.v291.types as types_291
 
 pub const delta_flag_has_x = u16(0x01)
 pub const delta_flag_has_y = u16(0x02)

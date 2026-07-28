@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 const aux_wildcard = i32(0x7fff)
 

@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum AgentActionType as i32 {
 	attack              = 1

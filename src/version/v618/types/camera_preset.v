@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v618.enums
+import protocol.serializer
+import protocol.version.v618.enums
 
 pub struct CameraPreset {
 pub mut:

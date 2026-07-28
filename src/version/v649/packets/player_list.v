@@ -1,9 +1,9 @@
 module packets
 
-import serializer
-import version.v291.types as types_291
-import version.v568.types as types_568
-import version.v649.enums
+import protocol.serializer
+import protocol.version.v291.types as types_291
+import protocol.version.v568.types as types_568
+import protocol.version.v649.enums
 
 pub enum PlayerListAction as u8 {
 	add    = 0

@@ -1,10 +1,10 @@
 module packets
 
-import serializer
-import version.v291.enums as enums_291
-import version.v291.types as types_291
-import version.v340.types as types_340
-import version.v407.types
+import protocol.serializer
+import protocol.version.v291.enums as enums_291
+import protocol.version.v291.types as types_291
+import protocol.version.v340.types as types_340
+import protocol.version.v407.types
 
 pub struct LegacySetItemSlotData {
 pub mut:

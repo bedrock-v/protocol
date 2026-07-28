@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum PlayerActionType as i32 {
 	start_break                                        = 0

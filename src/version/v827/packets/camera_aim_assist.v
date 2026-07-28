@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v729.enums
+import protocol.serializer
+import protocol.version.v729.enums
 
 pub enum TargetMode as i8 {
 	angle    = 0
@@ -26,11 +26,17 @@ pub mut:
 	show_debug_render bool
 }
 
-pub fn (p &CameraAimAssistPacket) pid() u16 { return 316 }
+pub fn (p &CameraAimAssistPacket) pid() u16 {
+	return 316
+}
 
-pub fn (p &CameraAimAssistPacket) name() string { return 'CameraAimAssistPacket' }
+pub fn (p &CameraAimAssistPacket) name() string {
+	return 'CameraAimAssistPacket'
+}
 
-pub fn (p &CameraAimAssistPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &CameraAimAssistPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &CameraAimAssistPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.preset_id)

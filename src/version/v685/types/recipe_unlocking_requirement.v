@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v662.types as types_662
+import protocol.serializer
+import protocol.version.v662.types as types_662
 
 pub struct UnlockingContextNone {
 pub mut:
@@ -28,9 +28,15 @@ pub fn (t UnlockingContext) encode(mut w serializer.Writer) {
 				e.encode(mut w)
 			}
 		}
-		UnlockingContextAlwaysUnlocked { w.i8(1) }
-		UnlockingContextPlayerInWater { w.i8(2) }
-		UnlockingContextPlayerHasManyItems { w.i8(3) }
+		UnlockingContextAlwaysUnlocked {
+			w.i8(1)
+		}
+		UnlockingContextPlayerInWater {
+			w.i8(2)
+		}
+		UnlockingContextPlayerHasManyItems {
+			w.i8(3)
+		}
 	}
 }
 
@@ -47,10 +53,18 @@ pub fn UnlockingContext.decode(mut r serializer.Reader) !UnlockingContext {
 				unlocking_ingredients: ingredients
 			}
 		}
-		1 { return UnlockingContextAlwaysUnlocked{} }
-		2 { return UnlockingContextPlayerInWater{} }
-		3 { return UnlockingContextPlayerHasManyItems{} }
-		else { return error('invalid UnlockingContext ${d}') }
+		1 {
+			return UnlockingContextAlwaysUnlocked{}
+		}
+		2 {
+			return UnlockingContextPlayerInWater{}
+		}
+		3 {
+			return UnlockingContextPlayerHasManyItems{}
+		}
+		else {
+			return error('invalid UnlockingContext ${d}')
+		}
 	}
 }
 

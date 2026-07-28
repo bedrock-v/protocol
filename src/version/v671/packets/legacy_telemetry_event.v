@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.types
+import protocol.version.v662.enums
 
 pub enum AgentResult as i8 {
 	action_fail        = 0
@@ -178,7 +178,37 @@ pub struct LegacyEventSneakCloseToSculkSensor {
 pub struct LegacyEventCarefulRestoration {
 }
 
-pub type LegacyTelemetryEventType = LegacyEventAchievement | LegacyEventActorDefinition | LegacyEventAgentCommandObsolete | LegacyEventAgentCreated | LegacyEventBellUsed | LegacyEventBossKilled | LegacyEventCarefulRestoration | LegacyEventCauldronUsed | LegacyEventCodeBuilderRuntimeAction | LegacyEventCodeBuilderScoreboard | LegacyEventComposterUsed | LegacyEventFishBucketed | LegacyEventHoneyHarvested | LegacyEventInteraction | LegacyEventMobBorn | LegacyEventMobKilled | LegacyEventPOICauldronUsed | LegacyEventPatternRemovedObsolete | LegacyEventPetDiedObsolete | LegacyEventPiglinBarter | LegacyEventPlayerDied | LegacyEventPlayerMovementAnomalyObsolete | LegacyEventPlayerMovementCorrectedObsolete | LegacyEventPlayerWaxedOrUnwaxedCopper | LegacyEventPortalCreated | LegacyEventPortalUsed | LegacyEventRaidUpdate | LegacyEventSlashCommand | LegacyEventSneakCloseToSculkSensor | LegacyEventStriderRiddenInLavaInOverworld | LegacyEventTargetBlockHit
+pub type LegacyTelemetryEventType = LegacyEventAchievement
+	| LegacyEventActorDefinition
+	| LegacyEventAgentCommandObsolete
+	| LegacyEventAgentCreated
+	| LegacyEventBellUsed
+	| LegacyEventBossKilled
+	| LegacyEventCarefulRestoration
+	| LegacyEventCauldronUsed
+	| LegacyEventCodeBuilderRuntimeAction
+	| LegacyEventCodeBuilderScoreboard
+	| LegacyEventComposterUsed
+	| LegacyEventFishBucketed
+	| LegacyEventHoneyHarvested
+	| LegacyEventInteraction
+	| LegacyEventMobBorn
+	| LegacyEventMobKilled
+	| LegacyEventPOICauldronUsed
+	| LegacyEventPatternRemovedObsolete
+	| LegacyEventPetDiedObsolete
+	| LegacyEventPiglinBarter
+	| LegacyEventPlayerDied
+	| LegacyEventPlayerMovementAnomalyObsolete
+	| LegacyEventPlayerMovementCorrectedObsolete
+	| LegacyEventPlayerWaxedOrUnwaxedCopper
+	| LegacyEventPortalCreated
+	| LegacyEventPortalUsed
+	| LegacyEventRaidUpdate
+	| LegacyEventSlashCommand
+	| LegacyEventSneakCloseToSculkSensor
+	| LegacyEventStriderRiddenInLavaInOverworld
+	| LegacyEventTargetBlockHit
 
 pub fn (t LegacyTelemetryEventType) id() i32 {
 	return match t {
@@ -335,11 +365,11 @@ pub fn LegacyTelemetryEventType.decode_payload(id i32, mut r serializer.Reader) 
 		}
 		1 {
 			return LegacyEventInteraction{
-				interacted_entity_id: types.ActorRuntimeID.decode(mut r)!
-				interaction_type: enums.InteractionType.decode(mut r)!
-				interaction_actor_type: enums.ActorType.decode(mut r)!
+				interacted_entity_id:      types.ActorRuntimeID.decode(mut r)!
+				interaction_type:          enums.InteractionType.decode(mut r)!
+				interaction_actor_type:    enums.ActorType.decode(mut r)!
 				interaction_actor_variant: r.read_varint32()!
-				interaction_actor_color: r.i8()!
+				interaction_actor_color:   r.i8()!
 			}
 		}
 		2 {
@@ -355,74 +385,82 @@ pub fn LegacyTelemetryEventType.decode_payload(id i32, mut r serializer.Reader) 
 		}
 		4 {
 			return LegacyEventMobKilled{
-				instigator_actor_id: r.read_varint64()!
-				target_actor_id: r.read_varint64()!
+				instigator_actor_id:         r.read_varint64()!
+				target_actor_id:             r.read_varint64()!
 				instigator_child_actor_type: enums.ActorType.decode(mut r)!
-				damage_source: enums.ActorDamageCause.decode(mut r)!
-				trade_tier: r.read_varint32()!
-				trader_name: r.read_string()!
+				damage_source:               enums.ActorDamageCause.decode(mut r)!
+				trade_tier:                  r.read_varint32()!
+				trader_name:                 r.read_string()!
 			}
 		}
 		5 {
 			return LegacyEventCauldronUsed{
 				contents_color: r.read_varuint32()!
-				contents_type: r.read_varint32()!
-				fill_level: r.read_varint32()!
+				contents_type:  r.read_varint32()!
+				fill_level:     r.read_varint32()!
 			}
 		}
 		6 {
 			return LegacyEventPlayerDied{
-				instigator_actor_id: r.read_varint32()!
+				instigator_actor_id:    r.read_varint32()!
 				instigator_mob_variant: r.read_varint32()!
-				damage_source: enums.ActorDamageCause.decode(mut r)!
-				died_in_raid: r.bool()!
+				damage_source:          enums.ActorDamageCause.decode(mut r)!
+				died_in_raid:           r.bool()!
 			}
 		}
 		7 {
 			return LegacyEventBossKilled{
 				boss_actor_id: r.read_varint64()!
-				party_size: r.read_varint32()!
-				boss_type: enums.ActorType.decode(mut r)!
+				party_size:    r.read_varint32()!
+				boss_type:     enums.ActorType.decode(mut r)!
 			}
 		}
 		8 {
 			return LegacyEventAgentCommandObsolete{
-				result: unsafe { AgentResult(r.i8()!) }
+				result:        unsafe { AgentResult(r.i8()!) }
 				result_number: r.read_varint32()!
-				command_name: r.read_string()!
-				result_key: r.read_string()!
+				command_name:  r.read_string()!
+				result_key:    r.read_string()!
 				result_string: r.read_string()!
 			}
 		}
-		9 { return LegacyEventAgentCreated{} }
-		10 { return LegacyEventPatternRemovedObsolete{} }
+		9 {
+			return LegacyEventAgentCreated{}
+		}
+		10 {
+			return LegacyEventPatternRemovedObsolete{}
+		}
 		11 {
 			return LegacyEventSlashCommand{
 				success_count: r.read_varint32()!
-				error_count: r.read_varint32()!
-				command_name: r.read_string()!
-				error_list: r.read_string()!
+				error_count:   r.read_varint32()!
+				command_name:  r.read_string()!
+				error_list:    r.read_string()!
 			}
 		}
-		12 { return LegacyEventFishBucketed{} }
+		12 {
+			return LegacyEventFishBucketed{}
+		}
 		13 {
 			return LegacyEventMobBorn{
-				baby_entity_type: r.read_varint32()!
+				baby_entity_type:    r.read_varint32()!
 				baby_entity_variant: r.read_varint32()!
-				baby_color: r.i8()!
+				baby_color:          r.i8()!
 			}
 		}
-		14 { return LegacyEventPetDiedObsolete{} }
+		14 {
+			return LegacyEventPetDiedObsolete{}
+		}
 		15 {
 			return LegacyEventPOICauldronUsed{
 				block_interaction_type: enums.POIBlockInteractionType.decode(mut r)!
-				item_id: r.read_varint32()!
+				item_id:                r.read_varint32()!
 			}
 		}
 		16 {
 			return LegacyEventComposterUsed{
 				block_interaction_type: enums.POIBlockInteractionType.decode(mut r)!
-				item_id: r.read_varint32()!
+				item_id:                r.read_varint32()!
 			}
 		}
 		17 {
@@ -438,13 +476,19 @@ pub fn LegacyTelemetryEventType.decode_payload(id i32, mut r serializer.Reader) 
 		19 {
 			return LegacyEventRaidUpdate{
 				current_raid_wave: r.read_varint32()!
-				total_raid_waves: r.read_varint32()!
-				raid_won: r.bool()!
+				total_raid_waves:  r.read_varint32()!
+				raid_won:          r.bool()!
 			}
 		}
-		20 { return LegacyEventPlayerMovementAnomalyObsolete{} }
-		21 { return LegacyEventPlayerMovementCorrectedObsolete{} }
-		22 { return LegacyEventHoneyHarvested{} }
+		20 {
+			return LegacyEventPlayerMovementAnomalyObsolete{}
+		}
+		21 {
+			return LegacyEventPlayerMovementCorrectedObsolete{}
+		}
+		22 {
+			return LegacyEventHoneyHarvested{}
+		}
 		23 {
 			return LegacyEventTargetBlockHit{
 				redstone_level: r.read_varint32()!
@@ -452,7 +496,7 @@ pub fn LegacyTelemetryEventType.decode_payload(id i32, mut r serializer.Reader) 
 		}
 		24 {
 			return LegacyEventPiglinBarter{
-				item_id: r.read_varint32()!
+				item_id:               r.read_varint32()!
 				bartering_with_player: r.bool()!
 			}
 		}
@@ -469,13 +513,21 @@ pub fn LegacyTelemetryEventType.decode_payload(id i32, mut r serializer.Reader) 
 		27 {
 			return LegacyEventCodeBuilderScoreboard{
 				objective_name: r.read_string()!
-				score: r.read_varint32()!
+				score:          r.read_varint32()!
 			}
 		}
-		28 { return LegacyEventStriderRiddenInLavaInOverworld{} }
-		29 { return LegacyEventSneakCloseToSculkSensor{} }
-		30 { return LegacyEventCarefulRestoration{} }
-		else { return error('invalid LegacyTelemetryEventType ${id}') }
+		28 {
+			return LegacyEventStriderRiddenInLavaInOverworld{}
+		}
+		29 {
+			return LegacyEventSneakCloseToSculkSensor{}
+		}
+		30 {
+			return LegacyEventCarefulRestoration{}
+		}
+		else {
+			return error('invalid LegacyTelemetryEventType ${id}')
+		}
 	}
 }
 
@@ -486,11 +538,17 @@ pub mut:
 	use_player_id   bool
 }
 
-pub fn (p &LegacyTelemetryEventPacket) pid() u16 { return 65 }
+pub fn (p &LegacyTelemetryEventPacket) pid() u16 {
+	return 65
+}
 
-pub fn (p &LegacyTelemetryEventPacket) name() string { return 'LegacyTelemetryEventPacket' }
+pub fn (p &LegacyTelemetryEventPacket) name() string {
+	return 'LegacyTelemetryEventPacket'
+}
 
-pub fn (p &LegacyTelemetryEventPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &LegacyTelemetryEventPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &LegacyTelemetryEventPacket) encode_payload(mut w serializer.Writer) {
 	p.target_actor_id.encode(mut w)

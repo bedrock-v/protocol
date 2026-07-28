@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct CreatePhotoPacket {
 pub mut:
@@ -9,11 +9,17 @@ pub mut:
 	photo_item_name string
 }
 
-pub fn (p &CreatePhotoPacket) pid() u16 { return 171 }
+pub fn (p &CreatePhotoPacket) pid() u16 {
+	return 171
+}
 
-pub fn (p &CreatePhotoPacket) name() string { return 'CreatePhotoPacket' }
+pub fn (p &CreatePhotoPacket) name() string {
+	return 'CreatePhotoPacket'
+}
 
-pub fn (p &CreatePhotoPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &CreatePhotoPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &CreatePhotoPacket) encode_payload(mut w serializer.Writer) {
 	w.le_u64(p.raw_id)

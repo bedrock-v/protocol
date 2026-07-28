@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum AgentActionType as i32 {
 	@none               = 0

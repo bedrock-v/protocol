@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v407.types as types_407
+import protocol.serializer
+import protocol.version.v407.types as types_407
 
 pub enum ItemStackResponseStatus as u8 {
 	ok                                                      = 0

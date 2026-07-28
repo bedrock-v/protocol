@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v567.types
+import protocol.serializer
+import protocol.version.v567.types
 
 pub struct PotionMixData {
 pub mut:

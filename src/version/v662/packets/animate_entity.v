@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.types
+import protocol.version.v662.enums
 
 pub struct AnimateEntityPacket {
 pub mut:
@@ -15,11 +15,17 @@ pub mut:
 	runtime_ids                    []types.ActorRuntimeID
 }
 
-pub fn (p &AnimateEntityPacket) pid() u16 { return 158 }
+pub fn (p &AnimateEntityPacket) pid() u16 {
+	return 158
+}
 
-pub fn (p &AnimateEntityPacket) name() string { return 'AnimateEntityPacket' }
+pub fn (p &AnimateEntityPacket) name() string {
+	return 'AnimateEntityPacket'
+}
 
-pub fn (p &AnimateEntityPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &AnimateEntityPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &AnimateEntityPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.animation)

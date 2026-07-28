@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v924.types
+import protocol.serializer
+import protocol.version.v924.types
 
 pub struct DebugDrawerPacket {
 pub mut:

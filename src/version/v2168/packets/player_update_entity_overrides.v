@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types as types_662
+import protocol.serializer
+import protocol.version.v662.types as types_662
 
 pub struct UpdateTypeClearOverrides {}
 
@@ -57,8 +57,12 @@ pub fn UpdateType.decode(mut r serializer.Reader) !UpdateType {
 	match d {
 		0 { return UpdateTypeClearOverrides{} }
 		1 { return UpdateTypeRemoveOverride{} }
-		2 { return UpdateTypeSetIntOverride{ value: r.le_i32()! } }
-		3 { return UpdateTypeSetFloatOverride{ value: r.le_f32()! } }
+		2 { return UpdateTypeSetIntOverride{
+				value: r.le_i32()!
+			} }
+		3 { return UpdateTypeSetFloatOverride{
+				value: r.le_f32()!
+			} }
 		else { return error('invalid UpdateType ${d}') }
 	}
 }
@@ -70,11 +74,17 @@ pub mut:
 	update_type      UpdateType = UpdateTypeClearOverrides{}
 }
 
-pub fn (p &PlayerUpdateEntityOverridesPacket) pid() u16 { return 325 }
+pub fn (p &PlayerUpdateEntityOverridesPacket) pid() u16 {
+	return 325
+}
 
-pub fn (p &PlayerUpdateEntityOverridesPacket) name() string { return 'PlayerUpdateEntityOverridesPacket' }
+pub fn (p &PlayerUpdateEntityOverridesPacket) name() string {
+	return 'PlayerUpdateEntityOverridesPacket'
+}
 
-pub fn (p &PlayerUpdateEntityOverridesPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlayerUpdateEntityOverridesPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlayerUpdateEntityOverridesPacket) encode_payload(mut w serializer.Writer) {
 	p.entity_unique_id.encode(mut w)

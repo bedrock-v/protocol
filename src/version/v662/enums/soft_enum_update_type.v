@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum SoftEnumUpdateType as u32 {
 	add     = 0

@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct LoginPacket {
 pub mut:
@@ -8,11 +8,17 @@ pub mut:
 	connection_request     []u8
 }
 
-pub fn (p &LoginPacket) pid() u16 { return 1 }
+pub fn (p &LoginPacket) pid() u16 {
+	return 1
+}
 
-pub fn (p &LoginPacket) name() string { return 'LoginPacket' }
+pub fn (p &LoginPacket) name() string {
+	return 'LoginPacket'
+}
 
-pub fn (p &LoginPacket) can_be_sent_before_login() bool { return true }
+pub fn (p &LoginPacket) can_be_sent_before_login() bool {
+	return true
+}
 
 pub fn (p &LoginPacket) encode_payload(mut w serializer.Writer) {
 	w.be_i32(p.client_network_version)

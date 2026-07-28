@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v340.types as types_340
+import protocol.serializer
+import protocol.version.v340.types as types_340
 
 pub struct CreativeItemData {
 pub mut:

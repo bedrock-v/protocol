@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum PlayStatus as i32 {
 	login_success                                = 0

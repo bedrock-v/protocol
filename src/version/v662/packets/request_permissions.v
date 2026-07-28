@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct RequestPermissionsPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	custom_permission_flags u16
 }
 
-pub fn (p &RequestPermissionsPacket) pid() u16 { return 185 }
+pub fn (p &RequestPermissionsPacket) pid() u16 {
+	return 185
+}
 
-pub fn (p &RequestPermissionsPacket) name() string { return 'RequestPermissionsPacket' }
+pub fn (p &RequestPermissionsPacket) name() string {
+	return 'RequestPermissionsPacket'
+}
 
-pub fn (p &RequestPermissionsPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &RequestPermissionsPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &RequestPermissionsPacket) encode_payload(mut w serializer.Writer) {
 	w.le_i64(p.target_player_raw_id)

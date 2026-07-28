@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct TakeItemActorPacket {
 pub mut:
@@ -9,11 +9,17 @@ pub mut:
 	actor_runtime_id types.ActorRuntimeID
 }
 
-pub fn (p &TakeItemActorPacket) pid() u16 { return 17 }
+pub fn (p &TakeItemActorPacket) pid() u16 {
+	return 17
+}
 
-pub fn (p &TakeItemActorPacket) name() string { return 'TakeItemActorPacket' }
+pub fn (p &TakeItemActorPacket) name() string {
+	return 'TakeItemActorPacket'
+}
 
-pub fn (p &TakeItemActorPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &TakeItemActorPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &TakeItemActorPacket) encode_payload(mut w serializer.Writer) {
 	p.item_runtime_id.encode(mut w)

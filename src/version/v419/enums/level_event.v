@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum LevelEvent as i32 {
 	undefined                        = 0

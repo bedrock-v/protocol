@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum StructureRedstoneSaveMode as u8 {
 	saves_to_memory = 0

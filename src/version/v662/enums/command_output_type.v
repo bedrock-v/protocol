@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub struct CommandOutputNone {}
 
@@ -44,7 +44,9 @@ pub fn CommandOutputType.decode_payload(id i8, mut r serializer.Reader) !Command
 		1 { return CommandOutputLastOutput{} }
 		2 { return CommandOutputSilent{} }
 		3 { return CommandOutputAllOutput{} }
-		4 { return CommandOutputDataSet{ value: r.read_string()! } }
+		4 { return CommandOutputDataSet{
+				value: r.read_string()!
+			} }
 		else { return error('invalid CommandOutputType ${id}') }
 	}
 }

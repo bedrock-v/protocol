@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum CommandOriginType as u32 {
 	player                      = 0

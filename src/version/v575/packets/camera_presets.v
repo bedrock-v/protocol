@@ -1,8 +1,8 @@
 module packets
 
 import nbt
-import serializer
-import version.v575.types
+import protocol.serializer
+import protocol.version.v575.types
 
 pub struct CameraPresetsPacket {
 pub mut:

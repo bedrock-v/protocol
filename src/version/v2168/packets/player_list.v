@@ -1,10 +1,10 @@
 module packets
 
-import serializer
-import version.v2168.types
-import version.v662.types as types_662
-import version.v662.enums as enums_662
-import version.v800.types as types_800
+import protocol.serializer
+import protocol.version.v2168.types
+import protocol.version.v662.types as types_662
+import protocol.version.v662.enums as enums_662
+import protocol.version.v800.types as types_800
 
 pub struct AddPlayerListEntry {
 pub mut:
@@ -82,8 +82,12 @@ pub fn PlayerListEntry.decode(mut r serializer.Reader) !PlayerListEntry {
 	d := r.read_varuint32()!
 	r.u8()!
 	match d {
-		0 { return PlayerListRemove{ uuid: types_662.Uuid.decode(mut r)! } }
-		1 { return PlayerListAdd{ entry: AddPlayerListEntry.decode(mut r)! } }
+		0 { return PlayerListRemove{
+				uuid: types_662.Uuid.decode(mut r)!
+			} }
+		1 { return PlayerListAdd{
+				entry: AddPlayerListEntry.decode(mut r)!
+			} }
 		else { return error('invalid PlayerListEntry ${d}') }
 	}
 }
@@ -93,11 +97,17 @@ pub mut:
 	entries []PlayerListEntry
 }
 
-pub fn (p &PlayerListPacket) pid() u16 { return 63 }
+pub fn (p &PlayerListPacket) pid() u16 {
+	return 63
+}
 
-pub fn (p &PlayerListPacket) name() string { return 'PlayerListPacket' }
+pub fn (p &PlayerListPacket) name() string {
+	return 'PlayerListPacket'
+}
 
-pub fn (p &PlayerListPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlayerListPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlayerListPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.entries.len))

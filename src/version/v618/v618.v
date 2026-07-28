@@ -1,38 +1,38 @@
 module v618
 
 import protocol
-import version
-import version.v291.packets as packets_291
-import version.v313.packets as packets_313
-import version.v332.packets as packets_332
-import version.v354.packets as packets_354
-import version.v361.packets as packets_361
-import version.v388.packets as packets_388
-import version.v390.packets as packets_390
-import version.v407.packets as packets_407
-import version.v419.packets as packets_419
-import version.v422.packets as packets_422
-import version.v428.packets as packets_428
-import version.v431.packets as packets_431
-import version.v440.packets as packets_440
-import version.v448.packets as packets_448
-import version.v465.packets as packets_465
-import version.v471.packets as packets_471
-import version.v486.packets as packets_486
-import version.v503.packets as packets_503
-import version.v527.packets as packets_527
-import version.v534.packets as packets_534
-import version.v544.packets as packets_544
-import version.v554.packets as packets_554
-import version.v557.packets as packets_557
-import version.v560.packets as packets_560
-import version.v567.packets as packets_567
-import version.v568.packets as packets_568
-import version.v575.packets as packets_575
-import version.v582.packets as packets_582
-import version.v589.packets as packets_589
-import version.v594.packets as packets_594
-import version.v618.packets
+import protocol.version
+import protocol.version.v291.packets as packets_291
+import protocol.version.v313.packets as packets_313
+import protocol.version.v332.packets as packets_332
+import protocol.version.v354.packets as packets_354
+import protocol.version.v361.packets as packets_361
+import protocol.version.v388.packets as packets_388
+import protocol.version.v390.packets as packets_390
+import protocol.version.v407.packets as packets_407
+import protocol.version.v419.packets as packets_419
+import protocol.version.v422.packets as packets_422
+import protocol.version.v428.packets as packets_428
+import protocol.version.v431.packets as packets_431
+import protocol.version.v440.packets as packets_440
+import protocol.version.v448.packets as packets_448
+import protocol.version.v465.packets as packets_465
+import protocol.version.v471.packets as packets_471
+import protocol.version.v486.packets as packets_486
+import protocol.version.v503.packets as packets_503
+import protocol.version.v527.packets as packets_527
+import protocol.version.v534.packets as packets_534
+import protocol.version.v544.packets as packets_544
+import protocol.version.v554.packets as packets_554
+import protocol.version.v557.packets as packets_557
+import protocol.version.v560.packets as packets_560
+import protocol.version.v567.packets as packets_567
+import protocol.version.v568.packets as packets_568
+import protocol.version.v575.packets as packets_575
+import protocol.version.v582.packets as packets_582
+import protocol.version.v589.packets as packets_589
+import protocol.version.v594.packets as packets_594
+import protocol.version.v618.packets
 
 pub const proto_version = version.ProtoVersion.v618
 

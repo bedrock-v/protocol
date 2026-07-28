@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct TrimPattern {
 pub mut:
@@ -47,11 +47,17 @@ pub mut:
 	trim_material_list []TrimMaterial
 }
 
-pub fn (p &TrimDataPacket) pid() u16 { return 302 }
+pub fn (p &TrimDataPacket) pid() u16 {
+	return 302
+}
 
-pub fn (p &TrimDataPacket) name() string { return 'TrimDataPacket' }
+pub fn (p &TrimDataPacket) name() string {
+	return 'TrimDataPacket'
+}
 
-pub fn (p &TrimDataPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &TrimDataPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &TrimDataPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.trim_pattern_list.len))

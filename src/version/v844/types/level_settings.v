@@ -1,8 +1,8 @@
 module types
 
-import serializer
-import version.v662.types as types_662
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.types as types_662
+import protocol.version.v662.enums
 
 pub struct GameRuleLegacyBool {
 pub mut:
@@ -41,9 +41,15 @@ pub fn (t GameRuleLegacyType) encode(mut w serializer.Writer) {
 pub fn GameRuleLegacyType.decode(mut r serializer.Reader) !GameRuleLegacyType {
 	d := r.read_varuint32()!
 	match d {
-		1 { return GameRuleLegacyBool{ value: r.bool()! } }
-		2 { return GameRuleLegacyInt{ value: r.read_varint32()! } }
-		3 { return GameRuleLegacyFloat{ value: r.le_f32()! } }
+		1 { return GameRuleLegacyBool{
+				value: r.bool()!
+			} }
+		2 { return GameRuleLegacyInt{
+				value: r.read_varint32()!
+			} }
+		3 { return GameRuleLegacyFloat{
+				value: r.le_f32()!
+			} }
 		else { return error('invalid GameRuleLegacyType ${d}') }
 	}
 }

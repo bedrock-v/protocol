@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub const crafting_data_type_shapeless = i32(0)
 pub const crafting_data_type_shaped = i32(1)

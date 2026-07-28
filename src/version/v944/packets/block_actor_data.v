@@ -1,8 +1,8 @@
 module packets
 
-import serializer
+import protocol.serializer
 import nbt
-import version.v944.types
+import protocol.version.v944.types
 
 pub struct BlockActorDataPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	actor_data_tags nbt.RootTag
 }
 
-pub fn (p &BlockActorDataPacket) pid() u16 { return 56 }
+pub fn (p &BlockActorDataPacket) pid() u16 {
+	return 56
+}
 
-pub fn (p &BlockActorDataPacket) name() string { return 'BlockActorDataPacket' }
+pub fn (p &BlockActorDataPacket) name() string {
+	return 'BlockActorDataPacket'
+}
 
-pub fn (p &BlockActorDataPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &BlockActorDataPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &BlockActorDataPacket) encode_payload(mut w serializer.Writer) {
 	p.block_position.encode(mut w)

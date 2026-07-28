@@ -1,11 +1,11 @@
 module packets
 
-import serializer
+import protocol.serializer
 import nbt
-import version.v662.enums
-import version.v662.types as types_662
-import version.v818.types as types_818
-import version.v1001.types
+import protocol.version.v662.enums
+import protocol.version.v662.types as types_662
+import protocol.version.v818.types as types_818
+import protocol.version.v1001.types
 
 pub struct StartGamePacket {
 pub mut:

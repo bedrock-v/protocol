@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.types
+import protocol.version.v662.enums
 
 pub struct RespawnPacket {
 pub mut:
@@ -11,11 +11,17 @@ pub mut:
 	player_runtime_id types.ActorRuntimeID
 }
 
-pub fn (p &RespawnPacket) pid() u16 { return 45 }
+pub fn (p &RespawnPacket) pid() u16 {
+	return 45
+}
 
-pub fn (p &RespawnPacket) name() string { return 'RespawnPacket' }
+pub fn (p &RespawnPacket) name() string {
+	return 'RespawnPacket'
+}
 
-pub fn (p &RespawnPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &RespawnPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &RespawnPacket) encode_payload(mut w serializer.Writer) {
 	w.le_f32(p.position[0])

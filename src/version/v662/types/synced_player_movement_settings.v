@@ -1,13 +1,13 @@
 module types
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct SyncedPlayerMovementSettings {
 pub mut:
-	authority_mode                        enums.ServerAuthMovementMode
-	rewind_history_size                   i32
-	server_authoritative_block_breaking   bool
+	authority_mode                      enums.ServerAuthMovementMode
+	rewind_history_size                 i32
+	server_authoritative_block_breaking bool
 }
 
 pub fn (t SyncedPlayerMovementSettings) encode(mut w serializer.Writer) {

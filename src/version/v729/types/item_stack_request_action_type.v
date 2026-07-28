@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v662.types as types_662
+import protocol.serializer
+import protocol.version.v662.types as types_662
 
 pub struct ItemStackActionTake {
 pub mut:
@@ -169,9 +169,15 @@ pub fn (t ItemStackRequestActionType) encode(mut w serializer.Writer) {
 			w.i8(6)
 			w.i8(t.slot)
 		}
-		ItemStackActionPlaceInItemContainer { w.i8(7) }
-		ItemStackActionTakeFromItemContainer { w.i8(8) }
-		ItemStackActionScreenLabTableCombine { w.i8(9) }
+		ItemStackActionPlaceInItemContainer {
+			w.i8(7)
+		}
+		ItemStackActionTakeFromItemContainer {
+			w.i8(8)
+		}
+		ItemStackActionScreenLabTableCombine {
+			w.i8(9)
+		}
 		ItemStackActionScreenBeaconPayment {
 			w.i8(10)
 			w.write_varint32(t.primary_effect)
@@ -219,8 +225,12 @@ pub fn (t ItemStackRequestActionType) encode(mut w serializer.Writer) {
 			w.write_string(t.pattern_id)
 			w.i8(t.number_of_requested_crafts)
 		}
-		ItemStackActionCraftNonImplemented { w.i8(18) }
-		ItemStackActionCraftResults { w.i8(19) }
+		ItemStackActionCraftNonImplemented {
+			w.i8(18)
+		}
+		ItemStackActionCraftResults {
+			w.i8(19)
+		}
 	}
 }
 
@@ -266,10 +276,20 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 				source: ItemStackRequestSlotInfo.decode(mut r)!
 			}
 		}
-		6 { return ItemStackActionCreate{ slot: r.i8()! } }
-		7 { return ItemStackActionPlaceInItemContainer{} }
-		8 { return ItemStackActionTakeFromItemContainer{} }
-		9 { return ItemStackActionScreenLabTableCombine{} }
+		6 {
+			return ItemStackActionCreate{
+				slot: r.i8()!
+			}
+		}
+		7 {
+			return ItemStackActionPlaceInItemContainer{}
+		}
+		8 {
+			return ItemStackActionTakeFromItemContainer{}
+		}
+		9 {
+			return ItemStackActionScreenLabTableCombine{}
+		}
 		10 {
 			return ItemStackActionScreenBeaconPayment{
 				primary_effect:   r.read_varint32()!
@@ -330,8 +350,14 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 				number_of_requested_crafts: r.i8()!
 			}
 		}
-		18 { return ItemStackActionCraftNonImplemented{} }
-		19 { return ItemStackActionCraftResults{} }
-		else { return error('invalid ItemStackRequestActionType ${d}') }
+		18 {
+			return ItemStackActionCraftNonImplemented{}
+		}
+		19 {
+			return ItemStackActionCraftResults{}
+		}
+		else {
+			return error('invalid ItemStackRequestActionType ${d}')
+		}
 	}
 }

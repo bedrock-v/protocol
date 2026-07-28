@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v90.types
+import protocol.serializer
+import protocol.version.v90.types
 
 pub struct CraftingEventPacket {
 pub mut:

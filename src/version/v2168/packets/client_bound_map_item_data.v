@@ -1,9 +1,9 @@
 module packets
 
-import serializer
-import version.v2168.types
-import version.v662.types as types_662
-import version.v944.types as types_944
+import protocol.serializer
+import protocol.version.v2168.types
+import protocol.version.v662.types as types_662
+import protocol.version.v944.types as types_944
 
 pub struct ClientBoundMapItemDataPacket {
 pub mut:
@@ -22,11 +22,17 @@ pub mut:
 	pixels            ?[]i32
 }
 
-pub fn (p &ClientBoundMapItemDataPacket) pid() u16 { return 67 }
+pub fn (p &ClientBoundMapItemDataPacket) pid() u16 {
+	return 67
+}
 
-pub fn (p &ClientBoundMapItemDataPacket) name() string { return 'ClientBoundMapItemDataPacket' }
+pub fn (p &ClientBoundMapItemDataPacket) name() string {
+	return 'ClientBoundMapItemDataPacket'
+}
 
-pub fn (p &ClientBoundMapItemDataPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ClientBoundMapItemDataPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ClientBoundMapItemDataPacket) encode_payload(mut w serializer.Writer) {
 	p.map_id.encode(mut w)

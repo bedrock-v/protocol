@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum NpcDialogueAction as i32 {
 	open  = 0

@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct NetworkSettingsPacket {
 pub mut:
@@ -12,11 +12,17 @@ pub mut:
 	client_throttle_scalar    f32
 }
 
-pub fn (p &NetworkSettingsPacket) pid() u16 { return 143 }
+pub fn (p &NetworkSettingsPacket) pid() u16 {
+	return 143
+}
 
-pub fn (p &NetworkSettingsPacket) name() string { return 'NetworkSettingsPacket' }
+pub fn (p &NetworkSettingsPacket) name() string {
+	return 'NetworkSettingsPacket'
+}
 
-pub fn (p &NetworkSettingsPacket) can_be_sent_before_login() bool { return true }
+pub fn (p &NetworkSettingsPacket) can_be_sent_before_login() bool {
+	return true
+}
 
 pub fn (p &NetworkSettingsPacket) encode_payload(mut w serializer.Writer) {
 	w.le_u16(p.compression_threshold)

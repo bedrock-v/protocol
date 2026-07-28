@@ -1,8 +1,8 @@
 module packets
 
-import serializer
+import protocol.serializer
 import nbt
-import version.v291.enums
+import protocol.version.v291.enums
 
 pub struct UpdateTradePacket {
 pub mut:

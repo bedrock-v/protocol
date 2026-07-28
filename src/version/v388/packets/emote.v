@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub const emote_flag_server_side = u8(0x01)
 pub const emote_flag_mute_emote_chat = u8(0x02)

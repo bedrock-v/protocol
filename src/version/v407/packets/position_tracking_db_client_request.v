@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum PositionTrackingRequestAction as u8 {
 	query = 0

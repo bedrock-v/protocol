@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct CodeBuilderSourcePacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	value     string
 }
 
-pub fn (p &CodeBuilderSourcePacket) pid() u16 { return 178 }
+pub fn (p &CodeBuilderSourcePacket) pid() u16 {
+	return 178
+}
 
-pub fn (p &CodeBuilderSourcePacket) name() string { return 'CodeBuilderSourcePacket' }
+pub fn (p &CodeBuilderSourcePacket) name() string {
+	return 'CodeBuilderSourcePacket'
+}
 
-pub fn (p &CodeBuilderSourcePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &CodeBuilderSourcePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &CodeBuilderSourcePacket) encode_payload(mut w serializer.Writer) {
 	p.operation.encode(mut w)

@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.types
+import protocol.version.v662.enums
 
 pub struct PlayerActionPacket {
 pub mut:
@@ -13,11 +13,17 @@ pub mut:
 	face              i32
 }
 
-pub fn (p &PlayerActionPacket) pid() u16 { return 36 }
+pub fn (p &PlayerActionPacket) pid() u16 {
+	return 36
+}
 
-pub fn (p &PlayerActionPacket) name() string { return 'PlayerActionPacket' }
+pub fn (p &PlayerActionPacket) name() string {
+	return 'PlayerActionPacket'
+}
 
-pub fn (p &PlayerActionPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlayerActionPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlayerActionPacket) encode_payload(mut w serializer.Writer) {
 	p.player_runtime_id.encode(mut w)

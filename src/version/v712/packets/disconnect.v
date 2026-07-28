@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct DisconnectMessage {
 pub mut:
@@ -27,11 +27,17 @@ pub mut:
 	message ?DisconnectMessage
 }
 
-pub fn (p &DisconnectPacket) pid() u16 { return 5 }
+pub fn (p &DisconnectPacket) pid() u16 {
+	return 5
+}
 
-pub fn (p &DisconnectPacket) name() string { return 'DisconnectPacket' }
+pub fn (p &DisconnectPacket) name() string {
+	return 'DisconnectPacket'
+}
 
-pub fn (p &DisconnectPacket) can_be_sent_before_login() bool { return true }
+pub fn (p &DisconnectPacket) can_be_sent_before_login() bool {
+	return true
+}
 
 pub fn (p &DisconnectPacket) encode_payload(mut w serializer.Writer) {
 	p.reason.encode(mut w)

@@ -1,8 +1,8 @@
 module packets
 
-import serializer
+import protocol.serializer
 import nbt
-import version.v291.types
+import protocol.version.v291.types
 
 pub struct BlockEntityDataPacket {
 pub mut:

@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v291.enums
+import protocol.serializer
+import protocol.version.v291.enums
 
 pub struct EntityEventPacket {
 pub mut:

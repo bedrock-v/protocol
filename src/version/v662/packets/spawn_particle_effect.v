@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct SpawnParticleEffectPacket {
 pub mut:
@@ -12,11 +12,17 @@ pub mut:
 	molang_variables ?types.MolangVariableMap
 }
 
-pub fn (p &SpawnParticleEffectPacket) pid() u16 { return 118 }
+pub fn (p &SpawnParticleEffectPacket) pid() u16 {
+	return 118
+}
 
-pub fn (p &SpawnParticleEffectPacket) name() string { return 'SpawnParticleEffectPacket' }
+pub fn (p &SpawnParticleEffectPacket) name() string {
+	return 'SpawnParticleEffectPacket'
+}
 
-pub fn (p &SpawnParticleEffectPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &SpawnParticleEffectPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &SpawnParticleEffectPacket) encode_payload(mut w serializer.Writer) {
 	w.i8(p.dimension_id)
@@ -27,7 +33,7 @@ pub fn (p &SpawnParticleEffectPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.effect_name)
 	if val := p.molang_variables {
 		w.bool(true)
-			val.encode(mut w)
+		val.encode(mut w)
 	} else {
 		w.bool(false)
 	}

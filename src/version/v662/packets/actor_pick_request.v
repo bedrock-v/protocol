@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct ActorPickRequestPacket {
 pub mut:
@@ -9,11 +9,17 @@ pub mut:
 	with_data bool
 }
 
-pub fn (p &ActorPickRequestPacket) pid() u16 { return 35 }
+pub fn (p &ActorPickRequestPacket) pid() u16 {
+	return 35
+}
 
-pub fn (p &ActorPickRequestPacket) name() string { return 'ActorPickRequestPacket' }
+pub fn (p &ActorPickRequestPacket) name() string {
+	return 'ActorPickRequestPacket'
+}
 
-pub fn (p &ActorPickRequestPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ActorPickRequestPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ActorPickRequestPacket) encode_payload(mut w serializer.Writer) {
 	w.le_i64(p.actor_id)

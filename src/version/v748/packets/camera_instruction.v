@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v748.types
+import protocol.serializer
+import protocol.version.v748.types
 
 pub struct CameraInstructionPacket {
 pub mut:

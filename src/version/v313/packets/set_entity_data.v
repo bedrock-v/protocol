@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v313.types
+import protocol.serializer
+import protocol.version.v313.types
 
 pub struct SetEntityDataPacket {
 pub mut:

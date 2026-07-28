@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum MobEffectEvent as u8 {
 	@none  = 0

@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum ModalFormCancelReason as u8 {
 	user_closed = 0

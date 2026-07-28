@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum MinecraftPacketIds as i32 {
 	keep_alive                                = 0

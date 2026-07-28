@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ItemVersion as i32 {
 	legacy      = 0

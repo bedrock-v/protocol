@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum ShowCreditsStatus as i32 {
 	start_credits = 0

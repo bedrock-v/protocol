@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types as types_662
-import version.v944.types
+import protocol.serializer
+import protocol.version.v662.types as types_662
+import protocol.version.v944.types
 
 pub struct MapPixelsEntry {
 pub mut:
@@ -135,11 +135,17 @@ pub mut:
 	map_origin types_662.BlockPos
 }
 
-pub fn (p &ClientBoundMapItemDataPacket) pid() u16 { return 67 }
+pub fn (p &ClientBoundMapItemDataPacket) pid() u16 {
+	return 67
+}
 
-pub fn (p &ClientBoundMapItemDataPacket) name() string { return 'ClientBoundMapItemDataPacket' }
+pub fn (p &ClientBoundMapItemDataPacket) name() string {
+	return 'ClientBoundMapItemDataPacket'
+}
 
-pub fn (p &ClientBoundMapItemDataPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ClientBoundMapItemDataPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ClientBoundMapItemDataPacket) encode_payload(mut w serializer.Writer) {
 	p.map_id.encode(mut w)

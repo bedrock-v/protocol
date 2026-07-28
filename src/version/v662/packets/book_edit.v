@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct BookEditPacket {
 pub mut:
@@ -9,11 +9,17 @@ pub mut:
 	book_slot i8
 }
 
-pub fn (p &BookEditPacket) pid() u16 { return 97 }
+pub fn (p &BookEditPacket) pid() u16 {
+	return 97
+}
 
-pub fn (p &BookEditPacket) name() string { return 'BookEditPacket' }
+pub fn (p &BookEditPacket) name() string {
+	return 'BookEditPacket'
+}
 
-pub fn (p &BookEditPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &BookEditPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &BookEditPacket) encode_payload(mut w serializer.Writer) {
 	w.i8(p.action.id())

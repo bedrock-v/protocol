@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ItemStackNetResultKind as i8 {
 	success                                                 = 0

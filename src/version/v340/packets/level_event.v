@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v291.types
-import version.v332.enums
+import protocol.serializer
+import protocol.version.v291.types
+import protocol.version.v332.enums
 
 pub struct LevelEventPacket {
 pub mut:

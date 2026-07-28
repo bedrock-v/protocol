@@ -1,9 +1,9 @@
 module packets
 
-import serializer
-import version.v766.types as types_766
-import version.v776.types
-import version.v776.enums
+import protocol.serializer
+import protocol.version.v766.types as types_766
+import protocol.version.v776.types
+import protocol.version.v776.enums
 
 pub struct CameraAimAssistPresetsPacket {
 pub mut:
@@ -12,11 +12,17 @@ pub mut:
 	operation  enums.CameraAimAssistOperation
 }
 
-pub fn (p &CameraAimAssistPresetsPacket) pid() u16 { return 320 }
+pub fn (p &CameraAimAssistPresetsPacket) pid() u16 {
+	return 320
+}
 
-pub fn (p &CameraAimAssistPresetsPacket) name() string { return 'CameraAimAssistPresetsPacket' }
+pub fn (p &CameraAimAssistPresetsPacket) name() string {
+	return 'CameraAimAssistPresetsPacket'
+}
 
-pub fn (p &CameraAimAssistPresetsPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &CameraAimAssistPresetsPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &CameraAimAssistPresetsPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.categories.len))

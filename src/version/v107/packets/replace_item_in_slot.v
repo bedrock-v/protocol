@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v107.types
+import protocol.serializer
+import protocol.version.v107.types
 
 pub struct ReplaceItemInSlotPacket {
 pub mut:

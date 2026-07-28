@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ShowStoreOfferRedirectType as i8 {
 	marketplace_offer       = 0

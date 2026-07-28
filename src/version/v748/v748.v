@@ -1,14 +1,14 @@
 module v748
 
 import protocol
-import version
-import version.v662.packets as packets_662
-import version.v671.packets as packets_671
-import version.v685.packets as packets_685
-import version.v686.packets as packets_686
-import version.v712.packets as packets_712
-import version.v729.packets as packets_729
-import version.v748.packets
+import protocol.version
+import protocol.version.v662.packets as packets_662
+import protocol.version.v671.packets as packets_671
+import protocol.version.v685.packets as packets_685
+import protocol.version.v686.packets as packets_686
+import protocol.version.v712.packets as packets_712
+import protocol.version.v729.packets as packets_729
+import protocol.version.v748.packets
 
 pub const proto_version = version.ProtoVersion.v748
 

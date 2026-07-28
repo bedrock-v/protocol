@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct PhotoTransferPacket {
 pub mut:
@@ -14,11 +14,17 @@ pub mut:
 	new_photo_name string
 }
 
-pub fn (p &PhotoTransferPacket) pid() u16 { return 99 }
+pub fn (p &PhotoTransferPacket) pid() u16 {
+	return 99
+}
 
-pub fn (p &PhotoTransferPacket) name() string { return 'PhotoTransferPacket' }
+pub fn (p &PhotoTransferPacket) name() string {
+	return 'PhotoTransferPacket'
+}
 
-pub fn (p &PhotoTransferPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PhotoTransferPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PhotoTransferPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.photo_name)

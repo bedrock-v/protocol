@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct LessonProgressPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	activity_id   string
 }
 
-pub fn (p &LessonProgressPacket) pid() u16 { return 183 }
+pub fn (p &LessonProgressPacket) pid() u16 {
+	return 183
+}
 
-pub fn (p &LessonProgressPacket) name() string { return 'LessonProgressPacket' }
+pub fn (p &LessonProgressPacket) name() string {
+	return 'LessonProgressPacket'
+}
 
-pub fn (p &LessonProgressPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &LessonProgressPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &LessonProgressPacket) encode_payload(mut w serializer.Writer) {
 	p.lesson_action.encode(mut w)

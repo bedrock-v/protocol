@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct AddPaintingPacket {
 pub mut:
@@ -12,11 +12,17 @@ pub mut:
 	motif             string
 }
 
-pub fn (p &AddPaintingPacket) pid() u16 { return 22 }
+pub fn (p &AddPaintingPacket) pid() u16 {
+	return 22
+}
 
-pub fn (p &AddPaintingPacket) name() string { return 'AddPaintingPacket' }
+pub fn (p &AddPaintingPacket) name() string {
+	return 'AddPaintingPacket'
+}
 
-pub fn (p &AddPaintingPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &AddPaintingPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &AddPaintingPacket) encode_payload(mut w serializer.Writer) {
 	p.target_actor_id.encode(mut w)

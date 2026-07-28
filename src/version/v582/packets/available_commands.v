@@ -1,9 +1,9 @@
 module packets
 
-import serializer
-import version.v291.types as types_291
-import version.v388.types as types_388
-import version.v448.types as types_448
+import protocol.serializer
+import protocol.version.v291.types as types_291
+import protocol.version.v388.types as types_388
+import protocol.version.v448.types as types_448
 
 pub struct AvailableCommandsPacket {
 pub mut:

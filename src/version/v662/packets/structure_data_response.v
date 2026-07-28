@@ -1,8 +1,8 @@
 module packets
 
-import serializer
+import protocol.serializer
 import nbt
-import version.v662.enums
+import protocol.version.v662.enums
 
 pub struct StructureDataResponsePacket {
 pub mut:
@@ -12,11 +12,17 @@ pub mut:
 	response_type  enums.StructureTemplateResponseType
 }
 
-pub fn (p &StructureDataResponsePacket) pid() u16 { return 133 }
+pub fn (p &StructureDataResponsePacket) pid() u16 {
+	return 133
+}
 
-pub fn (p &StructureDataResponsePacket) name() string { return 'StructureDataResponsePacket' }
+pub fn (p &StructureDataResponsePacket) name() string {
+	return 'StructureDataResponsePacket'
+}
 
-pub fn (p &StructureDataResponsePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &StructureDataResponsePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &StructureDataResponsePacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.structure_name)

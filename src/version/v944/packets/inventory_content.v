@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types as types_662
-import version.v944.types
+import protocol.serializer
+import protocol.version.v662.types as types_662
+import protocol.version.v944.types
 
 pub struct InventoryContentPacket {
 pub mut:
@@ -12,11 +12,17 @@ pub mut:
 	storage_item        types_662.NetworkItemStackDescriptor
 }
 
-pub fn (p &InventoryContentPacket) pid() u16 { return 49 }
+pub fn (p &InventoryContentPacket) pid() u16 {
+	return 49
+}
 
-pub fn (p &InventoryContentPacket) name() string { return 'InventoryContentPacket' }
+pub fn (p &InventoryContentPacket) name() string {
+	return 'InventoryContentPacket'
+}
 
-pub fn (p &InventoryContentPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &InventoryContentPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &InventoryContentPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(p.inventory_id)

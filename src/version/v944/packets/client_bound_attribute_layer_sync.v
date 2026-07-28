@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub enum BoolAttributeOperation {
 	override
@@ -150,8 +150,13 @@ pub fn (t Color255RGBA) encode(mut w serializer.Writer) {
 pub fn Color255RGBA.decode(mut r serializer.Reader) !Color255RGBA {
 	d := r.read_varuint32()!
 	match d {
-		0 { return Color255RgbaString{ value: r.read_string()! } }
-		1 { return Color255RgbaArray{ value: [r.le_i32()!, r.le_i32()!, r.le_i32()!, r.le_i32()!]! } }
+		0 { return Color255RgbaString{
+				value: r.read_string()!
+			} }
+		1 { return Color255RgbaArray{
+				value: [r.le_i32()!, r.le_i32()!, r.le_i32()!,
+					r.le_i32()!]!
+			} }
 		else { return error('invalid Color255RGBA ${d}') }
 	}
 }
@@ -304,8 +309,12 @@ pub fn (t AttributeLayerWeight) encode(mut w serializer.Writer) {
 pub fn AttributeLayerWeight.decode(mut r serializer.Reader) !AttributeLayerWeight {
 	d := r.read_varuint32()!
 	match d {
-		0 { return AttributeLayerWeightFloat{ value: r.le_f64()! } }
-		1 { return AttributeLayerWeightString{ value: r.read_string()! } }
+		0 { return AttributeLayerWeightFloat{
+				value: r.le_f64()!
+			} }
+		1 { return AttributeLayerWeightString{
+				value: r.read_string()!
+			} }
 		else { return error('invalid AttributeLayerWeight ${d}') }
 	}
 }
@@ -491,11 +500,17 @@ pub mut:
 	data ClientBoundAttributeLayerSyncData = UpdateAttributeLayersData{}
 }
 
-pub fn (p &ClientBoundAttributeLayerSyncPacket) pid() u16 { return 345 }
+pub fn (p &ClientBoundAttributeLayerSyncPacket) pid() u16 {
+	return 345
+}
 
-pub fn (p &ClientBoundAttributeLayerSyncPacket) name() string { return 'ClientBoundAttributeLayerSyncPacket' }
+pub fn (p &ClientBoundAttributeLayerSyncPacket) name() string {
+	return 'ClientBoundAttributeLayerSyncPacket'
+}
 
-pub fn (p &ClientBoundAttributeLayerSyncPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &ClientBoundAttributeLayerSyncPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &ClientBoundAttributeLayerSyncPacket) encode_payload(mut w serializer.Writer) {
 	p.data.encode(mut w)

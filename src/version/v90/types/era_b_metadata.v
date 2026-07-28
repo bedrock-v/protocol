@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub const metadata_end = u8(0x7f)
 

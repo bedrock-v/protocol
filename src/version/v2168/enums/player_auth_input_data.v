@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum PlayerAuthInputData as i32 {
 	ascend                              = 0

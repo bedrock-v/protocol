@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct PlayerHotbarPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	should_select_slot bool
 }
 
-pub fn (p &PlayerHotbarPacket) pid() u16 { return 48 }
+pub fn (p &PlayerHotbarPacket) pid() u16 {
+	return 48
+}
 
-pub fn (p &PlayerHotbarPacket) name() string { return 'PlayerHotbarPacket' }
+pub fn (p &PlayerHotbarPacket) name() string {
+	return 'PlayerHotbarPacket'
+}
 
-pub fn (p &PlayerHotbarPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &PlayerHotbarPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &PlayerHotbarPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(p.selected_slot)

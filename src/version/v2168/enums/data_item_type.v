@@ -1,8 +1,8 @@
 module enums
 
-import serializer
+import protocol.serializer
 import nbt
-import version.v662.types
+import protocol.version.v662.types
 
 pub struct DataItemByte {
 pub mut:
@@ -80,14 +80,30 @@ pub fn (t DataItemType) encode(mut w serializer.Writer) {
 	w.write_varuint32(id)
 	w.u8(u8(id))
 	match t {
-		DataItemByte { w.i8(t.value) }
-		DataItemShort { w.le_i16(t.value) }
-		DataItemInt { w.write_varint32(t.value) }
-		DataItemFloat { w.le_f32(t.value) }
-		DataItemString { w.write_string(t.value) }
-		DataItemNBT { w.write_nbt_compound_root(t.value) }
-		DataItemPos { t.value.encode(mut w) }
-		DataItemInt64 { w.write_varint64(t.value) }
+		DataItemByte {
+			w.i8(t.value)
+		}
+		DataItemShort {
+			w.le_i16(t.value)
+		}
+		DataItemInt {
+			w.write_varint32(t.value)
+		}
+		DataItemFloat {
+			w.le_f32(t.value)
+		}
+		DataItemString {
+			w.write_string(t.value)
+		}
+		DataItemNBT {
+			w.write_nbt_compound_root(t.value)
+		}
+		DataItemPos {
+			t.value.encode(mut w)
+		}
+		DataItemInt64 {
+			w.write_varint64(t.value)
+		}
 		DataItemVec3 {
 			w.le_f32(t.x)
 			w.le_f32(t.y)
@@ -100,15 +116,35 @@ pub fn DataItemType.decode(mut r serializer.Reader) !DataItemType {
 	d := r.read_varuint32()!
 	r.u8()!
 	match d {
-		0 { return DataItemByte{ value: r.i8()! } }
-		1 { return DataItemShort{ value: r.le_i16()! } }
-		2 { return DataItemInt{ value: r.read_varint32()! } }
-		3 { return DataItemFloat{ value: r.le_f32()! } }
-		4 { return DataItemString{ value: r.read_string()! } }
-		5 { return DataItemNBT{ value: r.read_nbt_compound_root()! } }
-		6 { return DataItemPos{ value: types.BlockPos.decode(mut r)! } }
-		7 { return DataItemInt64{ value: r.read_varint64()! } }
-		8 { return DataItemVec3{ x: r.le_f32()!, y: r.le_f32()!, z: r.le_f32()! } }
+		0 { return DataItemByte{
+				value: r.i8()!
+			} }
+		1 { return DataItemShort{
+				value: r.le_i16()!
+			} }
+		2 { return DataItemInt{
+				value: r.read_varint32()!
+			} }
+		3 { return DataItemFloat{
+				value: r.le_f32()!
+			} }
+		4 { return DataItemString{
+				value: r.read_string()!
+			} }
+		5 { return DataItemNBT{
+				value: r.read_nbt_compound_root()!
+			} }
+		6 { return DataItemPos{
+				value: types.BlockPos.decode(mut r)!
+			} }
+		7 { return DataItemInt64{
+				value: r.read_varint64()!
+			} }
+		8 { return DataItemVec3{
+				x: r.le_f32()!
+				y: r.le_f32()!
+				z: r.le_f32()!
+			} }
 		else { return error('invalid DataItemType ${d}') }
 	}
 }

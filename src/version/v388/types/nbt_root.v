@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 import nbt
 
 pub fn write_nbt_root(mut w serializer.Writer, root nbt.RootTag) {

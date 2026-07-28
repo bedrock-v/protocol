@@ -1,6 +1,6 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct TransferPlayerPacket {
 pub mut:
@@ -8,11 +8,17 @@ pub mut:
 	server_port    u16
 }
 
-pub fn (p &TransferPlayerPacket) pid() u16 { return 85 }
+pub fn (p &TransferPlayerPacket) pid() u16 {
+	return 85
+}
 
-pub fn (p &TransferPlayerPacket) name() string { return 'TransferPlayerPacket' }
+pub fn (p &TransferPlayerPacket) name() string {
+	return 'TransferPlayerPacket'
+}
 
-pub fn (p &TransferPlayerPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &TransferPlayerPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &TransferPlayerPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.server_address)

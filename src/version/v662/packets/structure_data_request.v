@@ -1,8 +1,8 @@
 module packets
 
-import serializer
-import version.v662.types
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.types
+import protocol.version.v662.enums
 
 pub struct StructureDataRequestPacket {
 pub mut:
@@ -12,11 +12,17 @@ pub mut:
 	requested_operation enums.StructureTemplateRequestOperation
 }
 
-pub fn (p &StructureDataRequestPacket) pid() u16 { return 132 }
+pub fn (p &StructureDataRequestPacket) pid() u16 {
+	return 132
+}
 
-pub fn (p &StructureDataRequestPacket) name() string { return 'StructureDataRequestPacket' }
+pub fn (p &StructureDataRequestPacket) name() string {
+	return 'StructureDataRequestPacket'
+}
 
-pub fn (p &StructureDataRequestPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &StructureDataRequestPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &StructureDataRequestPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.structure_name)

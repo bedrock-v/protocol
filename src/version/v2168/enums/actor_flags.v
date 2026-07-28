@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub enum ActorFlags as i32 {
 	unknown                           = -1

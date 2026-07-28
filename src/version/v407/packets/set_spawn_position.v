@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v291.types as types_291
+import protocol.serializer
+import protocol.version.v291.types as types_291
 
 pub enum SpawnPositionType as i32 {
 	player_spawn = 0

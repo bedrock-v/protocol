@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v662.types as types_662
+import protocol.serializer
+import protocol.version.v662.types as types_662
 
 pub struct MapItemTrackedEntity {
 pub mut:
@@ -29,15 +29,21 @@ pub fn (t MapItemTrackedActorType) encode(mut w serializer.Writer) {
 			w.le_i32(1)
 			t.block_position.encode(mut w)
 		}
-		MapItemTrackedOther { w.le_i32(2) }
+		MapItemTrackedOther {
+			w.le_i32(2)
+		}
 	}
 }
 
 pub fn MapItemTrackedActorType.decode(mut r serializer.Reader) !MapItemTrackedActorType {
 	d := r.le_i32()!
 	match d {
-		0 { return MapItemTrackedEntity{ actor_unique_id: types_662.ActorUniqueID.decode(mut r)! } }
-		1 { return MapItemTrackedBlockEntity{ block_position: NetworkBlockPosition.decode(mut r)! } }
+		0 { return MapItemTrackedEntity{
+				actor_unique_id: types_662.ActorUniqueID.decode(mut r)!
+			} }
+		1 { return MapItemTrackedBlockEntity{
+				block_position: NetworkBlockPosition.decode(mut r)!
+			} }
 		2 { return MapItemTrackedOther{} }
 		else { return error('invalid MapItemTrackedActorType ${d}') }
 	}

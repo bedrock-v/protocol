@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v898.types
+import protocol.serializer
+import protocol.version.v898.types
 
 pub struct CommandRequestPacket {
 pub mut:

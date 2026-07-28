@@ -1,9 +1,9 @@
 module types
 
-import serializer
-import version.v407.types as types_407
-import version.v431.types as types_431
-import version.v554.types as types_554
+import protocol.serializer
+import protocol.version.v407.types as types_407
+import protocol.version.v431.types as types_431
+import protocol.version.v554.types as types_554
 
 pub struct TakeAction {
 pub mut:

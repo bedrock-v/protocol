@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v100.types
+import protocol.serializer
+import protocol.version.v100.types
 
 pub struct ContainerSetContentPacket {
 pub mut:

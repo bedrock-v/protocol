@@ -1,27 +1,27 @@
 module v2168
 
 import protocol
-import version
-import version.v2168.packets
-import version.v662.packets as packets_662
-import version.v671.packets as packets_671
-import version.v685.packets as packets_685
-import version.v686.packets as packets_686
-import version.v712.packets as packets_712
-import version.v729.packets as packets_729
-import version.v766.packets as packets_766
-import version.v776.packets as packets_776
-import version.v786.packets as packets_786
-import version.v800.packets as packets_800
-import version.v818.packets as packets_818
-import version.v827.packets as packets_827
-import version.v844.packets as packets_844
-import version.v859.packets as packets_859
-import version.v898.packets as packets_898
-import version.v924.packets as packets_924
-import version.v944.packets as packets_944
-import version.v975.packets as packets_975
-import version.v1001.packets as packets_1001
+import protocol.version
+import protocol.version.v2168.packets
+import protocol.version.v662.packets as packets_662
+import protocol.version.v671.packets as packets_671
+import protocol.version.v685.packets as packets_685
+import protocol.version.v686.packets as packets_686
+import protocol.version.v712.packets as packets_712
+import protocol.version.v729.packets as packets_729
+import protocol.version.v766.packets as packets_766
+import protocol.version.v776.packets as packets_776
+import protocol.version.v786.packets as packets_786
+import protocol.version.v800.packets as packets_800
+import protocol.version.v818.packets as packets_818
+import protocol.version.v827.packets as packets_827
+import protocol.version.v844.packets as packets_844
+import protocol.version.v859.packets as packets_859
+import protocol.version.v898.packets as packets_898
+import protocol.version.v924.packets as packets_924
+import protocol.version.v944.packets as packets_944
+import protocol.version.v975.packets as packets_975
+import protocol.version.v1001.packets as packets_1001
 
 pub const proto_version = version.ProtoVersion.v2168
 

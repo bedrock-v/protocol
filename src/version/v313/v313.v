@@ -1,9 +1,9 @@
 module v313
 
 import protocol
-import version
-import version.v313.packets
-import version.v291.packets as packets_291
+import protocol.version
+import protocol.version.v313.packets
+import protocol.version.v291.packets as packets_291
 
 pub const proto_version = version.ProtoVersion.v313
 

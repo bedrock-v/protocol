@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.enums
+import protocol.serializer
+import protocol.version.v662.enums
 
 pub struct TextPacket {
 pub mut:
@@ -12,11 +12,17 @@ pub mut:
 	filtered_message string
 }
 
-pub fn (p &TextPacket) pid() u16 { return 9 }
+pub fn (p &TextPacket) pid() u16 {
+	return 9
+}
 
-pub fn (p &TextPacket) name() string { return 'TextPacket' }
+pub fn (p &TextPacket) name() string {
+	return 'TextPacket'
+}
 
-pub fn (p &TextPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &TextPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &TextPacket) encode_payload(mut w serializer.Writer) {
 	w.u8(p.message_type.id())

@@ -1,6 +1,6 @@
 module enums
 
-import serializer
+import protocol.serializer
 
 pub struct TextRaw {
 pub mut:
@@ -116,7 +116,9 @@ pub fn (t TextPacketType) id() u8 {
 
 pub fn (t TextPacketType) encode_payload(mut w serializer.Writer) {
 	match t {
-		TextRaw { w.write_string(t.message) }
+		TextRaw {
+			w.write_string(t.message)
+		}
 		TextChat {
 			w.write_string(t.player_name)
 			w.write_string(t.message)
@@ -133,8 +135,12 @@ pub fn (t TextPacketType) encode_payload(mut w serializer.Writer) {
 			w.write_string(t.message)
 			write_string_list(mut w, t.parameter_list)
 		}
-		TextTip { w.write_string(t.message) }
-		TextSystemMessage { w.write_string(t.message) }
+		TextTip {
+			w.write_string(t.message)
+		}
+		TextSystemMessage {
+			w.write_string(t.message)
+		}
 		TextWhisper {
 			w.write_string(t.player_name)
 			w.write_string(t.message)
@@ -143,9 +149,15 @@ pub fn (t TextPacketType) encode_payload(mut w serializer.Writer) {
 			w.write_string(t.player_name)
 			w.write_string(t.message)
 		}
-		TextObjectWhisper { w.write_string(t.message) }
-		TextObject { w.write_string(t.message) }
-		TextObjectAnnouncement { w.write_string(t.message) }
+		TextObjectWhisper {
+			w.write_string(t.message)
+		}
+		TextObject {
+			w.write_string(t.message)
+		}
+		TextObjectAnnouncement {
+			w.write_string(t.message)
+		}
 	}
 }
 
@@ -161,18 +173,48 @@ pub fn TextPacketType.decode(mut r serializer.Reader) !TextPacketType {
 
 pub fn TextPacketType.decode_payload(d u8, mut r serializer.Reader) !TextPacketType {
 	match d {
-		0 { return TextRaw{ message: r.read_string()! } }
-		1 { return TextChat{ player_name: r.read_string()!, message: r.read_string()! } }
-		2 { return TextTranslate{ message: r.read_string()!, parameter_list: read_string_list(mut r)! } }
-		3 { return TextPopup{ message: r.read_string()!, parameter_list: read_string_list(mut r)! } }
-		4 { return TextJukeboxPopup{ message: r.read_string()!, parameter_list: read_string_list(mut r)! } }
-		5 { return TextTip{ message: r.read_string()! } }
-		6 { return TextSystemMessage{ message: r.read_string()! } }
-		7 { return TextWhisper{ player_name: r.read_string()!, message: r.read_string()! } }
-		8 { return TextAnnouncement{ player_name: r.read_string()!, message: r.read_string()! } }
-		9 { return TextObjectWhisper{ message: r.read_string()! } }
-		10 { return TextObject{ message: r.read_string()! } }
-		11 { return TextObjectAnnouncement{ message: r.read_string()! } }
+		0 { return TextRaw{
+				message: r.read_string()!
+			} }
+		1 { return TextChat{
+				player_name: r.read_string()!
+				message:     r.read_string()!
+			} }
+		2 { return TextTranslate{
+				message:        r.read_string()!
+				parameter_list: read_string_list(mut r)!
+			} }
+		3 { return TextPopup{
+				message:        r.read_string()!
+				parameter_list: read_string_list(mut r)!
+			} }
+		4 { return TextJukeboxPopup{
+				message:        r.read_string()!
+				parameter_list: read_string_list(mut r)!
+			} }
+		5 { return TextTip{
+				message: r.read_string()!
+			} }
+		6 { return TextSystemMessage{
+				message: r.read_string()!
+			} }
+		7 { return TextWhisper{
+				player_name: r.read_string()!
+				message:     r.read_string()!
+			} }
+		8 { return TextAnnouncement{
+				player_name: r.read_string()!
+				message:     r.read_string()!
+			} }
+		9 { return TextObjectWhisper{
+				message: r.read_string()!
+			} }
+		10 { return TextObject{
+				message: r.read_string()!
+			} }
+		11 { return TextObjectAnnouncement{
+				message: r.read_string()!
+			} }
 		else { return error('invalid TextPacketType ${d}') }
 	}
 }

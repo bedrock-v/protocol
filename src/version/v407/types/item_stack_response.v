@@ -1,7 +1,7 @@
 module types
 
-import serializer
-import version.v407.enums
+import protocol.serializer
+import protocol.version.v407.enums
 
 pub struct ItemStackResponseSlot {
 pub mut:

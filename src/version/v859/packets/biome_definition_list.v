@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v859.types
+import protocol.serializer
+import protocol.version.v859.types
 
 pub struct BiomeEntry {
 pub mut:
@@ -27,11 +27,17 @@ pub mut:
 	strings []string
 }
 
-pub fn (p &BiomeDefinitionListPacket) pid() u16 { return 122 }
+pub fn (p &BiomeDefinitionListPacket) pid() u16 {
+	return 122
+}
 
-pub fn (p &BiomeDefinitionListPacket) name() string { return 'BiomeDefinitionListPacket' }
+pub fn (p &BiomeDefinitionListPacket) name() string {
+	return 'BiomeDefinitionListPacket'
+}
 
-pub fn (p &BiomeDefinitionListPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &BiomeDefinitionListPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &BiomeDefinitionListPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.biomes.len))

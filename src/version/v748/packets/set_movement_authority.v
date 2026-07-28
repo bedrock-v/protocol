@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v748.enums
+import protocol.serializer
+import protocol.version.v748.enums
 
 pub struct SetMovementAuthorityPacket {
 pub mut:

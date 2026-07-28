@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types as types_662
+import protocol.serializer
+import protocol.version.v662.types as types_662
 
 pub struct ScoreEntryRemove {
 pub mut:
@@ -115,7 +115,9 @@ pub fn ScorePacketEntry.decode(mut r serializer.Reader) !ScorePacketEntry {
 				fake_player_name: r.read_string()!
 			}
 		}
-		else { return error('invalid ScorePacketEntry ${d}') }
+		else {
+			return error('invalid ScorePacketEntry ${d}')
+		}
 	}
 }
 
@@ -124,11 +126,17 @@ pub mut:
 	score_info []ScorePacketEntry
 }
 
-pub fn (p &SetScorePacket) pid() u16 { return 108 }
+pub fn (p &SetScorePacket) pid() u16 {
+	return 108
+}
 
-pub fn (p &SetScorePacket) name() string { return 'SetScorePacket' }
+pub fn (p &SetScorePacket) name() string {
+	return 'SetScorePacket'
+}
 
-pub fn (p &SetScorePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &SetScorePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &SetScorePacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(u32(p.score_info.len))

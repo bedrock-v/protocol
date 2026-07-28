@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v662.types
+import protocol.serializer
+import protocol.version.v662.types
 
 pub struct InventoryContentPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	container_name_dynamic_id i32
 }
 
-pub fn (p &InventoryContentPacket) pid() u16 { return 49 }
+pub fn (p &InventoryContentPacket) pid() u16 {
+	return 49
+}
 
-pub fn (p &InventoryContentPacket) name() string { return 'InventoryContentPacket' }
+pub fn (p &InventoryContentPacket) name() string {
+	return 'InventoryContentPacket'
+}
 
-pub fn (p &InventoryContentPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &InventoryContentPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &InventoryContentPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(p.inventory_id)

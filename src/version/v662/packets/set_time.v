@@ -1,17 +1,23 @@
 module packets
 
-import serializer
+import protocol.serializer
 
 pub struct SetTimePacket {
 pub mut:
 	time i32
 }
 
-pub fn (p &SetTimePacket) pid() u16 { return 10 }
+pub fn (p &SetTimePacket) pid() u16 {
+	return 10
+}
 
-pub fn (p &SetTimePacket) name() string { return 'SetTimePacket' }
+pub fn (p &SetTimePacket) name() string {
+	return 'SetTimePacket'
+}
 
-pub fn (p &SetTimePacket) can_be_sent_before_login() bool { return false }
+pub fn (p &SetTimePacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &SetTimePacket) encode_payload(mut w serializer.Writer) {
 	w.write_varint32(p.time)

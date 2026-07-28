@@ -1,6 +1,6 @@
 module types
 
-import serializer
+import protocol.serializer
 
 pub struct CraftingEntryShapeless {
 pub mut:
@@ -123,8 +123,16 @@ pub fn (t CraftingDataEntryType) encode(mut w serializer.Writer) {
 pub fn CraftingDataEntryType.decode(mut r serializer.Reader) !CraftingDataEntryType {
 	d := r.read_varint32()!
 	match d {
-		0 { return CraftingEntryShapeless{ recipe: ShapelessRecipe.decode(mut r)! } }
-		1 { return CraftingEntryShaped{ recipe: ShapedRecipe.decode(mut r)! } }
+		0 {
+			return CraftingEntryShapeless{
+				recipe: ShapelessRecipe.decode(mut r)!
+			}
+		}
+		1 {
+			return CraftingEntryShaped{
+				recipe: ShapedRecipe.decode(mut r)!
+			}
+		}
 		2 {
 			return CraftingEntryFurnace{
 				item_data:   r.read_varint32()!
@@ -146,11 +154,33 @@ pub fn CraftingDataEntryType.decode(mut r serializer.Reader) !CraftingDataEntryT
 				net_id:       r.read_varuint32()!
 			}
 		}
-		5 { return CraftingEntryShulkerBox{ recipe: ShulkerBoxRecipe.decode(mut r)! } }
-		6 { return CraftingEntryShapelessChemistry{ recipe: ShapelessRecipe.decode(mut r)! } }
-		7 { return CraftingEntryShapedChemistry{ recipe: ShapedRecipe.decode(mut r)! } }
-		8 { return CraftingEntrySmithingTransform{ recipe: SmithingTransformRecipe.decode(mut r)! } }
-		9 { return CraftingEntrySmithingTrim{ recipe: SmithingTrimRecipe.decode(mut r)! } }
-		else { return error('invalid CraftingDataEntryType ${d}') }
+		5 {
+			return CraftingEntryShulkerBox{
+				recipe: ShulkerBoxRecipe.decode(mut r)!
+			}
+		}
+		6 {
+			return CraftingEntryShapelessChemistry{
+				recipe: ShapelessRecipe.decode(mut r)!
+			}
+		}
+		7 {
+			return CraftingEntryShapedChemistry{
+				recipe: ShapedRecipe.decode(mut r)!
+			}
+		}
+		8 {
+			return CraftingEntrySmithingTransform{
+				recipe: SmithingTransformRecipe.decode(mut r)!
+			}
+		}
+		9 {
+			return CraftingEntrySmithingTrim{
+				recipe: SmithingTrimRecipe.decode(mut r)!
+			}
+		}
+		else {
+			return error('invalid CraftingDataEntryType ${d}')
+		}
 	}
 }

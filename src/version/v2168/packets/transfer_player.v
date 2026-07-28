@@ -1,7 +1,7 @@
 module packets
 
-import serializer
-import version.v2168.types
+import protocol.serializer
+import protocol.version.v2168.types
 
 pub struct TransferPlayerPacket {
 pub mut:
@@ -10,11 +10,17 @@ pub mut:
 	gatherings_config ?types.GatheringsConfig
 }
 
-pub fn (p &TransferPlayerPacket) pid() u16 { return 85 }
+pub fn (p &TransferPlayerPacket) pid() u16 {
+	return 85
+}
 
-pub fn (p &TransferPlayerPacket) name() string { return 'TransferPlayerPacket' }
+pub fn (p &TransferPlayerPacket) name() string {
+	return 'TransferPlayerPacket'
+}
 
-pub fn (p &TransferPlayerPacket) can_be_sent_before_login() bool { return false }
+pub fn (p &TransferPlayerPacket) can_be_sent_before_login() bool {
+	return false
+}
 
 pub fn (p &TransferPlayerPacket) encode_payload(mut w serializer.Writer) {
 	w.write_string(p.server_address)
