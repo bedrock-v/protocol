@@ -34,10 +34,7 @@ pub mut:
 	network_permissions                   types_662.NetworkPermissions
 	is_logging_chat                       bool
 	server_join_information               ?ServerJoinInformation
-	server_id                             string
-	world_id                              string
-	scenario_id                           string
-	owner_id                              string
+	server_telemetry_data                 ServerTelemetryData
 }
 
 pub fn (p &StartGamePacket) pid() u16 {
@@ -89,10 +86,7 @@ pub fn (p &StartGamePacket) encode_payload(mut w serializer.Writer) {
 	} else {
 		w.bool(false)
 	}
-	w.write_string(p.server_id)
-	w.write_string(p.world_id)
-	w.write_string(p.scenario_id)
-	w.write_string(p.owner_id)
+	p.server_telemetry_data.encode(mut w)
 }
 
 pub fn (mut p StartGamePacket) decode_payload(mut r serializer.Reader) ! {
@@ -131,10 +125,7 @@ pub fn (mut p StartGamePacket) decode_payload(mut r serializer.Reader) ! {
 	} else {
 		p.server_join_information = none
 	}
-	p.server_id = r.read_string()!
-	p.world_id = r.read_string()!
-	p.scenario_id = r.read_string()!
-	p.owner_id = r.read_string()!
+	p.server_telemetry_data = ServerTelemetryData.decode(mut r)!
 }
 
 pub struct BlockProperty {
@@ -152,6 +143,30 @@ pub fn BlockProperty.decode(mut r serializer.Reader) !BlockProperty {
 	return BlockProperty{
 		block_name:       r.read_string()!
 		block_definition: r.read_nbt_compound_root()!
+	}
+}
+
+pub struct ServerTelemetryData {
+pub mut:
+	server_id   string
+	scenario_id string
+	world_id    string
+	owner_id    string
+}
+
+pub fn (t ServerTelemetryData) encode(mut w serializer.Writer) {
+	w.write_string(t.server_id)
+	w.write_string(t.scenario_id)
+	w.write_string(t.world_id)
+	w.write_string(t.owner_id)
+}
+
+pub fn ServerTelemetryData.decode(mut r serializer.Reader) !ServerTelemetryData {
+	return ServerTelemetryData{
+		server_id:   r.read_string()!
+		scenario_id: r.read_string()!
+		world_id:    r.read_string()!
+		owner_id:    r.read_string()!
 	}
 }
 

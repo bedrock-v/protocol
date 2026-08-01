@@ -25,7 +25,7 @@ pub fn (p &NetworkChunkPublisherUpdatePacket) can_be_sent_before_login() bool {
 pub fn (p &NetworkChunkPublisherUpdatePacket) encode_payload(mut w serializer.Writer) {
 	p.new_view_position.encode(mut w)
 	w.write_varuint32(p.new_view_radius)
-	w.write_varuint32(u32(p.server_built_chunks.len))
+	w.le_u32(u32(p.server_built_chunks.len))
 	for e in p.server_built_chunks {
 		e.encode(mut w)
 	}
@@ -35,7 +35,7 @@ pub fn (mut p NetworkChunkPublisherUpdatePacket) decode_payload(mut r serializer
 	p.new_view_position = types.BlockPos.decode(mut r)!
 	p.new_view_radius = r.read_varuint32()!
 	{
-		count := int(r.read_varuint32()!)
+		count := int(r.le_u32()!)
 		p.server_built_chunks = []types.ChunkPos{cap: count}
 		for _ in 0 .. count {
 			p.server_built_chunks << types.ChunkPos.decode(mut r)!
