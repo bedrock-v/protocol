@@ -6,14 +6,14 @@ import protocol.version.v944.types
 
 pub struct RequestsEntry {
 pub mut:
-	client_request_id        u32
+	client_request_id        i32
 	actions                  []types.ItemStackRequestActionType
 	strings_to_filter        []string
 	strings_to_filter_origin enums.TextProcessingEventOrigin
 }
 
 pub fn (e RequestsEntry) encode(mut w serializer.Writer) {
-	w.write_varuint32(e.client_request_id)
+	w.write_varint32(e.client_request_id)
 	w.write_varuint32(u32(e.actions.len))
 	for a in e.actions {
 		a.encode(mut w)
@@ -27,7 +27,7 @@ pub fn (e RequestsEntry) encode(mut w serializer.Writer) {
 
 pub fn RequestsEntry.decode(mut r serializer.Reader) !RequestsEntry {
 	mut e := RequestsEntry{}
-	e.client_request_id = r.read_varuint32()!
+	e.client_request_id = r.read_varint32()!
 	act_count := int(r.read_varuint32()!)
 	e.actions = []types.ItemStackRequestActionType{cap: act_count}
 	for _ in 0 .. act_count {
