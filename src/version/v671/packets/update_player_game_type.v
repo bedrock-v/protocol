@@ -8,7 +8,7 @@ pub struct UpdatePlayerGameTypePacket {
 pub mut:
 	player_game_type enums.GameType
 	target_player    types.ActorUniqueID
-	tick u64
+	tick             u64
 }
 
 pub fn (p &UpdatePlayerGameTypePacket) pid() u16 {

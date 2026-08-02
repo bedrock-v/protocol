@@ -6,11 +6,11 @@ import protocol.version.v944.types
 
 pub struct UpdateBlockSyncedPacket {
 pub mut:
-	block_position   types.NetworkBlockPosition
-	block_runtime_id u32
-	flags            u32
-	later            u32
-	unique_actor_id  u64
+	block_position     types.NetworkBlockPosition
+	block_runtime_id   u32
+	flags              u32
+	later              u32
+	unique_actor_id    u64
 	actor_sync_message enums.ActorBlockSyncMessageID
 }
 

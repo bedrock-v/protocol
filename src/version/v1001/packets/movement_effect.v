@@ -8,8 +8,8 @@ pub struct MovementEffectPacket {
 pub mut:
 	entity_runtime_id types.ActorRuntimeID
 	effect_type       enums.MovementEffectType
-	duration i32
-	tick     u64
+	duration          i32
+	tick              u64
 }
 
 pub fn (p &MovementEffectPacket) pid() u16 {

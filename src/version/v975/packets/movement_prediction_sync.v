@@ -49,8 +49,8 @@ pub mut:
 	friction_modifier f32
 	bounciness        f32
 	air_drag_modifier f32
-	entity_unique_id i64
-	is_flying        bool
+	entity_unique_id  i64
+	is_flying         bool
 }
 
 pub fn (p &MovementPredictionSyncPacket) pid() u16 {

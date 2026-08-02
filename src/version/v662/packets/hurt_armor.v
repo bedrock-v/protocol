@@ -4,8 +4,8 @@ import protocol.serializer
 
 pub struct HurtArmorPacket {
 pub mut:
-	cause  i32
-	damage i32
+	cause       i32
+	damage      i32
 	armor_slots i64
 }
 
