@@ -4,18 +4,18 @@ import protocol.serializer
 
 pub struct PlayerArmorDamageEntry {
 pub mut:
-	slot   i8
+	slot   i32
 	damage i16
 }
 
 pub fn (t PlayerArmorDamageEntry) encode(mut w serializer.Writer) {
-	w.i8(t.slot)
+	w.write_varint32(t.slot)
 	w.le_i16(t.damage)
 }
 
 pub fn PlayerArmorDamageEntry.decode(mut r serializer.Reader) !PlayerArmorDamageEntry {
 	return PlayerArmorDamageEntry{
-		slot:   r.i8()!
+		slot:   r.read_varint32()!
 		damage: r.le_i16()!
 	}
 }

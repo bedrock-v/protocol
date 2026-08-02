@@ -7,9 +7,16 @@ pub mut:
 	value f64
 }
 
+pub struct ClientBoundDataStoreValueNone {}
+
 pub struct ClientBoundDataStoreValueBool {
 pub mut:
 	value bool
+}
+
+pub struct ClientBoundDataStoreValueInt64 {
+pub mut:
+	value i64
 }
 
 pub struct ClientBoundDataStoreValueString {
@@ -17,34 +24,74 @@ pub mut:
 	value string
 }
 
+pub struct ClientBoundDataStoreValueList {
+pub mut:
+	values []ClientBoundDataStoreValue
+}
+
+pub struct ClientBoundDataStoreMapEntry {
+pub mut:
+	key   string
+	value ClientBoundDataStoreValue
+}
+
+pub struct ClientBoundDataStoreValueMap {
+pub mut:
+	values []ClientBoundDataStoreMapEntry
+}
+
 pub type ClientBoundDataStoreValue = ClientBoundDataStoreValueBool
 	| ClientBoundDataStoreValueDouble
+	| ClientBoundDataStoreValueInt64
+	| ClientBoundDataStoreValueList
+	| ClientBoundDataStoreValueMap
+	| ClientBoundDataStoreValueNone
 	| ClientBoundDataStoreValueString
 
 pub fn (t ClientBoundDataStoreValue) encode(mut w serializer.Writer) {
 	match t {
-		ClientBoundDataStoreValueDouble {
-			w.write_varuint32(0)
-			w.le_f64(t.value)
+		ClientBoundDataStoreValueNone {
+			w.le_i32(0)
 		}
 		ClientBoundDataStoreValueBool {
-			w.write_varuint32(1)
+			w.le_i32(1)
 			w.bool(t.value)
 		}
+		ClientBoundDataStoreValueInt64 {
+			w.le_i32(2)
+			w.le_i64(t.value)
+		}
+		ClientBoundDataStoreValueDouble {
+			w.le_i32(3)
+			w.le_f64(t.value)
+		}
 		ClientBoundDataStoreValueString {
-			w.write_varuint32(2)
+			w.le_i32(4)
 			w.write_string(t.value)
+		}
+		ClientBoundDataStoreValueList {
+			w.le_i32(5)
+			w.write_varuint32(u32(t.values.len))
+			for v in t.values {
+				v.encode(mut w)
+			}
+		}
+		ClientBoundDataStoreValueMap {
+			w.le_i32(6)
+			w.write_varuint32(u32(t.values.len))
+			for e in t.values {
+				w.write_string(e.key)
+				e.value.encode(mut w)
+			}
 		}
 	}
 }
 
 pub fn ClientBoundDataStoreValue.decode(mut r serializer.Reader) !ClientBoundDataStoreValue {
-	d := r.read_varuint32()!
+	d := r.le_i32()!
 	match d {
 		0 {
-			return ClientBoundDataStoreValueDouble{
-				value: r.le_f64()!
-			}
+			return ClientBoundDataStoreValueNone{}
 		}
 		1 {
 			return ClientBoundDataStoreValueBool{
@@ -52,12 +99,105 @@ pub fn ClientBoundDataStoreValue.decode(mut r serializer.Reader) !ClientBoundDat
 			}
 		}
 		2 {
+			return ClientBoundDataStoreValueInt64{
+				value: r.le_i64()!
+			}
+		}
+		3 {
+			return ClientBoundDataStoreValueDouble{
+				value: r.le_f64()!
+			}
+		}
+		4 {
 			return ClientBoundDataStoreValueString{
 				value: r.read_string()!
 			}
 		}
+		5 {
+			count := int(r.read_varuint32()!)
+			mut values := []ClientBoundDataStoreValue{cap: count}
+			for _ in 0 .. count {
+				values << ClientBoundDataStoreValue.decode(mut r)!
+			}
+			return ClientBoundDataStoreValueList{
+				values: values
+			}
+		}
+		6 {
+			count := int(r.read_varuint32()!)
+			mut values := []ClientBoundDataStoreMapEntry{cap: count}
+			for _ in 0 .. count {
+				values << ClientBoundDataStoreMapEntry{
+					key:   r.read_string()!
+					value: ClientBoundDataStoreValue.decode(mut r)!
+				}
+			}
+			return ClientBoundDataStoreValueMap{
+				values: values
+			}
+		}
 		else {
 			return error('invalid ClientBoundDataStoreValue ${d}')
+		}
+	}
+}
+
+pub struct DataStoreControlDouble {
+pub mut:
+	value f64
+}
+
+pub struct DataStoreControlBool {
+pub mut:
+	value bool
+}
+
+pub struct DataStoreControlString {
+pub mut:
+	value string
+}
+
+pub type DataStoreControlValue = DataStoreControlBool
+	| DataStoreControlDouble
+	| DataStoreControlString
+
+pub fn (t DataStoreControlValue) encode(mut w serializer.Writer) {
+	match t {
+		DataStoreControlDouble {
+			w.write_varuint32(0)
+			w.le_f64(t.value)
+		}
+		DataStoreControlBool {
+			w.write_varuint32(1)
+			w.bool(t.value)
+		}
+		DataStoreControlString {
+			w.write_varuint32(2)
+			w.write_string(t.value)
+		}
+	}
+}
+
+pub fn DataStoreControlValue.decode(mut r serializer.Reader) !DataStoreControlValue {
+	d := r.read_varuint32()!
+	match d {
+		0 {
+			return DataStoreControlDouble{
+				value: r.le_f64()!
+			}
+		}
+		1 {
+			return DataStoreControlBool{
+				value: r.bool()!
+			}
+		}
+		2 {
+			return DataStoreControlString{
+				value: r.read_string()!
+			}
+		}
+		else {
+			return error('invalid DataStoreControlValue ${d}')
 		}
 	}
 }
@@ -67,7 +207,7 @@ pub mut:
 	data_store_name   string
 	property          string
 	path              string
-	data              ClientBoundDataStoreValue = ClientBoundDataStoreValueDouble{}
+	data              DataStoreControlValue = DataStoreControlDouble{}
 	update_count      u32
 	path_update_count u32
 }
@@ -120,7 +260,7 @@ pub fn ClientBoundDataStoreUpdate.decode(mut r serializer.Reader) !ClientBoundDa
 				data_store_name:   r.read_string()!
 				property:          r.read_string()!
 				path:              r.read_string()!
-				data:              ClientBoundDataStoreValue.decode(mut r)!
+				data:              DataStoreControlValue.decode(mut r)!
 				update_count:      r.le_u32()!
 				path_update_count: r.le_u32()!
 			}

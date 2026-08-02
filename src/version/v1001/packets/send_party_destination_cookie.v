@@ -41,18 +41,18 @@ pub enum PartyDestinationCookieIntent {
 
 pub fn (e PartyDestinationCookieIntent) encode(mut w serializer.Writer) {
 	w.write_string(match e {
-		.notify { 'notify' }
-		.opt_in { 'optin' }
-		.opt_out { 'optout' }
+		.notify { 'Notify' }
+		.opt_in { 'OptIn' }
+		.opt_out { 'OptOut' }
 	})
 }
 
 pub fn PartyDestinationCookieIntent.decode(mut r serializer.Reader) !PartyDestinationCookieIntent {
 	s := r.read_string()!
 	return match s {
-		'notify' { PartyDestinationCookieIntent.notify }
-		'optin' { PartyDestinationCookieIntent.opt_in }
-		'optout' { PartyDestinationCookieIntent.opt_out }
+		'Notify' { PartyDestinationCookieIntent.notify }
+		'OptIn' { PartyDestinationCookieIntent.opt_in }
+		'OptOut' { PartyDestinationCookieIntent.opt_out }
 		else { error('invalid PartyDestinationCookieIntent ${s}') }
 	}
 }

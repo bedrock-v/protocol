@@ -204,7 +204,7 @@ pub mut:
 
 pub struct GameRuleLegacyInt {
 pub mut:
-	value i32
+	value u32
 }
 
 pub struct GameRuleLegacyFloat {
@@ -222,7 +222,7 @@ pub fn (t GameRuleLegacyType) encode(mut w serializer.Writer) {
 		}
 		GameRuleLegacyInt {
 			w.write_varuint32(2)
-			w.write_varint32(t.value)
+			w.write_varuint32(t.value)
 		}
 		GameRuleLegacyFloat {
 			w.write_varuint32(3)
@@ -241,7 +241,7 @@ pub fn GameRuleLegacyType.decode(mut r serializer.Reader) !GameRuleLegacyType {
 		}
 		2 {
 			return GameRuleLegacyInt{
-				value: r.read_varint32()!
+				value: r.read_varuint32()!
 			}
 		}
 		3 {

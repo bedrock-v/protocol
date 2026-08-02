@@ -264,6 +264,7 @@ pub mut:
 	clear         ?bool
 	fade          ?FadeInstruction
 	target        ?TargetInstruction
+	remove_target ?bool
 	field_of_view ?FieldOfViewInstruction
 	spline        ?CameraSplineInstruction
 	attach        ?AttachInstruction
@@ -292,6 +293,12 @@ pub fn (t CameraInstruction) encode(mut w serializer.Writer) {
 	if v := t.target {
 		w.bool(true)
 		v.encode(mut w)
+	} else {
+		w.bool(false)
+	}
+	if v := t.remove_target {
+		w.bool(true)
+		w.bool(v)
 	} else {
 		w.bool(false)
 	}
@@ -334,6 +341,9 @@ pub fn CameraInstruction.decode(mut r serializer.Reader) !CameraInstruction {
 	}
 	if r.bool()! {
 		t.target = TargetInstruction.decode(mut r)!
+	}
+	if r.bool()! {
+		t.remove_target = r.bool()!
 	}
 	if r.bool()! {
 		t.field_of_view = FieldOfViewInstruction.decode(mut r)!

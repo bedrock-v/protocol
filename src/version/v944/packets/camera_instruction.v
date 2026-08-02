@@ -6,7 +6,6 @@ import protocol.version.v944.types
 pub struct CameraInstructionPacket {
 pub mut:
 	camera_instruction types.CameraInstruction
-	remove_target      ?bool
 }
 
 pub fn (p &CameraInstructionPacket) pid() u16 {
@@ -23,17 +22,8 @@ pub fn (p &CameraInstructionPacket) can_be_sent_before_login() bool {
 
 pub fn (p &CameraInstructionPacket) encode_payload(mut w serializer.Writer) {
 	p.camera_instruction.encode(mut w)
-	if v := p.remove_target {
-		w.bool(true)
-		w.bool(v)
-	} else {
-		w.bool(false)
-	}
 }
 
 pub fn (mut p CameraInstructionPacket) decode_payload(mut r serializer.Reader) ! {
 	p.camera_instruction = types.CameraInstruction.decode(mut r)!
-	if r.bool()! {
-		p.remove_target = r.bool()!
-	}
 }

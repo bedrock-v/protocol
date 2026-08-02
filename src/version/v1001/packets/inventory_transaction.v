@@ -34,9 +34,9 @@ pub fn LegacySetItemSlotsEntry.decode(mut r serializer.Reader) !LegacySetItemSlo
 pub struct InventoryTransactionPacket {
 pub mut:
 	raw_id                i32
-	legacy_set_item_slots ?[]LegacySetItemSlotsEntry
-	transaction_type      ?enums.ComplexInventoryTransactionType
-	transaction           ?types.InventoryTransaction
+	legacy_set_item_slots []LegacySetItemSlotsEntry
+	transaction_type      enums.ComplexInventoryTransactionType
+	transaction           types.InventoryTransaction
 }
 
 pub fn (p &InventoryTransactionPacket) pid() u16 {
@@ -53,27 +53,18 @@ pub fn (p &InventoryTransactionPacket) can_be_sent_before_login() bool {
 
 pub fn (p &InventoryTransactionPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varint32(p.raw_id)
-	if v := p.legacy_set_item_slots {
-		w.bool(true)
-		w.write_varuint32(u32(v.len))
-		for e in v {
+	has_legacy := p.raw_id < -1 && (p.raw_id & 1) == 0
+	w.bool(has_legacy)
+	if has_legacy {
+		w.write_varuint32(u32(p.legacy_set_item_slots.len))
+		for e in p.legacy_set_item_slots {
 			e.encode(mut w)
 		}
-	} else {
-		w.bool(false)
 	}
-	if v := p.transaction_type {
-		w.bool(true)
-		v.encode(mut w)
-	} else {
-		w.bool(false)
-	}
-	if v := p.transaction {
-		w.bool(true)
-		v.encode(mut w)
-	} else {
-		w.bool(false)
-	}
+	w.bool(true)
+	p.transaction_type.encode(mut w)
+	w.bool(true)
+	p.transaction.encode(mut w)
 }
 
 pub fn (mut p InventoryTransactionPacket) decode_payload(mut r serializer.Reader) ! {
@@ -85,17 +76,11 @@ pub fn (mut p InventoryTransactionPacket) decode_payload(mut r serializer.Reader
 			items << LegacySetItemSlotsEntry.decode(mut r)!
 		}
 		p.legacy_set_item_slots = items
-	} else {
-		p.legacy_set_item_slots = none
 	}
 	if r.bool()! {
 		p.transaction_type = enums.ComplexInventoryTransactionType.decode(mut r)!
-	} else {
-		p.transaction_type = none
 	}
 	if r.bool()! {
-		p.transaction = types.InventoryTransaction.decode(mut r)!
-	} else {
-		p.transaction = none
+		p.transaction = types.InventoryTransaction.decode(u32(p.transaction_type), mut r)!
 	}
 }

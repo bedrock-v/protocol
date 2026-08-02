@@ -51,7 +51,7 @@ pub fn RotationOption.decode(mut r serializer.Reader) !RotationOption {
 pub struct CameraSplineInstruction {
 pub mut:
 	total_time          f32
-	spline_type         enums_859.CameraSplineType
+	spline_type         ?enums_859.CameraSplineType
 	curve               [][3]f32
 	progress_key_frames []ProgressKeyFrame
 	rotation_option     []RotationOption
@@ -61,7 +61,12 @@ pub mut:
 
 pub fn (t CameraSplineInstruction) encode(mut w serializer.Writer) {
 	w.le_f32(t.total_time)
-	t.spline_type.encode(mut w)
+	if v := t.spline_type {
+		w.bool(true)
+		v.encode(mut w)
+	} else {
+		w.bool(false)
+	}
 	w.write_varuint32(u32(t.curve.len))
 	for e in t.curve {
 		w.le_f32(e[0])
@@ -93,7 +98,9 @@ pub fn (t CameraSplineInstruction) encode(mut w serializer.Writer) {
 pub fn CameraSplineInstruction.decode(mut r serializer.Reader) !CameraSplineInstruction {
 	mut t := CameraSplineInstruction{}
 	t.total_time = r.le_f32()!
-	t.spline_type = enums_859.CameraSplineType.decode(mut r)!
+	if r.bool()! {
+		t.spline_type = enums_859.CameraSplineType.decode(mut r)!
+	}
 	curve_count := int(r.read_varuint32()!)
 	t.curve = [][3]f32{cap: curve_count}
 	for _ in 0 .. curve_count {

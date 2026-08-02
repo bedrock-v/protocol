@@ -38,11 +38,11 @@ pub enum PredictedResult as i32 {
 }
 
 pub fn (e PredictedResult) encode(mut w serializer.Writer) {
-	w.write_varint32(i32(e))
+	w.u8(u8(e))
 }
 
 pub fn PredictedResult.decode(mut r serializer.Reader) !PredictedResult {
-	return unsafe { PredictedResult(r.read_varint32()!) }
+	return unsafe { PredictedResult(r.u8()!) }
 }
 
 pub enum TriggerType as i32 {
@@ -52,18 +52,18 @@ pub enum TriggerType as i32 {
 }
 
 pub fn (e TriggerType) encode(mut w serializer.Writer) {
-	w.write_varint32(i32(e))
+	w.write_varuint32(u32(e))
 }
 
 pub fn TriggerType.decode(mut r serializer.Reader) !TriggerType {
-	return unsafe { TriggerType(r.read_varint32()!) }
+	return unsafe { TriggerType(r.read_varuint32()!) }
 }
 
 pub struct PackedItemUseLegacyInventoryTransaction {
 pub mut:
 	id               i32
 	container_slots  []ContainerSlotEntry
-	action           InventoryTransaction
+	action           LegacyInventoryTransaction
 	action_type      enums.ItemUseInventoryTransactionType
 	trigger_type     TriggerType
 	position         types_944.NetworkBlockPosition
@@ -79,7 +79,7 @@ pub mut:
 
 pub fn (t PackedItemUseLegacyInventoryTransaction) encode(mut w serializer.Writer) {
 	w.write_varint32(t.id)
-	if t.id != 0 {
+	if t.id < -1 && (t.id & 1) == 0 {
 		w.write_varuint32(u32(t.container_slots.len))
 		for e in t.container_slots {
 			e.encode(mut w)
@@ -106,14 +106,14 @@ pub fn (t PackedItemUseLegacyInventoryTransaction) encode(mut w serializer.Write
 pub fn PackedItemUseLegacyInventoryTransaction.decode(mut r serializer.Reader) !PackedItemUseLegacyInventoryTransaction {
 	mut t := PackedItemUseLegacyInventoryTransaction{}
 	t.id = r.read_varint32()!
-	if t.id != 0 {
+	if t.id < -1 && (t.id & 1) == 0 {
 		count := int(r.read_varuint32()!)
 		t.container_slots = []ContainerSlotEntry{cap: count}
 		for _ in 0 .. count {
 			t.container_slots << ContainerSlotEntry.decode(mut r)!
 		}
 	}
-	t.action = InventoryTransaction.decode(mut r)!
+	t.action = LegacyInventoryTransaction.decode(mut r)!
 	t.action_type = enums.ItemUseInventoryTransactionType.decode(mut r)!
 	t.trigger_type = TriggerType.decode(mut r)!
 	t.position = types_944.NetworkBlockPosition.decode(mut r)!

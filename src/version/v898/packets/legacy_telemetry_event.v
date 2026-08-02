@@ -256,8 +256,6 @@ pub fn (t LegacyTelemetryEventType) id() i32 {
 	}
 }
 
-// deprecated event types have no payload type on the wire in the rust
-// implementation, they fail to serialize there - here they map to 0
 pub fn (t LegacyTelemetryEventType) payload_type() u32 {
 	return match t {
 		LegacyEventAchievement { u32(0) }
@@ -607,14 +605,14 @@ pub fn (p &LegacyTelemetryEventPacket) encode_payload(mut w serializer.Writer) {
 	p.target_actor_id.encode(mut w)
 	w.write_varint32(p.event_type.id())
 	w.bool(p.use_player_id)
-	p.event_type.encode_payload(mut w)
 	w.write_varuint32(p.event_type.payload_type())
+	p.event_type.encode_payload(mut w)
 }
 
 pub fn (mut p LegacyTelemetryEventPacket) decode_payload(mut r serializer.Reader) ! {
 	p.target_actor_id = types.ActorUniqueID.decode(mut r)!
 	type_id := r.read_varint32()!
 	p.use_player_id = r.bool()!
-	p.event_type = LegacyTelemetryEventType.decode_payload(type_id, mut r)!
 	r.read_varuint32()!
+	p.event_type = LegacyTelemetryEventType.decode_payload(type_id, mut r)!
 }

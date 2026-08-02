@@ -81,6 +81,10 @@ pub fn (t NetworkItemStackDescriptorV2) encode(mut w serializer.Writer) {
 		w.bool(false)
 	}
 	w.write_varuint32(t.block_runtime_id)
+	if t.id == 0 {
+		w.write_varuint32(0)
+		return
+	}
 	w.write_item_extra_data(t.user_data_buffer)
 }
 
@@ -93,6 +97,10 @@ pub fn NetworkItemStackDescriptorV2.decode(mut r serializer.Reader) !NetworkItem
 		t.net_id = ItemStackNetIdVariant.decode(mut r)!
 	}
 	t.block_runtime_id = r.read_varuint32()!
+	if t.id == 0 {
+		r.read_varuint32()!
+		return t
+	}
 	t.user_data_buffer = r.read_item_extra_data()!
 	return t
 }

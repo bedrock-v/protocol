@@ -180,40 +180,16 @@ pub fn (mut p PlayerAuthInputPacket) decode_payload(mut r serializer.Reader) ! {
 	p.raw_move_vector = [r.le_f32()!, r.le_f32()!]!
 }
 
-pub struct ActionsEntry {
-pub mut:
-	action_type types_944.ItemStackRequestActionType
-	amount      i8
-	source      types_944.ItemStackRequestSlotInfo
-	destination types_944.ItemStackRequestSlotInfo
-}
-
-pub fn (t ActionsEntry) encode(mut w serializer.Writer) {
-	t.action_type.encode(mut w)
-	w.i8(t.amount)
-	t.source.encode(mut w)
-	t.destination.encode(mut w)
-}
-
-pub fn ActionsEntry.decode(mut r serializer.Reader) !ActionsEntry {
-	return ActionsEntry{
-		action_type: types_944.ItemStackRequestActionType.decode(mut r)!
-		amount:      r.i8()!
-		source:      types_944.ItemStackRequestSlotInfo.decode(mut r)!
-		destination: types_944.ItemStackRequestSlotInfo.decode(mut r)!
-	}
-}
-
 pub struct PerformItemStackRequestData {
 pub mut:
-	client_request_id        u32
-	actions                  []ActionsEntry
+	client_request_id        i32
+	actions                  []types_944.ItemStackRequestActionType
 	strings_to_filter        []string
 	strings_to_filter_origin enums_662.TextProcessingEventOrigin
 }
 
 pub fn (t PerformItemStackRequestData) encode(mut w serializer.Writer) {
-	w.write_varuint32(t.client_request_id)
+	w.write_varint32(t.client_request_id)
 	w.write_varuint32(u32(t.actions.len))
 	for e in t.actions {
 		e.encode(mut w)
@@ -227,12 +203,12 @@ pub fn (t PerformItemStackRequestData) encode(mut w serializer.Writer) {
 
 pub fn PerformItemStackRequestData.decode(mut r serializer.Reader) !PerformItemStackRequestData {
 	mut t := PerformItemStackRequestData{}
-	t.client_request_id = r.read_varuint32()!
+	t.client_request_id = r.read_varint32()!
 	{
 		count := int(r.read_varuint32()!)
-		t.actions = []ActionsEntry{cap: count}
+		t.actions = []types_944.ItemStackRequestActionType{cap: count}
 		for _ in 0 .. count {
-			t.actions << ActionsEntry.decode(mut r)!
+			t.actions << types_944.ItemStackRequestActionType.decode(mut r)!
 		}
 	}
 	{

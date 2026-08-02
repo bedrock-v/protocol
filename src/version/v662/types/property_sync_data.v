@@ -5,36 +5,36 @@ import protocol.serializer
 pub struct IntEntry {
 pub mut:
 	property_index u32
-	data           f32
+	data           i32
 }
 
 pub fn (t IntEntry) encode(mut w serializer.Writer) {
 	w.write_varuint32(t.property_index)
-	w.le_f32(t.data)
+	w.write_varint32(t.data)
 }
 
 pub fn IntEntry.decode(mut r serializer.Reader) !IntEntry {
 	return IntEntry{
 		property_index: r.read_varuint32()!
-		data:           r.le_f32()!
+		data:           r.read_varint32()!
 	}
 }
 
 pub struct FloatEntry {
 pub mut:
 	property_index u32
-	data           i32
+	data           f32
 }
 
 pub fn (t FloatEntry) encode(mut w serializer.Writer) {
 	w.write_varuint32(t.property_index)
-	w.write_varint32(t.data)
+	w.le_f32(t.data)
 }
 
 pub fn FloatEntry.decode(mut r serializer.Reader) !FloatEntry {
 	return FloatEntry{
 		property_index: r.read_varuint32()!
-		data:           r.read_varint32()!
+		data:           r.le_f32()!
 	}
 }
 
