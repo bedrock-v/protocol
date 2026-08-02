@@ -4,11 +4,12 @@ import protocol.serializer
 import protocol.version.v662.enums
 
 pub enum SerializedAbilitiesLayer as u16 {
-	custom_cache = 0
-	base         = 1
-	spectator    = 2
-	commands     = 3
-	editor       = 4
+	custom_cache   = 0
+	base           = 1
+	spectator      = 2
+	commands       = 3
+	editor         = 4
+	loading_screen = 5
 }
 
 pub fn (e SerializedAbilitiesLayer) encode(mut w serializer.Writer) {
@@ -61,7 +62,7 @@ pub fn (t SerializedAbilitiesData) encode(mut w serializer.Writer) {
 	w.le_i64(t.target_player_raw_id)
 	w.u8(t.player_permissions)
 	t.command_permissions.encode(mut w)
-	w.write_varuint32(u32(t.layers.len))
+	w.u8(u8(t.layers.len))
 	for e in t.layers {
 		e.encode(mut w)
 	}
@@ -71,7 +72,7 @@ pub fn SerializedAbilitiesData.decode(mut r serializer.Reader) !SerializedAbilit
 	raw := r.le_i64()!
 	pp := r.u8()!
 	cp := enums.CommandPermissionLevel.decode(mut r)!
-	count := int(r.read_varuint32()!)
+	count := int(r.u8()!)
 	mut items := []SerializedLayer{cap: count}
 	for _ in 0 .. count {
 		items << SerializedLayer.decode(mut r)!

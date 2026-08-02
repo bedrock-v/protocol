@@ -44,15 +44,25 @@ pub fn (t EntityOverrideUpdateType) encode(mut w serializer.Writer) {
 pub fn EntityOverrideUpdateType.decode(mut r serializer.Reader) !EntityOverrideUpdateType {
 	d := r.i8()!
 	match d {
-		0 { return EntityOverrideClear{} }
-		1 { return EntityOverrideRemove{} }
-		2 { return EntityOverrideSetInt{
+		0 {
+			return EntityOverrideClear{}
+		}
+		1 {
+			return EntityOverrideRemove{}
+		}
+		2 {
+			return EntityOverrideSetInt{
 				value: r.le_i32()!
-			} }
-		3 { return EntityOverrideSetFloat{
+			}
+		}
+		3 {
+			return EntityOverrideSetFloat{
 				value: r.le_f32()!
-			} }
-		else { return error('invalid EntityOverrideUpdateType ${d}') }
+			}
+		}
+		else {
+			return error('invalid EntityOverrideUpdateType ${d}')
+		}
 	}
 }
 

@@ -82,13 +82,19 @@ pub fn PlayerListEntry.decode(mut r serializer.Reader) !PlayerListEntry {
 	d := r.read_varuint32()!
 	r.u8()!
 	match d {
-		0 { return PlayerListRemove{
+		0 {
+			return PlayerListRemove{
 				uuid: types_662.Uuid.decode(mut r)!
-			} }
-		1 { return PlayerListAdd{
+			}
+		}
+		1 {
+			return PlayerListAdd{
 				entry: AddPlayerListEntry.decode(mut r)!
-			} }
-		else { return error('invalid PlayerListEntry ${d}') }
+			}
+		}
+		else {
+			return error('invalid PlayerListEntry ${d}')
+		}
 	}
 }
 

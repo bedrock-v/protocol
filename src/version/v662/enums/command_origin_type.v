@@ -88,27 +88,61 @@ pub fn (t CommandOriginType) encode_payload(mut w serializer.Writer) {
 
 pub fn CommandOriginType.decode_payload(id u32, mut r serializer.Reader) !CommandOriginType {
 	match id {
-		0 { return CommandOriginPlayer{} }
-		1 { return CommandOriginCommandBlock{} }
-		2 { return CommandOriginMinecartCommandBlock{} }
-		3 { return CommandOriginDevConsole{
+		0 {
+			return CommandOriginPlayer{}
+		}
+		1 {
+			return CommandOriginCommandBlock{}
+		}
+		2 {
+			return CommandOriginMinecartCommandBlock{}
+		}
+		3 {
+			return CommandOriginDevConsole{
 				value: r.read_varint64()!
-			} }
-		4 { return CommandOriginTest{
+			}
+		}
+		4 {
+			return CommandOriginTest{
 				value: r.read_varint64()!
-			} }
-		5 { return CommandOriginAutomationPlayer{} }
-		6 { return CommandOriginClientAutomation{} }
-		7 { return CommandOriginDedicatedServer{} }
-		8 { return CommandOriginEntity{} }
-		9 { return CommandOriginVirtual{} }
-		10 { return CommandOriginGameArgument{} }
-		11 { return CommandOriginEntityServer{} }
-		12 { return CommandOriginPrecompiled{} }
-		13 { return CommandOriginGameDirectorEntityServer{} }
-		14 { return CommandOriginScripting{} }
-		15 { return CommandOriginExecuteContext{} }
-		else { return error('invalid CommandOriginType ${id}') }
+			}
+		}
+		5 {
+			return CommandOriginAutomationPlayer{}
+		}
+		6 {
+			return CommandOriginClientAutomation{}
+		}
+		7 {
+			return CommandOriginDedicatedServer{}
+		}
+		8 {
+			return CommandOriginEntity{}
+		}
+		9 {
+			return CommandOriginVirtual{}
+		}
+		10 {
+			return CommandOriginGameArgument{}
+		}
+		11 {
+			return CommandOriginEntityServer{}
+		}
+		12 {
+			return CommandOriginPrecompiled{}
+		}
+		13 {
+			return CommandOriginGameDirectorEntityServer{}
+		}
+		14 {
+			return CommandOriginScripting{}
+		}
+		15 {
+			return CommandOriginExecuteContext{}
+		}
+		else {
+			return error('invalid CommandOriginType ${id}')
+		}
 	}
 }
 

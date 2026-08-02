@@ -38,14 +38,22 @@ pub fn (t MapItemTrackedActorType) encode(mut w serializer.Writer) {
 pub fn MapItemTrackedActorType.decode(mut r serializer.Reader) !MapItemTrackedActorType {
 	d := r.le_i32()!
 	match d {
-		0 { return MapItemTrackedEntity{
+		0 {
+			return MapItemTrackedEntity{
 				actor_unique_id: types_662.ActorUniqueID.decode(mut r)!
-			} }
-		1 { return MapItemTrackedBlockEntity{
+			}
+		}
+		1 {
+			return MapItemTrackedBlockEntity{
 				block_position: NetworkBlockPosition.decode(mut r)!
-			} }
-		2 { return MapItemTrackedOther{} }
-		else { return error('invalid MapItemTrackedActorType ${d}') }
+			}
+		}
+		2 {
+			return MapItemTrackedOther{}
+		}
+		else {
+			return error('invalid MapItemTrackedActorType ${d}')
+		}
 	}
 }
 

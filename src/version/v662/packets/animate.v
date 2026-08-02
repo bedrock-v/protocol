@@ -53,18 +53,34 @@ pub fn (t AnimateAction) encode_payload(mut w serializer.Writer) {
 
 pub fn AnimateAction.decode_payload(id i32, mut r serializer.Reader) !AnimateAction {
 	match id {
-		0 { return AnimateNoAction{} }
-		1 { return AnimateSwing{} }
-		3 { return AnimateWakeUp{} }
-		4 { return AnimateCriticalHit{} }
-		5 { return AnimateMagicCriticalHit{} }
-		128 { return AnimateRowRight{
+		0 {
+			return AnimateNoAction{}
+		}
+		1 {
+			return AnimateSwing{}
+		}
+		3 {
+			return AnimateWakeUp{}
+		}
+		4 {
+			return AnimateCriticalHit{}
+		}
+		5 {
+			return AnimateMagicCriticalHit{}
+		}
+		128 {
+			return AnimateRowRight{
 				rowing_time: r.le_f32()!
-			} }
-		129 { return AnimateRowLeft{
+			}
+		}
+		129 {
+			return AnimateRowLeft{
 				rowing_time: r.le_f32()!
-			} }
-		else { return error('invalid AnimateAction ${id}') }
+			}
+		}
+		else {
+			return error('invalid AnimateAction ${id}')
+		}
 	}
 }
 

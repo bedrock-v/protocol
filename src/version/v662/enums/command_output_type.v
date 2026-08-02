@@ -40,14 +40,26 @@ pub fn (t CommandOutputType) encode_payload(mut w serializer.Writer) {
 
 pub fn CommandOutputType.decode_payload(id i8, mut r serializer.Reader) !CommandOutputType {
 	match id {
-		0 { return CommandOutputNone{} }
-		1 { return CommandOutputLastOutput{} }
-		2 { return CommandOutputSilent{} }
-		3 { return CommandOutputAllOutput{} }
-		4 { return CommandOutputDataSet{
+		0 {
+			return CommandOutputNone{}
+		}
+		1 {
+			return CommandOutputLastOutput{}
+		}
+		2 {
+			return CommandOutputSilent{}
+		}
+		3 {
+			return CommandOutputAllOutput{}
+		}
+		4 {
+			return CommandOutputDataSet{
 				value: r.read_string()!
-			} }
-		else { return error('invalid CommandOutputType ${id}') }
+			}
+		}
+		else {
+			return error('invalid CommandOutputType ${id}')
+		}
 	}
 }
 

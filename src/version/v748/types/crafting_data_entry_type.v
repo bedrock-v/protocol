@@ -14,21 +14,6 @@ pub mut:
 	recipe types_685.ShapedRecipe
 }
 
-pub struct CraftingEntryFurnace {
-pub mut:
-	item_data   i32
-	result_item types_662.NetworkItemInstanceDescriptor
-	recipe_tag  string
-}
-
-pub struct CraftingEntryFurnaceAux {
-pub mut:
-	item_data           i32
-	auxiliary_item_data i32
-	result_item         types_662.NetworkItemInstanceDescriptor
-	recipe_tag          string
-}
-
 pub struct CraftingEntryMulti {
 pub mut:
 	multi_recipe types_662.Uuid
@@ -60,9 +45,7 @@ pub mut:
 	recipe types_662.SmithingTrimRecipe
 }
 
-pub type CraftingDataEntryType = CraftingEntryFurnace
-	| CraftingEntryFurnaceAux
-	| CraftingEntryMulti
+pub type CraftingDataEntryType = CraftingEntryMulti
 	| CraftingEntryShaped
 	| CraftingEntryShapedChemistry
 	| CraftingEntryShapeless
@@ -80,19 +63,6 @@ pub fn (t CraftingDataEntryType) encode(mut w serializer.Writer) {
 		CraftingEntryShaped {
 			w.write_varint32(1)
 			t.recipe.encode(mut w)
-		}
-		CraftingEntryFurnace {
-			w.write_varint32(2)
-			w.write_varint32(t.item_data)
-			t.result_item.encode(mut w)
-			w.write_string(t.recipe_tag)
-		}
-		CraftingEntryFurnaceAux {
-			w.write_varint32(3)
-			w.write_varint32(t.item_data)
-			w.write_varint32(t.auxiliary_item_data)
-			t.result_item.encode(mut w)
-			w.write_string(t.recipe_tag)
 		}
 		CraftingEntryMulti {
 			w.write_varint32(4)
@@ -133,21 +103,6 @@ pub fn CraftingDataEntryType.decode(mut r serializer.Reader) !CraftingDataEntryT
 		1 {
 			return CraftingEntryShaped{
 				recipe: types_685.ShapedRecipe.decode(mut r)!
-			}
-		}
-		2 {
-			return CraftingEntryFurnace{
-				item_data:   r.read_varint32()!
-				result_item: types_662.NetworkItemInstanceDescriptor.decode(mut r)!
-				recipe_tag:  r.read_string()!
-			}
-		}
-		3 {
-			return CraftingEntryFurnaceAux{
-				item_data:           r.read_varint32()!
-				auxiliary_item_data: r.read_varint32()!
-				result_item:         types_662.NetworkItemInstanceDescriptor.decode(mut r)!
-				recipe_tag:          r.read_string()!
 			}
 		}
 		4 {

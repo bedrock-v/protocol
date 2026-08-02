@@ -55,15 +55,25 @@ pub fn UpdateType.decode(mut r serializer.Reader) !UpdateType {
 	d := r.read_varuint32()!
 	r.read_string()!
 	match d {
-		0 { return UpdateTypeClearOverrides{} }
-		1 { return UpdateTypeRemoveOverride{} }
-		2 { return UpdateTypeSetIntOverride{
+		0 {
+			return UpdateTypeClearOverrides{}
+		}
+		1 {
+			return UpdateTypeRemoveOverride{}
+		}
+		2 {
+			return UpdateTypeSetIntOverride{
 				value: r.le_i32()!
-			} }
-		3 { return UpdateTypeSetFloatOverride{
+			}
+		}
+		3 {
+			return UpdateTypeSetFloatOverride{
 				value: r.le_f32()!
-			} }
-		else { return error('invalid UpdateType ${d}') }
+			}
+		}
+		else {
+			return error('invalid UpdateType ${d}')
+		}
 	}
 }
 

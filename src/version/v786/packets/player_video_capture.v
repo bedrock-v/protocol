@@ -35,13 +35,21 @@ pub fn (t PlayerVideoCapturePacketAction) encode(mut w serializer.Writer) {
 pub fn PlayerVideoCapturePacketAction.decode(mut r serializer.Reader) !PlayerVideoCapturePacketAction {
 	d := r.i8()!
 	match d {
-		0 { return PlayerVideoCaptureStop{} }
-		1 { return PlayerVideoCaptureStart{
+		0 {
+			return PlayerVideoCaptureStop{}
+		}
+		1 {
+			return PlayerVideoCaptureStart{
 				frame_rate:  r.le_i32()!
 				file_prefix: r.read_string()!
-			} }
-		2 { return PlayerVideoCaptureUnknown{} }
-		else { return error('invalid PlayerVideoCapturePacketAction ${d}') }
+			}
+		}
+		2 {
+			return PlayerVideoCaptureUnknown{}
+		}
+		else {
+			return error('invalid PlayerVideoCapturePacketAction ${d}')
+		}
 	}
 }
 

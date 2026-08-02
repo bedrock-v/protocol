@@ -39,16 +39,24 @@ pub fn (t GameRuleType) encode(mut w serializer.Writer) {
 pub fn GameRuleType.decode(mut r serializer.Reader) !GameRuleType {
 	d := r.read_varuint32()!
 	match d {
-		1 { return GameRuleBool{
+		1 {
+			return GameRuleBool{
 				value: r.bool()!
-			} }
-		2 { return GameRuleInt{
+			}
+		}
+		2 {
+			return GameRuleInt{
 				value: r.le_i32()!
-			} }
-		3 { return GameRuleFloat{
+			}
+		}
+		3 {
+			return GameRuleFloat{
 				value: r.le_f32()!
-			} }
-		else { return error('invalid GameRuleType ${d}') }
+			}
+		}
+		else {
+			return error('invalid GameRuleType ${d}')
+		}
 	}
 }
 

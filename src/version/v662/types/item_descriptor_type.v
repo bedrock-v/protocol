@@ -53,7 +53,9 @@ pub fn (t ItemDescriptorType) encode(mut w serializer.Writer) {
 		ItemDescDefault {
 			w.i8(1)
 			w.le_i16(t.item_id)
-			w.le_i16(t.aux_value)
+			if t.item_id != 0 {
+				w.le_i16(t.aux_value)
+			}
 		}
 		ItemDescMolang {
 			w.i8(2)
@@ -83,9 +85,11 @@ pub fn ItemDescriptorType.decode(mut r serializer.Reader) !ItemDescriptorType {
 			return ItemDescInvalid{}
 		}
 		1 {
+			item_id := r.le_i16()!
+			aux_value := if item_id != 0 { r.le_i16()! } else { i16(0) }
 			return ItemDescDefault{
-				item_id:   r.le_i16()!
-				aux_value: r.le_i16()!
+				item_id:   item_id
+				aux_value: aux_value
 			}
 		}
 		2 {

@@ -173,48 +173,74 @@ pub fn TextPacketType.decode(mut r serializer.Reader) !TextPacketType {
 
 pub fn TextPacketType.decode_payload(d u8, mut r serializer.Reader) !TextPacketType {
 	match d {
-		0 { return TextRaw{
+		0 {
+			return TextRaw{
 				message: r.read_string()!
-			} }
-		1 { return TextChat{
+			}
+		}
+		1 {
+			return TextChat{
 				player_name: r.read_string()!
 				message:     r.read_string()!
-			} }
-		2 { return TextTranslate{
+			}
+		}
+		2 {
+			return TextTranslate{
 				message:        r.read_string()!
 				parameter_list: read_string_list(mut r)!
-			} }
-		3 { return TextPopup{
+			}
+		}
+		3 {
+			return TextPopup{
 				message:        r.read_string()!
 				parameter_list: read_string_list(mut r)!
-			} }
-		4 { return TextJukeboxPopup{
+			}
+		}
+		4 {
+			return TextJukeboxPopup{
 				message:        r.read_string()!
 				parameter_list: read_string_list(mut r)!
-			} }
-		5 { return TextTip{
+			}
+		}
+		5 {
+			return TextTip{
 				message: r.read_string()!
-			} }
-		6 { return TextSystemMessage{
+			}
+		}
+		6 {
+			return TextSystemMessage{
 				message: r.read_string()!
-			} }
-		7 { return TextWhisper{
+			}
+		}
+		7 {
+			return TextWhisper{
 				player_name: r.read_string()!
 				message:     r.read_string()!
-			} }
-		8 { return TextAnnouncement{
+			}
+		}
+		8 {
+			return TextAnnouncement{
 				player_name: r.read_string()!
 				message:     r.read_string()!
-			} }
-		9 { return TextObjectWhisper{
+			}
+		}
+		9 {
+			return TextObjectWhisper{
 				message: r.read_string()!
-			} }
-		10 { return TextObject{
+			}
+		}
+		10 {
+			return TextObject{
 				message: r.read_string()!
-			} }
-		11 { return TextObjectAnnouncement{
+			}
+		}
+		11 {
+			return TextObjectAnnouncement{
 				message: r.read_string()!
-			} }
-		else { return error('invalid TextPacketType ${d}') }
+			}
+		}
+		else {
+			return error('invalid TextPacketType ${d}')
+		}
 	}
 }

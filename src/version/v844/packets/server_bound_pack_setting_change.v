@@ -40,16 +40,24 @@ pub fn (t PackSettingValue) encode(mut w serializer.Writer) {
 pub fn PackSettingValue.decode(mut r serializer.Reader) !PackSettingValue {
 	d := r.read_varuint32()!
 	match d {
-		0 { return PackSettingFloat{
+		0 {
+			return PackSettingFloat{
 				value: r.le_f32()!
-			} }
-		1 { return PackSettingBool{
+			}
+		}
+		1 {
+			return PackSettingBool{
 				value: r.bool()!
-			} }
-		2 { return PackSettingString{
+			}
+		}
+		2 {
+			return PackSettingString{
 				value: r.read_string()!
-			} }
-		else { return error('invalid PackSettingValue ${d}') }
+			}
+		}
+		else {
+			return error('invalid PackSettingValue ${d}')
+		}
 	}
 }
 

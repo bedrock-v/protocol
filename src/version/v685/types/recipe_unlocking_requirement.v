@@ -23,7 +23,7 @@ pub fn (t UnlockingContext) encode(mut w serializer.Writer) {
 	match t {
 		UnlockingContextNone {
 			w.i8(0)
-			w.write_varint32(i32(t.unlocking_ingredients.len))
+			w.write_varuint32(u32(t.unlocking_ingredients.len))
 			for e in t.unlocking_ingredients {
 				e.encode(mut w)
 			}
@@ -44,7 +44,7 @@ pub fn UnlockingContext.decode(mut r serializer.Reader) !UnlockingContext {
 	d := r.i8()!
 	match d {
 		0 {
-			count := int(r.read_varint32()!)
+			count := int(r.read_varuint32()!)
 			mut ingredients := []types_662.RecipeIngredient{cap: count}
 			for _ in 0 .. count {
 				ingredients << types_662.RecipeIngredient.decode(mut r)!

@@ -22,7 +22,8 @@ fn read_v975_user_data_blob(data []u8) ![]u8 {
 	r.le_u16()!
 	r.read_varuint32()!
 	if r.bool()! {
-		ItemStackNetIdVariant.decode(mut r)!
+		r.read_varuint32()!
+		r.read_varint32()!
 	}
 	r.read_varuint32()!
 	count := int(r.read_varuint32()!)

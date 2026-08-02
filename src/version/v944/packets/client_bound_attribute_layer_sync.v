@@ -150,14 +150,20 @@ pub fn (t Color255RGBA) encode(mut w serializer.Writer) {
 pub fn Color255RGBA.decode(mut r serializer.Reader) !Color255RGBA {
 	d := r.read_varuint32()!
 	match d {
-		0 { return Color255RgbaString{
+		0 {
+			return Color255RgbaString{
 				value: r.read_string()!
-			} }
-		1 { return Color255RgbaArray{
+			}
+		}
+		1 {
+			return Color255RgbaArray{
 				value: [r.le_i32()!, r.le_i32()!, r.le_i32()!,
 					r.le_i32()!]!
-			} }
-		else { return error('invalid Color255RGBA ${d}') }
+			}
+		}
+		else {
+			return error('invalid Color255RGBA ${d}')
+		}
 	}
 }
 
@@ -309,13 +315,19 @@ pub fn (t AttributeLayerWeight) encode(mut w serializer.Writer) {
 pub fn AttributeLayerWeight.decode(mut r serializer.Reader) !AttributeLayerWeight {
 	d := r.read_varuint32()!
 	match d {
-		0 { return AttributeLayerWeightFloat{
+		0 {
+			return AttributeLayerWeightFloat{
 				value: r.le_f64()!
-			} }
-		1 { return AttributeLayerWeightString{
+			}
+		}
+		1 {
+			return AttributeLayerWeightString{
 				value: r.read_string()!
-			} }
-		else { return error('invalid AttributeLayerWeight ${d}') }
+			}
+		}
+		else {
+			return error('invalid AttributeLayerWeight ${d}')
+		}
 	}
 }
 

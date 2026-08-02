@@ -3,9 +3,10 @@ module enums
 import protocol.serializer
 
 pub enum MovementEffectType as i32 {
-	invalid      = -1
-	glide_boost  = 0
-	geyser_boost = 2
+	invalid       = -1
+	glide_boost   = 0
+	dolphin_boost = 1
+	geyser_boost  = 2
 }
 
 pub fn (e MovementEffectType) encode(mut w serializer.Writer) {

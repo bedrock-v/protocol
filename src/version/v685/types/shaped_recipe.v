@@ -18,10 +18,10 @@ pub mut:
 
 pub fn (t ShapedRecipe) encode(mut w serializer.Writer) {
 	w.write_string(t.recipe_unique_id)
-	x_len := u32(t.ingredient_grid.len)
-	y_len := if x_len > 0 { u32(t.ingredient_grid[0].len) } else { u32(0) }
-	w.write_varuint32(x_len)
-	w.write_varuint32(y_len)
+	x_len := i32(t.ingredient_grid.len)
+	y_len := if x_len > 0 { i32(t.ingredient_grid[0].len) } else { i32(0) }
+	w.write_varint32(x_len)
+	w.write_varint32(y_len)
 	for row in t.ingredient_grid {
 		for ing in row {
 			ing.encode(mut w)
@@ -42,8 +42,8 @@ pub fn (t ShapedRecipe) encode(mut w serializer.Writer) {
 pub fn ShapedRecipe.decode(mut r serializer.Reader) !ShapedRecipe {
 	mut t := ShapedRecipe{}
 	t.recipe_unique_id = r.read_string()!
-	x_len := int(r.read_varuint32()!)
-	y_len := int(r.read_varuint32()!)
+	x_len := int(r.read_varint32()!)
+	y_len := int(r.read_varint32()!)
 	t.ingredient_grid = [][]types_662.RecipeIngredient{cap: x_len}
 	for _ in 0 .. x_len {
 		mut row := []types_662.RecipeIngredient{cap: y_len}

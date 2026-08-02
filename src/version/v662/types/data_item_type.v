@@ -106,35 +106,55 @@ pub fn (t DataItemType) encode(mut w serializer.Writer) {
 pub fn DataItemType.decode(mut r serializer.Reader) !DataItemType {
 	d := r.i8()!
 	match d {
-		0 { return DataItemByte{
+		0 {
+			return DataItemByte{
 				value: r.i8()!
-			} }
-		1 { return DataItemShort{
+			}
+		}
+		1 {
+			return DataItemShort{
 				value: r.le_i16()!
-			} }
-		2 { return DataItemInt{
+			}
+		}
+		2 {
+			return DataItemInt{
 				value: r.read_varint32()!
-			} }
-		3 { return DataItemFloat{
+			}
+		}
+		3 {
+			return DataItemFloat{
 				value: r.le_f32()!
-			} }
-		4 { return DataItemString{
+			}
+		}
+		4 {
+			return DataItemString{
 				value: r.read_string()!
-			} }
-		5 { return DataItemNBT{
+			}
+		}
+		5 {
+			return DataItemNBT{
 				value: r.read_nbt_compound_root()!
-			} }
-		6 { return DataItemPos{
+			}
+		}
+		6 {
+			return DataItemPos{
 				value: BlockPos.decode(mut r)!
-			} }
-		7 { return DataItemInt64{
+			}
+		}
+		7 {
+			return DataItemInt64{
 				value: r.read_varint64()!
-			} }
-		8 { return DataItemVec3{
+			}
+		}
+		8 {
+			return DataItemVec3{
 				x: r.le_f32()!
 				y: r.le_f32()!
 				z: r.le_f32()!
-			} }
-		else { return error('invalid DataItemType ${d}') }
+			}
+		}
+		else {
+			return error('invalid DataItemType ${d}')
+		}
 	}
 }
