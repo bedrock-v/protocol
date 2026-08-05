@@ -117,7 +117,44 @@ pub mut:
 
 pub struct ItemStackActionCraftNonImplemented {}
 
-pub struct ItemStackActionCraftResults {}
+pub struct ItemStackWithoutStackId {
+pub mut:
+	id               i32
+	count            u16
+	meta             u32
+	block_runtime_id i32
+	raw_extra_data   []u8
+}
+
+pub fn (t ItemStackWithoutStackId) encode(mut w serializer.Writer) {
+	w.write_varint32(t.id)
+	if t.id != 0 {
+		w.le_u16(t.count)
+		w.write_varuint32(t.meta)
+		w.write_varint32(t.block_runtime_id)
+		w.write_string_bytes(t.raw_extra_data)
+	}
+}
+
+pub fn ItemStackWithoutStackId.decode(mut r serializer.Reader) !ItemStackWithoutStackId {
+	id := r.read_varint32()!
+	if id == 0 {
+		return ItemStackWithoutStackId{}
+	}
+	return ItemStackWithoutStackId{
+		id:               id
+		count:            r.le_u16()!
+		meta:             r.read_varuint32()!
+		block_runtime_id: r.read_varint32()!
+		raw_extra_data:   r.read_string_bytes()!
+	}
+}
+
+pub struct ItemStackActionCraftResults {
+pub mut:
+	results    []ItemStackWithoutStackId
+	iterations u8
+}
 
 pub type ItemStackRequestActionType = ItemStackActionConsume
 	| ItemStackActionCraftCreative
@@ -246,6 +283,11 @@ pub fn (t ItemStackRequestActionType) encode(mut w serializer.Writer) {
 		}
 		ItemStackActionCraftResults {
 			w.i8(19)
+			w.write_varuint32(u32(t.results.len))
+			for result in t.results {
+				result.encode(mut w)
+			}
+			w.u8(t.iterations)
 		}
 	}
 }
@@ -378,7 +420,15 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 			return ItemStackActionCraftNonImplemented{}
 		}
 		19 {
-			return ItemStackActionCraftResults{}
+			count := int(r.read_varuint32()!)
+			mut results := []ItemStackWithoutStackId{cap: count}
+			for _ in 0 .. count {
+				results << ItemStackWithoutStackId.decode(mut r)!
+			}
+			return ItemStackActionCraftResults{
+				results:    results
+				iterations: r.u8()!
+			}
 		}
 		else {
 			return error('invalid ItemStackRequestActionType ${d}')
