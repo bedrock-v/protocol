@@ -54,25 +54,44 @@ pub fn (e SubChunkDataEntry) encode(mut w serializer.Writer) {
 	}
 }
 
+fn opt_height_map(has bool, v [16][16]i8) ?[16][16]i8 {
+	if has {
+		return v
+	}
+	return none
+}
+
 pub fn SubChunkDataEntry.decode(mut r serializer.Reader) !SubChunkDataEntry {
-	mut e := SubChunkDataEntry{}
-	e.sub_chunk_pos_offset = types_662.SubChunkPosOffset.decode(mut r)!
-	e.sub_chunk_request_result = unsafe { SubChunkRequestResult(r.i8()!) }
+	sub_chunk_pos_offset := types_662.SubChunkPosOffset.decode(mut r)!
+	sub_chunk_request_result := unsafe { SubChunkRequestResult(r.i8()!) }
+	mut serialized_sub_chunk := ?[]u8(none)
 	if r.bool()! {
-		e.serialized_sub_chunk = r.read_string_bytes()!
+		serialized_sub_chunk = r.read_string_bytes()!
 	}
-	e.height_map_data_type = unsafe { HeightMapDataType(r.i8()!) }
+	height_map_data_type := unsafe { HeightMapDataType(r.i8()!) }
+	has_height_map := r.bool()!
+	height_map_data_raw := if has_height_map { decode_height_map(mut r)! } else { [16][16]i8{} }
+	render_height_map_data_type := unsafe { HeightMapDataType(r.i8()!) }
+	has_render_height_map := r.bool()!
+	render_height_map_data_raw := if has_render_height_map {
+		decode_height_map(mut r)!
+	} else {
+		[16][16]i8{}
+	}
+	mut blob_id := ?u64(none)
 	if r.bool()! {
-		e.height_map_data = decode_height_map(mut r)!
+		blob_id = r.le_u64()!
 	}
-	e.render_height_map_data_type = unsafe { HeightMapDataType(r.i8()!) }
-	if r.bool()! {
-		e.render_height_map_data = decode_height_map(mut r)!
+	return SubChunkDataEntry{
+		sub_chunk_pos_offset:        sub_chunk_pos_offset
+		sub_chunk_request_result:    sub_chunk_request_result
+		serialized_sub_chunk:        serialized_sub_chunk
+		height_map_data_type:        height_map_data_type
+		height_map_data:             opt_height_map(has_height_map, height_map_data_raw)
+		render_height_map_data_type: render_height_map_data_type
+		render_height_map_data:      opt_height_map(has_render_height_map, render_height_map_data_raw)
+		blob_id:                     blob_id
 	}
-	if r.bool()! {
-		e.blob_id = r.le_u64()!
-	}
-	return e
 }
 
 fn encode_opt_height_map(mut w serializer.Writer, data ?[16][16]i8) {
