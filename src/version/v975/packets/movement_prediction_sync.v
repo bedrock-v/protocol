@@ -1,55 +1,38 @@
 module packets
 
 import protocol.serializer
-import protocol.version.v662.types as types_662
 
 pub struct MovementPredictionFlags {
 pub mut:
-	lo u64
-	hi u64
+	raw_groups []u8
 }
 
+const max_movement_prediction_flag_groups = 32
+
 pub fn (d MovementPredictionFlags) encode(mut w serializer.Writer) {
-	mut lo := d.lo
-	mut hi := d.hi
-	for {
-		b := u8(lo & 0x7f)
-		lo = (lo >> 7) | (hi << 57)
-		hi = hi >> 7
-		if lo == 0 && hi == 0 {
-			w.u8(b)
-			break
-		}
-		w.u8(b | 0x80)
+	if d.raw_groups.len == 0 {
+		w.u8(0)
+		return
+	}
+	for b in d.raw_groups {
+		w.u8(b)
 	}
 }
 
 pub fn MovementPredictionFlags.decode(mut r serializer.Reader) !MovementPredictionFlags {
-	mut lo := u64(0)
-	mut hi := u64(0)
-	mut shift := 0
+	mut groups := []u8{}
 	for {
 		b := r.u8()!
-		v := u64(b & 0x7f)
-		if shift < 64 {
-			lo |= v << u64(shift)
-			if shift > 57 {
-				hi |= v >> u64(64 - shift)
-			}
-		} else {
-			hi |= v << u64(shift - 64)
-		}
+		groups << b
 		if b & 0x80 == 0 {
 			break
 		}
-		shift += 7
-		if shift >= 128 {
-			return error('varuint128 is too long')
+		if groups.len >= max_movement_prediction_flag_groups {
+			return error('MovementPredictionFlags bitset is too long')
 		}
 	}
 	return MovementPredictionFlags{
-		lo: lo
-		hi: hi
+		raw_groups: groups
 	}
 }
 
@@ -66,7 +49,7 @@ pub mut:
 	friction_modifier f32
 	bounciness        f32
 	air_drag_modifier f32
-	runtime_entity_id types_662.ActorRuntimeID
+	entity_unique_id  i64
 	is_flying         bool
 }
 
@@ -96,7 +79,7 @@ pub fn (p &MovementPredictionSyncPacket) encode_payload(mut w serializer.Writer)
 	w.le_f32(p.friction_modifier)
 	w.le_f32(p.bounciness)
 	w.le_f32(p.air_drag_modifier)
-	p.runtime_entity_id.encode(mut w)
+	w.write_varint64(p.entity_unique_id)
 	w.bool(p.is_flying)
 }
 
@@ -112,6 +95,6 @@ pub fn (mut p MovementPredictionSyncPacket) decode_payload(mut r serializer.Read
 	p.friction_modifier = r.le_f32()!
 	p.bounciness = r.le_f32()!
 	p.air_drag_modifier = r.le_f32()!
-	p.runtime_entity_id = types_662.ActorRuntimeID.decode(mut r)!
+	p.entity_unique_id = r.read_varint64()!
 	p.is_flying = r.bool()!
 }

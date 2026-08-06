@@ -71,22 +71,38 @@ pub fn (t SoundData) encode(mut w serializer.Writer) {
 pub fn SoundData.decode(mut r serializer.Reader) !SoundData {
 	d := r.read_varuint32()!
 	match d {
-		0 { return SoundDataStop{} }
-		1 { return SoundDataSetVolume{
+		0 {
+			return SoundDataStop{}
+		}
+		1 {
+			return SoundDataSetVolume{
 				volume: r.le_f32()!
-			} }
-		2 { return SoundDataSetPitch{
+			}
+		}
+		2 {
+			return SoundDataSetPitch{
 				pitch: r.le_f32()!
-			} }
-		3 { return SoundDataFade{
+			}
+		}
+		3 {
+			return SoundDataFade{
 				duration:      r.le_f32()!
 				target_volume: r.le_f32()!
-			} }
-		4 { return SoundDataSeekTo{
+			}
+		}
+		4 {
+			return SoundDataSeekTo{
 				seconds: r.le_f32()!
-			} }
-		5 { return SoundDataPause{} }
-		6 { return SoundDataResume{} }
-		else { return error('invalid SoundData ${d}') }
+			}
+		}
+		5 {
+			return SoundDataPause{}
+		}
+		6 {
+			return SoundDataResume{}
+		}
+		else {
+			return error('invalid SoundData ${d}')
+		}
 	}
 }

@@ -2,7 +2,7 @@ module enums
 
 import protocol.serializer
 
-pub enum HudElement as u32 {
+pub enum HudElement as i32 {
 	paper_doll     = 0
 	armor          = 1
 	tool_tips      = 2
@@ -20,9 +20,9 @@ pub enum HudElement as u32 {
 }
 
 pub fn (e HudElement) encode(mut w serializer.Writer) {
-	w.write_varuint32(u32(e))
+	w.write_varint32(i32(e))
 }
 
 pub fn HudElement.decode(mut r serializer.Reader) !HudElement {
-	return unsafe { HudElement(r.read_varuint32()!) }
+	return unsafe { HudElement(r.read_varint32()!) }
 }

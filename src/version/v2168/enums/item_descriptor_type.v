@@ -56,18 +56,28 @@ pub fn ItemDescriptorType.decode(mut r serializer.Reader) !ItemDescriptorType {
 	d := r.read_varuint32()!
 	r.u8()!
 	match d {
-		0 { return ItemDescEmpty{} }
-		1 { return ItemDescName{
+		0 {
+			return ItemDescEmpty{}
+		}
+		1 {
+			return ItemDescName{
 				item_identifier: r.read_string()!
 				aux_value:       r.read_varint32()!
-			} }
-		2 { return ItemDescMolang{
+			}
+		}
+		2 {
+			return ItemDescMolang{
 				tag_expression: r.read_string()!
 				molang_version: r.le_i16()!
-			} }
-		3 { return ItemDescItemTag{
+			}
+		}
+		3 {
+			return ItemDescItemTag{
 				item_tag: r.read_string()!
-			} }
-		else { return error('invalid ItemDescriptorType ${d}') }
+			}
+		}
+		else {
+			return error('invalid ItemDescriptorType ${d}')
+		}
 	}
 }

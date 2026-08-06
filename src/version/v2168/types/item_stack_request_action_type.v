@@ -1,6 +1,25 @@
 module types
 
 import protocol.serializer
+import protocol.version.v2168.enums
+
+pub struct ItemDescriptorCount {
+pub mut:
+	descriptor enums.ItemDescriptorType = enums.ItemDescEmpty{}
+	count      i32
+}
+
+pub fn (t ItemDescriptorCount) encode(mut w serializer.Writer) {
+	t.descriptor.encode(mut w)
+	w.write_varint32(t.count)
+}
+
+pub fn ItemDescriptorCount.decode(mut r serializer.Reader) !ItemDescriptorCount {
+	return ItemDescriptorCount{
+		descriptor: enums.ItemDescriptorType.decode(mut r)!
+		count:      r.read_varint32()!
+	}
+}
 
 pub struct ItemStackActionTake {
 pub mut:
@@ -71,7 +90,7 @@ pub struct ItemStackActionCraftRecipeAuto {
 pub mut:
 	recipe_network_id          u32
 	number_of_requested_crafts i8
-	ingredients                []RecipeIngredient
+	ingredients                []ItemDescriptorCount
 }
 
 pub struct ItemStackActionCraftCreative {
@@ -330,9 +349,9 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 			recipe_network_id := r.read_varuint32()!
 			number_of_requested_crafts := r.i8()!
 			count := int(r.read_varuint32()!)
-			mut ings := []RecipeIngredient{cap: count}
+			mut ings := []ItemDescriptorCount{cap: count}
 			for _ in 0 .. count {
-				ings << RecipeIngredient.decode(mut r)!
+				ings << ItemDescriptorCount.decode(mut r)!
 			}
 			return ItemStackActionCraftRecipeAuto{
 				recipe_network_id:          recipe_network_id

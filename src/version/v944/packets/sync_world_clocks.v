@@ -7,23 +7,31 @@ pub mut:
 	id     u64
 	name   string
 	time   i32
-	period i32
+	period ?i32
 }
 
 pub fn (t TimeMarker) encode(mut w serializer.Writer) {
 	w.write_varuint64(t.id)
 	w.write_string(t.name)
 	w.write_varint32(t.time)
-	w.write_varint32(t.period)
+	if v := t.period {
+		w.bool(true)
+		w.le_i32(v)
+	} else {
+		w.bool(false)
+	}
 }
 
 pub fn TimeMarker.decode(mut r serializer.Reader) !TimeMarker {
-	return TimeMarker{
-		id:     r.read_varuint64()!
-		name:   r.read_string()!
-		time:   r.read_varint32()!
-		period: r.read_varint32()!
+	mut t := TimeMarker{
+		id:   r.read_varuint64()!
+		name: r.read_string()!
+		time: r.read_varint32()!
 	}
+	if r.bool()! {
+		t.period = r.le_i32()!
+	}
+	return t
 }
 
 pub struct SyncWorldClockState {
@@ -111,21 +119,21 @@ pub type SyncWorldClocks = WorldClocksAddTimeMarker
 pub fn (t SyncWorldClocks) encode(mut w serializer.Writer) {
 	match t {
 		WorldClocksSyncState {
-			w.le_u32(0)
+			w.write_varuint32(0)
 			w.write_varuint32(u32(t.clock_data.len))
 			for e in t.clock_data {
 				e.encode(mut w)
 			}
 		}
 		WorldClocksInitializeRegistry {
-			w.le_u32(1)
+			w.write_varuint32(1)
 			w.write_varuint32(u32(t.clock_data.len))
 			for e in t.clock_data {
 				e.encode(mut w)
 			}
 		}
 		WorldClocksAddTimeMarker {
-			w.le_u32(2)
+			w.write_varuint32(2)
 			w.write_varuint64(t.clock_id)
 			w.write_varuint32(u32(t.time_markers.len))
 			for e in t.time_markers {
@@ -133,7 +141,7 @@ pub fn (t SyncWorldClocks) encode(mut w serializer.Writer) {
 			}
 		}
 		WorldClocksRemoveTimeMarker {
-			w.le_u32(3)
+			w.write_varuint32(3)
 			w.write_varuint64(t.clock_id)
 			w.write_varuint32(u32(t.time_marker_ids.len))
 			for id in t.time_marker_ids {
@@ -144,7 +152,7 @@ pub fn (t SyncWorldClocks) encode(mut w serializer.Writer) {
 }
 
 pub fn SyncWorldClocks.decode(mut r serializer.Reader) !SyncWorldClocks {
-	d := r.le_u32()!
+	d := r.read_varuint32()!
 	match d {
 		0 {
 			count := int(r.read_varuint32()!)

@@ -8,7 +8,7 @@ pub struct MovementEffectPacket {
 pub mut:
 	entity_runtime_id types.ActorRuntimeID
 	effect_type       enums.MovementEffectType
-	duration          u32
+	duration          i32
 	tick              u64
 }
 
@@ -27,13 +27,13 @@ pub fn (p &MovementEffectPacket) can_be_sent_before_login() bool {
 pub fn (p &MovementEffectPacket) encode_payload(mut w serializer.Writer) {
 	p.entity_runtime_id.encode(mut w)
 	p.effect_type.encode(mut w)
-	w.write_varuint32(p.duration)
+	w.write_varint32(p.duration)
 	w.write_varuint64(p.tick)
 }
 
 pub fn (mut p MovementEffectPacket) decode_payload(mut r serializer.Reader) ! {
 	p.entity_runtime_id = types.ActorRuntimeID.decode(mut r)!
 	p.effect_type = enums.MovementEffectType.decode(mut r)!
-	p.duration = r.read_varuint32()!
+	p.duration = r.read_varint32()!
 	p.tick = r.read_varuint64()!
 }

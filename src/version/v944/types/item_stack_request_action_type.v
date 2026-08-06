@@ -47,9 +47,19 @@ pub mut:
 	slot i8
 }
 
-pub struct ItemStackActionPlaceInItemContainer {}
+pub struct ItemStackActionPlaceInItemContainer {
+pub mut:
+	amount      i8
+	source      ItemStackRequestSlotInfo
+	destination ItemStackRequestSlotInfo
+}
 
-pub struct ItemStackActionTakeFromItemContainer {}
+pub struct ItemStackActionTakeFromItemContainer {
+pub mut:
+	amount      i8
+	source      ItemStackRequestSlotInfo
+	destination ItemStackRequestSlotInfo
+}
 
 pub struct ItemStackActionScreenLabTableCombine {}
 
@@ -68,33 +78,33 @@ pub mut:
 
 pub struct ItemStackActionCraftRecipe {
 pub mut:
-	recipe_network_id          i32
+	recipe_network_id          u32
 	number_of_requested_crafts i8
 }
 
 pub struct ItemStackActionCraftRecipeAuto {
 pub mut:
-	recipe_network_id          i32
+	recipe_network_id          u32
 	number_of_requested_crafts i8
 	times_crafted              i8
-	ingredients                []types_662.ItemDescriptorType
+	ingredients                []types_662.ItemDescriptorCount
 }
 
 pub struct ItemStackActionCraftCreative {
 pub mut:
-	creative_item_network_id   i32
+	creative_item_network_id   u32
 	number_of_requested_crafts i8
 }
 
 pub struct ItemStackActionCraftRecipeOptional {
 pub mut:
-	recipe_network_id      i32
+	recipe_network_id      u32
 	filtered_strings_index i32
 }
 
 pub struct ItemStackActionCraftRepairAndDisenchant {
 pub mut:
-	recipe_network_id          i32
+	recipe_network_id          u32
 	number_of_requested_crafts i8
 	repair_cost                i32
 }
@@ -107,7 +117,44 @@ pub mut:
 
 pub struct ItemStackActionCraftNonImplemented {}
 
-pub struct ItemStackActionCraftResults {}
+pub struct ItemStackWithoutStackId {
+pub mut:
+	id               i32
+	count            u16
+	meta             u32
+	block_runtime_id i32
+	raw_extra_data   []u8
+}
+
+pub fn (t ItemStackWithoutStackId) encode(mut w serializer.Writer) {
+	w.write_varint32(t.id)
+	if t.id != 0 {
+		w.le_u16(t.count)
+		w.write_varuint32(t.meta)
+		w.write_varint32(t.block_runtime_id)
+		w.write_string_bytes(t.raw_extra_data)
+	}
+}
+
+pub fn ItemStackWithoutStackId.decode(mut r serializer.Reader) !ItemStackWithoutStackId {
+	id := r.read_varint32()!
+	if id == 0 {
+		return ItemStackWithoutStackId{}
+	}
+	return ItemStackWithoutStackId{
+		id:               id
+		count:            r.le_u16()!
+		meta:             r.read_varuint32()!
+		block_runtime_id: r.read_varint32()!
+		raw_extra_data:   r.read_string_bytes()!
+	}
+}
+
+pub struct ItemStackActionCraftResults {
+pub mut:
+	results    []ItemStackWithoutStackId
+	iterations u8
+}
 
 pub type ItemStackRequestActionType = ItemStackActionConsume
 	| ItemStackActionCraftCreative
@@ -171,9 +218,15 @@ pub fn (t ItemStackRequestActionType) encode(mut w serializer.Writer) {
 		}
 		ItemStackActionPlaceInItemContainer {
 			w.i8(7)
+			w.i8(t.amount)
+			t.source.encode(mut w)
+			t.destination.encode(mut w)
 		}
 		ItemStackActionTakeFromItemContainer {
 			w.i8(8)
+			w.i8(t.amount)
+			t.source.encode(mut w)
+			t.destination.encode(mut w)
 		}
 		ItemStackActionScreenLabTableCombine {
 			w.i8(9)
@@ -191,32 +244,32 @@ pub fn (t ItemStackRequestActionType) encode(mut w serializer.Writer) {
 		}
 		ItemStackActionCraftRecipe {
 			w.i8(12)
-			w.write_varint32(t.recipe_network_id)
+			w.write_varuint32(t.recipe_network_id)
 			w.i8(t.number_of_requested_crafts)
 		}
 		ItemStackActionCraftRecipeAuto {
 			w.i8(13)
-			w.write_varint32(t.recipe_network_id)
+			w.write_varuint32(t.recipe_network_id)
 			w.i8(t.number_of_requested_crafts)
 			w.i8(t.times_crafted)
-			w.u8(u8(t.ingredients.len))
+			w.write_varuint32(u32(t.ingredients.len))
 			for e in t.ingredients {
 				e.encode(mut w)
 			}
 		}
 		ItemStackActionCraftCreative {
 			w.i8(14)
-			w.write_varint32(t.creative_item_network_id)
+			w.write_varuint32(t.creative_item_network_id)
 			w.i8(t.number_of_requested_crafts)
 		}
 		ItemStackActionCraftRecipeOptional {
 			w.i8(15)
-			w.write_varint32(t.recipe_network_id)
+			w.write_varuint32(t.recipe_network_id)
 			w.le_i32(t.filtered_strings_index)
 		}
 		ItemStackActionCraftRepairAndDisenchant {
 			w.i8(16)
-			w.write_varint32(t.recipe_network_id)
+			w.write_varuint32(t.recipe_network_id)
 			w.i8(t.number_of_requested_crafts)
 			w.write_varint32(t.repair_cost)
 		}
@@ -230,6 +283,11 @@ pub fn (t ItemStackRequestActionType) encode(mut w serializer.Writer) {
 		}
 		ItemStackActionCraftResults {
 			w.i8(19)
+			w.write_varuint32(u32(t.results.len))
+			for result in t.results {
+				result.encode(mut w)
+			}
+			w.u8(t.iterations)
 		}
 	}
 }
@@ -282,10 +340,18 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 			}
 		}
 		7 {
-			return ItemStackActionPlaceInItemContainer{}
+			return ItemStackActionPlaceInItemContainer{
+				amount:      r.i8()!
+				source:      ItemStackRequestSlotInfo.decode(mut r)!
+				destination: ItemStackRequestSlotInfo.decode(mut r)!
+			}
 		}
 		8 {
-			return ItemStackActionTakeFromItemContainer{}
+			return ItemStackActionTakeFromItemContainer{
+				amount:      r.i8()!
+				source:      ItemStackRequestSlotInfo.decode(mut r)!
+				destination: ItemStackRequestSlotInfo.decode(mut r)!
+			}
 		}
 		9 {
 			return ItemStackActionScreenLabTableCombine{}
@@ -305,18 +371,18 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 		}
 		12 {
 			return ItemStackActionCraftRecipe{
-				recipe_network_id:          r.read_varint32()!
+				recipe_network_id:          r.read_varuint32()!
 				number_of_requested_crafts: r.i8()!
 			}
 		}
 		13 {
-			recipe_network_id := r.read_varint32()!
+			recipe_network_id := r.read_varuint32()!
 			number_of_requested_crafts := r.i8()!
 			times_crafted := r.i8()!
-			count := int(r.u8()!)
-			mut ings := []types_662.ItemDescriptorType{cap: count}
+			count := int(r.read_varuint32()!)
+			mut ings := []types_662.ItemDescriptorCount{cap: count}
 			for _ in 0 .. count {
-				ings << types_662.ItemDescriptorType.decode(mut r)!
+				ings << types_662.ItemDescriptorCount.decode(mut r)!
 			}
 			return ItemStackActionCraftRecipeAuto{
 				recipe_network_id:          recipe_network_id
@@ -327,19 +393,19 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 		}
 		14 {
 			return ItemStackActionCraftCreative{
-				creative_item_network_id:   r.read_varint32()!
+				creative_item_network_id:   r.read_varuint32()!
 				number_of_requested_crafts: r.i8()!
 			}
 		}
 		15 {
 			return ItemStackActionCraftRecipeOptional{
-				recipe_network_id:      r.read_varint32()!
+				recipe_network_id:      r.read_varuint32()!
 				filtered_strings_index: r.le_i32()!
 			}
 		}
 		16 {
 			return ItemStackActionCraftRepairAndDisenchant{
-				recipe_network_id:          r.read_varint32()!
+				recipe_network_id:          r.read_varuint32()!
 				number_of_requested_crafts: r.i8()!
 				repair_cost:                r.read_varint32()!
 			}
@@ -354,7 +420,15 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 			return ItemStackActionCraftNonImplemented{}
 		}
 		19 {
-			return ItemStackActionCraftResults{}
+			count := int(r.read_varuint32()!)
+			mut results := []ItemStackWithoutStackId{cap: count}
+			for _ in 0 .. count {
+				results << ItemStackWithoutStackId.decode(mut r)!
+			}
+			return ItemStackActionCraftResults{
+				results:    results
+				iterations: r.u8()!
+			}
 		}
 		else {
 			return error('invalid ItemStackRequestActionType ${d}')

@@ -12,6 +12,7 @@ pub enum AnimatePacketAction as i8 {
 }
 
 pub enum SwingSource {
+	none_      = -1
 	build      = 0
 	mine       = 1
 	interact   = 2
@@ -24,6 +25,7 @@ pub enum SwingSource {
 
 pub fn (e SwingSource) wire_name() string {
 	return match e {
+		.none_ { 'none' }
 		.build { 'build' }
 		.mine { 'mine' }
 		.interact { 'interact' }
@@ -42,6 +44,7 @@ pub fn (e SwingSource) encode(mut w serializer.Writer) {
 pub fn SwingSource.decode(mut r serializer.Reader) !SwingSource {
 	s := r.read_string()!
 	match s {
+		'none' { return SwingSource.none_ }
 		'build' { return SwingSource.build }
 		'mine' { return SwingSource.mine }
 		'interact' { return SwingSource.interact }

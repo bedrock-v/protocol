@@ -40,16 +40,24 @@ pub fn (t RequestAbilityType) encode(mut w serializer.Writer) {
 pub fn RequestAbilityType.decode(mut r serializer.Reader) !RequestAbilityType {
 	d := r.i8()!
 	match d {
-		0 { return RequestAbilityUnset{} }
-		1 { return RequestAbilityBool{
+		0 {
+			return RequestAbilityUnset{}
+		}
+		1 {
+			return RequestAbilityBool{
 				variable_value: r.bool()!
 				default_value:  r.le_f32()!
-			} }
-		2 { return RequestAbilityFloat{
+			}
+		}
+		2 {
+			return RequestAbilityFloat{
 				variable_value: r.le_f32()!
 				default_value:  r.bool()!
-			} }
-		else { return error('invalid RequestAbilityType ${d}') }
+			}
+		}
+		else {
+			return error('invalid RequestAbilityType ${d}')
+		}
 	}
 }
 

@@ -39,6 +39,12 @@ pub type ItemDescriptorType = ItemDescComplexAlias
 	| ItemDescItemTag
 	| ItemDescMolang
 
+pub struct ItemDescriptorCount {
+pub mut:
+	descriptor ItemDescriptorType = ItemDescInvalid{}
+	count      i32
+}
+
 pub fn (t ItemDescriptorType) encode(mut w serializer.Writer) {
 	match t {
 		ItemDescInvalid {
@@ -47,7 +53,9 @@ pub fn (t ItemDescriptorType) encode(mut w serializer.Writer) {
 		ItemDescDefault {
 			w.i8(1)
 			w.le_i16(t.item_id)
-			w.le_i16(t.aux_value)
+			if t.item_id != 0 {
+				w.le_i16(t.aux_value)
+			}
 		}
 		ItemDescMolang {
 			w.i8(2)
@@ -73,25 +81,53 @@ pub fn (t ItemDescriptorType) encode(mut w serializer.Writer) {
 pub fn ItemDescriptorType.decode(mut r serializer.Reader) !ItemDescriptorType {
 	d := r.i8()!
 	match d {
-		0 { return ItemDescInvalid{} }
-		1 { return ItemDescDefault{
-				item_id:   r.le_i16()!
-				aux_value: r.le_i16()!
-			} }
-		2 { return ItemDescMolang{
+		0 {
+			return ItemDescInvalid{}
+		}
+		1 {
+			item_id := r.le_i16()!
+			aux_value := if item_id != 0 { r.le_i16()! } else { i16(0) }
+			return ItemDescDefault{
+				item_id:   item_id
+				aux_value: aux_value
+			}
+		}
+		2 {
+			return ItemDescMolang{
 				tag_expression: r.read_string()!
 				molang_version: r.u8()!
-			} }
-		3 { return ItemDescItemTag{
+			}
+		}
+		3 {
+			return ItemDescItemTag{
 				item_tag: r.read_string()!
-			} }
-		4 { return ItemDescDeferred{
+			}
+		}
+		4 {
+			return ItemDescDeferred{
 				full_name: r.read_string()!
 				aux_value: r.le_i16()!
-			} }
-		5 { return ItemDescComplexAlias{
+			}
+		}
+		5 {
+			return ItemDescComplexAlias{
 				name: r.read_string()!
-			} }
-		else { return error('invalid ItemDescriptorType ${d}') }
+			}
+		}
+		else {
+			return error('invalid ItemDescriptorType ${d}')
+		}
+	}
+}
+
+pub fn (t ItemDescriptorCount) encode(mut w serializer.Writer) {
+	t.descriptor.encode(mut w)
+	w.write_varint32(t.count)
+}
+
+pub fn ItemDescriptorCount.decode(mut r serializer.Reader) !ItemDescriptorCount {
+	return ItemDescriptorCount{
+		descriptor: ItemDescriptorType.decode(mut r)!
+		count:      r.read_varint32()!
 	}
 }

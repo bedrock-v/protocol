@@ -41,16 +41,24 @@ pub fn (t GameRuleLegacyType) encode(mut w serializer.Writer) {
 pub fn GameRuleLegacyType.decode(mut r serializer.Reader) !GameRuleLegacyType {
 	d := r.read_varuint32()!
 	match d {
-		1 { return GameRuleLegacyBool{
+		1 {
+			return GameRuleLegacyBool{
 				value: r.bool()!
-			} }
-		2 { return GameRuleLegacyInt{
+			}
+		}
+		2 {
+			return GameRuleLegacyInt{
 				value: r.read_varint32()!
-			} }
-		3 { return GameRuleLegacyFloat{
+			}
+		}
+		3 {
+			return GameRuleLegacyFloat{
 				value: r.le_f32()!
-			} }
-		else { return error('invalid GameRuleLegacyType ${d}') }
+			}
+		}
+		else {
+			return error('invalid GameRuleLegacyType ${d}')
+		}
 	}
 }
 

@@ -47,16 +47,26 @@ pub fn (t IdentityDefinitionType) encode(mut w serializer.Writer) {
 pub fn IdentityDefinitionType.decode(mut r serializer.Reader) !IdentityDefinitionType {
 	d := r.i8()!
 	match d {
-		0 { return IdentityInvalid{} }
-		1 { return IdentityPlayer{
+		0 {
+			return IdentityInvalid{}
+		}
+		1 {
+			return IdentityPlayer{
 				player_unique_id: r.read_varint64()!
-			} }
-		2 { return IdentityEntity{
+			}
+		}
+		2 {
+			return IdentityEntity{
 				actor_id: ActorUniqueID.decode(mut r)!
-			} }
-		3 { return IdentityFakePlayer{
+			}
+		}
+		3 {
+			return IdentityFakePlayer{
 				fake_player_name: r.read_string()!
-			} }
-		else { return error('invalid IdentityDefinitionType ${d}') }
+			}
+		}
+		else {
+			return error('invalid IdentityDefinitionType ${d}')
+		}
 	}
 }

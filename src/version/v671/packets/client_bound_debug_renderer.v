@@ -24,13 +24,13 @@ pub type ClientBoundDebugRendererType = DebugRendererAddDebugMarkerCube
 pub fn (t ClientBoundDebugRendererType) encode(mut w serializer.Writer) {
 	match t {
 		DebugRendererInvalid {
-			w.le_u32(0)
+			w.write_string('unknown')
 		}
 		DebugRendererClearDebugMarkers {
-			w.le_u32(1)
+			w.write_string('cleardebugmarkers')
 		}
 		DebugRendererAddDebugMarkerCube {
-			w.le_u32(2)
+			w.write_string('adddebugmarkercube')
 			w.write_string(t.text)
 			w.le_f32(t.position[0])
 			w.le_f32(t.position[1])
@@ -45,15 +45,12 @@ pub fn (t ClientBoundDebugRendererType) encode(mut w serializer.Writer) {
 }
 
 pub fn ClientBoundDebugRendererType.decode(mut r serializer.Reader) !ClientBoundDebugRendererType {
-	d := r.le_u32()!
+	d := r.read_string()!
 	match d {
-		0 {
-			return DebugRendererInvalid{}
-		}
-		1 {
+		'cleardebugmarkers' {
 			return DebugRendererClearDebugMarkers{}
 		}
-		2 {
+		'adddebugmarkercube' {
 			return DebugRendererAddDebugMarkerCube{
 				text:                 r.read_string()!
 				position:             [r.le_f32()!, r.le_f32()!,

@@ -191,14 +191,14 @@ pub fn AttributeLayerData.decode(mut r serializer.Reader) !AttributeLayerData {
 pub struct AttributeLayerSettings {
 pub mut:
 	priority           i32
-	weight             AttributeLayerWeight = AttributeLayerWeightFloat{}
+	weight             f32
 	enabled            bool
 	transitions_paused bool
 }
 
 pub fn (t AttributeLayerSettings) encode(mut w serializer.Writer) {
 	w.le_i32(t.priority)
-	t.weight.encode(mut w)
+	w.le_f32(t.weight)
 	w.bool(t.enabled)
 	w.bool(t.transitions_paused)
 }
@@ -206,53 +206,27 @@ pub fn (t AttributeLayerSettings) encode(mut w serializer.Writer) {
 pub fn AttributeLayerSettings.decode(mut r serializer.Reader) !AttributeLayerSettings {
 	return AttributeLayerSettings{
 		priority:           r.le_i32()!
-		weight:             AttributeLayerWeight.decode(mut r)!
+		weight:             r.le_f32()!
 		enabled:            r.bool()!
 		transitions_paused: r.bool()!
 	}
 }
 
-pub struct AttributeLayerWeightFloat {
-pub mut:
-	value f64
-}
-
-pub struct AttributeLayerWeightString {
-pub mut:
-	value string
-}
-
-pub type AttributeLayerWeight = AttributeLayerWeightFloat | AttributeLayerWeightString
-
-pub fn (t AttributeLayerWeight) encode(mut w serializer.Writer) {
-	match t {
-		AttributeLayerWeightFloat {
-			w.write_varuint32(0)
-			w.le_f64(t.value)
-		}
-		AttributeLayerWeightString {
-			w.write_varuint32(1)
-			w.write_string(t.value)
-		}
+fn write_optional_i32(mut w serializer.Writer, value ?i32) {
+	if v := value {
+		w.bool(true)
+		w.le_i32(v)
+	} else {
+		w.bool(false)
 	}
 }
 
-pub fn AttributeLayerWeight.decode(mut r serializer.Reader) !AttributeLayerWeight {
-	d := r.read_varuint32()!
-	match d {
-		0 {
-			return AttributeLayerWeightFloat{
-				value: r.le_f64()!
-			}
-		}
-		1 {
-			return AttributeLayerWeightString{
-				value: r.read_string()!
-			}
-		}
-		else {
-			return error('invalid AttributeLayerWeight ${d}')
-		}
+fn write_optional_f32(mut w serializer.Writer, value ?f32) {
+	if v := value {
+		w.bool(true)
+		w.le_f32(v)
+	} else {
+		w.bool(false)
 	}
 }
 
@@ -312,21 +286,21 @@ pub fn EnvironmentAttributeData.decode(mut r serializer.Reader) !EnvironmentAttr
 pub struct AttributeDataBool {
 pub mut:
 	value     bool
-	operation BoolAttributeOperation
+	operation ?i32
 }
 
 pub struct AttributeDataFloat {
 pub mut:
 	value          f32
-	operation      FloatAttributeOperation
-	constraint_min f32
-	constraint_max f32
+	operation      ?i32
+	constraint_min ?f32
+	constraint_max ?f32
 }
 
 pub struct AttributeDataColor {
 pub mut:
-	value     Color255RGBA = Color255RGBAString{}
-	operation ColorAttributeOperation
+	value     i32
+	operation ?i32
 }
 
 pub type AttributeData = AttributeDataBool | AttributeDataColor | AttributeDataFloat
@@ -336,19 +310,19 @@ pub fn (t AttributeData) encode(mut w serializer.Writer) {
 		AttributeDataBool {
 			w.write_varuint32(0)
 			w.bool(t.value)
-			t.operation.encode(mut w)
+			write_optional_i32(mut w, t.operation)
 		}
 		AttributeDataFloat {
 			w.write_varuint32(1)
 			w.le_f32(t.value)
-			t.operation.encode(mut w)
-			w.le_f32(t.constraint_min)
-			w.le_f32(t.constraint_max)
+			write_optional_i32(mut w, t.operation)
+			write_optional_f32(mut w, t.constraint_min)
+			write_optional_f32(mut w, t.constraint_max)
 		}
 		AttributeDataColor {
 			w.write_varuint32(2)
-			t.value.encode(mut w)
-			t.operation.encode(mut w)
+			w.le_i32(t.value)
+			write_optional_i32(mut w, t.operation)
 		}
 	}
 }
@@ -357,180 +331,50 @@ pub fn AttributeData.decode(mut r serializer.Reader) !AttributeData {
 	d := r.read_varuint32()!
 	match d {
 		0 {
+			value := r.bool()!
+			mut operation := ?i32(none)
+			if r.bool()! {
+				operation = r.le_i32()!
+			}
 			return AttributeDataBool{
-				value:     r.bool()!
-				operation: BoolAttributeOperation.decode(mut r)!
+				value:     value
+				operation: operation
 			}
 		}
 		1 {
+			value := r.le_f32()!
+			mut operation := ?i32(none)
+			if r.bool()! {
+				operation = r.le_i32()!
+			}
+			mut constraint_min := ?f32(none)
+			if r.bool()! {
+				constraint_min = r.le_f32()!
+			}
+			mut constraint_max := ?f32(none)
+			if r.bool()! {
+				constraint_max = r.le_f32()!
+			}
 			return AttributeDataFloat{
-				value:          r.le_f32()!
-				operation:      FloatAttributeOperation.decode(mut r)!
-				constraint_min: r.le_f32()!
-				constraint_max: r.le_f32()!
+				value:          value
+				operation:      operation
+				constraint_min: constraint_min
+				constraint_max: constraint_max
 			}
 		}
 		2 {
+			value := r.le_i32()!
+			mut operation := ?i32(none)
+			if r.bool()! {
+				operation = r.le_i32()!
+			}
 			return AttributeDataColor{
-				value:     Color255RGBA.decode(mut r)!
-				operation: ColorAttributeOperation.decode(mut r)!
+				value:     value
+				operation: operation
 			}
 		}
 		else {
 			return error('invalid AttributeData ${d}')
 		}
-	}
-}
-
-pub enum BoolAttributeOperation {
-	override
-	alpha_blend
-	and
-	nand
-	@or
-	nor
-	xor
-	xnor
-}
-
-pub fn (e BoolAttributeOperation) encode(mut w serializer.Writer) {
-	w.write_string(match e {
-		.override { 'override' }
-		.alpha_blend { 'alpha_blend' }
-		.and { 'and' }
-		.nand { 'nand' }
-		.@or { 'or' }
-		.nor { 'nor' }
-		.xor { 'xor' }
-		.xnor { 'xnor' }
-	})
-}
-
-pub fn BoolAttributeOperation.decode(mut r serializer.Reader) !BoolAttributeOperation {
-	s := r.read_string()!
-	return match s {
-		'override' { BoolAttributeOperation.override }
-		'alpha_blend' { BoolAttributeOperation.alpha_blend }
-		'and' { BoolAttributeOperation.and }
-		'nand' { BoolAttributeOperation.nand }
-		'or' { BoolAttributeOperation.@or }
-		'nor' { BoolAttributeOperation.nor }
-		'xor' { BoolAttributeOperation.xor }
-		'xnor' { BoolAttributeOperation.xnor }
-		else { error('invalid BoolAttributeOperation ${s}') }
-	}
-}
-
-pub enum FloatAttributeOperation {
-	override
-	alpha_blend
-	add
-	subtract
-	multiply
-	minimum
-	maximum
-}
-
-pub fn (e FloatAttributeOperation) encode(mut w serializer.Writer) {
-	w.write_string(match e {
-		.override { 'override' }
-		.alpha_blend { 'alpha_blend' }
-		.add { 'add' }
-		.subtract { 'subtract' }
-		.multiply { 'multiply' }
-		.minimum { 'minimum' }
-		.maximum { 'maximum' }
-	})
-}
-
-pub fn FloatAttributeOperation.decode(mut r serializer.Reader) !FloatAttributeOperation {
-	s := r.read_string()!
-	return match s {
-		'override' { FloatAttributeOperation.override }
-		'alpha_blend' { FloatAttributeOperation.alpha_blend }
-		'add' { FloatAttributeOperation.add }
-		'subtract' { FloatAttributeOperation.subtract }
-		'multiply' { FloatAttributeOperation.multiply }
-		'minimum' { FloatAttributeOperation.minimum }
-		'maximum' { FloatAttributeOperation.maximum }
-		else { error('invalid FloatAttributeOperation ${s}') }
-	}
-}
-
-pub struct Color255RGBAString {
-pub mut:
-	value string
-}
-
-pub struct Color255RGBAArray {
-pub mut:
-	value [4]i32
-}
-
-pub type Color255RGBA = Color255RGBAArray | Color255RGBAString
-
-pub fn (t Color255RGBA) encode(mut w serializer.Writer) {
-	match t {
-		Color255RGBAString {
-			w.write_varuint32(0)
-			w.write_string(t.value)
-		}
-		Color255RGBAArray {
-			w.write_varuint32(1)
-			w.le_i32(t.value[0])
-			w.le_i32(t.value[1])
-			w.le_i32(t.value[2])
-			w.le_i32(t.value[3])
-		}
-	}
-}
-
-pub fn Color255RGBA.decode(mut r serializer.Reader) !Color255RGBA {
-	d := r.read_varuint32()!
-	match d {
-		0 {
-			return Color255RGBAString{
-				value: r.read_string()!
-			}
-		}
-		1 {
-			return Color255RGBAArray{
-				value: [r.le_i32()!, r.le_i32()!, r.le_i32()!,
-					r.le_i32()!]!
-			}
-		}
-		else {
-			return error('invalid Color255RGBA ${d}')
-		}
-	}
-}
-
-pub enum ColorAttributeOperation {
-	override
-	alpha_blend
-	add
-	subtract
-	multiply
-}
-
-pub fn (e ColorAttributeOperation) encode(mut w serializer.Writer) {
-	w.write_string(match e {
-		.override { 'override' }
-		.alpha_blend { 'alpha_blend' }
-		.add { 'add' }
-		.subtract { 'subtract' }
-		.multiply { 'multiply' }
-	})
-}
-
-pub fn ColorAttributeOperation.decode(mut r serializer.Reader) !ColorAttributeOperation {
-	s := r.read_string()!
-	return match s {
-		'override' { ColorAttributeOperation.override }
-		'alpha_blend' { ColorAttributeOperation.alpha_blend }
-		'add' { ColorAttributeOperation.add }
-		'subtract' { ColorAttributeOperation.subtract }
-		'multiply' { ColorAttributeOperation.multiply }
-		else { error('invalid ColorAttributeOperation ${s}') }
 	}
 }

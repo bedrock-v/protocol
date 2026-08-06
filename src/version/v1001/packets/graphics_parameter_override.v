@@ -5,8 +5,8 @@ import protocol.serializer
 pub struct GraphicsParameterOverridePacket {
 pub mut:
 	values            []GraphicsParameterOverrideKeyFrame
-	float_value       f32
-	vec3_value        [3]f32
+	float_value       ?f32
+	vec3_value        ?[3]f32
 	biome_identifier  string
 	player_identifier ?string
 	parameter_type    GraphicsParameterOverrideType
@@ -30,10 +30,20 @@ pub fn (p &GraphicsParameterOverridePacket) encode_payload(mut w serializer.Writ
 	for e in p.values {
 		e.encode(mut w)
 	}
-	w.le_f32(p.float_value)
-	w.le_f32(p.vec3_value[0])
-	w.le_f32(p.vec3_value[1])
-	w.le_f32(p.vec3_value[2])
+	if v := p.float_value {
+		w.bool(true)
+		w.le_f32(v)
+	} else {
+		w.bool(false)
+	}
+	if v := p.vec3_value {
+		w.bool(true)
+		w.le_f32(v[0])
+		w.le_f32(v[1])
+		w.le_f32(v[2])
+	} else {
+		w.bool(false)
+	}
 	w.write_string(p.biome_identifier)
 	if v := p.player_identifier {
 		w.bool(true)
@@ -53,8 +63,16 @@ pub fn (mut p GraphicsParameterOverridePacket) decode_payload(mut r serializer.R
 			p.values << GraphicsParameterOverrideKeyFrame.decode(mut r)!
 		}
 	}
-	p.float_value = r.le_f32()!
-	p.vec3_value = [r.le_f32()!, r.le_f32()!, r.le_f32()!]!
+	if r.bool()! {
+		p.float_value = r.le_f32()!
+	} else {
+		p.float_value = none
+	}
+	if r.bool()! {
+		p.vec3_value = [r.le_f32()!, r.le_f32()!, r.le_f32()!]!
+	} else {
+		p.vec3_value = none
+	}
 	p.biome_identifier = r.read_string()!
 	if r.bool()! {
 		p.player_identifier = r.read_string()!

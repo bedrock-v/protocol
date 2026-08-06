@@ -46,9 +46,19 @@ pub mut:
 	slot i8
 }
 
-pub struct ItemStackActionPlaceInItemContainer {}
+pub struct ItemStackActionPlaceInItemContainer {
+pub mut:
+	amount      i8
+	source      ItemStackRequestSlotInfo
+	destination ItemStackRequestSlotInfo
+}
 
-pub struct ItemStackActionTakeFromItemContainer {}
+pub struct ItemStackActionTakeFromItemContainer {
+pub mut:
+	amount      i8
+	source      ItemStackRequestSlotInfo
+	destination ItemStackRequestSlotInfo
+}
 
 pub struct ItemStackActionScreenLabTableCombine {}
 
@@ -67,30 +77,30 @@ pub mut:
 
 pub struct ItemStackActionCraftRecipe {
 pub mut:
-	recipe_network_id i32
+	recipe_network_id u32
 }
 
 pub struct ItemStackActionCraftRecipeAuto {
 pub mut:
-	recipe_network_id i32
+	recipe_network_id u32
 	times_crafted     i8
-	ingredients       []ItemDescriptorType
+	ingredients       []ItemDescriptorCount
 }
 
 pub struct ItemStackActionCraftCreative {
 pub mut:
-	creative_item_network_id i32
+	creative_item_network_id u32
 }
 
 pub struct ItemStackActionCraftRecipeOptional {
 pub mut:
-	recipe_network_id      i32
+	recipe_network_id      u32
 	filtered_strings_index i32
 }
 
 pub struct ItemStackActionCraftRepairAndDisenchant {
 pub mut:
-	recipe_network_id i32
+	recipe_network_id u32
 	repair_cost       i32
 }
 
@@ -165,9 +175,15 @@ pub fn (t ItemStackRequestActionType) encode(mut w serializer.Writer) {
 		}
 		ItemStackActionPlaceInItemContainer {
 			w.i8(7)
+			w.i8(t.amount)
+			t.source.encode(mut w)
+			t.destination.encode(mut w)
 		}
 		ItemStackActionTakeFromItemContainer {
 			w.i8(8)
+			w.i8(t.amount)
+			t.source.encode(mut w)
+			t.destination.encode(mut w)
 		}
 		ItemStackActionScreenLabTableCombine {
 			w.i8(9)
@@ -185,29 +201,29 @@ pub fn (t ItemStackRequestActionType) encode(mut w serializer.Writer) {
 		}
 		ItemStackActionCraftRecipe {
 			w.i8(12)
-			w.write_varint32(t.recipe_network_id)
+			w.write_varuint32(t.recipe_network_id)
 		}
 		ItemStackActionCraftRecipeAuto {
 			w.i8(13)
-			w.write_varint32(t.recipe_network_id)
+			w.write_varuint32(t.recipe_network_id)
 			w.i8(t.times_crafted)
-			w.u8(u8(t.ingredients.len))
+			w.write_varuint32(u32(t.ingredients.len))
 			for e in t.ingredients {
 				e.encode(mut w)
 			}
 		}
 		ItemStackActionCraftCreative {
 			w.i8(14)
-			w.write_varint32(t.creative_item_network_id)
+			w.write_varuint32(t.creative_item_network_id)
 		}
 		ItemStackActionCraftRecipeOptional {
 			w.i8(15)
-			w.write_varint32(t.recipe_network_id)
+			w.write_varuint32(t.recipe_network_id)
 			w.le_i32(t.filtered_strings_index)
 		}
 		ItemStackActionCraftRepairAndDisenchant {
 			w.i8(16)
-			w.write_varint32(t.recipe_network_id)
+			w.write_varuint32(t.recipe_network_id)
 			w.write_varint32(t.repair_cost)
 		}
 		ItemStackActionCraftLoom {
@@ -271,10 +287,18 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 			}
 		}
 		7 {
-			return ItemStackActionPlaceInItemContainer{}
+			return ItemStackActionPlaceInItemContainer{
+				amount:      r.i8()!
+				source:      ItemStackRequestSlotInfo.decode(mut r)!
+				destination: ItemStackRequestSlotInfo.decode(mut r)!
+			}
 		}
 		8 {
-			return ItemStackActionTakeFromItemContainer{}
+			return ItemStackActionTakeFromItemContainer{
+				amount:      r.i8()!
+				source:      ItemStackRequestSlotInfo.decode(mut r)!
+				destination: ItemStackRequestSlotInfo.decode(mut r)!
+			}
 		}
 		9 {
 			return ItemStackActionScreenLabTableCombine{}
@@ -294,16 +318,16 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 		}
 		12 {
 			return ItemStackActionCraftRecipe{
-				recipe_network_id: r.read_varint32()!
+				recipe_network_id: r.read_varuint32()!
 			}
 		}
 		13 {
-			recipe_network_id := r.read_varint32()!
+			recipe_network_id := r.read_varuint32()!
 			times_crafted := r.i8()!
-			count := int(r.u8()!)
-			mut ings := []ItemDescriptorType{cap: count}
+			count := int(r.read_varuint32()!)
+			mut ings := []ItemDescriptorCount{cap: count}
 			for _ in 0 .. count {
-				ings << ItemDescriptorType.decode(mut r)!
+				ings << ItemDescriptorCount.decode(mut r)!
 			}
 			return ItemStackActionCraftRecipeAuto{
 				recipe_network_id: recipe_network_id
@@ -313,18 +337,18 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 		}
 		14 {
 			return ItemStackActionCraftCreative{
-				creative_item_network_id: r.read_varint32()!
+				creative_item_network_id: r.read_varuint32()!
 			}
 		}
 		15 {
 			return ItemStackActionCraftRecipeOptional{
-				recipe_network_id:      r.read_varint32()!
+				recipe_network_id:      r.read_varuint32()!
 				filtered_strings_index: r.le_i32()!
 			}
 		}
 		16 {
 			return ItemStackActionCraftRepairAndDisenchant{
-				recipe_network_id: r.read_varint32()!
+				recipe_network_id: r.read_varuint32()!
 				repair_cost:       r.read_varint32()!
 			}
 		}

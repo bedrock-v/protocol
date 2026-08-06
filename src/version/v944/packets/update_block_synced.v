@@ -32,7 +32,7 @@ pub fn (p &UpdateBlockSyncedPacket) encode_payload(mut w serializer.Writer) {
 	w.write_varuint32(p.flags)
 	w.write_varuint32(p.later)
 	w.write_varuint64(p.unique_actor_id)
-	p.actor_sync_message.encode(mut w)
+	w.write_varuint64(u64(p.actor_sync_message))
 }
 
 pub fn (mut p UpdateBlockSyncedPacket) decode_payload(mut r serializer.Reader) ! {
@@ -41,5 +41,5 @@ pub fn (mut p UpdateBlockSyncedPacket) decode_payload(mut r serializer.Reader) !
 	p.flags = r.read_varuint32()!
 	p.later = r.read_varuint32()!
 	p.unique_actor_id = r.read_varuint64()!
-	p.actor_sync_message = enums.ActorBlockSyncMessageID.decode(mut r)!
+	p.actor_sync_message = unsafe { enums.ActorBlockSyncMessageID(r.read_varuint64()!) }
 }

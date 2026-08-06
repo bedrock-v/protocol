@@ -11,16 +11,18 @@ pub mut:
 }
 
 pub fn (t DimensionDefinition) encode(mut w serializer.Writer) {
-	w.write_varint32(t.height_max)
 	w.write_varint32(t.height_min)
+	w.write_varint32(t.height_max)
 	w.write_varint32(t.generator_type)
 	w.write_varint32(t.dimension_type)
 }
 
 pub fn DimensionDefinition.decode(mut r serializer.Reader) !DimensionDefinition {
+	min := r.read_varint32()!
+	max := r.read_varint32()!
 	return DimensionDefinition{
-		height_max:     r.read_varint32()!
-		height_min:     r.read_varint32()!
+		height_max:     max
+		height_min:     min
 		generator_type: r.read_varint32()!
 		dimension_type: r.read_varint32()!
 	}

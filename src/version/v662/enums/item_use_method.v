@@ -23,9 +23,9 @@ pub enum ItemUseMethod as i32 {
 }
 
 pub fn (e ItemUseMethod) encode(mut w serializer.Writer) {
-	w.write_varint32(i32(e))
+	w.le_i32(i32(e))
 }
 
 pub fn ItemUseMethod.decode(mut r serializer.Reader) !ItemUseMethod {
-	return unsafe { ItemUseMethod(r.read_varint32()!) }
+	return unsafe { ItemUseMethod(r.le_i32()!) }
 }

@@ -56,16 +56,30 @@ pub fn (t InventorySourceType) encode(mut w serializer.Writer) {
 pub fn InventorySourceType.decode(mut r serializer.Reader) !InventorySourceType {
 	d := r.read_varuint32()!
 	match d {
-		u32(0xffffffff) { return InventorySourceInvalidInventory{} }
-		0 { return InventorySourceContainerInventory{
+		u32(0xffffffff) {
+			return InventorySourceInvalidInventory{}
+		}
+		0 {
+			return InventorySourceContainerInventory{
 				container_id: enums.ContainerID.decode(mut r)!
-			} }
-		1 { return InventorySourceGlobalInventory{} }
-		2 { return InventorySourceWorldInteraction{
+			}
+		}
+		1 {
+			return InventorySourceGlobalInventory{}
+		}
+		2 {
+			return InventorySourceWorldInteraction{
 				flags: r.read_varuint32()!
-			} }
-		3 { return InventorySourceCreativeInventory{} }
-		99999 { return InventorySourceNonImplementedFeatureTodo{} }
-		else { return error('invalid InventorySourceType ${d}') }
+			}
+		}
+		3 {
+			return InventorySourceCreativeInventory{}
+		}
+		99999 {
+			return InventorySourceNonImplementedFeatureTodo{}
+		}
+		else {
+			return error('invalid InventorySourceType ${d}')
+		}
 	}
 }

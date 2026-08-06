@@ -214,50 +214,36 @@ pub fn ServerJoinInformation.decode(mut r serializer.Reader) !ServerJoinInformat
 
 pub struct GatheringJoinInfo {
 pub mut:
-	experience_id         string
-	experience_name       ?string
-	experience_world_id   string
-	experience_world_name ?string
+	experience_id         types_662.Uuid
+	experience_name       string
+	experience_world_id   types_662.Uuid
+	experience_world_name string
 	creator_id            string
-	unknown1              types_662.Uuid
-	unknown2              types_662.Uuid
+	target_id             types_662.Uuid
+	scenario_id           string
 	server_id             string
 }
 
 pub fn (t GatheringJoinInfo) encode(mut w serializer.Writer) {
-	w.write_string(t.experience_id)
-	if v := t.experience_name {
-		w.bool(true)
-		w.write_string(v)
-	} else {
-		w.bool(false)
-	}
-	w.write_string(t.experience_world_id)
-	if v := t.experience_world_name {
-		w.bool(true)
-		w.write_string(v)
-	} else {
-		w.bool(false)
-	}
+	t.experience_id.encode(mut w)
+	w.write_string(t.experience_name)
+	t.experience_world_id.encode(mut w)
+	w.write_string(t.experience_world_name)
 	w.write_string(t.creator_id)
-	t.unknown1.encode(mut w)
-	t.unknown2.encode(mut w)
+	t.target_id.encode(mut w)
+	w.write_string(t.scenario_id)
 	w.write_string(t.server_id)
 }
 
 pub fn GatheringJoinInfo.decode(mut r serializer.Reader) !GatheringJoinInfo {
 	mut t := GatheringJoinInfo{}
-	t.experience_id = r.read_string()!
-	if r.bool()! {
-		t.experience_name = r.read_string()!
-	}
-	t.experience_world_id = r.read_string()!
-	if r.bool()! {
-		t.experience_world_name = r.read_string()!
-	}
+	t.experience_id = types_662.Uuid.decode(mut r)!
+	t.experience_name = r.read_string()!
+	t.experience_world_id = types_662.Uuid.decode(mut r)!
+	t.experience_world_name = r.read_string()!
 	t.creator_id = r.read_string()!
-	t.unknown1 = types_662.Uuid.decode(mut r)!
-	t.unknown2 = types_662.Uuid.decode(mut r)!
+	t.target_id = types_662.Uuid.decode(mut r)!
+	t.scenario_id = r.read_string()!
 	t.server_id = r.read_string()!
 	return t
 }
