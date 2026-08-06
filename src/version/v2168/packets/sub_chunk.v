@@ -54,13 +54,6 @@ pub fn (e SubChunkDataEntry) encode(mut w serializer.Writer) {
 	}
 }
 
-fn opt_height_map(has bool, v [16][16]i8) ?[16][16]i8 {
-	if has {
-		return v
-	}
-	return none
-}
-
 pub fn SubChunkDataEntry.decode(mut r serializer.Reader) !SubChunkDataEntry {
 	sub_chunk_pos_offset := types_662.SubChunkPosOffset.decode(mut r)!
 	sub_chunk_request_result := unsafe { SubChunkRequestResult(r.i8()!) }
@@ -87,9 +80,9 @@ pub fn SubChunkDataEntry.decode(mut r serializer.Reader) !SubChunkDataEntry {
 		sub_chunk_request_result:    sub_chunk_request_result
 		serialized_sub_chunk:        serialized_sub_chunk
 		height_map_data_type:        height_map_data_type
-		height_map_data:             opt_height_map(has_height_map, height_map_data_raw)
+		height_map_data:             height_map_data_raw
 		render_height_map_data_type: render_height_map_data_type
-		render_height_map_data:      opt_height_map(has_render_height_map, render_height_map_data_raw)
+		render_height_map_data:      render_height_map_data_raw
 		blob_id:                     blob_id
 	}
 }
