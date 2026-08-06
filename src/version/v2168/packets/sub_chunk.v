@@ -27,9 +27,9 @@ pub mut:
 	sub_chunk_request_result    SubChunkRequestResult
 	serialized_sub_chunk        ?[]u8
 	height_map_data_type        HeightMapDataType
-	height_map_data             ?[16][16]i8
+	height_map_data             [16][16]i8
 	render_height_map_data_type HeightMapDataType
-	render_height_map_data      ?[16][16]i8
+	render_height_map_data      [16][16]i8
 	blob_id                     ?u64
 }
 
@@ -43,9 +43,9 @@ pub fn (e SubChunkDataEntry) encode(mut w serializer.Writer) {
 		w.bool(false)
 	}
 	w.i8(i8(e.height_map_data_type))
-	encode_opt_height_map(mut w, e.height_map_data)
+	encode_opt_height_map(mut w, e.height_map_data_type == .has_data, e.height_map_data)
 	w.i8(i8(e.render_height_map_data_type))
-	encode_opt_height_map(mut w, e.render_height_map_data)
+	encode_opt_height_map(mut w, e.render_height_map_data_type == .has_data, e.render_height_map_data)
 	if v := e.blob_id {
 		w.bool(true)
 		w.le_u64(v)
@@ -75,16 +75,14 @@ pub fn SubChunkDataEntry.decode(mut r serializer.Reader) !SubChunkDataEntry {
 	return e
 }
 
-fn encode_opt_height_map(mut w serializer.Writer, data ?[16][16]i8) {
-	if val := data {
-		w.bool(true)
+fn encode_opt_height_map(mut w serializer.Writer, present bool, data [16][16]i8) {
+	w.bool(present)
+	if present {
 		for x in 0 .. 16 {
 			for y in 0 .. 16 {
-				w.i8(val[x][y])
+				w.i8(data[x][y])
 			}
 		}
-	} else {
-		w.bool(false)
 	}
 }
 
