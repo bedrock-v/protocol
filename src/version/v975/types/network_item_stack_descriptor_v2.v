@@ -10,6 +10,7 @@ pub mut:
 	net_id           ?i32
 	block_runtime_id u32
 	user_data_buffer []u8
+	blocking         bool
 }
 
 pub fn (t NetworkItemStackDescriptorV2) encode(mut w serializer.Writer) {
@@ -28,7 +29,7 @@ pub fn (t NetworkItemStackDescriptorV2) encode(mut w serializer.Writer) {
 		w.write_varuint32(0)
 		return
 	}
-	w.write_item_extra_data(t.user_data_buffer)
+	w.write_item_extra_data_opts(t.user_data_buffer, t.blocking)
 }
 
 pub fn NetworkItemStackDescriptorV2.decode(mut r serializer.Reader) !NetworkItemStackDescriptorV2 {

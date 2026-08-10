@@ -78,6 +78,8 @@ pub fn (t DataItemType) type_id() u32 {
 pub fn (t DataItemType) encode(mut w serializer.Writer) {
 	id := t.type_id()
 	w.write_varuint32(id)
+	// since 1.26.40 the format is written twice: varuint followed by a raw byte
+	w.u8(u8(id))
 	match t {
 		DataItemByte {
 			w.i8(t.value)
@@ -113,6 +115,7 @@ pub fn (t DataItemType) encode(mut w serializer.Writer) {
 
 pub fn DataItemType.decode(mut r serializer.Reader) !DataItemType {
 	d := r.read_varuint32()!
+	r.u8()!
 	match d {
 		0 {
 			return DataItemByte{

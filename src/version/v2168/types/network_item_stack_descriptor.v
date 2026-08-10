@@ -10,6 +10,7 @@ pub mut:
 	net_id           ?i32
 	block_runtime_id u32
 	user_data_buffer []u8
+	blocking         bool
 }
 
 pub fn (t NetworkItemStackDescriptor) encode(mut w serializer.Writer) {
@@ -18,12 +19,14 @@ pub fn (t NetworkItemStackDescriptor) encode(mut w serializer.Writer) {
 	w.write_varuint32(t.aux_value)
 	if v := t.net_id {
 		w.bool(true)
+		// net id type, 0 = ItemStackNetId
+		w.write_varuint32(0)
 		w.write_varint32(v)
 	} else {
 		w.bool(false)
 	}
 	w.write_varuint32(t.block_runtime_id)
-	w.write_item_extra_data(t.user_data_buffer)
+	w.write_item_extra_data_opts(t.user_data_buffer, t.blocking)
 }
 
 pub fn NetworkItemStackDescriptor.decode(mut r serializer.Reader) !NetworkItemStackDescriptor {
@@ -32,6 +35,7 @@ pub fn NetworkItemStackDescriptor.decode(mut r serializer.Reader) !NetworkItemSt
 	t.stack_size = r.le_u16()!
 	t.aux_value = r.read_varuint32()!
 	if r.bool()! {
+		r.read_varuint32()!
 		t.net_id = r.read_varint32()!
 	}
 	t.block_runtime_id = r.read_varuint32()!
