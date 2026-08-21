@@ -103,6 +103,7 @@ pub enum ProtoVersion {
 	v975
 	v1001
 	v2168
+	v2192
 }
 
 pub fn (v ProtoVersion) protocol_id() int {
@@ -209,6 +210,7 @@ pub fn (v ProtoVersion) protocol_id() int {
 		.v975 { 975 }
 		.v1001 { 1001 }
 		.v2168 { 2168 }
+		.v2192 { 2192 }
 	}
 }
 
@@ -328,6 +330,7 @@ pub fn (v ProtoVersion) minecraft_version() string {
 		.v975 { '1.26.20' }
 		.v1001 { '1.26.30' }
 		.v2168 { '1.26.40' }
+		.v2192 { '1.26.50' }
 	}
 }
 
@@ -434,6 +437,7 @@ pub fn from_protocol_id(id int) ProtoVersion {
 		975 { ProtoVersion.v975 }
 		1001 { ProtoVersion.v1001 }
 		2168 { ProtoVersion.v2168 }
+		2192 { ProtoVersion.v2192 }
 		else { ProtoVersion.unknown }
 	}
 }
@@ -446,5 +450,5 @@ pub fn all() []ProtoVersion {
 		.v431, .v440, .v448, .v465, .v471, .v475, .v486, .v503, .v527, .v534, .v544, .v545, .v554,
 		.v557, .v560, .v567, .v568, .v575, .v582, .v589, .v594, .v618, .v622, .v630, .v649, .v662,
 		.v671, .v685, .v686, .v712, .v729, .v748, .v766, .v776, .v786, .v800, .v818, .v819, .v827,
-		.v844, .v859, .v898, .v924, .v944, .v975, .v1001, .v2168]
+		.v844, .v859, .v898, .v924, .v944, .v975, .v1001, .v2168, .v2192]
 }
