@@ -169,6 +169,7 @@ pub type ItemStackActionSwap = types_2168.ItemStackActionSwap
 pub type ItemStackActionTake = types_2168.ItemStackActionTake
 pub type ItemStackRequestActionType = types_2168.ItemStackRequestActionType
 pub type ItemStackRequestSlotInfo = types_2168.ItemStackRequestSlotInfo
+pub type UseItemTransactionData = types_2192.UseItemTransactionData
 pub type ItemStackResponseContainerInfo = types_2192.ItemStackResponseContainerInfo
 pub type ItemStackResponseInfo = types_2192.ItemStackResponseInfo
 pub type ItemStackResponseSlotInfo = types_2192.ItemStackResponseSlotInfo

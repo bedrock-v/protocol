@@ -2,6 +2,7 @@ module packets
 
 import protocol.serializer
 import protocol.version.v2168.types as types_2168
+import protocol.version.v2192.types
 import protocol.version.v662.enums as enums_662
 
 pub struct LegacySetItemSlotsEntry {
@@ -37,6 +38,10 @@ pub mut:
 	legacy_set_item_slots ?[]LegacySetItemSlotsEntry
 	transaction_type      enums_662.ComplexInventoryTransactionType
 	transaction           types_2168.InventoryTransaction
+	// use_item is present only for an item use transaction. The other complex
+	// types carry their own bodies, which nothing reads yet and which are left
+	// on the wire rather than guessed at.
+	use_item ?types.UseItemTransactionData
 }
 
 pub fn (p &InventoryTransactionPacket) pid() u16 {
@@ -64,6 +69,9 @@ pub fn (p &InventoryTransactionPacket) encode_payload(mut w serializer.Writer) {
 	}
 	p.transaction_type.encode(mut w)
 	p.transaction.encode(mut w)
+	if v := p.use_item {
+		v.encode(mut w)
+	}
 }
 
 pub fn (mut p InventoryTransactionPacket) decode_payload(mut r serializer.Reader) ! {
@@ -78,4 +86,9 @@ pub fn (mut p InventoryTransactionPacket) decode_payload(mut r serializer.Reader
 	}
 	p.transaction_type = enums_662.ComplexInventoryTransactionType.decode(mut r)!
 	p.transaction = types_2168.InventoryTransaction.decode(mut r)!
+	if p.transaction_type == .item_use_transaction {
+		p.use_item = types.UseItemTransactionData.decode(mut r)!
+	} else {
+		p.use_item = none
+	}
 }
