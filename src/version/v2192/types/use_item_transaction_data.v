@@ -16,7 +16,7 @@ pub mut:
 	action_type      enums_662.ItemUseInventoryTransactionType
 	trigger_type     TriggerType
 	position         types_944.NetworkBlockPosition
-	face             i32
+	face             u8
 	slot             i32
 	hand_slot        HandSlot
 	item             types_2168.NetworkItemStackDescriptor
@@ -31,7 +31,7 @@ pub fn (t UseItemTransactionData) encode(mut w serializer.Writer) {
 	t.action_type.encode(mut w)
 	t.trigger_type.encode(mut w)
 	t.position.encode(mut w)
-	w.write_varint32(t.face)
+	w.u8(t.face)
 	w.write_varint32(t.slot)
 	t.hand_slot.encode(mut w)
 	t.item.encode(mut w)
@@ -51,7 +51,7 @@ pub fn UseItemTransactionData.decode(mut r serializer.Reader) !UseItemTransactio
 	t.action_type = enums_662.ItemUseInventoryTransactionType.decode(mut r)!
 	t.trigger_type = TriggerType.decode(mut r)!
 	t.position = types_944.NetworkBlockPosition.decode(mut r)!
-	t.face = r.read_varint32()!
+	t.face = r.u8()!
 	t.slot = r.read_varint32()!
 	t.hand_slot = HandSlot.decode(mut r)!
 	t.item = types_2168.NetworkItemStackDescriptor.decode(mut r)!

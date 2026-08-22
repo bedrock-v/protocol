@@ -40,6 +40,7 @@ fn test_an_item_use_transaction_carries_its_click() {
 			}
 			face:        1
 			slot:        3
+			trigger_type: .player_input
 		}
 	}
 	mut pool := new_packet_pool()
@@ -56,6 +57,7 @@ fn test_an_item_use_transaction_carries_its_click() {
 		assert click.position.z == -411
 		assert click.face == 1
 		assert click.slot == 3
+		assert click.trigger_type == .player_input
 	} else {
 		assert false, 'the packet did not decode as an InventoryTransactionPacket'
 	}

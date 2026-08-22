@@ -32,31 +32,31 @@ pub fn ContainerSlotEntry.decode(mut r serializer.Reader) !ContainerSlotEntry {
 	}
 }
 
-pub enum PredictedResult as i32 {
+pub enum PredictedResult as u8 {
 	failure = 0
 	success = 1
 }
 
 pub fn (e PredictedResult) encode(mut w serializer.Writer) {
-	w.write_varint32(i32(e))
+	w.u8(u8(e))
 }
 
 pub fn PredictedResult.decode(mut r serializer.Reader) !PredictedResult {
-	return unsafe { PredictedResult(r.read_varint32()!) }
+	return unsafe { PredictedResult(r.u8()!) }
 }
 
-pub enum TriggerType as i32 {
+pub enum TriggerType as u8 {
 	unknown         = 0
 	player_input    = 1
 	simulation_tick = 2
 }
 
 pub fn (e TriggerType) encode(mut w serializer.Writer) {
-	w.write_varint32(i32(e))
+	w.u8(u8(e))
 }
 
 pub fn TriggerType.decode(mut r serializer.Reader) !TriggerType {
-	return unsafe { TriggerType(r.read_varint32()!) }
+	return unsafe { TriggerType(r.u8()!) }
 }
 
 pub enum HandSlot as u8 {
@@ -80,7 +80,7 @@ pub mut:
 	action_type      enums_662.ItemUseInventoryTransactionType
 	trigger_type     TriggerType
 	position         types_944.NetworkBlockPosition
-	face             i32
+	face             u8
 	slot             i32
 	hand_slot        HandSlot
 	item             types_2168.NetworkItemStackDescriptor
@@ -103,7 +103,7 @@ pub fn (t PackedItemUseLegacyInventoryTransaction) encode(mut w serializer.Write
 	t.action_type.encode(mut w)
 	t.trigger_type.encode(mut w)
 	t.position.encode(mut w)
-	w.write_varint32(t.face)
+	w.u8(t.face)
 	w.write_varint32(t.slot)
 	t.hand_slot.encode(mut w)
 	t.item.encode(mut w)
@@ -132,7 +132,7 @@ pub fn PackedItemUseLegacyInventoryTransaction.decode(mut r serializer.Reader) !
 	t.action_type = enums_662.ItemUseInventoryTransactionType.decode(mut r)!
 	t.trigger_type = TriggerType.decode(mut r)!
 	t.position = types_944.NetworkBlockPosition.decode(mut r)!
-	t.face = r.read_varint32()!
+	t.face = r.u8()!
 	t.slot = r.read_varint32()!
 	t.hand_slot = HandSlot.decode(mut r)!
 	t.item = types_2168.NetworkItemStackDescriptor.decode(mut r)!
