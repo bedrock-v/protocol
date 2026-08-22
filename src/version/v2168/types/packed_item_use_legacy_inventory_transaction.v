@@ -37,11 +37,11 @@ pub enum PredictedResult as i32 {
 }
 
 pub fn (e PredictedResult) encode(mut w serializer.Writer) {
-	w.write_varint32(i32(e))
+	w.u8(u8(e))
 }
 
 pub fn PredictedResult.decode(mut r serializer.Reader) !PredictedResult {
-	return unsafe { PredictedResult(r.read_varint32()!) }
+	return unsafe { PredictedResult(r.u8()!) }
 }
 
 pub enum TriggerType as i32 {
@@ -51,11 +51,11 @@ pub enum TriggerType as i32 {
 }
 
 pub fn (e TriggerType) encode(mut w serializer.Writer) {
-	w.write_varint32(i32(e))
+	w.u8(u8(e))
 }
 
 pub fn TriggerType.decode(mut r serializer.Reader) !TriggerType {
-	return unsafe { TriggerType(r.read_varint32()!) }
+	return unsafe { TriggerType(r.u8()!) }
 }
 
 pub struct PackedItemUseLegacyInventoryTransaction {
@@ -78,17 +78,20 @@ pub mut:
 
 pub fn (t PackedItemUseLegacyInventoryTransaction) encode(mut w serializer.Writer) {
 	w.write_varint32(t.id)
-	if t.id != 0 {
+	w.bool(t.container_slots.len > 0)
+	if t.container_slots.len > 0 {
 		w.write_varuint32(u32(t.container_slots.len))
 		for e in t.container_slots {
 			e.encode(mut w)
 		}
 	}
+	w.bool(true)
+	w.bool(true)
 	t.action.encode(mut w)
 	t.action_type.encode(mut w)
 	t.trigger_type.encode(mut w)
 	t.position.encode(mut w)
-	w.write_varint32(t.face)
+	w.u8(u8(t.face))
 	w.write_varint32(t.slot)
 	t.item.encode(mut w)
 	w.le_f32(t.from_position[0])
@@ -105,18 +108,22 @@ pub fn (t PackedItemUseLegacyInventoryTransaction) encode(mut w serializer.Write
 pub fn PackedItemUseLegacyInventoryTransaction.decode(mut r serializer.Reader) !PackedItemUseLegacyInventoryTransaction {
 	mut t := PackedItemUseLegacyInventoryTransaction{}
 	t.id = r.read_varint32()!
-	if t.id != 0 {
+	if r.bool()! {
 		count := int(r.read_varuint32()!)
 		t.container_slots = []ContainerSlotEntry{cap: count}
 		for _ in 0 .. count {
 			t.container_slots << ContainerSlotEntry.decode(mut r)!
 		}
 	}
-	t.action = InventoryTransaction.decode(mut r)!
+	if r.bool()! {
+		if r.bool()! {
+			t.action = InventoryTransaction.decode(mut r)!
+		}
+	}
 	t.action_type = enums_662.ItemUseInventoryTransactionType.decode(mut r)!
 	t.trigger_type = TriggerType.decode(mut r)!
 	t.position = types_944.NetworkBlockPosition.decode(mut r)!
-	t.face = r.read_varint32()!
+	t.face = i32(r.u8()!)
 	t.slot = r.read_varint32()!
 	t.item = NetworkItemStackDescriptor.decode(mut r)!
 	t.from_position = [r.le_f32()!, r.le_f32()!, r.le_f32()!]!

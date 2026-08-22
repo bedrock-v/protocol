@@ -5,15 +5,8 @@ A Minecraft: Bedrock Edition network protocol implementation in V.
 ## Versions
 
 Packets live under versioned modules in `src/version/`. Each supported protocol
-version ships its own packet pool - later versions only materialize the packets,
+version ships its own packet pool, later versions only materialize the packets,
 types and enums that changed and inherit the rest from earlier modules.
-
-Supported protocols run from 2 (MCPE 0.2.0, 2012) up to 2192 (MC 1.26.50), 101
-versions across four wire-format eras plus the modern chain:
-
-Framing differs per era - use `protocol.encode_packet_old_to_bytes` / `pool.decode_old`
-for proto 9-113, `protocol.encode_packet_split_to_bytes` / `pool.decode_split` for
-proto 130-274, and `protocol.encode_packet_to_bytes` / `pool.decode` for 280+.
 
 ## Dependency: nbt
 

@@ -35,8 +35,9 @@ pub struct InventoryTransactionPacket {
 pub mut:
 	raw_id                i32
 	legacy_set_item_slots ?[]LegacySetItemSlotsEntry
-	transaction_type      ?enums_662.ComplexInventoryTransactionType
-	transaction           ?types.InventoryTransaction
+	transaction_type      enums_662.ComplexInventoryTransactionType
+	transaction           types.InventoryTransaction
+	transaction_data      types.InventoryTransactionData
 }
 
 pub fn (p &InventoryTransactionPacket) pid() u16 {
@@ -62,17 +63,22 @@ pub fn (p &InventoryTransactionPacket) encode_payload(mut w serializer.Writer) {
 	} else {
 		w.bool(false)
 	}
-	if v := p.transaction_type {
-		w.bool(true)
-		v.encode(mut w)
-	} else {
-		w.bool(false)
-	}
-	if v := p.transaction {
-		w.bool(true)
-		v.encode(mut w)
-	} else {
-		w.bool(false)
+	w.bool(true)
+	p.transaction_type.encode(mut w)
+	w.bool(true)
+	p.transaction.encode(mut w)
+	match p.transaction_data {
+		types.NormalTransactionData {}
+		types.MismatchTransactionData {}
+		types.UseItemTransactionData {
+			p.transaction_data.encode(mut w)
+		}
+		types.UseItemOnEntityTransactionData {
+			p.transaction_data.encode(mut w)
+		}
+		types.ReleaseItemTransactionData {
+			p.transaction_data.encode(mut w)
+		}
 	}
 }
 
@@ -86,10 +92,25 @@ pub fn (mut p InventoryTransactionPacket) decode_payload(mut r serializer.Reader
 		}
 		p.legacy_set_item_slots = slots
 	}
-	if r.bool()! {
-		p.transaction_type = enums_662.ComplexInventoryTransactionType.decode(mut r)!
-	}
-	if r.bool()! {
-		p.transaction = types.InventoryTransaction.decode(mut r)!
+	r.bool()!
+	p.transaction_type = enums_662.ComplexInventoryTransactionType.decode(mut r)!
+	r.bool()!
+	p.transaction = types.InventoryTransaction.decode(mut r)!
+	p.transaction_data = match p.transaction_type {
+		.normal_transaction {
+			types.InventoryTransactionData(types.NormalTransactionData{})
+		}
+		.inventory_mismatch {
+			types.InventoryTransactionData(types.MismatchTransactionData{})
+		}
+		.item_use_transaction {
+			types.InventoryTransactionData(types.UseItemTransactionData.decode(mut r)!)
+		}
+		.item_use_on_entity_transaction {
+			types.InventoryTransactionData(types.UseItemOnEntityTransactionData.decode(mut r)!)
+		}
+		.item_release_transaction {
+			types.InventoryTransactionData(types.ReleaseItemTransactionData.decode(mut r)!)
+		}
 	}
 }
