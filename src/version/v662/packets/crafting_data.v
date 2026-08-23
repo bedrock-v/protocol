@@ -46,29 +46,29 @@ pub fn (p &CraftingDataPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p CraftingDataPacket) decode_payload(mut r serializer.Reader) ! {
 	{
-		count := int(r.read_varuint32()!)
-		p.crafting_entries = []types.CraftingDataEntry{cap: count}
+		count := r.read_count()!
+		p.crafting_entries = []types.CraftingDataEntry{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.crafting_entries << types.CraftingDataEntry.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.potion_mixes = []types.PotionMixDataEntry{cap: count}
+		count := r.read_count()!
+		p.potion_mixes = []types.PotionMixDataEntry{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.potion_mixes << types.PotionMixDataEntry.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.container_mixes = []types.ContainerMixDataEntry{cap: count}
+		count := r.read_count()!
+		p.container_mixes = []types.ContainerMixDataEntry{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.container_mixes << types.ContainerMixDataEntry.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.material_reducers = []types.MaterialReducerDataEntry{cap: count}
+		count := r.read_count()!
+		p.material_reducers = []types.MaterialReducerDataEntry{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.material_reducers << types.MaterialReducerDataEntry.decode(mut r)!
 		}

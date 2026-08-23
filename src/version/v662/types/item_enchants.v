@@ -37,8 +37,8 @@ pub fn (t ItemEnchants) encode(mut w serializer.Writer) {
 
 pub fn ItemEnchants.decode(mut r serializer.Reader) !ItemEnchants {
 	slot := r.le_i32()!
-	count := int(r.read_varuint32()!)
-	mut items := []ItemEnchant{cap: count}
+	count := r.read_count()!
+	mut items := []ItemEnchant{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		items << ItemEnchant.decode(mut r)!
 	}

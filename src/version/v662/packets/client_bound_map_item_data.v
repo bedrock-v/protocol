@@ -87,8 +87,8 @@ pub fn ClientBoundMapType.decode_payload(id u32, mut r serializer.Reader) !Clien
 			t.texture_height = r.read_varint32()!
 			t.x_tex_coordinate = r.read_varint32()!
 			t.y_tex_coordinate = r.read_varint32()!
-			count := int(r.read_varuint32()!)
-			t.pixels = []MapPixelsEntry{cap: count}
+			count := r.read_count()!
+			t.pixels = []MapPixelsEntry{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				t.pixels << MapPixelsEntry{
 					pixel: r.read_varuint32()!
@@ -98,13 +98,13 @@ pub fn ClientBoundMapType.decode_payload(id u32, mut r serializer.Reader) !Clien
 		}
 		0x4 {
 			mut t := MapTypeDecorationUpdate{}
-			ac := int(r.read_varuint32()!)
-			t.actor_ids = []types.MapItemTrackedActorUniqueID{cap: ac}
+			ac := r.read_count()!
+			t.actor_ids = []types.MapItemTrackedActorUniqueID{cap: serializer.prealloc(ac)}
 			for _ in 0 .. ac {
 				t.actor_ids << types.MapItemTrackedActorUniqueID.decode(mut r)!
 			}
-			dc := int(r.read_varuint32()!)
-			t.decoration_list = []types.MapDecoration{cap: dc}
+			dc := r.read_count()!
+			t.decoration_list = []types.MapDecoration{cap: serializer.prealloc(dc)}
 			for _ in 0 .. dc {
 				t.decoration_list << types.MapDecoration.decode(mut r)!
 			}
@@ -112,8 +112,8 @@ pub fn ClientBoundMapType.decode_payload(id u32, mut r serializer.Reader) !Clien
 		}
 		0x8 {
 			mut t := MapTypeCreation{}
-			mc := int(r.read_varuint32()!)
-			t.map_id_list = []types.ActorUniqueID{cap: mc}
+			mc := r.read_count()!
+			t.map_id_list = []types.ActorUniqueID{cap: serializer.prealloc(mc)}
 			for _ in 0 .. mc {
 				t.map_id_list << types.ActorUniqueID.decode(mut r)!
 			}

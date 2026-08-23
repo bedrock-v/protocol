@@ -97,18 +97,18 @@ pub fn (mut p ResourcePacksInfoPacket) decode_payload(mut r serializer.Reader) !
 	p.scripting_enabled = r.bool()!
 	p.forcing_server_packs_enabled = r.bool()!
 	behavior_count := int(r.le_u16()!)
-	p.behavior_pack_infos = []ResourcePacksInfoEntry{cap: behavior_count}
+	p.behavior_pack_infos = []ResourcePacksInfoEntry{cap: serializer.prealloc(behavior_count)}
 	for _ in 0 .. behavior_count {
 		p.behavior_pack_infos << ResourcePacksInfoEntry.decode(mut r, false)!
 	}
 	resource_count := int(r.le_u16()!)
-	p.resource_pack_infos = []ResourcePacksInfoEntry{cap: resource_count}
+	p.resource_pack_infos = []ResourcePacksInfoEntry{cap: serializer.prealloc(resource_count)}
 	for _ in 0 .. resource_count {
 		p.resource_pack_infos << ResourcePacksInfoEntry.decode(mut r, true)!
 	}
-	cdn_count := int(r.read_varuint32()!)
-	mut cdn_keys := []string{cap: cdn_count}
-	mut cdn_urls := []string{cap: cdn_count}
+	cdn_count := r.read_count()!
+	mut cdn_keys := []string{cap: serializer.prealloc(cdn_count)}
+	mut cdn_urls := []string{cap: serializer.prealloc(cdn_count)}
 	for _ in 0 .. cdn_count {
 		cdn_keys << r.read_string()!
 		cdn_urls << r.read_string()!

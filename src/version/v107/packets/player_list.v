@@ -48,7 +48,7 @@ pub fn (p &PlayerListPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p PlayerListPacket) decode_payload(mut r serializer.Reader) ! {
 	p.type = r.u8()!
-	n := int(r.read_varuint32()!)
+	n := r.read_count()!
 	for _ in 0 .. n {
 		mut e := PlayerListEntry{}
 		if p.type == 0 {

@@ -28,13 +28,13 @@ pub fn (e RequestsEntry) encode(mut w serializer.Writer) {
 pub fn RequestsEntry.decode(mut r serializer.Reader) !RequestsEntry {
 	mut e := RequestsEntry{}
 	e.client_request_id = r.read_varint32()!
-	act_count := int(r.read_varuint32()!)
-	e.actions = []types.ItemStackRequestActionType{cap: act_count}
+	act_count := r.read_count()!
+	e.actions = []types.ItemStackRequestActionType{cap: serializer.prealloc(act_count)}
 	for _ in 0 .. act_count {
 		e.actions << types.ItemStackRequestActionType.decode(mut r)!
 	}
-	str_count := int(r.read_varuint32()!)
-	e.strings_to_filter = []string{cap: str_count}
+	str_count := r.read_count()!
+	e.strings_to_filter = []string{cap: serializer.prealloc(str_count)}
 	for _ in 0 .. str_count {
 		e.strings_to_filter << r.read_string()!
 	}
@@ -67,8 +67,8 @@ pub fn (p &ItemStackRequestPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p ItemStackRequestPacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.requests = []RequestsEntry{cap: count}
+	count := r.read_count()!
+	p.requests = []RequestsEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.requests << RequestsEntry.decode(mut r)!
 	}

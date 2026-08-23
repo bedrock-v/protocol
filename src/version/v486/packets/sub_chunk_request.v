@@ -37,7 +37,7 @@ pub fn (mut p SubChunkRequestPacket) decode_payload(mut r serializer.Reader) ! {
 	p.dimension = r.read_varint32()!
 	p.sub_chunk_position = types_291.Vector3i.decode(mut r)!
 	offset_count := int(r.le_i32()!)
-	p.position_offsets = [][3]i8{cap: offset_count}
+	p.position_offsets = [][3]i8{cap: serializer.prealloc(offset_count)}
 	for _ in 0 .. offset_count {
 		p.position_offsets << [r.i8()!, r.i8()!, r.i8()!]!
 	}

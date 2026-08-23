@@ -90,7 +90,7 @@ pub fn SerializedSkin.decode(mut r serializer.Reader) !SerializedSkin {
 	t.skin_resource_patch = r.read_string()!
 	t.skin_data = types_388.ImageData.decode(mut r)!
 	animation_count := int(r.le_i32()!)
-	t.animations = []types_419.AnimationData{cap: animation_count}
+	t.animations = []types_419.AnimationData{cap: serializer.prealloc(animation_count)}
 	for _ in 0 .. animation_count {
 		t.animations << types_419.AnimationData.decode(mut r)!
 	}
@@ -103,7 +103,7 @@ pub fn SerializedSkin.decode(mut r serializer.Reader) !SerializedSkin {
 	t.arm_size = r.read_string()!
 	t.skin_color = r.read_string()!
 	piece_count := int(r.le_i32()!)
-	t.persona_pieces = []PersonaPieceData{cap: piece_count}
+	t.persona_pieces = []PersonaPieceData{cap: serializer.prealloc(piece_count)}
 	for _ in 0 .. piece_count {
 		t.persona_pieces << PersonaPieceData{
 			piece_id:   r.read_string()!
@@ -114,13 +114,13 @@ pub fn SerializedSkin.decode(mut r serializer.Reader) !SerializedSkin {
 		}
 	}
 	tint_count := int(r.le_i32()!)
-	t.tint_colors = []PersonaPieceTintData{cap: tint_count}
+	t.tint_colors = []PersonaPieceTintData{cap: serializer.prealloc(tint_count)}
 	for _ in 0 .. tint_count {
 		mut tint := PersonaPieceTintData{
 			piece_type: r.read_string()!
 		}
 		color_count := int(r.le_i32()!)
-		tint.colors = []string{cap: color_count}
+		tint.colors = []string{cap: serializer.prealloc(color_count)}
 		for _ in 0 .. color_count {
 			tint.colors << r.read_string()!
 		}

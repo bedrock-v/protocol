@@ -158,8 +158,8 @@ pub fn SerializedSkin.decode(mut r serializer.Reader) !SerializedSkin {
 	t.skin_image_width = r.le_u32()!
 	t.skin_image_height = r.le_u32()!
 	t.skin_image_bytes = r.read_string_bytes()!
-	anim_count := int(r.read_varuint32()!)
-	t.animations = []SerializedSkinAnimationFrame{cap: anim_count}
+	anim_count := r.read_count()!
+	t.animations = []SerializedSkinAnimationFrame{cap: serializer.prealloc(anim_count)}
 	for _ in 0 .. anim_count {
 		t.animations << SerializedSkinAnimationFrame.decode(mut r)!
 	}
@@ -173,13 +173,13 @@ pub fn SerializedSkin.decode(mut r serializer.Reader) !SerializedSkin {
 	t.full_id = r.read_string()!
 	t.arm_size = enums.ArmSizeType.decode(mut r)!
 	t.skin_color = r.le_i32()!
-	persona_count := int(r.read_varuint32()!)
-	t.persona_pieces = []PersonaPiecesEntry{cap: persona_count}
+	persona_count := r.read_count()!
+	t.persona_pieces = []PersonaPiecesEntry{cap: serializer.prealloc(persona_count)}
 	for _ in 0 .. persona_count {
 		t.persona_pieces << PersonaPiecesEntry.decode(mut r)!
 	}
-	tint_count := int(r.read_varuint32()!)
-	t.piece_tint_colors = []PieceTintColorsEntry{cap: tint_count}
+	tint_count := r.read_count()!
+	t.piece_tint_colors = []PieceTintColorsEntry{cap: serializer.prealloc(tint_count)}
 	for _ in 0 .. tint_count {
 		t.piece_tint_colors << PieceTintColorsEntry.decode(mut r)!
 	}

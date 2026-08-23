@@ -41,15 +41,15 @@ pub fn ShapelessRecipe.decode(mut r serializer.Reader) !ShapelessRecipe {
 	mut t := ShapelessRecipe{}
 	t.recipe_unique_id = r.read_string()!
 	{
-		count := int(r.read_varuint32()!)
-		t.ingredient_list = []CraftingRecipeIngredient{cap: count}
+		count := r.read_count()!
+		t.ingredient_list = []CraftingRecipeIngredient{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			t.ingredient_list << CraftingRecipeIngredient.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		t.production_list = []NetworkItemInstanceDescriptor{cap: count}
+		count := r.read_count()!
+		t.production_list = []NetworkItemInstanceDescriptor{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			t.production_list << NetworkItemInstanceDescriptor.decode(mut r)!
 		}

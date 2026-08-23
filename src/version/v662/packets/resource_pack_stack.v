@@ -61,13 +61,13 @@ pub fn (p &ResourcePackStackPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p ResourcePackStackPacket) decode_payload(mut r serializer.Reader) ! {
 	p.texture_pack_required = r.bool()!
-	addon_count := int(r.read_varuint32()!)
-	p.addon_list = []PackEntry{cap: addon_count}
+	addon_count := r.read_count()!
+	p.addon_list = []PackEntry{cap: serializer.prealloc(addon_count)}
 	for _ in 0 .. addon_count {
 		p.addon_list << PackEntry.decode(mut r)!
 	}
-	tex_count := int(r.read_varuint32()!)
-	p.texture_pack_list = []PackEntry{cap: tex_count}
+	tex_count := r.read_count()!
+	p.texture_pack_list = []PackEntry{cap: serializer.prealloc(tex_count)}
 	for _ in 0 .. tex_count {
 		p.texture_pack_list << PackEntry.decode(mut r)!
 	}

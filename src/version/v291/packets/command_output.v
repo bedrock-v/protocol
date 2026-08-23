@@ -41,8 +41,8 @@ pub fn (mut p CommandOutputPacket) decode_payload(mut r serializer.Reader) ! {
 	p.command_origin_data = types.CommandOriginData.decode(mut r)!
 	p.output_type = r.u8()!
 	p.success_count = r.read_varuint32()!
-	message_count := int(r.read_varuint32()!)
-	p.messages = []types.CommandOutputMessage{cap: message_count}
+	message_count := r.read_count()!
+	p.messages = []types.CommandOutputMessage{cap: serializer.prealloc(message_count)}
 	for _ in 0 .. message_count {
 		p.messages << types.CommandOutputMessage.decode(mut r)!
 	}

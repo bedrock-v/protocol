@@ -93,12 +93,12 @@ pub fn PlayerListAction.decode(mut r serializer.Reader) !PlayerListAction {
 	d := r.u8()!
 	match d {
 		0 {
-			count := int(r.read_varuint32()!)
-			mut entries := []AddPlayerListEntry{cap: count}
+			count := r.read_count()!
+			mut entries := []AddPlayerListEntry{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				entries << AddPlayerListEntry.decode(mut r)!
 			}
-			mut trusted := []bool{cap: count}
+			mut trusted := []bool{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				trusted << r.bool()!
 			}
@@ -108,8 +108,8 @@ pub fn PlayerListAction.decode(mut r serializer.Reader) !PlayerListAction {
 			}
 		}
 		1 {
-			count := int(r.read_varuint32()!)
-			mut uuids := []types_662.Uuid{cap: count}
+			count := r.read_count()!
+			mut uuids := []types_662.Uuid{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				uuids << types_662.Uuid.decode(mut r)!
 			}

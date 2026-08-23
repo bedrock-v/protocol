@@ -94,19 +94,19 @@ pub fn (mut p AddActorPacket) decode_payload(mut r serializer.Reader) ! {
 	p.rotation = [r.le_f32()!, r.le_f32()!]!
 	p.y_head_rotation = r.le_f32()!
 	p.y_body_rotation = r.le_f32()!
-	attr_count := int(r.read_varuint32()!)
-	p.attributes = []AttributeEntry{cap: attr_count}
+	attr_count := r.read_count()!
+	p.attributes = []AttributeEntry{cap: serializer.prealloc(attr_count)}
 	for _ in 0 .. attr_count {
 		p.attributes << AttributeEntry.decode(mut r)!
 	}
-	data_count := int(r.read_varuint32()!)
-	p.actor_data = []types_662.DataItem{cap: data_count}
+	data_count := r.read_count()!
+	p.actor_data = []types_662.DataItem{cap: serializer.prealloc(data_count)}
 	for _ in 0 .. data_count {
 		p.actor_data << types_662.DataItem.decode(mut r)!
 	}
 	p.synced_properties = types_662.PropertySyncData.decode(mut r)!
-	link_count := int(r.read_varuint32()!)
-	p.actor_links = []types.ActorLink{cap: link_count}
+	link_count := r.read_count()!
+	p.actor_links = []types.ActorLink{cap: serializer.prealloc(link_count)}
 	for _ in 0 .. link_count {
 		p.actor_links << types.ActorLink.decode(mut r)!
 	}

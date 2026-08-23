@@ -215,8 +215,8 @@ pub fn (mut p StartGamePacket) decode_payload(mut r serializer.Reader) ! {
 	p.platform_broadcast_mode = unsafe { packets_291.GamePublishSetting(r.read_varint32()!) }
 	p.commands_enabled = r.bool()!
 	p.texture_packs_required = r.bool()!
-	rule_count := int(r.read_varuint32()!)
-	mut gamerules := []types.GameRuleData{cap: rule_count}
+	rule_count := r.read_count()!
+	mut gamerules := []types.GameRuleData{cap: serializer.prealloc(rule_count)}
 	for _ in 0 .. rule_count {
 		gamerules << types.GameRuleData.decode(mut r)!
 	}
@@ -251,8 +251,8 @@ pub fn (mut p StartGamePacket) decode_payload(mut r serializer.Reader) ! {
 	p.server_authoritative_block_breaking = r.bool()!
 	p.current_tick = r.le_i64()!
 	p.enchantment_seed = r.read_varint32()!
-	block_count := int(r.read_varuint32()!)
-	mut blocks := []BlockPropertyData{cap: block_count}
+	block_count := r.read_count()!
+	mut blocks := []BlockPropertyData{cap: serializer.prealloc(block_count)}
 	for _ in 0 .. block_count {
 		blocks << BlockPropertyData{
 			name:       r.read_string()!
@@ -260,8 +260,8 @@ pub fn (mut p StartGamePacket) decode_payload(mut r serializer.Reader) ! {
 		}
 	}
 	p.block_properties = blocks
-	item_count := int(r.read_varuint32()!)
-	mut items := []ItemDefinition{cap: item_count}
+	item_count := r.read_count()!
+	mut items := []ItemDefinition{cap: serializer.prealloc(item_count)}
 	for _ in 0 .. item_count {
 		items << ItemDefinition{
 			identifier:      r.read_string()!

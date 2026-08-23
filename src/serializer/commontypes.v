@@ -1,7 +1,7 @@
 module serializer
 
 pub fn (mut r Reader) read_string() !string {
-	length := int(r.read_varuint32()!)
+	length := r.read_count()!
 	return r.read_raw(length)!.bytestr()
 }
 
@@ -11,7 +11,7 @@ pub fn (mut w Writer) write_string(v string) {
 }
 
 pub fn (mut r Reader) read_string_bytes() ![]u8 {
-	length := int(r.read_varuint32()!)
+	length := r.read_count()!
 	return r.read_raw(length)!
 }
 

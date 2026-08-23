@@ -15,8 +15,8 @@ pub fn (t BiomeSurfaceMaterialAdjustmentData) encode(mut w serializer.Writer) {
 }
 
 pub fn BiomeSurfaceMaterialAdjustmentData.decode(mut r serializer.Reader) !BiomeSurfaceMaterialAdjustmentData {
-	count := int(r.read_varuint32()!)
-	mut items := []BiomeElementData{cap: count}
+	count := r.read_count()!
+	mut items := []BiomeElementData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		items << BiomeElementData.decode(mut r)!
 	}

@@ -39,7 +39,7 @@ pub fn (p &SetEntityMotionPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p SetEntityMotionPacket) decode_payload(mut r serializer.Reader) ! {
 	count := int(r.be_i32()!)
-	p.entities = []SetEntityMotionEntry{cap: count}
+	p.entities = []SetEntityMotionEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.entities << SetEntityMotionEntry{
 			eid:  r.be_i32()!

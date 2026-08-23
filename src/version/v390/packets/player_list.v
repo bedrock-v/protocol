@@ -68,8 +68,8 @@ pub fn (p &PlayerListPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p PlayerListPacket) decode_payload(mut r serializer.Reader) ! {
 	p.action = unsafe { PlayerListAction(r.u8()!) }
-	count := int(r.read_varuint32()!)
-	p.entries = []PlayerListEntry{cap: count}
+	count := r.read_count()!
+	p.entries = []PlayerListEntry{cap: serializer.prealloc(count)}
 	if p.action == .add {
 		for _ in 0 .. count {
 			mut e := PlayerListEntry{

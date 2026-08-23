@@ -94,8 +94,8 @@ pub fn (t GameRulesChangedPacketData) encode(mut w serializer.Writer) {
 }
 
 pub fn GameRulesChangedPacketData.decode(mut r serializer.Reader) !GameRulesChangedPacketData {
-	count := int(r.read_varuint32()!)
-	mut items := []GameRuleChanged{cap: count}
+	count := r.read_count()!
+	mut items := []GameRuleChanged{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		items << GameRuleChanged.decode(mut r)!
 	}

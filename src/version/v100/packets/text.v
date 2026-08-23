@@ -45,7 +45,7 @@ pub fn (mut p TextPacket) decode_payload(mut r serializer.Reader) ! {
 		p.message = r.read_string()!
 	} else if p.type == 2 {
 		p.message = r.read_string()!
-		n := int(r.read_varuint32()!)
+		n := r.read_count()!
 		for _ in 0 .. n {
 			p.parameters << r.read_string()!
 		}

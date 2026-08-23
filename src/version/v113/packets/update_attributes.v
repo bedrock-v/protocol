@@ -43,7 +43,7 @@ pub fn (p &UpdateAttributesPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p UpdateAttributesPacket) decode_payload(mut r serializer.Reader) ! {
 	p.entity_id = r.read_varuint64()!
-	n := int(r.read_varuint32()!)
+	n := r.read_count()!
 	for _ in 0 .. n {
 		p.entries << AttributeEntry{
 			min:     r.le_f32()!

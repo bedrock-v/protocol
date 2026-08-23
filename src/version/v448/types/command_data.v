@@ -29,8 +29,8 @@ pub fn (t CommandEnumConstraintData) encode(mut w serializer.Writer) {
 pub fn CommandEnumConstraintData.decode(mut r serializer.Reader) !CommandEnumConstraintData {
 	value_index := r.le_i32()!
 	enum_index := r.le_i32()!
-	count := int(r.read_varuint32()!)
-	mut constraints := []CommandEnumConstraint{cap: count}
+	count := r.read_count()!
+	mut constraints := []CommandEnumConstraint{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		constraints << unsafe { CommandEnumConstraint(r.u8()!) }
 	}
@@ -96,11 +96,11 @@ pub fn CommandData.decode(mut r serializer.Reader) !CommandData {
 	flags := r.le_u16()!
 	permission := unsafe { enums_291.CommandPermission(r.u8()!) }
 	alias_index := r.le_i32()!
-	overload_count := int(r.read_varuint32()!)
-	mut overloads := [][]CommandParamData{cap: overload_count}
+	overload_count := r.read_count()!
+	mut overloads := [][]CommandParamData{cap: serializer.prealloc(overload_count)}
 	for _ in 0 .. overload_count {
-		param_count := int(r.read_varuint32()!)
-		mut params := []CommandParamData{cap: param_count}
+		param_count := r.read_count()!
+		mut params := []CommandParamData{cap: serializer.prealloc(param_count)}
 		for _ in 0 .. param_count {
 			params << CommandParamData.decode(mut r)!
 		}

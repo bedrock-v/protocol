@@ -31,15 +31,15 @@ pub fn (t BiomeNoiseGradientSurfaceData) encode(mut w serializer.Writer) {
 pub fn BiomeNoiseGradientSurfaceData.decode(mut r serializer.Reader) !BiomeNoiseGradientSurfaceData {
 	mut t := BiomeNoiseGradientSurfaceData{}
 	{
-		count := int(r.read_varuint32()!)
-		t.non_replaceable_block_runtime_ids = []i32{cap: count}
+		count := r.read_count()!
+		t.non_replaceable_block_runtime_ids = []i32{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			t.non_replaceable_block_runtime_ids << r.le_i32()!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		t.gradient_blocks = []NoiseBlockSpecifier{cap: count}
+		count := r.read_count()!
+		t.gradient_blocks = []NoiseBlockSpecifier{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			t.gradient_blocks << NoiseBlockSpecifier.decode(mut r)!
 		}
@@ -47,8 +47,8 @@ pub fn BiomeNoiseGradientSurfaceData.decode(mut r serializer.Reader) !BiomeNoise
 	t.noise = r.read_string()!
 	t.first_octave = r.le_i32()!
 	{
-		count := int(r.read_varuint32()!)
-		t.amplitudes = []f32{cap: count}
+		count := r.read_count()!
+		t.amplitudes = []f32{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			t.amplitudes << r.le_f32()!
 		}

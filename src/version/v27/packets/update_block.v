@@ -42,7 +42,7 @@ pub fn (p &UpdateBlockPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p UpdateBlockPacket) decode_payload(mut r serializer.Reader) ! {
 	count := int(r.be_i32()!)
-	p.records = []UpdateBlockRecord{cap: count}
+	p.records = []UpdateBlockRecord{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		x := r.be_i32()!
 		z := r.be_i32()!

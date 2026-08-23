@@ -31,8 +31,8 @@ pub fn (p &InventoryContentPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p InventoryContentPacket) decode_payload(mut r serializer.Reader) ! {
 	p.container_id = r.read_varuint32()!
-	count := int(r.read_varuint32()!)
-	p.contents = []types.NetItemData{cap: count}
+	count := r.read_count()!
+	p.contents = []types.NetItemData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.contents << types.NetItemData.decode(mut r)!
 	}

@@ -35,8 +35,8 @@ pub fn write_inventory_actions(mut w serializer.Writer, actions []InventoryActio
 }
 
 pub fn read_inventory_actions(mut r serializer.Reader) ![]InventoryActionData {
-	count := int(r.read_varuint32()!)
-	mut actions := []InventoryActionData{cap: count}
+	count := r.read_count()!
+	mut actions := []InventoryActionData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		actions << InventoryActionData.decode(mut r)!
 	}

@@ -26,7 +26,7 @@ fn read_v975_user_data_blob(data []u8) ![]u8 {
 		r.read_varint32()!
 	}
 	r.read_varuint32()!
-	count := int(r.read_varuint32()!)
+	count := r.read_count()!
 	return r.read_raw(count)!
 }
 

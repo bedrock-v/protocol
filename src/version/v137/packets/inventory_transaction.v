@@ -120,8 +120,8 @@ pub fn (p &InventoryTransactionPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p InventoryTransactionPacket) decode_payload(mut r serializer.Reader) ! {
 	p.transaction_type = r.read_varuint32()!
-	count := int(r.read_varuint32()!)
-	p.actions = []NetworkInventoryAction{cap: count}
+	count := r.read_count()!
+	p.actions = []NetworkInventoryAction{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.actions << read_network_inventory_action(mut r)!
 	}

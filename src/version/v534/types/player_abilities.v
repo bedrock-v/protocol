@@ -81,8 +81,8 @@ pub fn PlayerAbilitiesData.decode(mut r serializer.Reader) !PlayerAbilitiesData 
 	t.unique_entity_id = r.le_i64()!
 	t.player_permission = unsafe { enums_291.PlayerPermission(u32(r.u8()!)) }
 	t.command_permission = enums_291.CommandPermission.decode(mut r)!
-	layer_count := int(r.read_varuint32()!)
-	t.layers = []AbilityLayer{cap: layer_count}
+	layer_count := r.read_count()!
+	t.layers = []AbilityLayer{cap: serializer.prealloc(layer_count)}
 	for _ in 0 .. layer_count {
 		t.layers << AbilityLayer.decode(mut r)!
 	}

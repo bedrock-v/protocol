@@ -70,8 +70,8 @@ pub fn (mut p AddPlayerPacket) decode_payload(mut r serializer.Reader) ! {
 	p.game_type = enums_291.GameType.decode(mut r)!
 	p.metadata = types_527.read_entity_data(mut r)!
 	p.abilities = types.PlayerAbilitiesData.decode(mut r)!
-	link_count := int(r.read_varuint32()!)
-	p.entity_links = []types_407.EntityLinkData{cap: link_count}
+	link_count := r.read_count()!
+	p.entity_links = []types_407.EntityLinkData{cap: serializer.prealloc(link_count)}
 	for _ in 0 .. link_count {
 		p.entity_links << types_407.EntityLinkData.decode(mut r)!
 	}

@@ -59,11 +59,11 @@ pub fn CommandData.decode(mut r serializer.Reader) !CommandData {
 	t.flags = r.u8()!
 	t.permission = enums.CommandPermission.decode(mut r)!
 	t.alias_index = r.le_i32()!
-	overload_count := int(r.read_varuint32()!)
-	t.overloads = [][]CommandParamData{cap: overload_count}
+	overload_count := r.read_count()!
+	t.overloads = [][]CommandParamData{cap: serializer.prealloc(overload_count)}
 	for _ in 0 .. overload_count {
-		param_count := int(r.read_varuint32()!)
-		mut params := []CommandParamData{cap: param_count}
+		param_count := r.read_count()!
+		mut params := []CommandParamData{cap: serializer.prealloc(param_count)}
 		for _ in 0 .. param_count {
 			params << CommandParamData.decode(mut r)!
 		}

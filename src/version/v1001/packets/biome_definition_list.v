@@ -34,15 +34,15 @@ pub fn (p &BiomeDefinitionListPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p BiomeDefinitionListPacket) decode_payload(mut r serializer.Reader) ! {
 	{
-		count := int(r.read_varuint32()!)
-		p.biomes = []BiomeEntry{cap: count}
+		count := r.read_count()!
+		p.biomes = []BiomeEntry{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.biomes << BiomeEntry.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.strings = []string{cap: count}
+		count := r.read_count()!
+		p.strings = []string{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.strings << r.read_string()!
 		}

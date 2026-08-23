@@ -49,7 +49,7 @@ pub fn (mut p ExplodePacket) decode_payload(mut r serializer.Reader) ! {
 	p.z = r.be_f32()!
 	p.radius = r.be_f32()!
 	count := int(r.be_i32()!)
-	p.records = []ExplodeRecord{cap: count}
+	p.records = []ExplodeRecord{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.records << ExplodeRecord{
 			x: r.i8()!

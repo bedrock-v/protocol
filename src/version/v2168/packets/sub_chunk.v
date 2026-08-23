@@ -142,8 +142,8 @@ pub fn (mut p SubChunkPacket) decode_payload(mut r serializer.Reader) ! {
 	p.cache_enabled = r.bool()!
 	p.dimension_type = r.read_varint32()!
 	p.center_pos = types.SubChunkPos.decode(mut r)!
-	count := int(r.read_varuint32()!)
-	p.sub_chunk_data = []SubChunkDataEntry{cap: count}
+	count := r.read_count()!
+	p.sub_chunk_data = []SubChunkDataEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.sub_chunk_data << SubChunkDataEntry.decode(mut r)!
 	}

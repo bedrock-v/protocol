@@ -378,8 +378,8 @@ pub fn AttributeLayerData.decode(mut r serializer.Reader) !AttributeLayerData {
 	t.name = r.read_string()!
 	t.dimension = r.read_varint32()!
 	t.settings = AttributeLayerSettings.decode(mut r)!
-	count := int(r.read_varuint32()!)
-	t.attributes = []EnvironmentAttributeData{cap: count}
+	count := r.read_count()!
+	t.attributes = []EnvironmentAttributeData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.attributes << EnvironmentAttributeData.decode(mut r)!
 	}
@@ -457,8 +457,8 @@ pub fn ClientBoundAttributeLayerSyncData.decode(mut r serializer.Reader) !Client
 	d := r.read_varuint32()!
 	match d {
 		0 {
-			count := int(r.read_varuint32()!)
-			mut layers := []AttributeLayerData{cap: count}
+			count := r.read_count()!
+			mut layers := []AttributeLayerData{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				layers << AttributeLayerData.decode(mut r)!
 			}
@@ -476,8 +476,8 @@ pub fn ClientBoundAttributeLayerSyncData.decode(mut r serializer.Reader) !Client
 		2 {
 			name := r.read_string()!
 			dimension := r.read_varint32()!
-			count := int(r.read_varuint32()!)
-			mut attributes := []EnvironmentAttributeData{cap: count}
+			count := r.read_count()!
+			mut attributes := []EnvironmentAttributeData{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				attributes << EnvironmentAttributeData.decode(mut r)!
 			}
@@ -490,8 +490,8 @@ pub fn ClientBoundAttributeLayerSyncData.decode(mut r serializer.Reader) !Client
 		3 {
 			name := r.read_string()!
 			dimension := r.read_varint32()!
-			count := int(r.read_varuint32()!)
-			mut attributes := []string{cap: count}
+			count := r.read_count()!
+			mut attributes := []string{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				attributes << r.read_string()!
 			}

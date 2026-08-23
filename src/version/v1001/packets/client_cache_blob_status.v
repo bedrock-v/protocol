@@ -33,15 +33,15 @@ pub fn (p &ClientCacheBlobStatusPacket) encode_payload(mut w serializer.Writer) 
 
 pub fn (mut p ClientCacheBlobStatusPacket) decode_payload(mut r serializer.Reader) ! {
 	{
-		count := int(r.read_varuint32()!)
-		p.missing_blobs = []u64{cap: count}
+		count := r.read_count()!
+		p.missing_blobs = []u64{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.missing_blobs << r.le_u64()!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.obtained_blobs = []u64{cap: count}
+		count := r.read_count()!
+		p.obtained_blobs = []u64{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.obtained_blobs << r.le_u64()!
 		}

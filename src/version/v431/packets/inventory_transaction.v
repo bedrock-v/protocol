@@ -86,8 +86,8 @@ pub fn (p &InventoryTransactionPacket) encode_payload(mut w serializer.Writer) {
 pub fn (mut p InventoryTransactionPacket) decode_payload(mut r serializer.Reader) ! {
 	p.legacy_request_id = r.read_varint32()!
 	if p.legacy_request_id < -1 && (p.legacy_request_id & 1) == 0 {
-		slot_count := int(r.read_varuint32()!)
-		p.legacy_slots = []LegacySetItemSlotData{cap: slot_count}
+		slot_count := r.read_count()!
+		p.legacy_slots = []LegacySetItemSlotData{cap: serializer.prealloc(slot_count)}
 		for _ in 0 .. slot_count {
 			p.legacy_slots << LegacySetItemSlotData.decode(mut r)!
 		}

@@ -44,8 +44,8 @@ pub fn (t ItemStackResponseContainer) encode(mut w serializer.Writer) {
 pub fn ItemStackResponseContainer.decode(mut r serializer.Reader) !ItemStackResponseContainer {
 	mut t := ItemStackResponseContainer{}
 	t.container = enums.ContainerSlotType.decode(mut r)!
-	count := int(r.read_varuint32()!)
-	t.items = []ItemStackResponseSlot{cap: count}
+	count := r.read_count()!
+	t.items = []ItemStackResponseSlot{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.items << ItemStackResponseSlot.decode(mut r)!
 	}

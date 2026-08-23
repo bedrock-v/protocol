@@ -36,7 +36,7 @@ pub fn (p &CraftingDataPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p CraftingDataPacket) decode_payload(mut r serializer.Reader) ! {
-	n := int(r.read_varuint32()!)
+	n := r.read_count()!
 	for _ in 0 .. n {
 		p.entries << CraftingEntry{
 			type: r.read_varint32()!

@@ -45,8 +45,8 @@ pub fn (p &FeatureRegistryPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p FeatureRegistryPacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.features_data_list = []FeaturesDataListEntry{cap: count}
+	count := r.read_count()!
+	p.features_data_list = []FeaturesDataListEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.features_data_list << FeaturesDataListEntry.decode(mut r)!
 	}

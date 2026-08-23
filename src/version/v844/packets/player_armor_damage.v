@@ -45,8 +45,8 @@ pub fn (p &PlayerArmorDamagePacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p PlayerArmorDamagePacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	mut list := []PlayerArmorDamageEntry{cap: count}
+	count := r.read_count()!
+	mut list := []PlayerArmorDamageEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		list << PlayerArmorDamageEntry.decode(mut r)!
 	}

@@ -42,8 +42,8 @@ pub fn (t BiomeConsolidatedFeatureList) encode(mut w serializer.Writer) {
 }
 
 pub fn BiomeConsolidatedFeatureList.decode(mut r serializer.Reader) !BiomeConsolidatedFeatureList {
-	count := int(r.read_varuint32()!)
-	mut items := []BiomeConsolidatedFeatureData{cap: count}
+	count := r.read_count()!
+	mut items := []BiomeConsolidatedFeatureData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		items << BiomeConsolidatedFeatureData.decode(mut r)!
 	}

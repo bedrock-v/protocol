@@ -87,8 +87,8 @@ pub fn (mut p ClientBoundMapItemDataPacket) decode_payload(mut r serializer.Read
 	p.is_locked = r.bool()!
 	p.map_origin = types_662.BlockPos.decode(mut r)!
 	if p.update_flags & map_update_flag_initialisation != 0 {
-		count := int(r.read_varuint32()!)
-		p.maps_included_in = []types_662.ActorUniqueID{cap: count}
+		count := r.read_count()!
+		p.maps_included_in = []types_662.ActorUniqueID{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.maps_included_in << types_662.ActorUniqueID.decode(mut r)!
 		}
@@ -97,13 +97,13 @@ pub fn (mut p ClientBoundMapItemDataPacket) decode_payload(mut r serializer.Read
 		p.scale = r.u8()!
 	}
 	if p.update_flags & map_update_flag_decoration != 0 {
-		tracked_count := int(r.read_varuint32()!)
-		p.tracked_objects = []types.MapItemTrackedActorUniqueID{cap: tracked_count}
+		tracked_count := r.read_count()!
+		p.tracked_objects = []types.MapItemTrackedActorUniqueID{cap: serializer.prealloc(tracked_count)}
 		for _ in 0 .. tracked_count {
 			p.tracked_objects << types.MapItemTrackedActorUniqueID.decode(mut r)!
 		}
-		decoration_count := int(r.read_varuint32()!)
-		p.decorations = []types_662.MapDecoration{cap: decoration_count}
+		decoration_count := r.read_count()!
+		p.decorations = []types_662.MapDecoration{cap: serializer.prealloc(decoration_count)}
 		for _ in 0 .. decoration_count {
 			p.decorations << types_662.MapDecoration.decode(mut r)!
 		}
@@ -113,8 +113,8 @@ pub fn (mut p ClientBoundMapItemDataPacket) decode_payload(mut r serializer.Read
 		p.height = r.read_varint32()!
 		p.x_offset = r.read_varint32()!
 		p.y_offset = r.read_varint32()!
-		pixel_count := int(r.read_varuint32()!)
-		p.pixels = []MapPixelsEntry{cap: pixel_count}
+		pixel_count := r.read_count()!
+		p.pixels = []MapPixelsEntry{cap: serializer.prealloc(pixel_count)}
 		for _ in 0 .. pixel_count {
 			p.pixels << MapPixelsEntry{
 				pixel: r.read_varuint32()!

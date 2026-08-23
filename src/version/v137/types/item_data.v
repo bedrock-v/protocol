@@ -51,12 +51,12 @@ pub fn ItemData.decode(mut r serializer.Reader) !ItemData {
 		t.nbt_data = r.read_raw(int(nbt_len))!
 	}
 	place_count := r.read_varint32()!
-	t.can_place = []string{cap: int(place_count)}
+	t.can_place = []string{cap: serializer.prealloc(int(place_count))}
 	for _ in 0 .. place_count {
 		t.can_place << r.read_string()!
 	}
 	break_count := r.read_varint32()!
-	t.can_break = []string{cap: int(break_count)}
+	t.can_break = []string{cap: serializer.prealloc(int(break_count))}
 	for _ in 0 .. break_count {
 		t.can_break << r.read_string()!
 	}

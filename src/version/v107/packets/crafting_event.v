@@ -42,11 +42,11 @@ pub fn (mut p CraftingEventPacket) decode_payload(mut r serializer.Reader) ! {
 	p.window_id = r.u8()!
 	p.type = r.read_varint32()!
 	p.id = types.EraBUuid.decode(mut r)!
-	n := int(r.read_varuint32()!)
+	n := r.read_count()!
 	for _ in 0 .. n {
 		p.input << types.EraBItem.decode(mut r)!
 	}
-	m := int(r.read_varuint32()!)
+	m := r.read_count()!
 	for _ in 0 .. m {
 		p.output << types.EraBItem.decode(mut r)!
 	}

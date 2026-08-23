@@ -19,8 +19,8 @@ pub fn (t CameraAimAssistCategories) encode(mut w serializer.Writer) {
 pub fn CameraAimAssistCategories.decode(mut r serializer.Reader) !CameraAimAssistCategories {
 	mut t := CameraAimAssistCategories{}
 	t.identifier = r.read_string()!
-	count := int(r.read_varuint32()!)
-	t.categories = []CameraAimAssistCategory{cap: count}
+	count := r.read_count()!
+	t.categories = []CameraAimAssistCategory{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.categories << CameraAimAssistCategory.decode(mut r)!
 	}

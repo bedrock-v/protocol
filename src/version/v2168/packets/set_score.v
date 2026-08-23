@@ -146,8 +146,8 @@ pub fn (p &SetScorePacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p SetScorePacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.score_info = []ScorePacketEntry{cap: count}
+	count := r.read_count()!
+	p.score_info = []ScorePacketEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.score_info << ScorePacketEntry.decode(mut r)!
 	}

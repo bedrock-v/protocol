@@ -324,8 +324,8 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 		13 {
 			recipe_network_id := r.read_varuint32()!
 			times_crafted := r.i8()!
-			count := int(r.read_varuint32()!)
-			mut ings := []ItemDescriptorCount{cap: count}
+			count := r.read_count()!
+			mut ings := []ItemDescriptorCount{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				ings << ItemDescriptorCount.decode(mut r)!
 			}

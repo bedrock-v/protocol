@@ -120,13 +120,13 @@ pub fn RecipeData.decode(mut r serializer.Reader) !RecipeData {
 				recipe_type: recipe_type
 			}
 			t.recipe_id = r.read_string()!
-			ingredient_count := int(r.read_varuint32()!)
-			t.ingredients = []types_407.Ingredient{cap: ingredient_count}
+			ingredient_count := r.read_count()!
+			t.ingredients = []types_407.Ingredient{cap: serializer.prealloc(ingredient_count)}
 			for _ in 0 .. ingredient_count {
 				t.ingredients << types_407.Ingredient.decode(mut r)!
 			}
-			result_count := int(r.read_varuint32()!)
-			t.results = []ItemData{cap: result_count}
+			result_count := r.read_count()!
+			t.results = []ItemData{cap: serializer.prealloc(result_count)}
 			for _ in 0 .. result_count {
 				t.results << ItemData.decode_instance(mut r)!
 			}
@@ -144,12 +144,12 @@ pub fn RecipeData.decode(mut r serializer.Reader) !RecipeData {
 			t.width = r.read_varint32()!
 			t.height = r.read_varint32()!
 			ingredient_count := int(t.width * t.height)
-			t.ingredients = []types_407.Ingredient{cap: ingredient_count}
+			t.ingredients = []types_407.Ingredient{cap: serializer.prealloc(ingredient_count)}
 			for _ in 0 .. ingredient_count {
 				t.ingredients << types_407.Ingredient.decode(mut r)!
 			}
-			result_count := int(r.read_varuint32()!)
-			t.results = []ItemData{cap: result_count}
+			result_count := r.read_count()!
+			t.results = []ItemData{cap: serializer.prealloc(result_count)}
 			for _ in 0 .. result_count {
 				t.results << ItemData.decode_instance(mut r)!
 			}

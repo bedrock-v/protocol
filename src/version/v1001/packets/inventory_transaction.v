@@ -20,8 +20,8 @@ pub fn (e LegacySetItemSlotsEntry) encode(mut w serializer.Writer) {
 
 pub fn LegacySetItemSlotsEntry.decode(mut r serializer.Reader) !LegacySetItemSlotsEntry {
 	container_enum := r.i8()!
-	count := int(r.read_varuint32()!)
-	mut slots := []i8{cap: count}
+	count := r.read_count()!
+	mut slots := []i8{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		slots << r.i8()!
 	}
@@ -70,8 +70,8 @@ pub fn (p &InventoryTransactionPacket) encode_payload(mut w serializer.Writer) {
 pub fn (mut p InventoryTransactionPacket) decode_payload(mut r serializer.Reader) ! {
 	p.raw_id = r.read_varint32()!
 	if r.bool()! {
-		count := int(r.read_varuint32()!)
-		mut items := []LegacySetItemSlotsEntry{cap: count}
+		count := r.read_count()!
+		mut items := []LegacySetItemSlotsEntry{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			items << LegacySetItemSlotsEntry.decode(mut r)!
 		}

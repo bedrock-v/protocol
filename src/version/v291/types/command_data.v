@@ -28,8 +28,8 @@ pub fn CommandEnumData.decode(mut r serializer.Reader, soft bool) !CommandEnumDa
 		soft: soft
 	}
 	t.name = r.read_string()!
-	count := int(r.read_varuint32()!)
-	t.values = []string{cap: count}
+	count := r.read_count()!
+	t.values = []string{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.values << r.read_string()!
 	}
@@ -78,8 +78,8 @@ pub fn (t CommandEnumIndexed) encode(mut w serializer.Writer, index_size int) {
 pub fn CommandEnumIndexed.decode(mut r serializer.Reader, index_size int) !CommandEnumIndexed {
 	mut t := CommandEnumIndexed{}
 	t.name = r.read_string()!
-	count := int(r.read_varuint32()!)
-	t.value_indices = []u32{cap: count}
+	count := r.read_count()!
+	t.value_indices = []u32{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.value_indices << read_enum_index(mut r, index_size)!
 	}
@@ -139,11 +139,11 @@ pub fn CommandData.decode(mut r serializer.Reader) !CommandData {
 	t.flags = r.u8()!
 	t.permission = enums.CommandPermission.decode(mut r)!
 	t.alias_index = r.le_i32()!
-	overload_count := int(r.read_varuint32()!)
-	t.overloads = [][]CommandParamData{cap: overload_count}
+	overload_count := r.read_count()!
+	t.overloads = [][]CommandParamData{cap: serializer.prealloc(overload_count)}
 	for _ in 0 .. overload_count {
-		param_count := int(r.read_varuint32()!)
-		mut params := []CommandParamData{cap: param_count}
+		param_count := r.read_count()!
+		mut params := []CommandParamData{cap: serializer.prealloc(param_count)}
 		for _ in 0 .. param_count {
 			params << CommandParamData.decode(mut r)!
 		}

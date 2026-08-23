@@ -156,8 +156,8 @@ pub fn (mut p ServerBoundDiagnosticsPacket) decode_payload(mut r serializer.Read
 	p.avg_end_frame_time_ms = r.le_f32()!
 	p.avg_remainder_time_percent = r.le_f32()!
 	p.avg_unnacounted_time_percent = r.le_f32()!
-	count := int(r.read_varuint32()!)
-	p.memory_category_values = []MemoryCategoryCounter{cap: count}
+	count := r.read_count()!
+	p.memory_category_values = []MemoryCategoryCounter{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.memory_category_values << MemoryCategoryCounter.decode(mut r)!
 	}

@@ -20,8 +20,8 @@ pub fn (t BiomeConditionalTransformationData) encode(mut w serializer.Writer) {
 
 pub fn BiomeConditionalTransformationData.decode(mut r serializer.Reader) !BiomeConditionalTransformationData {
 	mut t := BiomeConditionalTransformationData{}
-	count := int(r.read_varuint32()!)
-	t.weighted_biomes = []BiomeWeightedData{cap: count}
+	count := r.read_count()!
+	t.weighted_biomes = []BiomeWeightedData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.weighted_biomes << BiomeWeightedData.decode(mut r)!
 	}

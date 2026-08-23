@@ -71,13 +71,13 @@ pub fn (p &TrimDataPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p TrimDataPacket) decode_payload(mut r serializer.Reader) ! {
-	pat_count := int(r.read_varuint32()!)
-	p.trim_pattern_list = []TrimPattern{cap: pat_count}
+	pat_count := r.read_count()!
+	p.trim_pattern_list = []TrimPattern{cap: serializer.prealloc(pat_count)}
 	for _ in 0 .. pat_count {
 		p.trim_pattern_list << TrimPattern.decode(mut r)!
 	}
-	mat_count := int(r.read_varuint32()!)
-	p.trim_material_list = []TrimMaterial{cap: mat_count}
+	mat_count := r.read_count()!
+	p.trim_material_list = []TrimMaterial{cap: serializer.prealloc(mat_count)}
 	for _ in 0 .. mat_count {
 		p.trim_material_list << TrimMaterial.decode(mut r)!
 	}

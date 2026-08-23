@@ -76,8 +76,8 @@ pub fn write_game_rules(mut w serializer.Writer, rules []GameRule) {
 }
 
 pub fn read_game_rules(mut r serializer.Reader) ![]GameRule {
-	count := int(r.read_varuint32()!)
-	mut rules := []GameRule{cap: count}
+	count := r.read_count()!
+	mut rules := []GameRule{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		rules << GameRule.decode(mut r)!
 	}

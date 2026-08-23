@@ -39,8 +39,8 @@ fn write_enchants(mut w serializer.Writer, enchants []EnchantData) {
 }
 
 fn read_enchants(mut r serializer.Reader) ![]EnchantData {
-	count := int(r.read_varuint32()!)
-	mut enchants := []EnchantData{cap: count}
+	count := r.read_count()!
+	mut enchants := []EnchantData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		enchants << EnchantData.decode(mut r)!
 	}
@@ -94,8 +94,8 @@ pub fn (p &PlayerEnchantOptionsPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p PlayerEnchantOptionsPacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.options = []EnchantOptionData{cap: count}
+	count := r.read_count()!
+	p.options = []EnchantOptionData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.options << EnchantOptionData.decode(mut r)!
 	}

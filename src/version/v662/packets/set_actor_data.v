@@ -36,8 +36,8 @@ pub fn (p &SetActorDataPacket) encode_payload(mut w serializer.Writer) {
 pub fn (mut p SetActorDataPacket) decode_payload(mut r serializer.Reader) ! {
 	p.target_runtime_id = types.ActorRuntimeID.decode(mut r)!
 	{
-		count := int(r.read_varuint32()!)
-		p.actor_data = []types.DataItem{cap: count}
+		count := r.read_count()!
+		p.actor_data = []types.DataItem{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.actor_data << types.DataItem.decode(mut r)!
 		}

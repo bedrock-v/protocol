@@ -93,8 +93,8 @@ pub fn (mut p ClientboundMapItemDataPacket) decode_payload(mut r serializer.Read
 	p.type = r.read_varuint32()!
 
 	if p.type & 0x08 != 0 {
-		count := int(r.read_varuint32()!)
-		p.eids = []i64{cap: count}
+		count := r.read_count()!
+		p.eids = []i64{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.eids << r.read_varint64()!
 		}
@@ -105,8 +105,8 @@ pub fn (mut p ClientboundMapItemDataPacket) decode_payload(mut r serializer.Read
 	}
 
 	if p.type & 0x04 != 0 {
-		decoration_count := int(r.read_varuint32()!)
-		p.decorations = []MapItemDataDecoration{cap: decoration_count}
+		decoration_count := r.read_count()!
+		p.decorations = []MapItemDataDecoration{cap: serializer.prealloc(decoration_count)}
 		for _ in 0 .. decoration_count {
 			mut d := MapItemDataDecoration{}
 			weird := r.read_varint32()!
@@ -127,7 +127,7 @@ pub fn (mut p ClientboundMapItemDataPacket) decode_payload(mut r serializer.Read
 		p.y_offset = r.read_varint32()!
 
 		color_count := int(p.width) * int(p.height)
-		p.colors = []u32{cap: color_count}
+		p.colors = []u32{cap: serializer.prealloc(color_count)}
 		for _ in 0 .. color_count {
 			p.colors << r.read_varuint32()!
 		}

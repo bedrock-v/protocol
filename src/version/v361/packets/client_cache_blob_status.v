@@ -32,13 +32,13 @@ pub fn (p &ClientCacheBlobStatusPacket) encode_payload(mut w serializer.Writer) 
 }
 
 pub fn (mut p ClientCacheBlobStatusPacket) decode_payload(mut r serializer.Reader) ! {
-	nak_count := int(r.read_varuint32()!)
-	ack_count := int(r.read_varuint32()!)
-	p.naks = []i64{cap: nak_count}
+	nak_count := r.read_count()!
+	ack_count := r.read_count()!
+	p.naks = []i64{cap: serializer.prealloc(nak_count)}
 	for _ in 0 .. nak_count {
 		p.naks << r.le_i64()!
 	}
-	p.acks = []i64{cap: ack_count}
+	p.acks = []i64{cap: serializer.prealloc(ack_count)}
 	for _ in 0 .. ack_count {
 		p.acks << r.le_i64()!
 	}

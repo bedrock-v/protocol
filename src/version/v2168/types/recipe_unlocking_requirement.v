@@ -40,8 +40,8 @@ pub fn RecipeUnlockingRequirement.decode(mut r serializer.Reader) !RecipeUnlocki
 	mut t := RecipeUnlockingRequirement{}
 	t.context = UnlockingContext.decode(mut r)!
 	if r.bool()! {
-		count := int(r.read_varuint32()!)
-		mut items := []CraftingRecipeIngredient{cap: count}
+		count := r.read_count()!
+		mut items := []CraftingRecipeIngredient{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			items << CraftingRecipeIngredient.decode(mut r)!
 		}

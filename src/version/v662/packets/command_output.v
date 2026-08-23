@@ -24,8 +24,8 @@ pub fn OutputMessagesEntry.decode(mut r serializer.Reader) !OutputMessagesEntry 
 	mut e := OutputMessagesEntry{}
 	e.successful = r.bool()!
 	e.message_id = r.read_string()!
-	count := int(r.read_varuint32()!)
-	e.parameters = []string{cap: count}
+	count := r.read_count()!
+	e.parameters = []string{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		e.parameters << r.read_string()!
 	}
@@ -67,8 +67,8 @@ pub fn (mut p CommandOutputPacket) decode_payload(mut r serializer.Reader) ! {
 	p.origin_data = types.CommandOriginData.decode(mut r)!
 	type_id := r.i8()!
 	p.success_count = r.read_varuint32()!
-	count := int(r.read_varuint32()!)
-	p.output_messages = []OutputMessagesEntry{cap: count}
+	count := r.read_count()!
+	p.output_messages = []OutputMessagesEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.output_messages << OutputMessagesEntry.decode(mut r)!
 	}

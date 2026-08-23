@@ -73,8 +73,8 @@ pub fn (mut p SetScoreboardIdentityPacket) decode_payload(mut r serializer.Reade
 	d := r.i8()!
 	match d {
 		0 {
-			count := int(r.read_varuint32()!)
-			mut entries := []IdentityInfoUpdateEntry{cap: count}
+			count := r.read_count()!
+			mut entries := []IdentityInfoUpdateEntry{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				entries << IdentityInfoUpdateEntry.decode(mut r)!
 			}
@@ -83,8 +83,8 @@ pub fn (mut p SetScoreboardIdentityPacket) decode_payload(mut r serializer.Reade
 			}
 		}
 		1 {
-			count := int(r.read_varuint32()!)
-			mut entries := []types.ScoreboardId{cap: count}
+			count := r.read_count()!
+			mut entries := []types.ScoreboardId{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				entries << types.ScoreboardId.decode(mut r)!
 			}

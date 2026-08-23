@@ -87,7 +87,7 @@ pub fn (mut p AddEntityPacket) decode_payload(mut r serializer.Reader) ! {
 	p.speed_z = r.le_f32()!
 	p.pitch = r.le_f32()!
 	p.yaw = r.le_f32()!
-	na := int(r.read_varuint32()!)
+	na := r.read_count()!
 	for _ in 0 .. na {
 		p.attributes << AddEntityAttribute{
 			name:  r.read_string()!
@@ -97,7 +97,7 @@ pub fn (mut p AddEntityPacket) decode_payload(mut r serializer.Reader) ! {
 		}
 	}
 	p.metadata = types.EraBMetadata.decode(mut r)!
-	nl := int(r.read_varuint32()!)
+	nl := r.read_count()!
 	for _ in 0 .. nl {
 		p.links << EntityLink{
 			from: r.read_varint64()!

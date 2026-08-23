@@ -50,8 +50,8 @@ pub fn (mut p AddItemActorPacket) decode_payload(mut r serializer.Reader) ! {
 	p.position = [r.le_f32()!, r.le_f32()!, r.le_f32()!]!
 	p.velocity = [r.le_f32()!, r.le_f32()!, r.le_f32()!]!
 	{
-		count := int(r.read_varuint32()!)
-		p.entity_data = []types.DataItem{cap: count}
+		count := r.read_count()!
+		p.entity_data = []types.DataItem{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.entity_data << types.DataItem.decode(mut r)!
 		}

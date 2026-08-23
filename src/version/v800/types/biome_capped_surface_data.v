@@ -42,13 +42,13 @@ pub fn (t BiomeCappedSurfaceData) encode(mut w serializer.Writer) {
 
 pub fn BiomeCappedSurfaceData.decode(mut r serializer.Reader) !BiomeCappedSurfaceData {
 	mut t := BiomeCappedSurfaceData{}
-	floor_count := int(r.read_varuint32()!)
-	t.floor_block_runtime_ids = []i32{cap: floor_count}
+	floor_count := r.read_count()!
+	t.floor_block_runtime_ids = []i32{cap: serializer.prealloc(floor_count)}
 	for _ in 0 .. floor_count {
 		t.floor_block_runtime_ids << r.le_i32()!
 	}
-	ceiling_count := int(r.read_varuint32()!)
-	t.ceiling_block_runtime_ids = []i32{cap: ceiling_count}
+	ceiling_count := r.read_count()!
+	t.ceiling_block_runtime_ids = []i32{cap: serializer.prealloc(ceiling_count)}
 	for _ in 0 .. ceiling_count {
 		t.ceiling_block_runtime_ids << r.le_i32()!
 	}

@@ -82,78 +82,78 @@ pub fn (p &CraftingDataPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p CraftingDataPacket) decode_payload(mut r serializer.Reader) ! {
 	{
-		count := int(r.read_varuint32()!)
-		p.shaped_recipes = []types.ShapedRecipe{cap: count}
+		count := r.read_count()!
+		p.shaped_recipes = []types.ShapedRecipe{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.shaped_recipes << types.ShapedRecipe.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.shapeless_recipes = []types.ShapelessRecipe{cap: count}
+		count := r.read_count()!
+		p.shapeless_recipes = []types.ShapelessRecipe{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.shapeless_recipes << types.ShapelessRecipe.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.multi_recipes = []types.MultiRecipe{cap: count}
+		count := r.read_count()!
+		p.multi_recipes = []types.MultiRecipe{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.multi_recipes << types.MultiRecipe.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.user_data_shapeless_recipes = []types.ShapelessRecipe{cap: count}
+		count := r.read_count()!
+		p.user_data_shapeless_recipes = []types.ShapelessRecipe{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.user_data_shapeless_recipes << types.ShapelessRecipe.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.shapeless_chemistry_recipes = []types.ShapelessRecipe{cap: count}
+		count := r.read_count()!
+		p.shapeless_chemistry_recipes = []types.ShapelessRecipe{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.shapeless_chemistry_recipes << types.ShapelessRecipe.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.shaped_chemistry_recipes = []types.ShapedRecipe{cap: count}
+		count := r.read_count()!
+		p.shaped_chemistry_recipes = []types.ShapedRecipe{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.shaped_chemistry_recipes << types.ShapedRecipe.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.smithing_transform_recipes = []types.SmithingTransformRecipe{cap: count}
+		count := r.read_count()!
+		p.smithing_transform_recipes = []types.SmithingTransformRecipe{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.smithing_transform_recipes << types.SmithingTransformRecipe.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.smithing_trim_recipes = []types.SmithingTrimRecipe{cap: count}
+		count := r.read_count()!
+		p.smithing_trim_recipes = []types.SmithingTrimRecipe{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.smithing_trim_recipes << types.SmithingTrimRecipe.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.potion_mixes = []types_662.PotionMixDataEntry{cap: count}
+		count := r.read_count()!
+		p.potion_mixes = []types_662.PotionMixDataEntry{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.potion_mixes << types_662.PotionMixDataEntry.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.container_mixes = []types_662.ContainerMixDataEntry{cap: count}
+		count := r.read_count()!
+		p.container_mixes = []types_662.ContainerMixDataEntry{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.container_mixes << types_662.ContainerMixDataEntry.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.material_reducers = []types_662.MaterialReducerDataEntry{cap: count}
+		count := r.read_count()!
+		p.material_reducers = []types_662.MaterialReducerDataEntry{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.material_reducers << types_662.MaterialReducerDataEntry.decode(mut r)!
 		}

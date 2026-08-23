@@ -44,16 +44,16 @@ pub fn ShapedRecipe.decode(mut r serializer.Reader) !ShapedRecipe {
 	t.recipe_unique_id = r.read_string()!
 	x_len := int(r.read_varint32()!)
 	y_len := int(r.read_varint32()!)
-	t.ingredient_grid = [][]types_662.RecipeIngredient{cap: x_len}
+	t.ingredient_grid = [][]types_662.RecipeIngredient{cap: serializer.prealloc(x_len)}
 	for _ in 0 .. x_len {
-		mut row := []types_662.RecipeIngredient{cap: y_len}
+		mut row := []types_662.RecipeIngredient{cap: serializer.prealloc(y_len)}
 		for _ in 0 .. y_len {
 			row << types_662.RecipeIngredient.decode(mut r)!
 		}
 		t.ingredient_grid << row
 	}
-	prod_count := int(r.read_varuint32()!)
-	t.production_list = []types_662.NetworkItemInstanceDescriptor{cap: prod_count}
+	prod_count := r.read_count()!
+	t.production_list = []types_662.NetworkItemInstanceDescriptor{cap: serializer.prealloc(prod_count)}
 	for _ in 0 .. prod_count {
 		t.production_list << types_662.NetworkItemInstanceDescriptor.decode(mut r)!
 	}

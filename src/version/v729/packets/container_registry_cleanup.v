@@ -28,8 +28,8 @@ pub fn (p &ContainerRegistryCleanupPacket) encode_payload(mut w serializer.Write
 }
 
 pub fn (mut p ContainerRegistryCleanupPacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.containers = []types.FullContainerName{cap: count}
+	count := r.read_count()!
+	p.containers = []types.FullContainerName{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.containers << types.FullContainerName.decode(mut r)!
 	}

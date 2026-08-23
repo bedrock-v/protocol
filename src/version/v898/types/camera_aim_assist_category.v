@@ -44,18 +44,18 @@ pub fn (t CameraAimAssistCategory) encode(mut w serializer.Writer) {
 pub fn CameraAimAssistCategory.decode(mut r serializer.Reader) !CameraAimAssistCategory {
 	mut t := CameraAimAssistCategory{}
 	t.name = r.read_string()!
-	entity_count := int(r.read_varuint32()!)
-	t.entity_priorities = []types_766.CameraAimAssistPriority{cap: entity_count}
+	entity_count := r.read_count()!
+	t.entity_priorities = []types_766.CameraAimAssistPriority{cap: serializer.prealloc(entity_count)}
 	for _ in 0 .. entity_count {
 		t.entity_priorities << types_766.CameraAimAssistPriority.decode(mut r)!
 	}
-	block_count := int(r.read_varuint32()!)
-	t.block_priorities = []types_766.CameraAimAssistPriority{cap: block_count}
+	block_count := r.read_count()!
+	t.block_priorities = []types_766.CameraAimAssistPriority{cap: serializer.prealloc(block_count)}
 	for _ in 0 .. block_count {
 		t.block_priorities << types_766.CameraAimAssistPriority.decode(mut r)!
 	}
-	block_tag_count := int(r.read_varuint32()!)
-	t.block_tag_priorities = []types_766.CameraAimAssistPriority{cap: block_tag_count}
+	block_tag_count := r.read_count()!
+	t.block_tag_priorities = []types_766.CameraAimAssistPriority{cap: serializer.prealloc(block_tag_count)}
 	for _ in 0 .. block_tag_count {
 		t.block_tag_priorities << types_766.CameraAimAssistPriority.decode(mut r)!
 	}

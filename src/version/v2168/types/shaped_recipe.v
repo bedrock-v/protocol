@@ -49,15 +49,15 @@ pub fn ShapedRecipe.decode(mut r serializer.Reader) !ShapedRecipe {
 	t.width = r.read_varint32()!
 	t.height = r.read_varint32()!
 	{
-		count := int(r.read_varuint32()!)
-		t.ingredients = []CraftingRecipeIngredient{cap: count}
+		count := r.read_count()!
+		t.ingredients = []CraftingRecipeIngredient{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			t.ingredients << CraftingRecipeIngredient.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		t.production_list = []NetworkItemInstanceDescriptor{cap: count}
+		count := r.read_count()!
+		t.production_list = []NetworkItemInstanceDescriptor{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			t.production_list << NetworkItemInstanceDescriptor.decode(mut r)!
 		}

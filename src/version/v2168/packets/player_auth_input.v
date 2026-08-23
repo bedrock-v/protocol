@@ -51,13 +51,13 @@ pub fn (e PerformItemStackRequestData) encode(mut w serializer.Writer) {
 pub fn PerformItemStackRequestData.decode(mut r serializer.Reader) !PerformItemStackRequestData {
 	mut e := PerformItemStackRequestData{}
 	e.client_request_id = r.read_varuint32()!
-	act_count := int(r.read_varuint32()!)
-	e.actions = []types.ItemStackRequestActionType{cap: act_count}
+	act_count := r.read_count()!
+	e.actions = []types.ItemStackRequestActionType{cap: serializer.prealloc(act_count)}
 	for _ in 0 .. act_count {
 		e.actions << types.ItemStackRequestActionType.decode(mut r)!
 	}
-	str_count := int(r.read_varuint32()!)
-	e.strings_to_filter = []string{cap: str_count}
+	str_count := r.read_count()!
+	e.strings_to_filter = []string{cap: serializer.prealloc(str_count)}
 	for _ in 0 .. str_count {
 		e.strings_to_filter << r.read_string()!
 	}
@@ -177,8 +177,8 @@ pub fn (mut p PlayerAuthInputPacket) decode_payload(mut r serializer.Reader) ! {
 	p.move_vector = [r.le_f32()!, r.le_f32()!]!
 	p.player_head_rotation = r.le_f32()!
 	if r.bool()! {
-		count := int(r.read_varuint32()!)
-		p.input_data = []enums.PlayerAuthInputData{cap: count}
+		count := r.read_count()!
+		p.input_data = []enums.PlayerAuthInputData{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.input_data << enums.PlayerAuthInputData.decode(mut r)!
 		}
@@ -207,8 +207,8 @@ pub fn (mut p PlayerAuthInputPacket) decode_payload(mut r serializer.Reader) ! {
 	}
 	if r.bool()! {
 		if r.bool()! {
-			count := int(r.read_varuint32()!)
-			mut actions := []types.PlayerBlockActionData{cap: count}
+			count := r.read_count()!
+			mut actions := []types.PlayerBlockActionData{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				actions << types.PlayerBlockActionData.decode(mut r)!
 			}

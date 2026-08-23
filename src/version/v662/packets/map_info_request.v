@@ -50,7 +50,7 @@ pub fn (p &MapInfoRequestPacket) encode_payload(mut w serializer.Writer) {
 pub fn (mut p MapInfoRequestPacket) decode_payload(mut r serializer.Reader) ! {
 	p.map_unique_id = types.ActorUniqueID.decode(mut r)!
 	count := int(r.le_u32()!)
-	p.client_pixels_list = []ClientPixelsListEntry{cap: count}
+	p.client_pixels_list = []ClientPixelsListEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.client_pixels_list << ClientPixelsListEntry.decode(mut r)!
 	}

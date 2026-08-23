@@ -35,8 +35,8 @@ pub fn ItemStackResponseInfo.decode(mut r serializer.Reader) !ItemStackResponseI
 	t.has_containers = r.bool()!
 	if t.has_containers {
 		if r.bool()! {
-			count := int(r.read_varuint32()!)
-			mut items := []ItemStackResponseContainerInfo{cap: count}
+			count := r.read_count()!
+			mut items := []ItemStackResponseContainerInfo{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				items << ItemStackResponseContainerInfo.decode(mut r)!
 			}

@@ -156,6 +156,38 @@ pub fn (mut r Reader) read_varuint32() !u32 {
 	return error('varuint32 did not terminate after 5 bytes')
 }
 
+// max_prealloc bounds how many elements a decoder reserves up front for a
+// list. The length prefix comes from the peer, so sizing an allocation
+// straight from it lets one small frame ask for gigabytes. Longer lists still
+// decode - they just grow as they are read.
+pub const max_prealloc = 1024
+
+// prealloc turns a decoded list length into a capacity that is safe to reserve
+// before a single element has been read.
+pub fn prealloc(count int) int {
+	if count < 0 {
+		return 0
+	}
+	if count > max_prealloc {
+		return max_prealloc
+	}
+	return count
+}
+
+// read_count reads the length prefix of a list or a byte blob. Every element
+// takes at least one byte on the wire, so a length reaching past the end of the
+// buffer is a malformed or hostile frame and is rejected here, before any
+// allocation. Without this bound a length of 2^32-1 becomes a negative int and
+// aborts the process on the spot.
+pub fn (mut r Reader) read_count() !int {
+	value := r.read_varuint32()!
+	remaining := r.remaining()
+	if value > u32(remaining) {
+		return error('list length ${value} exceeds the ${remaining} bytes left in the buffer')
+	}
+	return int(value)
+}
+
 pub fn (mut r Reader) read_varint32() !i32 {
 	ux := r.read_varuint32()!
 	mut x := i32(ux >> 1)

@@ -51,8 +51,8 @@ pub fn ResourcePackClientResponse.decode(mut r serializer.Reader) !ResourcePackC
 			return ResourcePackResponseCancel{}
 		}
 		1 {
-			count := int(r.read_varuint32()!)
-			mut packs := []string{cap: count}
+			count := r.read_count()!
+			mut packs := []string{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				packs << r.read_string()!
 			}

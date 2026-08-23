@@ -81,8 +81,8 @@ pub fn WorldClock.decode(mut r serializer.Reader) !WorldClock {
 	t.name = r.read_string()!
 	t.time = r.read_varint32()!
 	t.paused = r.bool()!
-	count := int(r.read_varuint32()!)
-	t.time_markers = []TimeMarker{cap: count}
+	count := r.read_count()!
+	t.time_markers = []TimeMarker{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.time_markers << TimeMarker.decode(mut r)!
 	}
@@ -155,8 +155,8 @@ pub fn SyncWorldClocks.decode(mut r serializer.Reader) !SyncWorldClocks {
 	d := r.read_varuint32()!
 	match d {
 		0 {
-			count := int(r.read_varuint32()!)
-			mut clock_data := []SyncWorldClockState{cap: count}
+			count := r.read_count()!
+			mut clock_data := []SyncWorldClockState{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				clock_data << SyncWorldClockState.decode(mut r)!
 			}
@@ -165,8 +165,8 @@ pub fn SyncWorldClocks.decode(mut r serializer.Reader) !SyncWorldClocks {
 			}
 		}
 		1 {
-			count := int(r.read_varuint32()!)
-			mut clock_data := []WorldClock{cap: count}
+			count := r.read_count()!
+			mut clock_data := []WorldClock{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				clock_data << WorldClock.decode(mut r)!
 			}
@@ -176,8 +176,8 @@ pub fn SyncWorldClocks.decode(mut r serializer.Reader) !SyncWorldClocks {
 		}
 		2 {
 			clock_id := r.read_varuint64()!
-			count := int(r.read_varuint32()!)
-			mut time_markers := []TimeMarker{cap: count}
+			count := r.read_count()!
+			mut time_markers := []TimeMarker{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				time_markers << TimeMarker.decode(mut r)!
 			}
@@ -188,8 +188,8 @@ pub fn SyncWorldClocks.decode(mut r serializer.Reader) !SyncWorldClocks {
 		}
 		3 {
 			clock_id := r.read_varuint64()!
-			count := int(r.read_varuint32()!)
-			mut ids := []u64{cap: count}
+			count := r.read_count()!
+			mut ids := []u64{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				ids << r.read_varuint64()!
 			}

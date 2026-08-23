@@ -42,8 +42,8 @@ pub fn (mut p AnimateEntityPacket) decode_payload(mut r serializer.Reader) ! {
 	p.stop_expression = r.read_string()!
 	p.controller = r.read_string()!
 	p.blend_out_time = r.le_f32()!
-	count := int(r.read_varuint32()!)
-	p.runtime_entity_ids = []u64{cap: count}
+	count := r.read_count()!
+	p.runtime_entity_ids = []u64{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.runtime_entity_ids << r.read_varuint64()!
 	}

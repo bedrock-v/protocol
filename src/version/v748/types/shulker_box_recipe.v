@@ -36,13 +36,13 @@ pub fn (t ShulkerBoxRecipe) encode(mut w serializer.Writer) {
 pub fn ShulkerBoxRecipe.decode(mut r serializer.Reader) !ShulkerBoxRecipe {
 	mut t := ShulkerBoxRecipe{}
 	t.recipe_unique_id = r.read_string()!
-	ing_count := int(r.read_varuint32()!)
-	t.ingredient_list = []types_662.RecipeIngredient{cap: ing_count}
+	ing_count := r.read_count()!
+	t.ingredient_list = []types_662.RecipeIngredient{cap: serializer.prealloc(ing_count)}
 	for _ in 0 .. ing_count {
 		t.ingredient_list << types_662.RecipeIngredient.decode(mut r)!
 	}
-	prod_count := int(r.read_varuint32()!)
-	t.production_list = []types_662.NetworkItemInstanceDescriptor{cap: prod_count}
+	prod_count := r.read_count()!
+	t.production_list = []types_662.NetworkItemInstanceDescriptor{cap: serializer.prealloc(prod_count)}
 	for _ in 0 .. prod_count {
 		t.production_list << types_662.NetworkItemInstanceDescriptor.decode(mut r)!
 	}

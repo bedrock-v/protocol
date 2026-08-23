@@ -81,14 +81,14 @@ pub fn (mut p CommandOutputPacket) decode_payload(mut r serializer.Reader) ! {
 	p.origin_data = CommandOriginData.decode(mut r)!
 	p.output_type = r.u8()!
 	p.success_count = r.read_varuint32()!
-	message_count := int(r.read_varuint32()!)
-	p.messages = []CommandOutputMessage{cap: message_count}
+	message_count := r.read_count()!
+	p.messages = []CommandOutputMessage{cap: serializer.prealloc(message_count)}
 	for _ in 0 .. message_count {
 		mut m := CommandOutputMessage{}
 		m.is_internal = r.bool()!
 		m.message_id = r.read_string()!
-		param_count := int(r.read_varuint32()!)
-		m.parameters = []string{cap: param_count}
+		param_count := r.read_count()!
+		m.parameters = []string{cap: serializer.prealloc(param_count)}
 		for _ in 0 .. param_count {
 			m.parameters << r.read_string()!
 		}

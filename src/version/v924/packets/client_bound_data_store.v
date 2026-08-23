@@ -114,8 +114,8 @@ pub fn ClientBoundDataStoreValue.decode(mut r serializer.Reader) !ClientBoundDat
 			}
 		}
 		5 {
-			count := int(r.read_varuint32()!)
-			mut values := []ClientBoundDataStoreValue{cap: count}
+			count := r.read_count()!
+			mut values := []ClientBoundDataStoreValue{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				values << ClientBoundDataStoreValue.decode(mut r)!
 			}
@@ -124,8 +124,8 @@ pub fn ClientBoundDataStoreValue.decode(mut r serializer.Reader) !ClientBoundDat
 			}
 		}
 		6 {
-			count := int(r.read_varuint32()!)
-			mut values := []ClientBoundDataStoreMapEntry{cap: count}
+			count := r.read_count()!
+			mut values := []ClientBoundDataStoreMapEntry{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				values << ClientBoundDataStoreMapEntry{
 					key:   r.read_string()!
@@ -309,8 +309,8 @@ pub fn (p &ClientBoundDataStorePacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p ClientBoundDataStorePacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.updates = []ClientBoundDataStoreUpdate{cap: count}
+	count := r.read_count()!
+	p.updates = []ClientBoundDataStoreUpdate{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.updates << ClientBoundDataStoreUpdate.decode(mut r)!
 	}

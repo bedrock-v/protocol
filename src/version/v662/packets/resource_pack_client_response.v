@@ -33,7 +33,7 @@ pub fn (mut p ResourcePackClientResponsePacket) decode_payload(mut r serializer.
 	p.response = enums.ResourcePackResponse.decode(mut r)!
 	{
 		count := int(r.le_u16()!)
-		p.downloading_packs = []string{cap: count}
+		p.downloading_packs = []string{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.downloading_packs << r.read_string()!
 		}

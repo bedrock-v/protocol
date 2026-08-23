@@ -45,8 +45,8 @@ pub fn (p &SetScoreboardIdentityPacket) encode_payload(mut w serializer.Writer) 
 
 pub fn (mut p SetScoreboardIdentityPacket) decode_payload(mut r serializer.Reader) ! {
 	p.action = unsafe { ScoreboardIdentityAction(r.u8()!) }
-	count := int(r.read_varuint32()!)
-	mut entries := []ScoreboardIdentityEntry{cap: count}
+	count := r.read_count()!
+	mut entries := []ScoreboardIdentityEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		mut entry := ScoreboardIdentityEntry{
 			scoreboard_id: r.read_varint64()!

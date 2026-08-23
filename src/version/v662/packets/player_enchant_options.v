@@ -52,8 +52,8 @@ pub fn (p &PlayerEnchantOptionsPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p PlayerEnchantOptionsPacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.options = []OptionsEntry{cap: count}
+	count := r.read_count()!
+	p.options = []OptionsEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.options << OptionsEntry.decode(mut r)!
 	}

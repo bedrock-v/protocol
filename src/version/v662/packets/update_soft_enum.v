@@ -34,8 +34,8 @@ pub fn (p &UpdateSoftEnumPacket) encode_payload(mut w serializer.Writer) {
 pub fn (mut p UpdateSoftEnumPacket) decode_payload(mut r serializer.Reader) ! {
 	p.enum_name = r.read_string()!
 	{
-		count := int(r.read_varuint32()!)
-		p.values = []string{cap: count}
+		count := r.read_count()!
+		p.values = []string{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.values << r.read_string()!
 		}

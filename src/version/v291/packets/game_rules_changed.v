@@ -28,8 +28,8 @@ pub fn (p &GameRulesChangedPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p GameRulesChangedPacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.game_rules = []types.GameRuleData{cap: count}
+	count := r.read_count()!
+	p.game_rules = []types.GameRuleData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.game_rules << types.GameRuleData.decode(mut r)!
 	}

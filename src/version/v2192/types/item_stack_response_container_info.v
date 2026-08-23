@@ -20,8 +20,8 @@ pub fn (t ItemStackResponseContainerInfo) encode(mut w serializer.Writer) {
 pub fn ItemStackResponseContainerInfo.decode(mut r serializer.Reader) !ItemStackResponseContainerInfo {
 	mut t := ItemStackResponseContainerInfo{}
 	t.container_name = types_944.FullContainerName.decode(mut r)!
-	count := int(r.read_varuint32()!)
-	t.slots = []ItemStackResponseSlotInfo{cap: count}
+	count := r.read_count()!
+	t.slots = []ItemStackResponseSlotInfo{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.slots << ItemStackResponseSlotInfo.decode(mut r)!
 	}

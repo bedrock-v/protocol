@@ -71,7 +71,7 @@ pub fn (mut p AddEntityPacket) decode_payload(mut r serializer.Reader) ! {
 	p.pitch = r.be_f32()!
 	p.metadata = types.OldMetadata.decode(mut r)!
 	count := int(r.be_u16()!)
-	p.links = []EntityLink{cap: count}
+	p.links = []EntityLink{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.links << EntityLink{
 			from: r.be_i64()!

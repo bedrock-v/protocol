@@ -58,14 +58,14 @@ pub fn (mut p AddEntityPacket) decode_payload(mut r serializer.Reader) ! {
 	p.motion = types_291.Vector3f.decode(mut r)!
 	p.rotation = types_291.Vector2f.decode(mut r)!
 	p.head_rotation = r.le_f32()!
-	attribute_count := int(r.read_varuint32()!)
-	p.attributes = []types_291.AttributeData{cap: attribute_count}
+	attribute_count := r.read_count()!
+	p.attributes = []types_291.AttributeData{cap: serializer.prealloc(attribute_count)}
 	for _ in 0 .. attribute_count {
 		p.attributes << types_291.AttributeData.decode_entity(mut r)!
 	}
 	p.metadata = types_361.read_entity_data(mut r)!
-	link_count := int(r.read_varuint32()!)
-	p.entity_links = []types.EntityLinkData{cap: link_count}
+	link_count := r.read_count()!
+	p.entity_links = []types.EntityLinkData{cap: serializer.prealloc(link_count)}
 	for _ in 0 .. link_count {
 		p.entity_links << types.EntityLinkData.decode(mut r)!
 	}

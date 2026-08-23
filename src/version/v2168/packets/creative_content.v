@@ -93,13 +93,13 @@ pub fn (p &CreativeContentPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p CreativeContentPacket) decode_payload(mut r serializer.Reader) ! {
-	group_count := int(r.read_varuint32()!)
-	p.groups = []CreativeItemGroup{cap: group_count}
+	group_count := r.read_count()!
+	p.groups = []CreativeItemGroup{cap: serializer.prealloc(group_count)}
 	for _ in 0 .. group_count {
 		p.groups << CreativeItemGroup.decode(mut r)!
 	}
-	content_count := int(r.read_varuint32()!)
-	p.contents = []CreativeItemData{cap: content_count}
+	content_count := r.read_count()!
+	p.contents = []CreativeItemData{cap: serializer.prealloc(content_count)}
 	for _ in 0 .. content_count {
 		p.contents << CreativeItemData.decode(mut r)!
 	}

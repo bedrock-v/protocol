@@ -53,8 +53,8 @@ pub fn (mut p ClientBoundTextureShiftPacket) decode_payload(mut r serializer.Rea
 	p.collection_name = r.read_string()!
 	p.from_step = r.read_string()!
 	p.to_step = r.read_string()!
-	count := int(r.read_varuint32()!)
-	p.all_steps = []string{cap: count}
+	count := r.read_count()!
+	p.all_steps = []string{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.all_steps << r.read_string()!
 	}

@@ -154,8 +154,8 @@ pub fn (t InventoryTransaction) encode(mut w serializer.Writer) {
 }
 
 pub fn InventoryTransaction.decode(transaction_type u32, mut r serializer.Reader) !InventoryTransaction {
-	count := int(r.read_varuint32()!)
-	mut items := []InventoryAction{cap: count}
+	count := r.read_count()!
+	mut items := []InventoryAction{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		items << InventoryAction.decode(mut r)!
 	}
@@ -178,8 +178,8 @@ pub fn (t LegacyInventoryTransaction) encode(mut w serializer.Writer) {
 }
 
 pub fn LegacyInventoryTransaction.decode(mut r serializer.Reader) !LegacyInventoryTransaction {
-	count := int(r.read_varuint32()!)
-	mut items := []LegacyInventoryAction{cap: count}
+	count := r.read_count()!
+	mut items := []LegacyInventoryAction{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		items << LegacyInventoryAction.decode(mut r)!
 	}

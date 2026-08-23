@@ -30,8 +30,8 @@ pub fn (p &UnlockedRecipesPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p UnlockedRecipesPacket) decode_payload(mut r serializer.Reader) ! {
 	p.newly_unlocked = r.bool()!
-	count := int(r.read_varuint32()!)
-	p.unlocked_recipes = []string{cap: count}
+	count := r.read_count()!
+	p.unlocked_recipes = []string{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.unlocked_recipes << r.read_string()!
 	}

@@ -48,7 +48,7 @@ fn read_tag_payload(mut r serializer.Reader, id u8) !nbt.Tag {
 		nbt.tag_list {
 			element_type := r.u8()!
 			length := int(r.read_varint32()!)
-			mut values := []nbt.Tag{cap: length}
+			mut values := []nbt.Tag{cap: serializer.prealloc(length)}
 			for _ in 0 .. length {
 				values << read_tag_payload(mut r, element_type)!
 			}
@@ -73,7 +73,7 @@ fn read_tag_payload(mut r serializer.Reader, id u8) !nbt.Tag {
 		}
 		nbt.tag_int_array {
 			length := int(r.read_varint32()!)
-			mut values := []i32{cap: length}
+			mut values := []i32{cap: serializer.prealloc(length)}
 			for _ in 0 .. length {
 				values << r.read_varint32()!
 			}
@@ -83,7 +83,7 @@ fn read_tag_payload(mut r serializer.Reader, id u8) !nbt.Tag {
 		}
 		nbt.tag_long_array {
 			length := int(r.read_varint32()!)
-			mut values := []i64{cap: length}
+			mut values := []i64{cap: serializer.prealloc(length)}
 			for _ in 0 .. length {
 				values << r.read_varint64()!
 			}

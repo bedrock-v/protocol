@@ -37,8 +37,8 @@ pub fn write_attribute_list(mut w serializer.Writer, list []AttributeData) {
 }
 
 pub fn read_attribute_list(mut r serializer.Reader) ![]AttributeData {
-	count := int(r.read_varuint32()!)
-	mut list := []AttributeData{cap: count}
+	count := r.read_count()!
+	mut list := []AttributeData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		list << AttributeData.decode(mut r)!
 	}
