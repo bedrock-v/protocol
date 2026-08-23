@@ -42,13 +42,13 @@ pub fn (mut p CraftingEventPacket) decode_payload(mut r serializer.Reader) ! {
 	p.window_id = r.u8()!
 	p.type = r.read_varint32()!
 	p.id = types.Uuid.decode(mut r)!
-	input_count := int(r.read_varuint32()!)
-	p.input = []types.ItemData{cap: input_count}
+	input_count := r.read_count()!
+	p.input = []types.ItemData{cap: serializer.prealloc(input_count)}
 	for _ in 0 .. input_count {
 		p.input << types.ItemData.decode(mut r)!
 	}
-	output_count := int(r.read_varuint32()!)
-	p.output = []types.ItemData{cap: output_count}
+	output_count := r.read_count()!
+	p.output = []types.ItemData{cap: serializer.prealloc(output_count)}
 	for _ in 0 .. output_count {
 		p.output << types.ItemData.decode(mut r)!
 	}

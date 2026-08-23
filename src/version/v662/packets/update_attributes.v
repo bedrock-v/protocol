@@ -63,8 +63,8 @@ pub fn AttributeData.decode(mut r serializer.Reader) !AttributeData {
 	e.current_value = r.le_f32()!
 	e.default_value = r.le_f32()!
 	e.attribute_name = r.read_string()!
-	count := int(r.read_varuint32()!)
-	e.attribute_modifiers = []AttributeModifier{cap: count}
+	count := r.read_count()!
+	e.attribute_modifiers = []AttributeModifier{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		e.attribute_modifiers << AttributeModifier.decode(mut r)!
 	}
@@ -101,8 +101,8 @@ pub fn (p &UpdateAttributesPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p UpdateAttributesPacket) decode_payload(mut r serializer.Reader) ! {
 	p.target_runtime_id = types.ActorRuntimeID.decode(mut r)!
-	count := int(r.read_varuint32()!)
-	p.attribute_list = []AttributeData{cap: count}
+	count := r.read_count()!
+	p.attribute_list = []AttributeData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.attribute_list << AttributeData.decode(mut r)!
 	}

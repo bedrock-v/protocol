@@ -51,8 +51,8 @@ pub fn (p &DimensionDataPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p DimensionDataPacket) decode_payload(mut r serializer.Reader) ! {
-	definition_count := int(r.read_varuint32()!)
-	p.definitions = []DimensionDefinition{cap: definition_count}
+	definition_count := r.read_count()!
+	p.definitions = []DimensionDefinition{cap: serializer.prealloc(definition_count)}
 	for _ in 0 .. definition_count {
 		p.definitions << DimensionDefinition.decode(mut r)!
 	}

@@ -16,8 +16,8 @@ pub fn (t BiomeTagList) encode(mut w serializer.Writer) {
 
 pub fn BiomeTagList.decode(mut r serializer.Reader) !BiomeTagList {
 	mut t := BiomeTagList{}
-	count := int(r.read_varuint32()!)
-	t.tags = []u16{cap: count}
+	count := r.read_count()!
+	t.tags = []u16{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.tags << r.le_u16()!
 	}

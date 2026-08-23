@@ -44,8 +44,8 @@ pub fn VoxelCells.decode(mut r serializer.Reader) !VoxelCells {
 		y_size: r.u8()!
 		z_size: r.u8()!
 	}
-	count := int(r.read_varuint32()!)
-	t.storage = []u8{cap: count}
+	count := r.read_count()!
+	t.storage = []u8{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.storage << r.u8()!
 	}
@@ -84,8 +84,8 @@ fn encode_f32_slice(mut w serializer.Writer, values []f32) {
 }
 
 fn decode_f32_slice(mut r serializer.Reader) ![]f32 {
-	count := int(r.read_varuint32()!)
-	mut out := []f32{cap: count}
+	count := r.read_count()!
+	mut out := []f32{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		out << r.le_f32()!
 	}
@@ -124,13 +124,13 @@ pub fn (p &VoxelShapesPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p VoxelShapesPacket) decode_payload(mut r serializer.Reader) ! {
-	shape_count := int(r.read_varuint32()!)
-	p.shapes = []VoxelShape{cap: shape_count}
+	shape_count := r.read_count()!
+	p.shapes = []VoxelShape{cap: serializer.prealloc(shape_count)}
 	for _ in 0 .. shape_count {
 		p.shapes << VoxelShape.decode(mut r)!
 	}
-	name_count := int(r.read_varuint32()!)
-	p.name_map = []VoxelShapeNameEntry{cap: name_count}
+	name_count := r.read_count()!
+	p.name_map = []VoxelShapeNameEntry{cap: serializer.prealloc(name_count)}
 	for _ in 0 .. name_count {
 		p.name_map << VoxelShapeNameEntry.decode(mut r)!
 	}

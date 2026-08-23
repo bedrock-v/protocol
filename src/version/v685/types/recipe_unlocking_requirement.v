@@ -44,8 +44,8 @@ pub fn UnlockingContext.decode(mut r serializer.Reader) !UnlockingContext {
 	d := r.i8()!
 	match d {
 		0 {
-			count := int(r.read_varuint32()!)
-			mut ingredients := []types_662.RecipeIngredient{cap: count}
+			count := r.read_count()!
+			mut ingredients := []types_662.RecipeIngredient{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				ingredients << types_662.RecipeIngredient.decode(mut r)!
 			}

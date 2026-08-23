@@ -73,7 +73,7 @@ pub fn SerializedAbilitiesData.decode(mut r serializer.Reader) !SerializedAbilit
 	pp := r.u8()!
 	cp := enums.CommandPermissionLevel.decode(mut r)!
 	count := int(r.u8()!)
-	mut items := []SerializedLayer{cap: count}
+	mut items := []SerializedLayer{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		items << SerializedLayer.decode(mut r)!
 	}

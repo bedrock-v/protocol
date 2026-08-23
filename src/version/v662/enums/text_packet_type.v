@@ -89,8 +89,8 @@ fn write_string_list(mut w serializer.Writer, list []string) {
 }
 
 fn read_string_list(mut r serializer.Reader) ![]string {
-	count := int(r.read_varuint32()!)
-	mut out := []string{cap: count}
+	count := r.read_count()!
+	mut out := []string{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		out << r.read_string()!
 	}

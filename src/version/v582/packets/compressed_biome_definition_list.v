@@ -42,12 +42,12 @@ pub fn (p &CompressedBiomeDefinitionListPacket) encode_payload(mut w serializer.
 }
 
 pub fn (mut p CompressedBiomeDefinitionListPacket) decode_payload(mut r serializer.Reader) ! {
-	length := int(r.read_varuint32()!)
+	length := r.read_count()!
 	blob := r.read_raw(length)!
 	mut br := serializer.new_reader(blob)
 	br.read_raw(compressed_indicator.len)!
 	dictionary_size := int(br.le_u16()!)
-	mut dictionary := [][]u8{cap: dictionary_size}
+	mut dictionary := [][]u8{cap: serializer.prealloc(dictionary_size)}
 	for _ in 0 .. dictionary_size {
 		entry_len := int(br.u8()!)
 		dictionary << br.read_raw(entry_len)!

@@ -40,8 +40,8 @@ pub fn (p &SetScorePacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p SetScorePacket) decode_payload(mut r serializer.Reader) ! {
 	p.type = r.u8()!
-	count := int(r.read_varuint32()!)
-	p.entries = []ScorePacketEntry{cap: count}
+	count := r.read_count()!
+	p.entries = []ScorePacketEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		mut entry := ScorePacketEntry{}
 		entry.uuid = types.Uuid.decode(mut r)!

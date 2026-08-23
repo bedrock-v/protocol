@@ -31,8 +31,8 @@ pub fn (p &DeathInfoPacket) encode_payload(mut w serializer.Writer) {
 pub fn (mut p DeathInfoPacket) decode_payload(mut r serializer.Reader) ! {
 	p.death_cause_attack_name = r.read_string()!
 	{
-		count := int(r.read_varuint32()!)
-		p.death_cause_message_list = []string{cap: count}
+		count := r.read_count()!
+		p.death_cause_message_list = []string{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.death_cause_message_list << r.read_string()!
 		}

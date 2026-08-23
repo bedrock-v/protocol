@@ -49,7 +49,7 @@ pub fn (p &MapInfoRequestPacket) encode_payload(mut w serializer.Writer) {
 pub fn (mut p MapInfoRequestPacket) decode_payload(mut r serializer.Reader) ! {
 	p.unique_map_id = r.read_varint64()!
 	pixel_count := int(r.le_u32()!)
-	p.pixels = []MapPixel{cap: pixel_count}
+	p.pixels = []MapPixel{cap: serializer.prealloc(pixel_count)}
 	for _ in 0 .. pixel_count {
 		p.pixels << MapPixel.decode(mut r)!
 	}

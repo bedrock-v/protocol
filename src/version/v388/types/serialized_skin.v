@@ -42,7 +42,7 @@ pub fn SerializedSkin.decode(mut r serializer.Reader) !SerializedSkin {
 	t.skin_resource_patch = r.read_string()!
 	t.skin_data = ImageData.decode(mut r)!
 	animation_count := int(r.le_i32()!)
-	t.animations = []AnimationData{cap: animation_count}
+	t.animations = []AnimationData{cap: serializer.prealloc(animation_count)}
 	for _ in 0 .. animation_count {
 		t.animations << AnimationData.decode(mut r)!
 	}

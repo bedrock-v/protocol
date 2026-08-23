@@ -35,8 +35,8 @@ pub fn (p &PlayerHotbarPacket) encode_payload(mut w serializer.Writer) {
 pub fn (mut p PlayerHotbarPacket) decode_payload(mut r serializer.Reader) ! {
 	p.selected_hotbar_slot = r.read_varuint32()!
 	p.window_id = r.u8()!
-	count := int(r.read_varuint32()!)
-	p.slots = []i32{cap: count}
+	count := r.read_count()!
+	p.slots = []i32{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.slots << i32(r.read_varuint32()!)
 	}

@@ -61,8 +61,8 @@ pub fn AttributeData.decode(mut r serializer.Reader) !AttributeData {
 	t.value = r.le_f32()!
 	t.default_value = r.le_f32()!
 	t.name = r.read_string()!
-	modifier_count := int(r.read_varuint32()!)
-	t.modifiers = []AttributeModifierData{cap: modifier_count}
+	modifier_count := r.read_count()!
+	t.modifiers = []AttributeModifierData{cap: serializer.prealloc(modifier_count)}
 	for _ in 0 .. modifier_count {
 		t.modifiers << AttributeModifierData.decode(mut r)!
 	}

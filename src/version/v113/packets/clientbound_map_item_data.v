@@ -84,7 +84,7 @@ pub fn (mut p ClientboundMapItemDataPacket) decode_payload(mut r serializer.Read
 	p.map_id = r.read_varint64()!
 	typ := r.read_varuint32()!
 	if (typ & 0x08) != 0 {
-		n := int(r.read_varuint32()!)
+		n := r.read_count()!
 		for _ in 0 .. n {
 			p.eids << r.read_varint64()!
 		}
@@ -93,7 +93,7 @@ pub fn (mut p ClientboundMapItemDataPacket) decode_payload(mut r serializer.Read
 		p.scale = r.u8()!
 	}
 	if (typ & 0x04) != 0 {
-		n := int(r.read_varuint32()!)
+		n := r.read_count()!
 		for _ in 0 .. n {
 			weird := r.read_varint32()!
 			mut d := MapDecoration{

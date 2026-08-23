@@ -72,8 +72,8 @@ pub fn (p &SetScoreboardIdentityPacket) encode_payload(mut w serializer.Writer) 
 
 pub fn (mut p SetScoreboardIdentityPacket) decode_payload(mut r serializer.Reader) ! {
 	d := r.i8()!
-	count := int(r.read_varuint32()!)
-	mut entries := []IdentityInfoEntry{cap: count}
+	count := r.read_count()!
+	mut entries := []IdentityInfoEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		entries << IdentityInfoEntry.decode(mut r)!
 	}

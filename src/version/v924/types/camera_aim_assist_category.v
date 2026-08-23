@@ -22,8 +22,8 @@ fn write_priority_list(mut w serializer.Writer, list []types_766.CameraAimAssist
 }
 
 fn read_priority_list(mut r serializer.Reader) ![]types_766.CameraAimAssistPriority {
-	count := int(r.read_varuint32()!)
-	mut out := []types_766.CameraAimAssistPriority{cap: count}
+	count := r.read_count()!
+	mut out := []types_766.CameraAimAssistPriority{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		out << types_766.CameraAimAssistPriority.decode(mut r)!
 	}

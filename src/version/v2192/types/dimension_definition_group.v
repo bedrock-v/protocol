@@ -64,8 +64,8 @@ pub fn (t DimensionDefinitionGroup) encode(mut w serializer.Writer) {
 }
 
 pub fn DimensionDefinitionGroup.decode(mut r serializer.Reader) !DimensionDefinitionGroup {
-	count := int(r.read_varuint32()!)
-	mut items := []DimensionDefinitionGroupType{cap: count}
+	count := r.read_count()!
+	mut items := []DimensionDefinitionGroupType{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		items << DimensionDefinitionGroupType.decode(mut r)!
 	}

@@ -154,15 +154,15 @@ pub fn (mut p PlayerAuthInputPacket) decode_payload(mut r serializer.Reader) ! {
 	if p.input_data & input_flag_perform_item_interaction != 0 {
 		p.item_use_legacy_request_id = r.read_varint32()!
 		if p.item_use_legacy_request_id < -1 && (p.item_use_legacy_request_id & 1) == 0 {
-			slot_count := int(r.read_varuint32()!)
-			p.item_use_legacy_slots = []LegacySetItemSlotData{cap: slot_count}
+			slot_count := r.read_count()!
+			p.item_use_legacy_slots = []LegacySetItemSlotData{cap: serializer.prealloc(slot_count)}
 			for _ in 0 .. slot_count {
 				p.item_use_legacy_slots << LegacySetItemSlotData.decode(mut r)!
 			}
 		}
 		p.item_use_has_network_ids = r.bool()!
-		action_count := int(r.read_varuint32()!)
-		p.item_use_actions = []types_407.InventoryActionData{cap: action_count}
+		action_count := r.read_count()!
+		p.item_use_actions = []types_407.InventoryActionData{cap: serializer.prealloc(action_count)}
 		for _ in 0 .. action_count {
 			p.item_use_actions << types_407.InventoryActionData.decode(mut r,
 				p.item_use_has_network_ids)!
@@ -175,7 +175,7 @@ pub fn (mut p PlayerAuthInputPacket) decode_payload(mut r serializer.Reader) ! {
 	}
 	if p.input_data & input_flag_perform_block_actions != 0 {
 		action_count := int(r.read_varint32()!)
-		p.player_actions = []PlayerBlockActionData{cap: action_count}
+		p.player_actions = []PlayerBlockActionData{cap: serializer.prealloc(action_count)}
 		for _ in 0 .. action_count {
 			p.player_actions << PlayerBlockActionData.decode(mut r)!
 		}

@@ -88,8 +88,8 @@ pub fn (mut p ResourcePacksInfoPacket) decode_payload(mut r serializer.Reader) !
 	p.force_disable_vibrant_visuals = r.bool()!
 	p.world_template_uuid = types_662.Uuid.decode(mut r)!
 	p.world_template_version = r.read_string()!
-	count := int(r.read_varuint32()!)
-	p.resource_packs = []ResourcePackEntry{cap: count}
+	count := r.read_count()!
+	p.resource_packs = []ResourcePackEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.resource_packs << ResourcePackEntry.decode(mut r)!
 	}

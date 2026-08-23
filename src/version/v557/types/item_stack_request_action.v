@@ -295,7 +295,7 @@ pub fn ItemStackRequestAction.decode(mut r serializer.Reader) !ItemStackRequestA
 			recipe_network_id := r.read_varuint32()!
 			times_crafted := r.u8()!
 			ingredient_count := int(r.u8()!)
-			mut ingredients := []types_554.ItemDescriptorWithCount{cap: ingredient_count}
+			mut ingredients := []types_554.ItemDescriptorWithCount{cap: serializer.prealloc(ingredient_count)}
 			for _ in 0 .. ingredient_count {
 				ingredients << types_554.ItemDescriptorWithCount.decode(mut r)!
 			}
@@ -331,8 +331,8 @@ pub fn ItemStackRequestAction.decode(mut r serializer.Reader) !ItemStackRequestA
 			return CraftNonImplementedAction{}
 		}
 		19 {
-			item_count := int(r.read_varuint32()!)
-			mut result_items := []types_431.ItemData{cap: item_count}
+			item_count := r.read_count()!
+			mut result_items := []types_431.ItemData{cap: serializer.prealloc(item_count)}
 			for _ in 0 .. item_count {
 				result_items << types_431.ItemData.decode_instance(mut r)!
 			}

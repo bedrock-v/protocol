@@ -79,8 +79,8 @@ pub fn (mut p AddPlayerPacket) decode_payload(mut r serializer.Reader) ! {
 	p.carried_item = types_662.NetworkItemStackDescriptor.decode(mut r)!
 	p.player_game_type = enums.GameType.decode(mut r)!
 	{
-		count := int(r.read_varuint32()!)
-		p.entity_data = []types_662.DataItem{cap: count}
+		count := r.read_count()!
+		p.entity_data = []types_662.DataItem{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.entity_data << types_662.DataItem.decode(mut r)!
 		}
@@ -88,8 +88,8 @@ pub fn (mut p AddPlayerPacket) decode_payload(mut r serializer.Reader) ! {
 	p.synced_properties = types_662.PropertySyncData.decode(mut r)!
 	p.abilities_data = types_662.SerializedAbilitiesData.decode(mut r)!
 	{
-		count := int(r.read_varuint32()!)
-		p.actor_links = []types.ActorLink{cap: count}
+		count := r.read_count()!
+		p.actor_links = []types.ActorLink{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.actor_links << types.ActorLink.decode(mut r)!
 		}

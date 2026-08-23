@@ -116,8 +116,8 @@ pub fn BiomeDefinitionChunkGenData.decode(mut r serializer.Reader) !BiomeDefinit
 		t.legacy_world_gen_rules = types_800.BiomeLegacyWorldGenRulesData.decode(mut r)!
 	}
 	if r.bool()! {
-		count := int(r.read_varuint32()!)
-		mut items := []types_859.BiomeReplacementData{cap: count}
+		count := r.read_count()!
+		mut items := []types_859.BiomeReplacementData{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			items << types_859.BiomeReplacementData.decode(mut r)!
 		}

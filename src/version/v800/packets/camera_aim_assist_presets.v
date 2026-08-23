@@ -37,13 +37,13 @@ pub fn (p &CameraAimAssistPresetsPacket) encode_payload(mut w serializer.Writer)
 }
 
 pub fn (mut p CameraAimAssistPresetsPacket) decode_payload(mut r serializer.Reader) ! {
-	category_count := int(r.read_varuint32()!)
-	p.category_definitions = []types_766.CameraAimAssistCategory{cap: category_count}
+	category_count := r.read_count()!
+	p.category_definitions = []types_766.CameraAimAssistCategory{cap: serializer.prealloc(category_count)}
 	for _ in 0 .. category_count {
 		p.category_definitions << types_766.CameraAimAssistCategory.decode(mut r)!
 	}
-	preset_count := int(r.read_varuint32()!)
-	p.presets = []types_776.CameraAimAssistPresetDefinition{cap: preset_count}
+	preset_count := r.read_count()!
+	p.presets = []types_776.CameraAimAssistPresetDefinition{cap: serializer.prealloc(preset_count)}
 	for _ in 0 .. preset_count {
 		p.presets << types_776.CameraAimAssistPresetDefinition.decode(mut r)!
 	}

@@ -65,8 +65,8 @@ pub fn (mut p AddPlayerPacket) decode_payload(mut r serializer.Reader) ! {
 	p.hand = types_340.ItemData.decode(mut r)!
 	p.metadata = types.read_entity_data(mut r)!
 	p.adventure_settings = types_291.AdventureSettingsData.decode(mut r)!
-	link_count := int(r.read_varuint32()!)
-	p.entity_links = []types_291.EntityLinkData{cap: link_count}
+	link_count := r.read_count()!
+	p.entity_links = []types_291.EntityLinkData{cap: serializer.prealloc(link_count)}
 	for _ in 0 .. link_count {
 		p.entity_links << types_291.EntityLinkData.decode(mut r)!
 	}

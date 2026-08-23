@@ -34,8 +34,8 @@ pub fn (p &ExplodePacket) encode_payload(mut w serializer.Writer) {
 pub fn (mut p ExplodePacket) decode_payload(mut r serializer.Reader) ! {
 	p.position = types.Vector3f.decode(mut r)!
 	p.radius = f32(r.read_varint32()!) / 32.0
-	count := int(r.read_varuint32()!)
-	p.records = []types.Vector3i{cap: count}
+	count := r.read_count()!
+	p.records = []types.Vector3i{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.records << types.Vector3i.decode(mut r)!
 	}

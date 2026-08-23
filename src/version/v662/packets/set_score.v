@@ -100,8 +100,8 @@ pub fn (mut p SetScorePacket) decode_payload(mut r serializer.Reader) ! {
 	d := r.i8()!
 	match d {
 		0 {
-			count := int(r.read_varuint32()!)
-			mut entries := []ScorePacketInfoChangeEntry{cap: count}
+			count := r.read_count()!
+			mut entries := []ScorePacketInfoChangeEntry{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				entries << ScorePacketInfoChangeEntry.decode(mut r)!
 			}
@@ -110,8 +110,8 @@ pub fn (mut p SetScorePacket) decode_payload(mut r serializer.Reader) ! {
 			}
 		}
 		1 {
-			count := int(r.read_varuint32()!)
-			mut entries := []ScorePacketInfoRemoveEntry{cap: count}
+			count := r.read_count()!
+			mut entries := []ScorePacketInfoRemoveEntry{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				entries << ScorePacketInfoRemoveEntry.decode(mut r)!
 			}

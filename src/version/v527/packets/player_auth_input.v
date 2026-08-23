@@ -94,14 +94,14 @@ pub fn ItemUseTransaction.decode(mut r serializer.Reader) !ItemUseTransaction {
 	mut t := ItemUseTransaction{}
 	t.legacy_request_id = r.read_varint32()!
 	if t.legacy_request_id < -1 && t.legacy_request_id & 1 == 0 {
-		slot_count := int(r.read_varuint32()!)
-		t.legacy_slots = []LegacySetItemSlotData{cap: slot_count}
+		slot_count := r.read_count()!
+		t.legacy_slots = []LegacySetItemSlotData{cap: serializer.prealloc(slot_count)}
 		for _ in 0 .. slot_count {
 			t.legacy_slots << LegacySetItemSlotData.decode(mut r)!
 		}
 	}
-	action_count := int(r.read_varuint32()!)
-	t.actions = []types_431.InventoryActionData{cap: action_count}
+	action_count := r.read_count()!
+	t.actions = []types_431.InventoryActionData{cap: serializer.prealloc(action_count)}
 	for _ in 0 .. action_count {
 		t.actions << types_431.InventoryActionData.decode(mut r)!
 	}
@@ -236,7 +236,7 @@ pub fn (mut p PlayerAuthInputPacket) decode_payload(mut r serializer.Reader) ! {
 	}
 	if p.input_data & input_flag_perform_block_actions != 0 {
 		action_count := int(r.read_varint32()!)
-		p.player_actions = []PlayerBlockActionData{cap: action_count}
+		p.player_actions = []PlayerBlockActionData{cap: serializer.prealloc(action_count)}
 		for _ in 0 .. action_count {
 			p.player_actions << PlayerBlockActionData.decode(mut r)!
 		}

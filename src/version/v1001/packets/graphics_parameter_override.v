@@ -57,8 +57,8 @@ pub fn (p &GraphicsParameterOverridePacket) encode_payload(mut w serializer.Writ
 
 pub fn (mut p GraphicsParameterOverridePacket) decode_payload(mut r serializer.Reader) ! {
 	{
-		count := int(r.read_varuint32()!)
-		p.values = []GraphicsParameterOverrideKeyFrame{cap: count}
+		count := r.read_count()!
+		p.values = []GraphicsParameterOverrideKeyFrame{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.values << GraphicsParameterOverrideKeyFrame.decode(mut r)!
 		}

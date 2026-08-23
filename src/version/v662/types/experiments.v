@@ -36,7 +36,7 @@ pub fn (t Experiments) encode(mut w serializer.Writer) {
 
 pub fn Experiments.decode(mut r serializer.Reader) !Experiments {
 	count := int(r.le_u32()!)
-	mut items := []Experiment{cap: count}
+	mut items := []Experiment{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		items << Experiment.decode(mut r)!
 	}

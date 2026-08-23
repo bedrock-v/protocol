@@ -44,24 +44,24 @@ pub fn (p &AvailableCommandsPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p AvailableCommandsPacket) decode_payload(mut r serializer.Reader) ! {
-	value_count := int(r.read_varuint32()!)
-	p.enum_values = []string{cap: value_count}
+	value_count := r.read_count()!
+	p.enum_values = []string{cap: serializer.prealloc(value_count)}
 	for _ in 0 .. value_count {
 		p.enum_values << r.read_string()!
 	}
-	postfix_count := int(r.read_varuint32()!)
-	p.postfixes = []string{cap: postfix_count}
+	postfix_count := r.read_count()!
+	p.postfixes = []string{cap: serializer.prealloc(postfix_count)}
 	for _ in 0 .. postfix_count {
 		p.postfixes << r.read_string()!
 	}
 	index_size := types.enum_index_size(p.enum_values.len)
-	enum_count := int(r.read_varuint32()!)
-	p.enums = []types.CommandEnumIndexed{cap: enum_count}
+	enum_count := r.read_count()!
+	p.enums = []types.CommandEnumIndexed{cap: serializer.prealloc(enum_count)}
 	for _ in 0 .. enum_count {
 		p.enums << types.CommandEnumIndexed.decode(mut r, index_size)!
 	}
-	command_count := int(r.read_varuint32()!)
-	p.commands = []types.CommandData{cap: command_count}
+	command_count := r.read_count()!
+	p.commands = []types.CommandData{cap: serializer.prealloc(command_count)}
 	for _ in 0 .. command_count {
 		p.commands << types.CommandData.decode(mut r)!
 	}

@@ -318,8 +318,8 @@ pub fn ItemStackRequestAction.decode(mut r serializer.Reader) !ItemStackRequestA
 		}
 		17 {
 			mut t := ItemStackActionCraftResults{}
-			item_count := int(r.read_varuint32()!)
-			t.result_items = []types_431.ItemData{cap: item_count}
+			item_count := r.read_count()!
+			t.result_items = []types_431.ItemData{cap: serializer.prealloc(item_count)}
 			for _ in 0 .. item_count {
 				t.result_items << types_431.ItemData.decode_instance(mut r)!
 			}

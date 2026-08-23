@@ -29,8 +29,8 @@ pub fn ItemStackResponse.decode(mut r serializer.Reader) !ItemStackResponse {
 	if !t.success {
 		return t
 	}
-	count := int(r.read_varuint32()!)
-	t.containers = []types.ItemStackResponseContainer{cap: count}
+	count := r.read_count()!
+	t.containers = []types.ItemStackResponseContainer{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.containers << types.ItemStackResponseContainer.decode(mut r)!
 	}
@@ -62,8 +62,8 @@ pub fn (p &ItemStackResponsePacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p ItemStackResponsePacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.entries = []ItemStackResponse{cap: count}
+	count := r.read_count()!
+	p.entries = []ItemStackResponse{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.entries << ItemStackResponse.decode(mut r)!
 	}

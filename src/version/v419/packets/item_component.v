@@ -46,8 +46,8 @@ pub fn (p &ItemComponentPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p ItemComponentPacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.items = []ItemComponentEntry{cap: count}
+	count := r.read_count()!
+	p.items = []ItemComponentEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.items << ItemComponentEntry.decode(mut r)!
 	}

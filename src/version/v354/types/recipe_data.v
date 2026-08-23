@@ -106,13 +106,13 @@ pub fn RecipeData.decode(mut r serializer.Reader) !RecipeData {
 			mut t := ShapelessRecipeData{
 				recipe_type: recipe_type
 			}
-			input_count := int(r.read_varuint32()!)
-			t.inputs = []types_340.ItemData{cap: input_count}
+			input_count := r.read_count()!
+			t.inputs = []types_340.ItemData{cap: serializer.prealloc(input_count)}
 			for _ in 0 .. input_count {
 				t.inputs << types_340.ItemData.decode(mut r)!
 			}
-			output_count := int(r.read_varuint32()!)
-			t.outputs = []types_340.ItemData{cap: output_count}
+			output_count := r.read_count()!
+			t.outputs = []types_340.ItemData{cap: serializer.prealloc(output_count)}
 			for _ in 0 .. output_count {
 				t.outputs << types_340.ItemData.decode(mut r)!
 			}
@@ -127,12 +127,12 @@ pub fn RecipeData.decode(mut r serializer.Reader) !RecipeData {
 			t.width = r.read_varint32()!
 			t.height = r.read_varint32()!
 			input_count := int(t.width * t.height)
-			t.inputs = []types_340.ItemData{cap: input_count}
+			t.inputs = []types_340.ItemData{cap: serializer.prealloc(input_count)}
 			for _ in 0 .. input_count {
 				t.inputs << types_340.ItemData.decode(mut r)!
 			}
-			output_count := int(r.read_varuint32()!)
-			t.outputs = []types_340.ItemData{cap: output_count}
+			output_count := r.read_count()!
+			t.outputs = []types_340.ItemData{cap: serializer.prealloc(output_count)}
 			for _ in 0 .. output_count {
 				t.outputs << types_340.ItemData.decode(mut r)!
 			}

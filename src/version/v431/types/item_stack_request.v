@@ -281,8 +281,8 @@ pub fn ItemStackRequestAction.decode(mut r serializer.Reader) !ItemStackRequestA
 			return CraftNonImplementedAction{}
 		}
 		.craft_results_deprecated {
-			count := int(r.read_varuint32()!)
-			mut items := []ItemData{cap: count}
+			count := r.read_count()!
+			mut items := []ItemData{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				items << ItemData.decode_instance(mut r)!
 			}

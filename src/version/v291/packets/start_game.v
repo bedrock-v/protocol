@@ -152,8 +152,8 @@ pub fn (mut p StartGamePacket) decode_payload(mut r serializer.Reader) ! {
 	r.bool()!
 	p.commands_enabled = r.bool()!
 	p.texture_packs_required = r.bool()!
-	rule_count := int(r.read_varuint32()!)
-	mut gamerules := []types.GameRuleData{cap: rule_count}
+	rule_count := r.read_count()!
+	mut gamerules := []types.GameRuleData{cap: serializer.prealloc(rule_count)}
 	for _ in 0 .. rule_count {
 		gamerules << types.GameRuleData.decode(mut r)!
 	}
@@ -177,8 +177,8 @@ pub fn (mut p StartGamePacket) decode_payload(mut r serializer.Reader) ! {
 	p.trial = r.bool()!
 	p.current_tick = r.le_i64()!
 	p.enchantment_seed = r.read_varint32()!
-	palette_count := int(r.read_varuint32()!)
-	mut palette := []BlockPaletteEntry{cap: palette_count}
+	palette_count := r.read_count()!
+	mut palette := []BlockPaletteEntry{cap: serializer.prealloc(palette_count)}
 	for _ in 0 .. palette_count {
 		palette << BlockPaletteEntry{
 			name: r.read_string()!

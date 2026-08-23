@@ -28,8 +28,8 @@ pub fn (p &CameraPresetsPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p CameraPresetsPacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.presets = []types.CameraPreset{cap: count}
+	count := r.read_count()!
+	p.presets = []types.CameraPreset{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.presets << types.CameraPreset.decode(mut r)!
 	}

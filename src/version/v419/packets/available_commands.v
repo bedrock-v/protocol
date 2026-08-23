@@ -56,34 +56,34 @@ pub fn (p &AvailableCommandsPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p AvailableCommandsPacket) decode_payload(mut r serializer.Reader) ! {
-	value_count := int(r.read_varuint32()!)
-	p.enum_values = []string{cap: value_count}
+	value_count := r.read_count()!
+	p.enum_values = []string{cap: serializer.prealloc(value_count)}
 	for _ in 0 .. value_count {
 		p.enum_values << r.read_string()!
 	}
-	postfix_count := int(r.read_varuint32()!)
-	p.postfixes = []string{cap: postfix_count}
+	postfix_count := r.read_count()!
+	p.postfixes = []string{cap: serializer.prealloc(postfix_count)}
 	for _ in 0 .. postfix_count {
 		p.postfixes << r.read_string()!
 	}
 	index_size := types_291.enum_index_size(p.enum_values.len)
-	enum_count := int(r.read_varuint32()!)
-	p.enums = []types_291.CommandEnumIndexed{cap: enum_count}
+	enum_count := r.read_count()!
+	p.enums = []types_291.CommandEnumIndexed{cap: serializer.prealloc(enum_count)}
 	for _ in 0 .. enum_count {
 		p.enums << types_291.CommandEnumIndexed.decode(mut r, index_size)!
 	}
-	command_count := int(r.read_varuint32()!)
-	p.commands = []types_340.CommandData{cap: command_count}
+	command_count := r.read_count()!
+	p.commands = []types_340.CommandData{cap: serializer.prealloc(command_count)}
 	for _ in 0 .. command_count {
 		p.commands << types_340.CommandData.decode(mut r)!
 	}
-	soft_enum_count := int(r.read_varuint32()!)
-	p.soft_enums = []types_291.CommandEnumData{cap: soft_enum_count}
+	soft_enum_count := r.read_count()!
+	p.soft_enums = []types_291.CommandEnumData{cap: serializer.prealloc(soft_enum_count)}
 	for _ in 0 .. soft_enum_count {
 		p.soft_enums << types_291.CommandEnumData.decode(mut r, true)!
 	}
-	constraint_count := int(r.read_varuint32()!)
-	p.constraints = []types_388.CommandEnumConstraintData{cap: constraint_count}
+	constraint_count := r.read_count()!
+	p.constraints = []types_388.CommandEnumConstraintData{cap: serializer.prealloc(constraint_count)}
 	for _ in 0 .. constraint_count {
 		p.constraints << types_388.CommandEnumConstraintData.decode(mut r)!
 	}

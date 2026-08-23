@@ -34,8 +34,8 @@ pub fn (p &ClientCacheMissResponsePacket) encode_payload(mut w serializer.Writer
 }
 
 pub fn (mut p ClientCacheMissResponsePacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.blobs = []CacheBlob{cap: count}
+	count := r.read_count()!
+	p.blobs = []CacheBlob{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.blobs << CacheBlob{
 			id:   r.le_i64()!

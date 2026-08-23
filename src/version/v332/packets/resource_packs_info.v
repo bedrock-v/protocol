@@ -72,12 +72,12 @@ pub fn (mut p ResourcePacksInfoPacket) decode_payload(mut r serializer.Reader) !
 	p.forced_to_accept = r.bool()!
 	p.scripting_enabled = r.bool()!
 	behavior_count := int(r.le_u16()!)
-	p.behavior_pack_infos = []ResourcePacksInfoEntry{cap: behavior_count}
+	p.behavior_pack_infos = []ResourcePacksInfoEntry{cap: serializer.prealloc(behavior_count)}
 	for _ in 0 .. behavior_count {
 		p.behavior_pack_infos << ResourcePacksInfoEntry.decode(mut r)!
 	}
 	resource_count := int(r.le_u16()!)
-	p.resource_pack_infos = []ResourcePacksInfoEntry{cap: resource_count}
+	p.resource_pack_infos = []ResourcePacksInfoEntry{cap: serializer.prealloc(resource_count)}
 	for _ in 0 .. resource_count {
 		p.resource_pack_infos << ResourcePacksInfoEntry.decode(mut r)!
 	}

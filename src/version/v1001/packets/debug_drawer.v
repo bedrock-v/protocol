@@ -28,8 +28,8 @@ pub fn (p &DebugDrawerPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p DebugDrawerPacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.shapes = []types.DebugShape{cap: count}
+	count := r.read_count()!
+	p.shapes = []types.DebugShape{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.shapes << types.DebugShape.decode(mut r)!
 	}

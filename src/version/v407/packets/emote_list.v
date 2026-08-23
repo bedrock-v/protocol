@@ -31,8 +31,8 @@ pub fn (p &EmoteListPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p EmoteListPacket) decode_payload(mut r serializer.Reader) ! {
 	p.runtime_entity_id = r.read_varuint64()!
-	count := int(r.read_varuint32()!)
-	p.piece_ids = []types_291.Uuid{cap: count}
+	count := r.read_count()!
+	p.piece_ids = []types_291.Uuid{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.piece_ids << types_291.Uuid.decode(mut r)!
 	}

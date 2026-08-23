@@ -48,7 +48,7 @@ pub fn (mut p ExplodePacket) decode_payload(mut r serializer.Reader) ! {
 	p.y = r.le_f32()!
 	p.z = r.le_f32()!
 	p.radius = r.le_f32()!
-	n := int(r.read_varuint32()!)
+	n := r.read_count()!
 	for _ in 0 .. n {
 		p.records << ExplodeRecord{
 			x: r.read_varint32()!

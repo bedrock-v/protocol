@@ -45,22 +45,22 @@ pub fn CameraAimAssistPresetDefinition.decode(mut r serializer.Reader) !CameraAi
 	mut t := CameraAimAssistPresetDefinition{}
 	t.identifier = r.read_string()!
 	{
-		count := int(r.read_varuint32()!)
-		t.exclusion_list = []string{cap: count}
+		count := r.read_count()!
+		t.exclusion_list = []string{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			t.exclusion_list << r.read_string()!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		t.liquid_targeting_list = []string{cap: count}
+		count := r.read_count()!
+		t.liquid_targeting_list = []string{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			t.liquid_targeting_list << r.read_string()!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		t.item_settings = []types_766.CameraAimAssistItemSettings{cap: count}
+		count := r.read_count()!
+		t.item_settings = []types_766.CameraAimAssistItemSettings{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			t.item_settings << types_766.CameraAimAssistItemSettings.decode(mut r)!
 		}

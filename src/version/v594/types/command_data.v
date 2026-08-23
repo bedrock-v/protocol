@@ -28,8 +28,8 @@ pub fn (t ChainedSubCommandData) encode(mut w serializer.Writer) {
 pub fn ChainedSubCommandData.decode(mut r serializer.Reader) !ChainedSubCommandData {
 	mut t := ChainedSubCommandData{}
 	t.name = r.read_string()!
-	count := int(r.read_varuint32()!)
-	t.values = []ChainedSubCommandValue{cap: count}
+	count := r.read_count()!
+	t.values = []ChainedSubCommandValue{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.values << ChainedSubCommandValue{
 			first:  r.le_u16()!
@@ -83,17 +83,17 @@ pub fn CommandData.decode(mut r serializer.Reader) !CommandData {
 	t.flags = r.le_u16()!
 	t.permission = enums_291.CommandPermission.decode(mut r)!
 	t.alias_index = r.le_i32()!
-	subcommand_count := int(r.read_varuint32()!)
-	t.subcommand_indices = []u16{cap: subcommand_count}
+	subcommand_count := r.read_count()!
+	t.subcommand_indices = []u16{cap: serializer.prealloc(subcommand_count)}
 	for _ in 0 .. subcommand_count {
 		t.subcommand_indices << r.le_u16()!
 	}
-	overload_count := int(r.read_varuint32()!)
-	t.overloads = []CommandOverloadData{cap: overload_count}
+	overload_count := r.read_count()!
+	t.overloads = []CommandOverloadData{cap: serializer.prealloc(overload_count)}
 	for _ in 0 .. overload_count {
 		chaining := r.bool()!
-		param_count := int(r.read_varuint32()!)
-		mut params := []types_340.CommandParamData{cap: param_count}
+		param_count := r.read_count()!
+		mut params := []types_340.CommandParamData{cap: serializer.prealloc(param_count)}
 		for _ in 0 .. param_count {
 			params << types_340.CommandParamData.decode(mut r)!
 		}

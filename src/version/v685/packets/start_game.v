@@ -114,13 +114,13 @@ pub fn (mut p StartGamePacket) decode_payload(mut r serializer.Reader) ! {
 	p.movement_settings = types_662.SyncedPlayerMovementSettings.decode(mut r)!
 	p.current_level_time = r.le_u64()!
 	p.enchantment_seed = r.read_varint32()!
-	block_count := int(r.read_varuint32()!)
-	p.block_properties = []BlockProperty{cap: block_count}
+	block_count := r.read_count()!
+	p.block_properties = []BlockProperty{cap: serializer.prealloc(block_count)}
 	for _ in 0 .. block_count {
 		p.block_properties << BlockProperty.decode(mut r)!
 	}
-	item_count := int(r.read_varuint32()!)
-	p.item_list = []types_662.ItemData{cap: item_count}
+	item_count := r.read_count()!
+	p.item_list = []types_662.ItemData{cap: serializer.prealloc(item_count)}
 	for _ in 0 .. item_count {
 		p.item_list << types_662.ItemData.decode(mut r)!
 	}

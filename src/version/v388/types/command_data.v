@@ -29,8 +29,8 @@ pub fn CommandEnumConstraintData.decode(mut r serializer.Reader) !CommandEnumCon
 	mut t := CommandEnumConstraintData{}
 	t.value_index = r.le_i32()!
 	t.enum_index = r.le_i32()!
-	count := int(r.read_varuint32()!)
-	t.constraints = []CommandEnumConstraint{cap: count}
+	count := r.read_count()!
+	t.constraints = []CommandEnumConstraint{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.constraints << unsafe { CommandEnumConstraint(r.u8()!) }
 	}

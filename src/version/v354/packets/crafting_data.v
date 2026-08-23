@@ -30,8 +30,8 @@ pub fn (p &CraftingDataPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p CraftingDataPacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.crafting_data = []types.RecipeData{cap: count}
+	count := r.read_count()!
+	p.crafting_data = []types.RecipeData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.crafting_data << types.RecipeData.decode(mut r)!
 	}

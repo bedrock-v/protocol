@@ -56,8 +56,8 @@ pub fn (e EnumDataEntry) encode(mut w serializer.Writer) {
 pub fn EnumDataEntry.decode(mut r serializer.Reader) !EnumDataEntry {
 	mut e := EnumDataEntry{}
 	e.name = r.read_string()!
-	count := int(r.read_varuint32()!)
-	e.values = []u32{cap: count}
+	count := r.read_count()!
+	e.values = []u32{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		e.values << r.le_u32()!
 	}
@@ -123,8 +123,8 @@ pub fn (e OverloadsEntry) encode(mut w serializer.Writer) {
 pub fn OverloadsEntry.decode(mut r serializer.Reader) !OverloadsEntry {
 	mut e := OverloadsEntry{}
 	e.is_chaining = r.bool()!
-	count := int(r.read_varuint32()!)
-	e.parameter_data = []ParameterDataEntry{cap: count}
+	count := r.read_count()!
+	e.parameter_data = []ParameterDataEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		e.parameter_data << ParameterDataEntry.decode(mut r)!
 	}
@@ -165,13 +165,13 @@ pub fn CommandsEntry.decode(mut r serializer.Reader) !CommandsEntry {
 	e.flags = r.le_u16()!
 	e.permission_level = CommandPermissionLevelString.decode(mut r)!
 	e.alias_enum = r.le_i32()!
-	index_count := int(r.read_varuint32()!)
-	e.chained_sub_command_indices = []i32{cap: index_count}
+	index_count := r.read_count()!
+	e.chained_sub_command_indices = []i32{cap: serializer.prealloc(index_count)}
 	for _ in 0 .. index_count {
 		e.chained_sub_command_indices << r.le_i32()!
 	}
-	overload_count := int(r.read_varuint32()!)
-	e.overloads = []OverloadsEntry{cap: overload_count}
+	overload_count := r.read_count()!
+	e.overloads = []OverloadsEntry{cap: serializer.prealloc(overload_count)}
 	for _ in 0 .. overload_count {
 		e.overloads << OverloadsEntry.decode(mut r)!
 	}
@@ -195,8 +195,8 @@ pub fn (e SoftEnumsEntry) encode(mut w serializer.Writer) {
 pub fn SoftEnumsEntry.decode(mut r serializer.Reader) !SoftEnumsEntry {
 	mut e := SoftEnumsEntry{}
 	e.enum_name = r.read_string()!
-	count := int(r.read_varuint32()!)
-	e.enum_options = []string{cap: count}
+	count := r.read_count()!
+	e.enum_options = []string{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		e.enum_options << r.read_string()!
 	}
@@ -223,8 +223,8 @@ pub fn ConstraintsEntry.decode(mut r serializer.Reader) !ConstraintsEntry {
 	mut e := ConstraintsEntry{}
 	e.enum_value_symbol = r.le_u32()!
 	e.enum_symbol = r.le_u32()!
-	count := int(r.read_varuint32()!)
-	e.constraint_indices = []i8{cap: count}
+	count := r.read_count()!
+	e.constraint_indices = []i8{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		e.constraint_indices << r.i8()!
 	}
@@ -248,8 +248,8 @@ pub fn (e ChainedSubCommandDataEntry) encode(mut w serializer.Writer) {
 pub fn ChainedSubCommandDataEntry.decode(mut r serializer.Reader) !ChainedSubCommandDataEntry {
 	mut e := ChainedSubCommandDataEntry{}
 	e.sub_command_name = r.read_string()!
-	count := int(r.read_varuint32()!)
-	e.sub_command_values = []SubCommandValues{cap: count}
+	count := r.read_count()!
+	e.sub_command_values = []SubCommandValues{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		e.sub_command_values << SubCommandValues.decode(mut r)!
 	}
@@ -276,8 +276,8 @@ fn write_string_list(mut w serializer.Writer, list []string) {
 }
 
 fn read_string_list(mut r serializer.Reader) ![]string {
-	count := int(r.read_varuint32()!)
-	mut out := []string{cap: count}
+	count := r.read_count()!
+	mut out := []string{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		out << r.read_string()!
 	}
@@ -326,28 +326,28 @@ pub fn (mut p AvailableCommandsPacket) decode_payload(mut r serializer.Reader) !
 	p.enum_values = read_string_list(mut r)!
 	p.sub_command_values = read_string_list(mut r)!
 	p.post_fixes = read_string_list(mut r)!
-	enum_data_count := int(r.read_varuint32()!)
-	p.enum_data = []EnumDataEntry{cap: enum_data_count}
+	enum_data_count := r.read_count()!
+	p.enum_data = []EnumDataEntry{cap: serializer.prealloc(enum_data_count)}
 	for _ in 0 .. enum_data_count {
 		p.enum_data << EnumDataEntry.decode(mut r)!
 	}
-	chained_count := int(r.read_varuint32()!)
-	p.chained_sub_command_data = []ChainedSubCommandDataEntry{cap: chained_count}
+	chained_count := r.read_count()!
+	p.chained_sub_command_data = []ChainedSubCommandDataEntry{cap: serializer.prealloc(chained_count)}
 	for _ in 0 .. chained_count {
 		p.chained_sub_command_data << ChainedSubCommandDataEntry.decode(mut r)!
 	}
-	command_count := int(r.read_varuint32()!)
-	p.commands = []CommandsEntry{cap: command_count}
+	command_count := r.read_count()!
+	p.commands = []CommandsEntry{cap: serializer.prealloc(command_count)}
 	for _ in 0 .. command_count {
 		p.commands << CommandsEntry.decode(mut r)!
 	}
-	soft_enum_count := int(r.read_varuint32()!)
-	p.soft_enums = []SoftEnumsEntry{cap: soft_enum_count}
+	soft_enum_count := r.read_count()!
+	p.soft_enums = []SoftEnumsEntry{cap: serializer.prealloc(soft_enum_count)}
 	for _ in 0 .. soft_enum_count {
 		p.soft_enums << SoftEnumsEntry.decode(mut r)!
 	}
-	constraint_count := int(r.read_varuint32()!)
-	p.constraints = []ConstraintsEntry{cap: constraint_count}
+	constraint_count := r.read_count()!
+	p.constraints = []ConstraintsEntry{cap: serializer.prealloc(constraint_count)}
 	for _ in 0 .. constraint_count {
 		p.constraints << ConstraintsEntry.decode(mut r)!
 	}

@@ -40,12 +40,12 @@ pub fn (p &ContainerSetContentPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p ContainerSetContentPacket) decode_payload(mut r serializer.Reader) ! {
 	p.windowid = r.u8()!
-	n := int(r.read_varuint32()!)
+	n := r.read_count()!
 	for _ in 0 .. n {
 		p.slots << types.EraBItem.decode(mut r)!
 	}
 	if p.windowid == 0 {
-		m := int(r.read_varuint32()!)
+		m := r.read_count()!
 		for _ in 0 .. m {
 			p.hotbar << r.read_varint32()!
 		}

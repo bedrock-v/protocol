@@ -18,8 +18,8 @@ pub fn (t ItemStackResponseContainerInfo) encode(mut w serializer.Writer) {
 
 pub fn ItemStackResponseContainerInfo.decode(mut r serializer.Reader) !ItemStackResponseContainerInfo {
 	id := r.i8()!
-	count := int(r.read_varuint32()!)
-	mut items := []ItemStackResponseSlotInfo{cap: count}
+	count := r.read_count()!
+	mut items := []ItemStackResponseSlotInfo{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		items << ItemStackResponseSlotInfo.decode(mut r)!
 	}

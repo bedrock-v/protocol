@@ -348,8 +348,8 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 		11 {
 			recipe_network_id := r.read_varuint32()!
 			number_of_requested_crafts := r.i8()!
-			count := int(r.read_varuint32()!)
-			mut ings := []ItemDescriptorCount{cap: count}
+			count := r.read_count()!
+			mut ings := []ItemDescriptorCount{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				ings << ItemDescriptorCount.decode(mut r)!
 			}
@@ -388,8 +388,8 @@ pub fn ItemStackRequestActionType.decode(mut r serializer.Reader) !ItemStackRequ
 			return ItemStackActionCraftNonImplemented{}
 		}
 		17 {
-			count := int(r.read_varuint32()!)
-			mut items := []ItemStackRequestNetworkItemInstanceDescriptor{cap: count}
+			count := r.read_count()!
+			mut items := []ItemStackRequestNetworkItemInstanceDescriptor{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				items << ItemStackRequestNetworkItemInstanceDescriptor.decode(mut r)!
 			}

@@ -28,8 +28,8 @@ pub fn BiomeReplacementData.decode(mut r serializer.Reader) !BiomeReplacementDat
 	mut t := BiomeReplacementData{}
 	t.biome = r.le_i16()!
 	t.dimension = r.le_i16()!
-	count := int(r.read_varuint32()!)
-	mut target_biomes := []i16{cap: count}
+	count := r.read_count()!
+	mut target_biomes := []i16{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		target_biomes << r.le_i16()!
 	}

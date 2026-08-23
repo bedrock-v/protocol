@@ -68,8 +68,8 @@ pub fn (mut p TextPacket) decode_payload(mut r serializer.Reader) ! {
 		}
 		2, 3, 4 {
 			p.message = r.read_string()!
-			count := int(r.read_varuint32()!)
-			mut parameters := []string{cap: count}
+			count := r.read_count()!
+			mut parameters := []string{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				parameters << r.read_string()!
 			}

@@ -58,7 +58,7 @@ pub fn (mut p TextPacket) decode_payload(mut r serializer.Reader) ! {
 		text_type_translation {
 			p.message = r.read_string_be()!
 			count := int(r.u8()!)
-			p.parameters = []string{cap: count}
+			p.parameters = []string{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				p.parameters << r.read_string_be()!
 			}

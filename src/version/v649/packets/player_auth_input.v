@@ -103,7 +103,7 @@ pub fn (mut p PlayerAuthInputPacket) decode_payload(mut r serializer.Reader) ! {
 	}
 	if has_input_flag(p.input_data, .perform_block_actions) {
 		action_count := int(r.read_varint32()!)
-		p.player_actions = []types.PlayerBlockActionData{cap: action_count}
+		p.player_actions = []types.PlayerBlockActionData{cap: serializer.prealloc(action_count)}
 		for _ in 0 .. action_count {
 			p.player_actions << types.PlayerBlockActionData.decode(mut r)!
 		}

@@ -46,8 +46,8 @@ pub fn (p &CameraSplinePacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p CameraSplinePacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.splines = []CameraSplineDefinition{cap: count}
+	count := r.read_count()!
+	p.splines = []CameraSplineDefinition{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.splines << CameraSplineDefinition.decode(mut r)!
 	}

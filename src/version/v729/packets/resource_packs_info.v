@@ -99,12 +99,12 @@ pub fn (mut p ResourcePacksInfoPacket) decode_payload(mut r serializer.Reader) !
 	p.has_addon_packs = r.bool()!
 	p.has_scripts = r.bool()!
 	res_count := int(r.le_u16()!)
-	p.resource_packs = []ResourcePackEntry{cap: res_count}
+	p.resource_packs = []ResourcePackEntry{cap: serializer.prealloc(res_count)}
 	for _ in 0 .. res_count {
 		p.resource_packs << ResourcePackEntry.decode(mut r)!
 	}
-	cdn_count := int(r.read_varuint32()!)
-	p.cdn_urls = []CDNUrl{cap: cdn_count}
+	cdn_count := r.read_count()!
+	p.cdn_urls = []CDNUrl{cap: serializer.prealloc(cdn_count)}
 	for _ in 0 .. cdn_count {
 		p.cdn_urls << CDNUrl.decode(mut r)!
 	}

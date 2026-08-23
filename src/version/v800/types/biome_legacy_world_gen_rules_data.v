@@ -15,8 +15,8 @@ pub fn (t BiomeLegacyWorldGenRulesData) encode(mut w serializer.Writer) {
 }
 
 pub fn BiomeLegacyWorldGenRulesData.decode(mut r serializer.Reader) !BiomeLegacyWorldGenRulesData {
-	count := int(r.read_varuint32()!)
-	mut items := []BiomeConditionalTransformationData{cap: count}
+	count := r.read_count()!
+	mut items := []BiomeConditionalTransformationData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		items << BiomeConditionalTransformationData.decode(mut r)!
 	}

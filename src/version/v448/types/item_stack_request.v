@@ -291,8 +291,8 @@ pub fn ItemStackRequestAction.decode(mut r serializer.Reader) !ItemStackRequestA
 			return CraftNonImplementedAction{}
 		}
 		15 {
-			count := int(r.read_varuint32()!)
-			mut items := []types_431.ItemData{cap: count}
+			count := r.read_count()!
+			mut items := []types_431.ItemData{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				items << types_431.ItemData.decode_instance(mut r)!
 			}

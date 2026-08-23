@@ -314,20 +314,20 @@ pub fn SplineInstruction.decode(mut r serializer.Reader) !SplineInstruction {
 	mut t := SplineInstruction{}
 	t.total_time = r.le_f32()!
 	t.spline_type = enums.CameraSplineType.decode(mut r)!
-	curve_count := int(r.read_varuint32()!)
-	mut curve := [][3]f32{cap: curve_count}
+	curve_count := r.read_count()!
+	mut curve := [][3]f32{cap: serializer.prealloc(curve_count)}
 	for _ in 0 .. curve_count {
 		curve << [r.le_f32()!, r.le_f32()!, r.le_f32()!]!
 	}
 	t.curve = curve
-	frame_count := int(r.read_varuint32()!)
-	mut progress_key_frames := []ProgressKeyFrame{cap: frame_count}
+	frame_count := r.read_count()!
+	mut progress_key_frames := []ProgressKeyFrame{cap: serializer.prealloc(frame_count)}
 	for _ in 0 .. frame_count {
 		progress_key_frames << ProgressKeyFrame.decode(mut r)!
 	}
 	t.progress_key_frames = progress_key_frames
-	rotation_count := int(r.read_varuint32()!)
-	mut rotation_option := []RotationOption{cap: rotation_count}
+	rotation_count := r.read_count()!
+	mut rotation_option := []RotationOption{cap: serializer.prealloc(rotation_count)}
 	for _ in 0 .. rotation_count {
 		rotation_option << RotationOption.decode(mut r)!
 	}

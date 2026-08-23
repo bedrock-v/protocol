@@ -166,8 +166,8 @@ pub fn (p &ClientBoundDataStorePacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p ClientBoundDataStorePacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.updates = []ClientBoundDataStoreUpdate{cap: count}
+	count := r.read_count()!
+	p.updates = []ClientBoundDataStoreUpdate{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.updates << ClientBoundDataStoreUpdate.decode(mut r)!
 	}

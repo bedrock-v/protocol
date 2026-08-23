@@ -168,8 +168,8 @@ fn (mut p StartGamePacket) decode_level_settings(mut r serializer.Reader) ! {
 	p.platform_broadcast_mode = r.read_varint32()!
 	p.commands_enabled = r.bool()!
 	p.texture_packs_required = r.bool()!
-	gamerule_count := int(r.read_varuint32()!)
-	p.gamerules = []types_291.GameRuleData{cap: gamerule_count}
+	gamerule_count := r.read_count()!
+	p.gamerules = []types_291.GameRuleData{cap: serializer.prealloc(gamerule_count)}
 	for _ in 0 .. gamerule_count {
 		p.gamerules << types_291.GameRuleData.decode(mut r)!
 	}
@@ -243,16 +243,16 @@ pub fn (mut p StartGamePacket) decode_payload(mut r serializer.Reader) ! {
 	p.server_authoritative_block_breaking = r.bool()!
 	p.current_tick = r.le_i64()!
 	p.enchantment_seed = r.read_varint32()!
-	block_count := int(r.read_varuint32()!)
-	p.block_properties = []BlockPropertyData{cap: block_count}
+	block_count := r.read_count()!
+	p.block_properties = []BlockPropertyData{cap: serializer.prealloc(block_count)}
 	for _ in 0 .. block_count {
 		p.block_properties << BlockPropertyData{
 			name:       r.read_string()!
 			properties: r.read_nbt_compound_root()!
 		}
 	}
-	item_count := int(r.read_varuint32()!)
-	p.item_definitions = []ItemDefinition{cap: item_count}
+	item_count := r.read_count()!
+	p.item_definitions = []ItemDefinition{cap: serializer.prealloc(item_count)}
 	for _ in 0 .. item_count {
 		p.item_definitions << ItemDefinition{
 			identifier:      r.read_string()!

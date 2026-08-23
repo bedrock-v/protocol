@@ -67,8 +67,8 @@ pub fn (mut p AddEntityPacket) decode_payload(mut r serializer.Reader) ! {
 	p.motion = types.Vector3f.decode(mut r)!
 	p.pitch = r.le_f32()!
 	p.yaw = r.le_f32()!
-	attribute_count := int(r.read_varuint32()!)
-	p.attributes = []EntityAttribute{cap: attribute_count}
+	attribute_count := r.read_count()!
+	p.attributes = []EntityAttribute{cap: serializer.prealloc(attribute_count)}
 	for _ in 0 .. attribute_count {
 		p.attributes << EntityAttribute{
 			name:    r.read_string()!
@@ -78,8 +78,8 @@ pub fn (mut p AddEntityPacket) decode_payload(mut r serializer.Reader) ! {
 		}
 	}
 	p.metadata = types.read_entity_data(mut r)!
-	link_count := int(r.read_varuint32()!)
-	p.links = []types.EntityLink{cap: link_count}
+	link_count := r.read_count()!
+	p.links = []types.EntityLink{cap: serializer.prealloc(link_count)}
 	for _ in 0 .. link_count {
 		p.links << types.EntityLink.decode(mut r)!
 	}

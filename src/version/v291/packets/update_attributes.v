@@ -31,8 +31,8 @@ pub fn (p &UpdateAttributesPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p UpdateAttributesPacket) decode_payload(mut r serializer.Reader) ! {
 	p.runtime_entity_id = r.read_varuint64()!
-	count := int(r.read_varuint32()!)
-	mut attributes := []types.AttributeData{cap: count}
+	count := r.read_count()!
+	mut attributes := []types.AttributeData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		attributes << types.AttributeData.decode(mut r)!
 	}

@@ -93,8 +93,8 @@ pub fn (mut p ClientBoundMapItemDataPacket) decode_payload(mut r serializer.Read
 	p.is_locked = r.bool()!
 	p.map_origin = types_944.NetworkBlockPosition.decode(mut r)!
 	if r.bool()! {
-		count := int(r.read_varuint32()!)
-		mut ids := []types_662.ActorUniqueID{cap: count}
+		count := r.read_count()!
+		mut ids := []types_662.ActorUniqueID{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			ids << types_662.ActorUniqueID.decode(mut r)!
 		}
@@ -104,16 +104,16 @@ pub fn (mut p ClientBoundMapItemDataPacket) decode_payload(mut r serializer.Read
 		p.scale = r.i8()!
 	}
 	if r.bool()! {
-		count := int(r.read_varuint32()!)
-		mut ids := []types.MapItemTrackedActorUniqueID{cap: count}
+		count := r.read_count()!
+		mut ids := []types.MapItemTrackedActorUniqueID{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			ids << types.MapItemTrackedActorUniqueID.decode(mut r)!
 		}
 		p.tracked_actor_ids = ids
 	}
 	if r.bool()! {
-		count := int(r.read_varuint32()!)
-		mut decorations := []types.MapDecoration{cap: count}
+		count := r.read_count()!
+		mut decorations := []types.MapDecoration{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			decorations << types.MapDecoration.decode(mut r)!
 		}
@@ -132,8 +132,8 @@ pub fn (mut p ClientBoundMapItemDataPacket) decode_payload(mut r serializer.Read
 		p.start_y = r.read_varint32()!
 	}
 	if r.bool()! {
-		count := int(r.read_varuint32()!)
-		mut pixels := []i32{cap: count}
+		count := r.read_count()!
+		mut pixels := []i32{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			pixels << r.le_i32()!
 		}

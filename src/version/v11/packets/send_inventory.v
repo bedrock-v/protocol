@@ -41,7 +41,7 @@ pub fn (mut p SendInventoryPacket) decode_payload(mut r serializer.Reader) ! {
 	p.eid = r.be_i32()!
 	p.windowid = r.u8()!
 	count := int(r.be_u16()!)
-	p.slots = []types_14.OldItem{cap: count}
+	p.slots = []types_14.OldItem{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.slots << types_14.OldItem.decode(mut r)!
 	}

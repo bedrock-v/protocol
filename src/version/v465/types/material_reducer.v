@@ -26,8 +26,8 @@ pub fn (t MaterialReducer) encode(mut w serializer.Writer) {
 pub fn MaterialReducer.decode(mut r serializer.Reader) !MaterialReducer {
 	mut t := MaterialReducer{}
 	t.input_id = r.read_varint32()!
-	count := int(r.read_varuint32()!)
-	t.item_counts = []MaterialReducerEntry{cap: count}
+	count := r.read_count()!
+	t.item_counts = []MaterialReducerEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.item_counts << MaterialReducerEntry{
 			item_runtime_id: r.read_varint32()!

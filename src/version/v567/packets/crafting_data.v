@@ -86,13 +86,13 @@ pub fn (p &CraftingDataPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p CraftingDataPacket) decode_payload(mut r serializer.Reader) ! {
-	recipe_count := int(r.read_varuint32()!)
-	p.crafting_data = []types.RecipeData{cap: recipe_count}
+	recipe_count := r.read_count()!
+	p.crafting_data = []types.RecipeData{cap: serializer.prealloc(recipe_count)}
 	for _ in 0 .. recipe_count {
 		p.crafting_data << types.RecipeData.decode(mut r)!
 	}
-	potion_count := int(r.read_varuint32()!)
-	p.potion_mix_data = []PotionMixData{cap: potion_count}
+	potion_count := r.read_count()!
+	p.potion_mix_data = []PotionMixData{cap: serializer.prealloc(potion_count)}
 	for _ in 0 .. potion_count {
 		p.potion_mix_data << PotionMixData{
 			input_id:     r.read_varint32()!
@@ -103,8 +103,8 @@ pub fn (mut p CraftingDataPacket) decode_payload(mut r serializer.Reader) ! {
 			output_meta:  r.read_varint32()!
 		}
 	}
-	container_count := int(r.read_varuint32()!)
-	p.container_mix_data = []ContainerMixData{cap: container_count}
+	container_count := r.read_count()!
+	p.container_mix_data = []ContainerMixData{cap: serializer.prealloc(container_count)}
 	for _ in 0 .. container_count {
 		p.container_mix_data << ContainerMixData{
 			input_id:   r.read_varint32()!
@@ -112,14 +112,14 @@ pub fn (mut p CraftingDataPacket) decode_payload(mut r serializer.Reader) ! {
 			output_id:  r.read_varint32()!
 		}
 	}
-	reducer_count := int(r.read_varuint32()!)
-	p.material_reducers = []MaterialReducer{cap: reducer_count}
+	reducer_count := r.read_count()!
+	p.material_reducers = []MaterialReducer{cap: serializer.prealloc(reducer_count)}
 	for _ in 0 .. reducer_count {
 		mut reducer := MaterialReducer{
 			input_id: r.read_varint32()!
 		}
-		entry_count := int(r.read_varuint32()!)
-		reducer.item_counts = []MaterialReducerEntry{cap: entry_count}
+		entry_count := r.read_count()!
+		reducer.item_counts = []MaterialReducerEntry{cap: serializer.prealloc(entry_count)}
 		for _ in 0 .. entry_count {
 			reducer.item_counts << MaterialReducerEntry{
 				item_id: r.read_varint32()!

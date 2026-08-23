@@ -108,34 +108,34 @@ pub fn (p &AvailableCommandsPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p AvailableCommandsPacket) decode_payload(mut r serializer.Reader) ! {
-	enum_values_len := int(r.read_varuint32()!)
-	p.enum_values = []string{cap: enum_values_len}
+	enum_values_len := r.read_count()!
+	p.enum_values = []string{cap: serializer.prealloc(enum_values_len)}
 	for _ in 0 .. enum_values_len {
 		p.enum_values << r.read_string()!
 	}
 	enum_values_count := p.enum_values.len
 
-	postfix_len := int(r.read_varuint32()!)
-	p.postfixes = []string{cap: postfix_len}
+	postfix_len := r.read_count()!
+	p.postfixes = []string{cap: serializer.prealloc(postfix_len)}
 	for _ in 0 .. postfix_len {
 		p.postfixes << r.read_string()!
 	}
 
-	enum_len := int(r.read_varuint32()!)
-	p.enums = []CommandEnum{cap: enum_len}
+	enum_len := r.read_count()!
+	p.enums = []CommandEnum{cap: serializer.prealloc(enum_len)}
 	for _ in 0 .. enum_len {
 		mut e := CommandEnum{}
 		e.name = r.read_string()!
-		value_count := int(r.read_varuint32()!)
-		e.value_indices = []u32{cap: value_count}
+		value_count := r.read_count()!
+		e.value_indices = []u32{cap: serializer.prealloc(value_count)}
 		for _ in 0 .. value_count {
 			e.value_indices << read_enum_value_index(mut r, enum_values_count)!
 		}
 		p.enums << e
 	}
 
-	command_len := int(r.read_varuint32()!)
-	p.command_data = []CommandData{cap: command_len}
+	command_len := r.read_count()!
+	p.command_data = []CommandData{cap: serializer.prealloc(command_len)}
 	for _ in 0 .. command_len {
 		mut cmd := CommandData{}
 		cmd.name = r.read_string()!
@@ -143,12 +143,12 @@ pub fn (mut p AvailableCommandsPacket) decode_payload(mut r serializer.Reader) !
 		cmd.flags = r.u8()!
 		cmd.permission = r.u8()!
 		cmd.alias_enum_index = r.le_i32()!
-		overload_count := int(r.read_varuint32()!)
-		cmd.overloads = []CommandOverload{cap: overload_count}
+		overload_count := r.read_count()!
+		cmd.overloads = []CommandOverload{cap: serializer.prealloc(overload_count)}
 		for _ in 0 .. overload_count {
 			mut overload := CommandOverload{}
-			param_count := int(r.read_varuint32()!)
-			overload.parameters = []CommandParameter{cap: param_count}
+			param_count := r.read_count()!
+			overload.parameters = []CommandParameter{cap: serializer.prealloc(param_count)}
 			for _ in 0 .. param_count {
 				mut param := CommandParameter{}
 				param.param_name = r.read_string()!

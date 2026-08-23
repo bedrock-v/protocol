@@ -43,14 +43,14 @@ pub fn (p &ResourcePackStackPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p ResourcePackStackPacket) decode_payload(mut r serializer.Reader) ! {
 	p.must_accept = r.bool()!
-	n := int(r.read_varuint32()!)
+	n := r.read_count()!
 	for _ in 0 .. n {
 		p.behaviour_stack << PackStackEntry{
 			pack_id: r.read_string()!
 			version: r.read_string()!
 		}
 	}
-	m := int(r.read_varuint32()!)
+	m := r.read_count()!
 	for _ in 0 .. m {
 		p.resource_stack << PackStackEntry{
 			pack_id: r.read_string()!

@@ -69,13 +69,13 @@ pub fn (p &UpdateSubChunkBlocksPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p UpdateSubChunkBlocksPacket) decode_payload(mut r serializer.Reader) ! {
 	p.position = types_291.BlockPosition.decode(mut r)!
-	standard_count := int(r.read_varuint32()!)
-	p.standard_blocks = []BlockChangeEntry{cap: standard_count}
+	standard_count := r.read_count()!
+	p.standard_blocks = []BlockChangeEntry{cap: serializer.prealloc(standard_count)}
 	for _ in 0 .. standard_count {
 		p.standard_blocks << BlockChangeEntry.decode(mut r)!
 	}
-	extra_count := int(r.read_varuint32()!)
-	p.extra_blocks = []BlockChangeEntry{cap: extra_count}
+	extra_count := r.read_count()!
+	p.extra_blocks = []BlockChangeEntry{cap: serializer.prealloc(extra_count)}
 	for _ in 0 .. extra_count {
 		p.extra_blocks << BlockChangeEntry.decode(mut r)!
 	}

@@ -53,7 +53,7 @@ pub fn (mut p NetworkChunkPublisherUpdatePacket) decode_payload(mut r serializer
 	p.position = types_291.Vector3i.decode(mut r)!
 	p.radius = r.read_varuint32()!
 	chunk_count := int(r.le_u32()!)
-	p.saved_chunks = []SavedChunkPosition{cap: chunk_count}
+	p.saved_chunks = []SavedChunkPosition{cap: serializer.prealloc(chunk_count)}
 	for _ in 0 .. chunk_count {
 		p.saved_chunks << SavedChunkPosition.decode(mut r)!
 	}

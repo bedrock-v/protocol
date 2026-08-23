@@ -39,13 +39,13 @@ pub fn (p &ContainerSetContentPacket) encode_payload(mut w serializer.Writer) {
 pub fn (mut p ContainerSetContentPacket) decode_payload(mut r serializer.Reader) ! {
 	p.windowid = r.u8()!
 	count := int(r.be_u16()!)
-	p.slots = []types.OldItem{cap: count}
+	p.slots = []types.OldItem{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.slots << types.OldItem.decode(mut r)!
 	}
 	if p.windowid == 0 {
 		hcount := int(r.be_u16()!)
-		p.hotbar = []i32{cap: hcount}
+		p.hotbar = []i32{cap: serializer.prealloc(hcount)}
 		for _ in 0 .. hcount {
 			p.hotbar << r.be_i32()!
 		}

@@ -79,20 +79,20 @@ pub fn (p &CraftingDataPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p CraftingDataPacket) decode_payload(mut r serializer.Reader) ! {
-	recipe_count := int(r.read_varuint32()!)
-	p.entries = []CraftingDataEntry{cap: recipe_count}
+	recipe_count := r.read_count()!
+	p.entries = []CraftingDataEntry{cap: serializer.prealloc(recipe_count)}
 	for _ in 0 .. recipe_count {
 		mut entry := CraftingDataEntry{}
 		entry.recipe_type = r.read_varint32()!
 		match entry.recipe_type {
 			0, 5 {
-				ingredient_count := int(r.read_varuint32()!)
-				entry.input = []types.ItemData{cap: ingredient_count}
+				ingredient_count := r.read_count()!
+				entry.input = []types.ItemData{cap: serializer.prealloc(ingredient_count)}
 				for _ in 0 .. ingredient_count {
 					entry.input << types.ItemData.decode(mut r)!
 				}
-				result_count := int(r.read_varuint32()!)
-				entry.output = []types.ItemData{cap: result_count}
+				result_count := r.read_count()!
+				entry.output = []types.ItemData{cap: serializer.prealloc(result_count)}
 				for _ in 0 .. result_count {
 					entry.output << types.ItemData.decode(mut r)!
 				}
@@ -102,12 +102,12 @@ pub fn (mut p CraftingDataPacket) decode_payload(mut r serializer.Reader) ! {
 				entry.width = r.read_varint32()!
 				entry.height = r.read_varint32()!
 				grid := int(entry.width * entry.height)
-				entry.input = []types.ItemData{cap: grid}
+				entry.input = []types.ItemData{cap: serializer.prealloc(grid)}
 				for _ in 0 .. grid {
 					entry.input << types.ItemData.decode(mut r)!
 				}
-				result_count := int(r.read_varuint32()!)
-				entry.output = []types.ItemData{cap: result_count}
+				result_count := r.read_count()!
+				entry.output = []types.ItemData{cap: serializer.prealloc(result_count)}
 				for _ in 0 .. result_count {
 					entry.output << types.ItemData.decode(mut r)!
 				}

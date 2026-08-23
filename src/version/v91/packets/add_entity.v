@@ -75,7 +75,7 @@ pub fn (mut p AddEntityPacket) decode_payload(mut r serializer.Reader) ! {
 	p.pitch = r.le_f32()!
 	p.modifiers = r.read_varuint32()!
 	p.metadata = types.EraBMetadata.decode(mut r)!
-	n := int(r.read_varuint32()!)
+	n := r.read_count()!
 	for _ in 0 .. n {
 		p.links << EntityLink{
 			from: r.read_varint32()!

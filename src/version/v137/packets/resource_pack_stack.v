@@ -46,8 +46,8 @@ pub fn (p &ResourcePackStackPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p ResourcePackStackPacket) decode_payload(mut r serializer.Reader) ! {
 	p.must_accept = r.bool()!
-	behavior_count := int(r.read_varuint32()!)
-	p.behavior_pack_stack = []ResourcePackStackEntry{cap: behavior_count}
+	behavior_count := r.read_count()!
+	p.behavior_pack_stack = []ResourcePackStackEntry{cap: serializer.prealloc(behavior_count)}
 	for _ in 0 .. behavior_count {
 		mut entry := ResourcePackStackEntry{}
 		entry.pack_id = r.read_string()!
@@ -55,8 +55,8 @@ pub fn (mut p ResourcePackStackPacket) decode_payload(mut r serializer.Reader) !
 		entry.extra = r.read_string()!
 		p.behavior_pack_stack << entry
 	}
-	resource_count := int(r.read_varuint32()!)
-	p.resource_pack_stack = []ResourcePackStackEntry{cap: resource_count}
+	resource_count := r.read_count()!
+	p.resource_pack_stack = []ResourcePackStackEntry{cap: serializer.prealloc(resource_count)}
 	for _ in 0 .. resource_count {
 		mut entry := ResourcePackStackEntry{}
 		entry.pack_id = r.read_string()!

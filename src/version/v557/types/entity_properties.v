@@ -34,16 +34,16 @@ pub fn (t EntityProperties) encode(mut w serializer.Writer) {
 }
 
 pub fn EntityProperties.decode(mut r serializer.Reader) !EntityProperties {
-	int_count := int(r.read_varuint32()!)
-	mut int_properties := []IntEntityProperty{cap: int_count}
+	int_count := r.read_count()!
+	mut int_properties := []IntEntityProperty{cap: serializer.prealloc(int_count)}
 	for _ in 0 .. int_count {
 		int_properties << IntEntityProperty{
 			index: r.read_varuint32()!
 			value: r.read_varint32()!
 		}
 	}
-	float_count := int(r.read_varuint32()!)
-	mut float_properties := []FloatEntityProperty{cap: float_count}
+	float_count := r.read_count()!
+	mut float_properties := []FloatEntityProperty{cap: serializer.prealloc(float_count)}
 	for _ in 0 .. float_count {
 		float_properties << FloatEntityProperty{
 			index: r.read_varuint32()!

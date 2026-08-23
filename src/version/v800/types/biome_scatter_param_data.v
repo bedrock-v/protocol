@@ -30,8 +30,8 @@ pub fn (t BiomeScatterParamData) encode(mut w serializer.Writer) {
 
 pub fn BiomeScatterParamData.decode(mut r serializer.Reader) !BiomeScatterParamData {
 	mut t := BiomeScatterParamData{}
-	count := int(r.read_varuint32()!)
-	t.coordinates = []BiomeCoordinateData{cap: count}
+	count := r.read_count()!
+	t.coordinates = []BiomeCoordinateData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.coordinates << BiomeCoordinateData.decode(mut r)!
 	}

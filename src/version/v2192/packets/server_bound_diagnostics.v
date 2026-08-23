@@ -315,36 +315,36 @@ pub fn (mut p ServerBoundDiagnosticsPacket) decode_payload(mut r serializer.Read
 	p.avg_remainder_time_percent = r.le_f32()!
 	p.avg_unnacounted_time_percent = r.le_f32()!
 	{
-		count := int(r.read_varuint32()!)
-		p.memory_category_values = []MemoryCategoryCounter{cap: count}
+		count := r.read_count()!
+		p.memory_category_values = []MemoryCategoryCounter{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.memory_category_values << MemoryCategoryCounter.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.entity_diagnostics = []EntityDiagnosticTimingInfo{cap: count}
+		count := r.read_count()!
+		p.entity_diagnostics = []EntityDiagnosticTimingInfo{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.entity_diagnostics << EntityDiagnosticTimingInfo.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.system_diagnostics = []SystemDiagnosticTimingInfo{cap: count}
+		count := r.read_count()!
+		p.system_diagnostics = []SystemDiagnosticTimingInfo{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.system_diagnostics << SystemDiagnosticTimingInfo.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.system_categories = []SystemCategory{cap: count}
+		count := r.read_count()!
+		p.system_categories = []SystemCategory{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.system_categories << SystemCategory.decode(mut r)!
 		}
 	}
 	{
-		count := int(r.read_varuint32()!)
-		p.whisker_scopes = []WhiskerScopeDataSummary{cap: count}
+		count := r.read_count()!
+		p.whisker_scopes = []WhiskerScopeDataSummary{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.whisker_scopes << WhiskerScopeDataSummary.decode(mut r)!
 		}

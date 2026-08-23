@@ -66,8 +66,8 @@ pub fn (mut p LevelChunkPacket) decode_payload(mut r serializer.Reader) ! {
 	}
 	p.caching_enabled = r.bool()!
 	if p.caching_enabled {
-		blob_count := int(r.read_varuint32()!)
-		p.blob_ids = []i64{cap: blob_count}
+		blob_count := r.read_count()!
+		p.blob_ids = []i64{cap: serializer.prealloc(blob_count)}
 		for _ in 0 .. blob_count {
 			p.blob_ids << r.le_i64()!
 		}

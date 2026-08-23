@@ -80,13 +80,13 @@ pub fn (t PerformItemStackRequestData) encode(mut w serializer.Writer) {
 pub fn PerformItemStackRequestData.decode(mut r serializer.Reader) !PerformItemStackRequestData {
 	mut t := PerformItemStackRequestData{}
 	t.client_request_id = r.read_varuint32()!
-	action_count := int(r.read_varuint32()!)
-	t.actions = []ActionsEntry{cap: action_count}
+	action_count := r.read_count()!
+	t.actions = []ActionsEntry{cap: serializer.prealloc(action_count)}
 	for _ in 0 .. action_count {
 		t.actions << ActionsEntry.decode(mut r)!
 	}
-	filter_count := int(r.read_varuint32()!)
-	t.strings_to_filter = []string{cap: filter_count}
+	filter_count := r.read_count()!
+	t.strings_to_filter = []string{cap: serializer.prealloc(filter_count)}
 	for _ in 0 .. filter_count {
 		t.strings_to_filter << r.read_string()!
 	}
@@ -211,7 +211,7 @@ pub fn (mut p PlayerAuthInputPacket) decode_payload(mut r serializer.Reader) ! {
 	}
 	if p.input_data & input_flag_perform_block_actions != 0 {
 		count := int(r.read_varint32()!)
-		mut actions := []types_662.PlayerBlockActionData{cap: count}
+		mut actions := []types_662.PlayerBlockActionData{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			actions << types_662.PlayerBlockActionData.decode(mut r)!
 		}

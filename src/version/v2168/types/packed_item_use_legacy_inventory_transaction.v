@@ -20,8 +20,8 @@ pub fn (t ContainerSlotEntry) encode(mut w serializer.Writer) {
 
 pub fn ContainerSlotEntry.decode(mut r serializer.Reader) !ContainerSlotEntry {
 	name := r.read_string()!
-	count := int(r.read_varuint32()!)
-	mut slots := []i8{cap: count}
+	count := r.read_count()!
+	mut slots := []i8{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		slots << r.i8()!
 	}
@@ -109,8 +109,8 @@ pub fn PackedItemUseLegacyInventoryTransaction.decode(mut r serializer.Reader) !
 	mut t := PackedItemUseLegacyInventoryTransaction{}
 	t.id = r.read_varint32()!
 	if r.bool()! {
-		count := int(r.read_varuint32()!)
-		t.container_slots = []ContainerSlotEntry{cap: count}
+		count := r.read_count()!
+		t.container_slots = []ContainerSlotEntry{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			t.container_slots << ContainerSlotEntry.decode(mut r)!
 		}

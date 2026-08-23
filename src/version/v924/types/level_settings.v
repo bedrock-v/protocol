@@ -97,8 +97,8 @@ pub fn (t GameRuleLegacyData) encode(mut w serializer.Writer) {
 
 pub fn GameRuleLegacyData.decode(mut r serializer.Reader) !GameRuleLegacyData {
 	mut t := GameRuleLegacyData{}
-	count := int(r.read_varuint32()!)
-	t.rules_list = []GameRuleLegacyChanged{cap: count}
+	count := r.read_count()!
+	t.rules_list = []GameRuleLegacyChanged{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.rules_list << GameRuleLegacyChanged.decode(mut r)!
 	}

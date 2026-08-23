@@ -60,8 +60,8 @@ pub fn (p &InventoryTransactionPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p InventoryTransactionPacket) decode_payload(mut r serializer.Reader) ! {
 	p.transaction_type = enums.InventoryTransactionType.decode(mut r)!
-	count := int(r.read_varuint32()!)
-	p.actions = []types.InventoryActionData{cap: count}
+	count := r.read_count()!
+	p.actions = []types.InventoryActionData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.actions << types.InventoryActionData.decode(mut r)!
 	}

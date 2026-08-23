@@ -86,8 +86,8 @@ pub fn (mut p ClientboundMapItemDataPacket) decode_payload(mut r serializer.Read
 	p.locked = r.bool()!
 	p.origin = types_291.Vector3i.decode(mut r)!
 	if update_type & 0x8 != 0 {
-		entity_count := int(r.read_varuint32()!)
-		p.tracked_entity_ids = []i64{cap: entity_count}
+		entity_count := r.read_count()!
+		p.tracked_entity_ids = []i64{cap: serializer.prealloc(entity_count)}
 		for _ in 0 .. entity_count {
 			p.tracked_entity_ids << r.read_varint64()!
 		}
@@ -96,13 +96,13 @@ pub fn (mut p ClientboundMapItemDataPacket) decode_payload(mut r serializer.Read
 		p.scale = r.u8()!
 	}
 	if update_type & 0x4 != 0 {
-		object_count := int(r.read_varuint32()!)
-		p.tracked_objects = []types_291.MapTrackedObject{cap: object_count}
+		object_count := r.read_count()!
+		p.tracked_objects = []types_291.MapTrackedObject{cap: serializer.prealloc(object_count)}
 		for _ in 0 .. object_count {
 			p.tracked_objects << types_291.MapTrackedObject.decode(mut r)!
 		}
-		decoration_count := int(r.read_varuint32()!)
-		p.decorations = []types_291.MapDecoration{cap: decoration_count}
+		decoration_count := r.read_count()!
+		p.decorations = []types_291.MapDecoration{cap: serializer.prealloc(decoration_count)}
 		for _ in 0 .. decoration_count {
 			p.decorations << types_291.MapDecoration.decode(mut r)!
 		}
@@ -112,8 +112,8 @@ pub fn (mut p ClientboundMapItemDataPacket) decode_payload(mut r serializer.Read
 		p.height = r.read_varint32()!
 		p.x_offset = r.read_varint32()!
 		p.y_offset = r.read_varint32()!
-		color_count := int(r.read_varuint32()!)
-		p.colors = []u32{cap: color_count}
+		color_count := r.read_count()!
+		p.colors = []u32{cap: serializer.prealloc(color_count)}
 		for _ in 0 .. color_count {
 			p.colors << r.read_varuint32()!
 		}

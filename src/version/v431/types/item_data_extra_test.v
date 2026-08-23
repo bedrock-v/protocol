@@ -28,7 +28,7 @@ fn read_v431_user_data_blob(data []u8, has_net_id bool) ![]u8 {
 		r.bool()!
 	}
 	r.read_varint32()!
-	count := int(r.read_varuint32()!)
+	count := r.read_count()!
 	return r.read_raw(count)!
 }
 

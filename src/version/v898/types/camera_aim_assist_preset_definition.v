@@ -23,8 +23,8 @@ fn write_string_list(mut w serializer.Writer, list []string) {
 }
 
 fn read_string_list(mut r serializer.Reader) ![]string {
-	count := int(r.read_varuint32()!)
-	mut out := []string{cap: count}
+	count := r.read_count()!
+	mut out := []string{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		out << r.read_string()!
 	}
@@ -62,8 +62,8 @@ pub fn CameraAimAssistPresetDefinition.decode(mut r serializer.Reader) !CameraAi
 	t.entity_exclusion_list = read_string_list(mut r)!
 	t.block_tag_exclusion_list = read_string_list(mut r)!
 	t.liquid_targeting_list = read_string_list(mut r)!
-	count := int(r.read_varuint32()!)
-	t.item_settings = []types_766.CameraAimAssistItemSettings{cap: count}
+	count := r.read_count()!
+	t.item_settings = []types_766.CameraAimAssistItemSettings{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.item_settings << types_766.CameraAimAssistItemSettings.decode(mut r)!
 	}

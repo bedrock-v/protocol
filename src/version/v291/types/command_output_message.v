@@ -22,8 +22,8 @@ pub fn CommandOutputMessage.decode(mut r serializer.Reader) !CommandOutputMessag
 	mut t := CommandOutputMessage{}
 	t.internal = r.bool()!
 	t.message_id = r.read_string()!
-	count := int(r.read_varuint32()!)
-	t.parameters = []string{cap: count}
+	count := r.read_count()!
+	t.parameters = []string{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		t.parameters << r.read_string()!
 	}

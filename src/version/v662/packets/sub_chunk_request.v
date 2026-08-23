@@ -36,7 +36,7 @@ pub fn (mut p SubChunkRequestPacket) decode_payload(mut r serializer.Reader) ! {
 	p.center_pos = types.SubChunkPos.decode(mut r)!
 	{
 		count := int(r.le_u32()!)
-		p.sub_chunk_pos_offsets = []types.SubChunkPosOffset{cap: count}
+		p.sub_chunk_pos_offsets = []types.SubChunkPosOffset{cap: serializer.prealloc(count)}
 		for _ in 0 .. count {
 			p.sub_chunk_pos_offsets << types.SubChunkPosOffset.decode(mut r)!
 		}

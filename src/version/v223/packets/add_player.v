@@ -88,8 +88,8 @@ pub fn (mut p AddPlayerPacket) decode_payload(mut r serializer.Reader) ! {
 	p.uvarint4 = r.read_varuint32()!
 	p.uvarint5 = r.read_varuint32()!
 	p.long1 = r.le_i64()!
-	link_count := int(r.read_varuint32()!)
-	p.entity_links = []types.EntityLink{cap: link_count}
+	link_count := r.read_count()!
+	p.entity_links = []types.EntityLink{cap: serializer.prealloc(link_count)}
 	for _ in 0 .. link_count {
 		p.entity_links << types.EntityLink.decode(mut r)!
 	}

@@ -80,7 +80,7 @@ pub fn (mut p SubChunkPacket) decode_payload(mut r serializer.Reader) ! {
 	p.dimension_type = r.read_varint32()!
 	p.center_pos = types.SubChunkPos.decode(mut r)!
 	count := int(r.le_u32()!)
-	p.sub_chunk_data = []SubChunkDataEntry{cap: count}
+	p.sub_chunk_data = []SubChunkDataEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		mut e := SubChunkDataEntry{}
 		e.sub_chunk_pos_offset = types.SubChunkPosOffset.decode(mut r)!

@@ -222,18 +222,18 @@ pub fn (mut p ServerBoundDiagnosticsPacket) decode_payload(mut r serializer.Read
 	p.avg_end_frame_time_ms = r.le_f32()!
 	p.avg_remainder_time_percent = r.le_f32()!
 	p.avg_unnacounted_time_percent = r.le_f32()!
-	memory_count := int(r.read_varuint32()!)
-	p.memory_category_values = []MemoryCategoryCounter{cap: memory_count}
+	memory_count := r.read_count()!
+	p.memory_category_values = []MemoryCategoryCounter{cap: serializer.prealloc(memory_count)}
 	for _ in 0 .. memory_count {
 		p.memory_category_values << MemoryCategoryCounter.decode(mut r)!
 	}
-	entity_count := int(r.read_varuint32()!)
-	p.entity_diagnostics = []EntityDiagnosticTimingInfo{cap: entity_count}
+	entity_count := r.read_count()!
+	p.entity_diagnostics = []EntityDiagnosticTimingInfo{cap: serializer.prealloc(entity_count)}
 	for _ in 0 .. entity_count {
 		p.entity_diagnostics << EntityDiagnosticTimingInfo.decode(mut r)!
 	}
-	system_count := int(r.read_varuint32()!)
-	p.system_diagnostics = []SystemDiagnosticTimingInfo{cap: system_count}
+	system_count := r.read_count()!
+	p.system_diagnostics = []SystemDiagnosticTimingInfo{cap: serializer.prealloc(system_count)}
 	for _ in 0 .. system_count {
 		p.system_diagnostics << SystemDiagnosticTimingInfo.decode(mut r)!
 	}

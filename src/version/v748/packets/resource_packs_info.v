@@ -79,7 +79,7 @@ pub fn (mut p ResourcePacksInfoPacket) decode_payload(mut r serializer.Reader) !
 	p.has_addon_packs = r.bool()!
 	p.has_scripts = r.bool()!
 	count := int(r.le_u16()!)
-	p.resource_packs = []ResourcePackEntry{cap: count}
+	p.resource_packs = []ResourcePackEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.resource_packs << ResourcePackEntry.decode(mut r)!
 	}

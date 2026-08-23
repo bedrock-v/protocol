@@ -51,8 +51,8 @@ pub fn (p &CameraAimAssistActorPriorityPacket) encode_payload(mut w serializer.W
 }
 
 pub fn (mut p CameraAimAssistActorPriorityPacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.priority_data = []CameraAimAssistActorPriorityData{cap: count}
+	count := r.read_count()!
+	p.priority_data = []CameraAimAssistActorPriorityData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.priority_data << CameraAimAssistActorPriorityData.decode(mut r)!
 	}

@@ -26,13 +26,13 @@ pub fn (t ItemStackRequest) encode(mut w serializer.Writer) {
 
 pub fn ItemStackRequest.decode(mut r serializer.Reader) !ItemStackRequest {
 	request_id := r.read_varint32()!
-	action_count := int(r.read_varuint32()!)
-	mut actions := []types_471.ItemStackRequestAction{cap: action_count}
+	action_count := r.read_count()!
+	mut actions := []types_471.ItemStackRequestAction{cap: serializer.prealloc(action_count)}
 	for _ in 0 .. action_count {
 		actions << types_471.ItemStackRequestAction.decode(mut r)!
 	}
-	filter_count := int(r.read_varuint32()!)
-	mut filter_strings := []string{cap: filter_count}
+	filter_count := r.read_count()!
+	mut filter_strings := []string{cap: serializer.prealloc(filter_count)}
 	for _ in 0 .. filter_count {
 		filter_strings << r.read_string()!
 	}

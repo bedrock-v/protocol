@@ -56,13 +56,13 @@ pub fn (t PropertySyncData) encode(mut w serializer.Writer) {
 }
 
 pub fn PropertySyncData.decode(mut r serializer.Reader) !PropertySyncData {
-	int_count := int(r.read_varuint32()!)
-	mut ints := []IntEntry{cap: int_count}
+	int_count := r.read_count()!
+	mut ints := []IntEntry{cap: serializer.prealloc(int_count)}
 	for _ in 0 .. int_count {
 		ints << IntEntry.decode(mut r)!
 	}
-	float_count := int(r.read_varuint32()!)
-	mut floats := []FloatEntry{cap: float_count}
+	float_count := r.read_count()!
+	mut floats := []FloatEntry{cap: serializer.prealloc(float_count)}
 	for _ in 0 .. float_count {
 		floats << FloatEntry.decode(mut r)!
 	}

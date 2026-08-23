@@ -30,8 +30,8 @@ pub fn (p &SetHudPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p SetHudPacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.elements = []enums.HudElement{cap: count}
+	count := r.read_count()!
+	p.elements = []enums.HudElement{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.elements << enums.HudElement.decode(mut r)!
 	}

@@ -35,7 +35,7 @@ pub fn (p &RotateHeadPacket) encode_payload(mut w serializer.Writer) {
 
 pub fn (mut p RotateHeadPacket) decode_payload(mut r serializer.Reader) ! {
 	count := int(r.be_i32()!)
-	p.entities = []RotateHeadEntry{cap: count}
+	p.entities = []RotateHeadEntry{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.entities << RotateHeadEntry{
 			eid: r.be_i32()!

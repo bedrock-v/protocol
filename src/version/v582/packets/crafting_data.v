@@ -48,23 +48,23 @@ pub fn (p &CraftingDataPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p CraftingDataPacket) decode_payload(mut r serializer.Reader) ! {
-	entry_count := int(r.read_varuint32()!)
-	p.crafting_data = []types.RecipeData{cap: entry_count}
+	entry_count := r.read_count()!
+	p.crafting_data = []types.RecipeData{cap: serializer.prealloc(entry_count)}
 	for _ in 0 .. entry_count {
 		p.crafting_data << types.RecipeData.decode(mut r)!
 	}
-	potion_mix_count := int(r.read_varuint32()!)
-	p.potion_mix_data = []types_407.PotionMixData{cap: potion_mix_count}
+	potion_mix_count := r.read_count()!
+	p.potion_mix_data = []types_407.PotionMixData{cap: serializer.prealloc(potion_mix_count)}
 	for _ in 0 .. potion_mix_count {
 		p.potion_mix_data << types_407.PotionMixData.decode(mut r)!
 	}
-	container_mix_count := int(r.read_varuint32()!)
-	p.container_mix_data = []types_388.ContainerMixData{cap: container_mix_count}
+	container_mix_count := r.read_count()!
+	p.container_mix_data = []types_388.ContainerMixData{cap: serializer.prealloc(container_mix_count)}
 	for _ in 0 .. container_mix_count {
 		p.container_mix_data << types_388.ContainerMixData.decode(mut r)!
 	}
-	reducer_count := int(r.read_varuint32()!)
-	p.material_reducers = []types_465.MaterialReducer{cap: reducer_count}
+	reducer_count := r.read_count()!
+	p.material_reducers = []types_465.MaterialReducer{cap: serializer.prealloc(reducer_count)}
 	for _ in 0 .. reducer_count {
 		p.material_reducers << types_465.MaterialReducer.decode(mut r)!
 	}

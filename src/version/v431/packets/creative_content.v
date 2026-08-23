@@ -35,8 +35,8 @@ pub fn (p &CreativeContentPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p CreativeContentPacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.contents = []CreativeItemData{cap: count}
+	count := r.read_count()!
+	p.contents = []CreativeItemData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.contents << CreativeItemData{
 			net_id: r.read_varuint32()!

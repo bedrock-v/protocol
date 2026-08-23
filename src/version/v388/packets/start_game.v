@@ -158,8 +158,8 @@ pub fn (mut p StartGamePacket) decode_payload(mut r serializer.Reader) ! {
 	p.platform_broadcast_mode = unsafe { packets_291.GamePublishSetting(r.read_varint32()!) }
 	p.commands_enabled = r.bool()!
 	p.texture_packs_required = r.bool()!
-	rule_count := int(r.read_varuint32()!)
-	mut gamerules := []types_291.GameRuleData{cap: rule_count}
+	rule_count := r.read_count()!
+	mut gamerules := []types_291.GameRuleData{cap: serializer.prealloc(rule_count)}
 	for _ in 0 .. rule_count {
 		gamerules << types_291.GameRuleData.decode(mut r)!
 	}
@@ -184,8 +184,8 @@ pub fn (mut p StartGamePacket) decode_payload(mut r serializer.Reader) ! {
 	p.current_tick = r.le_i64()!
 	p.enchantment_seed = r.read_varint32()!
 	p.block_palette = types.read_nbt_root(mut r)!
-	definition_count := int(r.read_varuint32()!)
-	p.item_definitions = []ItemDefinition{cap: definition_count}
+	definition_count := r.read_count()!
+	p.item_definitions = []ItemDefinition{cap: serializer.prealloc(definition_count)}
 	for _ in 0 .. definition_count {
 		p.item_definitions << ItemDefinition{
 			identifier: r.read_string()!

@@ -179,8 +179,8 @@ pub fn write_entity_data(mut w serializer.Writer, items []DataItem) {
 }
 
 pub fn read_entity_data(mut r serializer.Reader) ![]DataItem {
-	count := int(r.read_varuint32()!)
-	mut items := []DataItem{cap: count}
+	count := r.read_count()!
+	mut items := []DataItem{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		items << DataItem.decode(mut r)!
 	}

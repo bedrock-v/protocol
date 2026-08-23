@@ -76,13 +76,13 @@ pub fn ItemData.decode(mut r serializer.Reader) !ItemData {
 		t.tag = r.read_nbt_compound_root()!
 		t.has_tag = true
 	}
-	place_count := int(r.read_varuint32()!)
-	t.can_place = []string{cap: place_count}
+	place_count := r.read_count()!
+	t.can_place = []string{cap: serializer.prealloc(place_count)}
 	for _ in 0 .. place_count {
 		t.can_place << r.read_string()!
 	}
-	break_count := int(r.read_varuint32()!)
-	t.can_break = []string{cap: break_count}
+	break_count := r.read_count()!
+	t.can_break = []string{cap: serializer.prealloc(break_count)}
 	for _ in 0 .. break_count {
 		t.can_break << r.read_string()!
 	}

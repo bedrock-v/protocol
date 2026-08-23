@@ -27,8 +27,8 @@ pub fn (p &PurchaseReceiptPacket) encode_payload(mut w serializer.Writer) {
 }
 
 pub fn (mut p PurchaseReceiptPacket) decode_payload(mut r serializer.Reader) ! {
-	count := int(r.read_varuint32()!)
-	p.receipts = []string{cap: count}
+	count := r.read_count()!
+	p.receipts = []string{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.receipts << r.read_string()!
 	}

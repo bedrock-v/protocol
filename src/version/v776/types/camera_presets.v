@@ -15,8 +15,8 @@ pub fn (t CameraPresets) encode(mut w serializer.Writer) {
 }
 
 pub fn CameraPresets.decode(mut r serializer.Reader) !CameraPresets {
-	count := int(r.read_varuint32()!)
-	mut items := []CameraPreset{cap: count}
+	count := r.read_count()!
+	mut items := []CameraPreset{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		items << CameraPreset.decode(mut r)!
 	}

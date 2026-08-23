@@ -39,7 +39,7 @@ pub fn (p &ResourcePackClientResponsePacket) encode_payload(mut w serializer.Wri
 pub fn (mut p ResourcePackClientResponsePacket) decode_payload(mut r serializer.Reader) ! {
 	p.status = unsafe { ResourcePackResponseStatus(r.u8()!) }
 	count := int(r.le_u16()!)
-	p.pack_ids = []string{cap: count}
+	p.pack_ids = []string{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
 		p.pack_ids << r.read_string()!
 	}

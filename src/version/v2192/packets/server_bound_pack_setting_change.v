@@ -71,8 +71,8 @@ pub fn PackSettingValue.decode(mut r serializer.Reader) !PackSettingValue {
 			}
 		}
 		3 {
-			count := int(r.read_varuint32()!)
-			mut values := []string{cap: count}
+			count := r.read_count()!
+			mut values := []string{cap: serializer.prealloc(count)}
 			for _ in 0 .. count {
 				values << r.read_string()!
 			}
