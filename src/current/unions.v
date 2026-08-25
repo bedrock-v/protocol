@@ -166,6 +166,12 @@ pub:
 	creative_item_network_id u32
 }
 
+pub struct CraftRecipeAction {
+pub:
+	recipe_network_id u32
+	number_of_crafts  i8
+}
+
 // OtherAction stands for every request action a server does not act on, so a
 // match over the union stays total without listing the crafting screens one by
 // one.
@@ -173,6 +179,7 @@ pub struct OtherAction {}
 
 pub type ItemStackAction = ConsumeAction
 	| CraftCreativeAction
+	| CraftRecipeAction
 	| DestroyAction
 	| DropAction
 	| OtherAction
@@ -225,6 +232,12 @@ pub fn item_stack_action(action types_2168.ItemStackRequestActionType) ItemStack
 		types_2168.ItemStackActionCraftCreative {
 			ItemStackAction(CraftCreativeAction{
 				creative_item_network_id: action.creative_item_network_id
+			})
+		}
+		types_2168.ItemStackActionCraftRecipe {
+			ItemStackAction(CraftRecipeAction{
+				recipe_network_id: action.recipe_network_id
+				number_of_crafts:  action.number_of_requested_crafts
 			})
 		}
 		else {
