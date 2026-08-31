@@ -1,6 +1,6 @@
 module current
 
-import nbt
+import bedrock_v.nbt
 import protocol.types as model
 
 // The bridge between the version independent model types and the shapes the

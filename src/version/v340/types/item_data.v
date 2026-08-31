@@ -1,7 +1,7 @@
 module types
 
 import protocol.serializer
-import nbt
+import bedrock_v.nbt
 
 pub const shield_runtime_id = i32(513)
 

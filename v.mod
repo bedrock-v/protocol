@@ -4,5 +4,5 @@ Module {
 	base_url: 'src'
 	version: '1.0.0'
 	license: 'LGPL-3.0'
-	dependencies: []
+	dependencies: ['bedrock-v.nbt']
 }

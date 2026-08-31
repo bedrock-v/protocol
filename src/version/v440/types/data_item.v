@@ -1,6 +1,6 @@
 module types
 
-import nbt
+import bedrock_v.nbt
 import protocol.serializer
 import protocol.version.v291.types as types_291
 

@@ -1,7 +1,7 @@
 module packets
 
 import protocol.serializer
-import nbt
+import bedrock_v.nbt
 
 pub struct UpdateEquipPacket {
 pub mut:

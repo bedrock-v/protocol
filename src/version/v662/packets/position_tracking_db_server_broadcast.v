@@ -1,7 +1,7 @@
 module packets
 
 import protocol.serializer
-import nbt
+import bedrock_v.nbt
 import protocol.version.v662.types
 
 pub enum PositionTrackingDBBroadcastAction as i8 {

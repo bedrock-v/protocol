@@ -1,7 +1,7 @@
 module types
 
 import protocol.serializer
-import nbt
+import bedrock_v.nbt
 
 pub fn write_nbt_root(mut w serializer.Writer, root nbt.RootTag) {
 	w.write_raw(nbt.encode(root))

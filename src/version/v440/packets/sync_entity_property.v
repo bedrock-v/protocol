@@ -1,6 +1,6 @@
 module packets
 
-import nbt
+import bedrock_v.nbt
 import protocol.serializer
 
 pub struct SyncEntityPropertyPacket {
