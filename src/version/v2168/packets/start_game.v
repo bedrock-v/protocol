@@ -1,7 +1,7 @@
 module packets
 
 import protocol.serializer
-import nbt
+import bedrock_v.nbt
 import protocol.version.v2168.types
 import protocol.version.v662.types as types_662
 import protocol.version.v662.enums as enums_662

@@ -1,7 +1,7 @@
 module packets
 
 import protocol.serializer
-import nbt
+import bedrock_v.nbt
 
 pub enum StructureTemplateResponseType as u8 {
 	@none   = 0

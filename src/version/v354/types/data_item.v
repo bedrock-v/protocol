@@ -1,7 +1,7 @@
 module types
 
 import protocol.serializer
-import nbt
+import bedrock_v.nbt
 import protocol.version.v291.types as types_291
 import protocol.version.v340.types as types_340
 

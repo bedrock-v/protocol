@@ -1,6 +1,6 @@
 module serializer
 
-import nbt
+import bedrock_v.nbt
 
 pub fn (mut r Reader) read_nbt_compound_root() !nbt.RootTag {
 	res := nbt.decode(r.data[r.offset..])!

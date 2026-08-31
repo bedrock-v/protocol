@@ -1,6 +1,6 @@
 module types
 
-import nbt
+import bedrock_v.nbt
 import protocol.serializer
 
 pub struct CameraEaseData {

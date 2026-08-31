@@ -1,7 +1,7 @@
 module types
 
 import protocol.serializer
-import nbt
+import bedrock_v.nbt
 
 pub struct DataItemByte {
 pub mut:
