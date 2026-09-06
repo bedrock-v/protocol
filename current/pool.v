@@ -205,6 +205,9 @@ pub fn new_packet_pool() protocol.PacketPool {
 		return &SetScorePacket{}
 	})
 	pool.register(fn () protocol.Packet {
+		return &SetSpawnPositionPacket{}
+	})
+	pool.register(fn () protocol.Packet {
 		return &SetTimePacket{}
 	})
 	pool.register(fn () protocol.Packet {
