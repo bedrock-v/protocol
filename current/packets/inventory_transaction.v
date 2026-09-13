@@ -2,7 +2,7 @@ module packets
 
 import protocol.serializer
 import protocol.version.v2168.types as types_2168
-import protocol.version.v2192.types
+import protocol.current.types
 import protocol.version.v662.enums as enums_662
 
 pub struct LegacySetItemSlotsEntry {
