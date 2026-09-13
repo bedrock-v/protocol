@@ -4,7 +4,7 @@ import protocol.version.v924.enums as enums_924
 import protocol.version.v2168.packets as packets_2168
 import protocol.version.v2168.types as types_2168
 import protocol.version.v2168.enums as enums_2168
-import protocol.version.v2192.packets as packets_2192
+import protocol.current.packets as packets_2192
 
 // The unions below are declared here rather than aliased from the version that
 // defines them. V only accepts the defining type in a match over a sum type, so
@@ -125,40 +125,40 @@ pub fn resource_pack_response(response packets_2168.ResourcePackClientResponse) 
 pub struct TakeAction {
 pub:
 	amount      i8
-	source      ItemStackRequestSlotInfo
-	destination ItemStackRequestSlotInfo
+	source      types_2168.ItemStackRequestSlotInfo
+	destination types_2168.ItemStackRequestSlotInfo
 }
 
 pub struct PlaceAction {
 pub:
 	amount      i8
-	source      ItemStackRequestSlotInfo
-	destination ItemStackRequestSlotInfo
+	source      types_2168.ItemStackRequestSlotInfo
+	destination types_2168.ItemStackRequestSlotInfo
 }
 
 pub struct SwapAction {
 pub:
-	source      ItemStackRequestSlotInfo
-	destination ItemStackRequestSlotInfo
+	source      types_2168.ItemStackRequestSlotInfo
+	destination types_2168.ItemStackRequestSlotInfo
 }
 
 pub struct DropAction {
 pub:
 	amount   i8
-	source   ItemStackRequestSlotInfo
+	source   types_2168.ItemStackRequestSlotInfo
 	randomly bool
 }
 
 pub struct DestroyAction {
 pub:
 	amount i8
-	source ItemStackRequestSlotInfo
+	source types_2168.ItemStackRequestSlotInfo
 }
 
 pub struct ConsumeAction {
 pub:
 	amount i8
-	source ItemStackRequestSlotInfo
+	source types_2168.ItemStackRequestSlotInfo
 }
 
 pub struct CraftCreativeAction {
@@ -263,63 +263,63 @@ pub fn item_stack_action(action types_2168.ItemStackRequestActionType) ItemStack
 // than redeclared: the check has to name the defining type, which only this
 // module can do.
 
-pub fn data_item_float(item DataItemType) ?DataItemFloat {
+pub fn data_item_float(item enums_2168.DataItemType) ?enums_2168.DataItemFloat {
 	if item is enums_2168.DataItemFloat {
 		return item
 	}
 	return none
 }
 
-pub fn data_item_int64(item DataItemType) ?DataItemInt64 {
+pub fn data_item_int64(item enums_2168.DataItemType) ?enums_2168.DataItemInt64 {
 	if item is enums_2168.DataItemInt64 {
 		return item
 	}
 	return none
 }
 
-pub fn score_entry_change_fake_player(entry ScorePacketEntry) ?ScoreEntryChangeFakePlayer {
+pub fn score_entry_change_fake_player(entry packets_2168.ScorePacketEntry) ?packets_2168.ScoreEntryChangeFakePlayer {
 	if entry is packets_2168.ScoreEntryChangeFakePlayer {
 		return entry
 	}
 	return none
 }
 
-pub fn player_list_add(entry PlayerListEntry) ?PlayerListAdd {
+pub fn player_list_add(entry packets_2192.PlayerListEntry) ?packets_2192.PlayerListAdd {
 	if entry is packets_2192.PlayerListAdd {
 		return entry
 	}
 	return none
 }
 
-pub fn text_chat(message TextPacketType) ?TextChat {
+pub fn text_chat(message enums_924.TextPacketType) ?enums_924.TextChat {
 	if message is enums_924.TextChat {
 		return message
 	}
 	return none
 }
 
-pub fn text_raw(message TextPacketType) ?TextRaw {
+pub fn text_raw(message enums_924.TextPacketType) ?enums_924.TextRaw {
 	if message is enums_924.TextRaw {
 		return message
 	}
 	return none
 }
 
-pub fn text_translate(message TextPacketType) ?TextTranslate {
+pub fn text_translate(message enums_924.TextPacketType) ?enums_924.TextTranslate {
 	if message is enums_924.TextTranslate {
 		return message
 	}
 	return none
 }
 
-pub fn data_item_byte(item DataItemType) ?DataItemByte {
+pub fn data_item_byte(item enums_2168.DataItemType) ?enums_2168.DataItemByte {
 	if item is enums_2168.DataItemByte {
 		return item
 	}
 	return none
 }
 
-pub fn data_item_string(item DataItemType) ?DataItemString {
+pub fn data_item_string(item enums_2168.DataItemType) ?enums_2168.DataItemString {
 	if item is enums_2168.DataItemString {
 		return item
 	}

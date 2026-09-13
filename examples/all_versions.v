@@ -102,7 +102,7 @@ import protocol.version.v944
 import protocol.version.v975
 import protocol.version.v1001
 import protocol.version.v2168
-import protocol.version.v2192
+import protocol.current
 
 fn main() {
 	mut pools := map[int]int{}
@@ -207,7 +207,7 @@ fn main() {
 	pools[975] = v975.new_pool().factories.len
 	pools[1001] = v1001.new_pool().factories.len
 	pools[2168] = v2168.new_pool().factories.len
-	pools[2192] = v2192.new_pool().factories.len
+	pools[2192] = current.new_pool().factories.len
 	mut total := 0
 	for v in version.all() {
 		id := v.protocol_id()

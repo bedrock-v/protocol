@@ -1,7 +1,7 @@
 module packets
 
 import protocol.serializer
-import protocol.version.v2192.types
+import protocol.current.types
 
 pub struct CameraPresetsPacket {
 pub mut:

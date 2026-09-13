@@ -4,9 +4,12 @@ A Minecraft: Bedrock Edition network protocol implementation in V.
 
 ## Versions
 
-Packets live under versioned modules in `src/version/`. Each supported protocol
+Packets live under versioned modules in `version/`. Each supported protocol
 version ships its own packet pool, later versions only materialize the packets,
 types and enums that changed and inherit the rest from earlier modules.
+
+The latest supported version lives in `protocol.current`. Older releases remain
+available under their numbered `protocol.version` modules.
 
 ## Dependency: nbt
 
@@ -32,15 +35,15 @@ v -path 'src|@vlib|@vmodules' run examples/all_versions.v
 import protocol
 import protocol.serializer
 import protocol.version
-import protocol.version.v1001
+import protocol.current
 import protocol.version.v662.packets as packets_662
 
-mut pool := v1001.new_pool()
-println('proto=${v1001.proto_version.protocol_id()} mc=${v1001.proto_version.minecraft_version()}')
+mut pool := current.new_pool()
+println('proto=${current.proto_version.protocol_id()} mc=${current.proto_version.minecraft_version()}')
 
 // encode any packet from the pool's version slice
 packet := &packets_662.RequestNetworkSettingsPacket{
-	client_network_version: i32(v1001.proto_version.protocol_id())
+	client_network_version: i32(current.proto_version.protocol_id())
 }
 bytes := protocol.encode_packet_to_bytes(packet)
 

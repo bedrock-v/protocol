@@ -2,6 +2,11 @@ module current
 
 import bedrock_v.nbt
 import protocol.types as model
+import protocol.version.v1001.packets as packets_1001
+import protocol.version.v2168.types as types_2168
+import protocol.version.v662.enums as enums_662
+import protocol.version.v662.types as types_662
+import protocol.version.v944.types as types_944
 
 // The bridge between the version independent model types and the shapes the
 // selected version puts on the wire. Callers work in model types and never
@@ -11,14 +16,14 @@ import protocol.types as model
 // runtime id, so it moves with the item palette rather than with the protocol.
 const shield_runtime_id = 358
 
-pub fn actor_unique_id(value i64) ActorUniqueID {
-	return ActorUniqueID{
+pub fn actor_unique_id(value i64) types_662.ActorUniqueID {
+	return types_662.ActorUniqueID{
 		value: value
 	}
 }
 
-pub fn actor_runtime_id(value u64) ActorRuntimeID {
-	return ActorRuntimeID{
+pub fn actor_runtime_id(value u64) types_662.ActorRuntimeID {
+	return types_662.ActorRuntimeID{
 		value: value
 	}
 }
@@ -31,15 +36,15 @@ pub fn vec3_from_array(v [3]f32) model.Vector3 {
 	return model.Vector3{v[0], v[1], v[2]}
 }
 
-pub fn block_pos(v model.BlockPosition) NetworkBlockPosition {
-	return NetworkBlockPosition{
+pub fn block_pos(v model.BlockPosition) types_944.NetworkBlockPosition {
+	return types_944.NetworkBlockPosition{
 		x: i32(v.x)
 		y: i32(v.y)
 		z: i32(v.z)
 	}
 }
 
-pub fn block_pos_from(v NetworkBlockPosition) model.BlockPosition {
+pub fn block_pos_from(v types_944.NetworkBlockPosition) model.BlockPosition {
 	return model.BlockPosition{
 		x: int(v.x)
 		y: int(v.y)
@@ -48,8 +53,8 @@ pub fn block_pos_from(v NetworkBlockPosition) model.BlockPosition {
 }
 
 // block_pos_from_legacy reads the older of the two block position shapes, which
-// the packets that predate NetworkBlockPosition still carry.
-pub fn block_pos_from_legacy(v BlockPos) model.BlockPosition {
+// the packets that predate types_944.NetworkBlockPosition still carry.
+pub fn block_pos_from_legacy(v types_662.BlockPos) model.BlockPosition {
 	return model.BlockPosition{
 		x: int(v.x)
 		y: int(v.y)
@@ -57,8 +62,8 @@ pub fn block_pos_from_legacy(v BlockPos) model.BlockPosition {
 	}
 }
 
-pub fn item_descriptor(item model.ItemStack) NetworkItemStackDescriptor {
-	return NetworkItemStackDescriptor{
+pub fn item_descriptor(item model.ItemStack) types_2168.NetworkItemStackDescriptor {
+	return types_2168.NetworkItemStackDescriptor{
 		id:               i16(item.id)
 		stack_size:       u16(item.count)
 		aux_value:        u32(item.meta)
@@ -68,8 +73,8 @@ pub fn item_descriptor(item model.ItemStack) NetworkItemStackDescriptor {
 	}
 }
 
-pub fn item_instance(item model.ItemStack) NetworkItemInstanceDescriptor {
-	return NetworkItemInstanceDescriptor{
+pub fn item_instance(item model.ItemStack) types_2168.NetworkItemInstanceDescriptor {
+	return types_2168.NetworkItemInstanceDescriptor{
 		id:               i32(item.id)
 		stack_size:       u16(item.count)
 		aux_value:        u32(item.meta)
@@ -79,12 +84,12 @@ pub fn item_instance(item model.ItemStack) NetworkItemInstanceDescriptor {
 	}
 }
 
-pub fn item_descriptor_v2(item model.ItemStack) NetworkItemStackDescriptorV2 {
+pub fn item_descriptor_v2(item model.ItemStack) types_2168.NetworkItemStackDescriptorV2 {
 	return item_descriptor_v2_tracked(item, 0)
 }
 
-pub fn item_descriptor_v2_tracked(item model.ItemStack, net_id int) NetworkItemStackDescriptorV2 {
-	mut d := NetworkItemStackDescriptorV2{
+pub fn item_descriptor_v2_tracked(item model.ItemStack, net_id int) types_2168.NetworkItemStackDescriptorV2 {
+	mut d := types_2168.NetworkItemStackDescriptorV2{
 		id:               i16(item.id)
 		stack_size:       u16(item.count)
 		aux_value:        u32(item.meta)
@@ -98,7 +103,7 @@ pub fn item_descriptor_v2_tracked(item model.ItemStack, net_id int) NetworkItemS
 	return d
 }
 
-pub fn item_stack_from_descriptor_v2(item NetworkItemStackDescriptorV2) model.ItemStack {
+pub fn item_stack_from_descriptor_v2(item types_2168.NetworkItemStackDescriptorV2) model.ItemStack {
 	return model.ItemStack{
 		id:               int(item.id)
 		count:            int(item.stack_size)
@@ -108,8 +113,8 @@ pub fn item_stack_from_descriptor_v2(item NetworkItemStackDescriptorV2) model.It
 	}
 }
 
-pub fn level_sound_event(event_name string, position model.Vector3, data i32, actor_identifier string, entity_unique_id u64) &LevelSoundEventPacket {
-	mut packet := &LevelSoundEventPacket{
+pub fn level_sound_event(event_name string, position model.Vector3, data i32, actor_identifier string, entity_unique_id u64) &packets_1001.LevelSoundEventPacket {
+	mut packet := &packets_1001.LevelSoundEventPacket{
 		event_name:       event_name
 		data:             data
 		actor_identifier: actor_identifier
@@ -130,8 +135,8 @@ pub fn rotation_byte(value f32) i8 {
 	return i8(u8(scaled))
 }
 
-pub fn uuid_from_bytes(b []u8) Uuid {
-	mut uuid := Uuid{}
+pub fn uuid_from_bytes(b []u8) types_662.Uuid {
+	mut uuid := types_662.Uuid{}
 	for i := 0; i < 16 && i < b.len; i++ {
 		uuid.bytes[i] = b[i]
 	}
@@ -145,6 +150,6 @@ pub fn empty_nbt() nbt.RootTag {
 	}
 }
 
-pub fn game_type(value int) GameType {
-	return unsafe { GameType(value) }
+pub fn game_type(value int) enums_662.GameType {
+	return unsafe { enums_662.GameType(value) }
 }

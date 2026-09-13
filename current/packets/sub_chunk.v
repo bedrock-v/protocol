@@ -45,8 +45,7 @@ pub fn (e SubChunkDataEntry) encode(mut w serializer.Writer) {
 	w.i8(i8(e.height_map_data_type))
 	encode_opt_height_map(mut w, e.height_map_data_type == .has_data, e.height_map_data)
 	w.i8(i8(e.render_height_map_data_type))
-	encode_opt_height_map(mut w, e.render_height_map_data_type == .has_data,
-		e.render_height_map_data)
+	encode_opt_height_map(mut w, e.render_height_map_data_type == .has_data, e.render_height_map_data)
 	if v := e.blob_id {
 		w.bool(true)
 		w.le_u64(v)
