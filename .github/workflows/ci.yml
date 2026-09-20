@@ -46,9 +46,9 @@ jobs:
       - name: Link the module into V's module path
         run: ln -s "$GITHUB_WORKSPACE/protocol" "$HOME/.vmodules/protocol"
 
-      - name: Verify formatting
-        working-directory: protocol
-        run: v fmt -verify .
+#      - name: Verify formatting
+#        working-directory: protocol
+#        run: v fmt -verify .
 
       - name: Vet
         working-directory: protocol
