@@ -21,7 +21,7 @@ This project consumes the standalone network-NBT codec from
 path before building:
 
 ```bash
-v install bedrock-v.install
+v install bedrock-v.nbt
 ```
 
 ## Tests
