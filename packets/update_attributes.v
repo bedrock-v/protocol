@@ -34,7 +34,7 @@ pub fn AttributeModifier.decode(mut r serializer.Reader) !AttributeModifier {
 	}
 }
 
-pub struct Attribute {
+pub struct AttributeData {
 pub mut:
 	min_value           f32
 	max_value           f32
@@ -46,7 +46,7 @@ pub mut:
 	attribute_modifiers []AttributeModifier
 }
 
-pub fn (e Attribute) encode(mut w serializer.Writer) {
+pub fn (e AttributeData) encode(mut w serializer.Writer) {
 	w.le_f32(e.min_value)
 	w.le_f32(e.max_value)
 	w.le_f32(e.current_value)
@@ -60,8 +60,8 @@ pub fn (e Attribute) encode(mut w serializer.Writer) {
 	}
 }
 
-pub fn Attribute.decode(mut r serializer.Reader) !Attribute {
-	mut e := Attribute{}
+pub fn AttributeData.decode(mut r serializer.Reader) !AttributeData {
+	mut e := AttributeData{}
 	e.min_value = r.le_f32()!
 	e.max_value = r.le_f32()!
 	e.current_value = r.le_f32()!
@@ -80,7 +80,7 @@ pub fn Attribute.decode(mut r serializer.Reader) !Attribute {
 pub struct UpdateAttributesPacket {
 pub mut:
 	target_runtime_id       types.ActorRuntimeID
-	attribute_list          []Attribute
+	attribute_list          []AttributeData
 	ticks_since_sim_started u64
 }
 
@@ -108,9 +108,9 @@ pub fn (p &UpdateAttributesPacket) encode_payload(mut w serializer.Writer) {
 pub fn (mut p UpdateAttributesPacket) decode_payload(mut r serializer.Reader) ! {
 	p.target_runtime_id = types.ActorRuntimeID.decode(mut r)!
 	count := r.read_count()!
-	p.attribute_list = []Attribute{cap: serializer.prealloc(count)}
+	p.attribute_list = []AttributeData{cap: serializer.prealloc(count)}
 	for _ in 0 .. count {
-		p.attribute_list << Attribute.decode(mut r)!
+		p.attribute_list << AttributeData.decode(mut r)!
 	}
 	p.ticks_since_sim_started = r.read_varuint64()!
 }

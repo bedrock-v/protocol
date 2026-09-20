@@ -233,9 +233,9 @@ fn write_optional_f32(mut w serializer.Writer, value ?f32) {
 pub struct EnvironmentAttributeData {
 pub mut:
 	attribute_name           string
-	from_attribute           ?AttributeData
-	attribute                AttributeData = AttributeDataBool{}
-	to_attribute             ?AttributeData
+	from_attribute           ?EnvironmentAttributeValue
+	attribute                EnvironmentAttributeValue = AttributeDataBool{}
+	to_attribute             ?EnvironmentAttributeValue
 	current_transition_ticks u32
 	total_transition_ticks   u32
 	easing                   string
@@ -271,11 +271,11 @@ pub fn EnvironmentAttributeData.decode(mut r serializer.Reader) !EnvironmentAttr
 	mut t := EnvironmentAttributeData{}
 	t.attribute_name = r.read_string()!
 	if r.bool()! {
-		t.from_attribute = AttributeData.decode(mut r)!
+		t.from_attribute = EnvironmentAttributeValue.decode(mut r)!
 	}
-	t.attribute = AttributeData.decode(mut r)!
+	t.attribute = EnvironmentAttributeValue.decode(mut r)!
 	if r.bool()! {
-		t.to_attribute = AttributeData.decode(mut r)!
+		t.to_attribute = EnvironmentAttributeValue.decode(mut r)!
 	}
 	t.current_transition_ticks = r.le_u32()!
 	t.total_transition_ticks = r.le_u32()!
@@ -336,9 +336,9 @@ pub mut:
 	operation ?i32
 }
 
-pub type AttributeData = AttributeDataBool | AttributeDataColor | AttributeDataFloat
+pub type EnvironmentAttributeValue = AttributeDataBool | AttributeDataColor | AttributeDataFloat
 
-pub fn (t AttributeData) encode(mut w serializer.Writer) {
+pub fn (t EnvironmentAttributeValue) encode(mut w serializer.Writer) {
 	match t {
 		AttributeDataBool {
 			w.write_varuint32(0)
@@ -360,7 +360,7 @@ pub fn (t AttributeData) encode(mut w serializer.Writer) {
 	}
 }
 
-pub fn AttributeData.decode(mut r serializer.Reader) !AttributeData {
+pub fn EnvironmentAttributeValue.decode(mut r serializer.Reader) !EnvironmentAttributeValue {
 	d := r.read_varuint32()!
 	match d {
 		0 {
@@ -407,7 +407,7 @@ pub fn AttributeData.decode(mut r serializer.Reader) !AttributeData {
 			}
 		}
 		else {
-			return error('invalid AttributeData ${d}')
+			return error('invalid EnvironmentAttributeValue ${d}')
 		}
 	}
 }
