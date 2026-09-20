@@ -2,9 +2,7 @@ module main
 
 import protocol
 import protocol.serializer
-import protocol.current
-import protocol.current.packets
-import protocol.version.v662.packets as packets_662
+import protocol.packets
 
 fn roundtrip(p protocol.Packet, mut pool protocol.PacketPool) !protocol.Packet {
 	encoded := protocol.encode_packet_to_bytes(p)
@@ -13,17 +11,17 @@ fn roundtrip(p protocol.Packet, mut pool protocol.PacketPool) !protocol.Packet {
 }
 
 fn main() {
-	mut pool := current.new_pool()
-	println('current proto=${current.proto_version.protocol_id()} mc=${current.proto_version.minecraft_version()}')
+	mut pool := protocol.new_pool()
+	println('current proto=${protocol.protocol_id} mc=${protocol.minecraft_version}')
 	println('Registered packet count: ${pool.factories.len}')
 
-	req := &packets_662.RequestNetworkSettingsPacket{
-		client_network_version: i32(current.proto_version.protocol_id())
+	req := &packets.RequestNetworkSettingsPacket{
+		client_network_version: i32(protocol.protocol_id)
 	}
 	println('RequestNetworkSettings encoded: ${protocol.encode_packet_to_bytes(req).hex()}')
 	d1 := roundtrip(req, mut pool)!
-	if d1 is packets_662.RequestNetworkSettingsPacket {
-		assert d1.client_network_version == i32(current.proto_version.protocol_id())
+	if d1 is packets.RequestNetworkSettingsPacket {
+		assert d1.client_network_version == i32(protocol.protocol_id)
 		println('  -> client_network_version=${d1.client_network_version} OK')
 	}
 
