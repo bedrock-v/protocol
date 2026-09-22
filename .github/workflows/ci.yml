@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  # Weekly
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  VFLAGS: -no-parallel
+
+jobs:
+  # Building V takes longer than every check here put together, so they share
+  # one build rather than running as separate jobs.
+  checks:
+    name: Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout V
+        uses: actions/checkout@v7
+        with:
+          repository: vlang/v
+
+      - name: Checkout protocol
+        uses: actions/checkout@v7
+        with:
+          path: protocol
+
+      - name: Build V
+        run: |
+          make
+          echo "$GITHUB_WORKSPACE" >> "$GITHUB_PATH"
+
+      - name: Install nbt
+        run: v install bedrock-v.nbt
+
+      - name: Link the module into V's module path
+        run: ln -s "$GITHUB_WORKSPACE/protocol" "$HOME/.vmodules/protocol"
+
+#      - name: Verify formatting
+#        working-directory: protocol
+#        run: v fmt -verify .
+
+      - name: Vet
+        working-directory: protocol
+        run: v vet .
+
+      - name: Test
+        working-directory: protocol
+        run: v test tests
+
+      - name: Build and run the example
+        working-directory: protocol
+        run: v run examples/roundtrip.v

@@ -2,31 +2,33 @@
 
 A Minecraft: Bedrock Edition network protocol implementation in V.
 
-## Versions
+## Scope
 
-Packets live under versioned modules in `version/`. Each supported protocol
-version ships its own packet pool, later versions only materialize the packets,
-types and enums that changed and inherit the rest from earlier modules.
+Current version: **1.26.50, protocol 2192**.
 
-The latest supported version lives in `protocol.current`. Older releases remain
-available under their numbered `protocol.version` modules.
+```
+packets/      one file per packet
+types/        the types packets carry on the wire
+enums/        the enums they use
+model/        the types callers work with, independent of the wire layout
+serializer/   the reader and writer
+```
 
 ## Dependency: nbt
 
 This project consumes the standalone network-NBT codec from
-[bedrock-v/nbt](https://github.com/bedrock-v/nbt) via `import nbt`. Install it into
-your V module path before building:
+[bedrock-v/nbt](https://github.com/bedrock-v/nbt). Install it into your V module
+path before building:
 
 ```bash
-git clone https://github.com/bedrock-v/nbt ~/.vmodules/nbt
+v install bedrock-v.nbt
 ```
 
-## Build and Run
+## Tests
 
 ```bash
-v -shared -skip-unused .          # compile the library
-v -path 'src|@vlib|@vmodules' run examples/roundtrip.v
-v -path 'src|@vlib|@vmodules' run examples/all_versions.v
+v test tests              # the test suite
+v run examples/roundtrip.v
 ```
 
 ## Usage
@@ -34,27 +36,27 @@ v -path 'src|@vlib|@vmodules' run examples/all_versions.v
 ```v
 import protocol
 import protocol.serializer
-import protocol.version
-import protocol.current
-import protocol.version.v662.packets as packets_662
+import protocol.packets
 
-mut pool := current.new_pool()
-println('proto=${current.proto_version.protocol_id()} mc=${current.proto_version.minecraft_version()}')
+mut pool := protocol.new_pool()
+println('proto=${protocol.protocol_id} mc=${protocol.minecraft_version}')
 
-// encode any packet from the pool's version slice
-packet := &packets_662.RequestNetworkSettingsPacket{
-	client_network_version: i32(current.proto_version.protocol_id())
+packet := &packets.RequestNetworkSettingsPacket{
+	client_network_version: i32(protocol.protocol_id)
 }
 bytes := protocol.encode_packet_to_bytes(packet)
 
 // decode straight from bytes
 mut r := serializer.new_reader(bytes)
 decoded := pool.decode(mut r)!
-if decoded is packets_662.RequestNetworkSettingsPacket {
+if decoded is packets.RequestNetworkSettingsPacket {
 	println('decoded=${decoded.name()} client_network_version=${decoded.client_network_version}')
 }
-
-// pick a pool from a client's protocol id
-v := version.from_protocol_id(1001)
-println('selected=${v} mc=${v.minecraft_version()}')
 ```
+
+## Tests
+
+`tests/` exercises the module from outside, the way a dependent does.
+`roundtrip_test.v` encodes and decodes every packet the pool registers and
+compares the result against a recorded baseline, so a packet that stops
+round-tripping is caught even though the suite has no wire fixtures yet.
