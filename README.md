@@ -4,7 +4,7 @@ A Minecraft: Bedrock Edition network protocol implementation in V.
 
 ## Scope
 
-Current version: **1.26.50, protocol 2192**.
+Current version: **1.26.50, protocol 2193**.
 
 ```
 packets/      one file per packet

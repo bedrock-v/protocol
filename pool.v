@@ -3,7 +3,7 @@ module protocol
 import protocol.packets
 
 // The protocol this implementation speaks.
-pub const protocol_id = 2192
+pub const protocol_id = 2193
 pub const minecraft_version = '1.26.50'
 
 pub fn new_pool() PacketPool {
